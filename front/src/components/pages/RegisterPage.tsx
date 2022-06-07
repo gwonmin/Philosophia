@@ -113,17 +113,6 @@ export default function RegisterPage() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="이름"
-                  autoFocus
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -133,6 +122,21 @@ export default function RegisterPage() {
                   name="email"
                   autoComplete="email"
                 />
+                <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
+                  인증번호 받기
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="Certification"
+                  label="인증번호"
+                  name="Certification"
+                />
+                <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
+                  확인
+                </Button>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -156,6 +160,17 @@ export default function RegisterPage() {
                   autoComplete="new-password"
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="name"
+                  required
+                  fullWidth
+                  id="name"
+                  label="이름"
+                  autoFocus
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -163,7 +178,7 @@ export default function RegisterPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              회원가입
+              가입완료
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
