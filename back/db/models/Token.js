@@ -1,13 +1,13 @@
-import { Token } from "../schemas/token";
+import { tokenModel } from "../schemas/token";
 
-class TokenModel {
+class Token {
   static async findToken(userId) {
-    const userToken = await Token.findOne({ _id: userId });
+    const userToken = await tokenModel.findOne({ _id: userId });
     return userToken;
   }
 
   static async updateRefresh({ _id, refreshToken }) {
-    const update = await Token.updateOne(
+    const update = await tokenModel.updateOne(
       { _id },
       { _id, refreshToken },
       { upsert: true }
@@ -16,4 +16,4 @@ class TokenModel {
   }
 }
 
-export { TokenModel };
+export { Token };

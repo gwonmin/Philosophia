@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { TokenModel } from "../db";
+import { Token } from "../db";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -25,7 +25,7 @@ const verify = function (token) {
 const refreshVerify = async function (token, userId) {
   try {
     // db에서 refresh token 가져오기
-    const { refreshToken } = await TokenModel.findToken(userId);
+    const { refreshToken } = await Token.findToken(userId);
     if (token === refreshToken) {
       try {
         jwt.verify(token, JWT_KEY);
