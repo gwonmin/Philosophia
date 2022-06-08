@@ -14,7 +14,6 @@ type Action =
     }
   | {
       type: "LOGOUT";
-      payload: null;
     };
 type DispatchType = Dispatch<Action>;
 
@@ -43,9 +42,10 @@ function loginReducer(userState: State, action: Action) {
 // UserProvider 에서 useReduer를 사용하고
 // UserStateContext.Provider 와 UserDispatchContext.Provider 로 children 을 감싸서 반환합니다.
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(loginReducer, {
+  const initUser = {
     user: null,
-  });
+  };
+  const [state, dispatch] = useReducer(loginReducer, initUser);
 
   return (
     <UserStateContext.Provider value={state}>
@@ -59,12 +59,12 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 // state 와 dispatch 를 쉽게 사용하기 위한 커스텀 Hooks
 export function useUserState() {
   const state = useContext(UserStateContext);
-  if (!state) throw new Error("Cannot find SampleProvider"); // 유효하지 않을땐 에러를 발생
+  if (!state) throw new Error("Cannot find UserProvider"); // 유효하지 않을땐 에러를 발생
   return state;
 }
 
 export function useUserDispatch() {
   const dispatch = useContext(DispatchContext);
-  if (!dispatch) throw new Error("Cannot find SampleProvider"); // 유효하지 않을땐 에러를 발생
+  if (!dispatch) throw new Error("Cannot find UserProvider"); // 유효하지 않을땐 에러를 발생
   return dispatch;
 }

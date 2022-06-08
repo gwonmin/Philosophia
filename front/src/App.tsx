@@ -8,8 +8,10 @@ import RegisterPage from "./components/pages/RegisterPage";
 
 function App() {
   // 커스텀훅을 통해 userState 상태와 dispatch함수를 생성함.
-  const state = useUserState();
-  const dispatch = useUserDispatch();
+
+  //const state = useUserState();
+  //const dispatch = useUserDispatch();
+
   // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -21,10 +23,11 @@ function App() {
       const currentUser = res.data;
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: currentUser,
-      });
+
+      // dispatch({
+      //   type: "LOGIN_SUCCESS",
+      //   payload: currentUser,
+      // });
 
       console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;");
     } catch {
@@ -44,13 +47,12 @@ function App() {
   }
 
   return (
-    <UserProvider>
-      <Router>
-        <Routes>
-          <Route path="/register" element={<RegisterPage />} />
-        </Routes>
-      </Router>
-    </UserProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<RegisterPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </Router>
   );
 }
 

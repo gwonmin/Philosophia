@@ -105,7 +105,7 @@ export default function RegisterPage() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <div>자물쇠 아이콘</div>
+            <div>b</div>
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -120,25 +120,23 @@ export default function RegisterPage() {
               <Grid item xs={12}>
                 <TextField
                   required
-                  fullWidth
                   id="email"
                   label="이메일"
                   name="email"
                   autoComplete="email"
                 />
-                <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
+                <Button variant="contained" sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}>
                   인증번호 받기
                 </Button>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
-                  fullWidth
                   id="Certification"
                   label="인증번호"
                   name="Certification"
                 />
-                <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
+                <Button variant="contained" sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}>
                   확인
                 </Button>
               </Grid>
@@ -164,7 +162,7 @@ export default function RegisterPage() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
                   name="name"
