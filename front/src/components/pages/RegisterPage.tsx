@@ -49,12 +49,14 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  const validateEmail = (email: string): string => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
+  const validateEmail = (email: string | null) => {
+    if (typeof email === "string") {
+      return email
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    }
   };
 
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
@@ -70,7 +72,9 @@ export default function RegisterPage() {
   const isFormValid =
     isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: {
+    preventDefault: () => void;
+  }): Promise<void> => {
     e.preventDefault();
 
     try {

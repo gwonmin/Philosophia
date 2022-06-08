@@ -1,20 +1,15 @@
 import React, { useState, useEffect, useReducer, createContext } from "react";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import * as Api from "./api";
-import { loginReducer } from "./reducer";
+import { UserProvider, useUserState, useUserDispatch } from "./context";
 
 import RegisterPage from "./components/pages/RegisterPage";
 
-export const UserStateContext = createContext(null);
-export const DispatchContext = createContext(null);
-
 function App() {
-  // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
-  const [userState, dispatch] = useReducer(loginReducer, {
-    user: "default",
-  });
-
+  // 커스텀훅을 통해 userState 상태와 dispatch함수를 생성함.
+  const state = useUserState();
+  const dispatch = useUserDispatch();
   // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -49,15 +44,13 @@ function App() {
   }
 
   return (
-    <DispatchContext.Provider value={dispatch}>
-      <UserStateContext.Provider value={userState}>
-        <Router location={""} navigator={undefined}>
-          <Routes>
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
-        </Router>
-      </UserStateContext.Provider>
-    </DispatchContext.Provider>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 
