@@ -1,16 +1,22 @@
-import React, { useState, useEffect, useReducer, createContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  createContext,
+  useContext,
+} from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import * as Api from "./api";
-import { UserProvider, useUserState, useUserDispatch } from "./context";
+import { UserProvider, UserStateContext, DispatchContext } from "./context";
 
 import RegisterPage from "./components/pages/RegisterPage";
 
 function App() {
   // 커스텀훅을 통해 userState 상태와 dispatch함수를 생성함.
 
-  //const state = useUserState();
-  //const dispatch = useUserDispatch();
+  const state = useContext(UserStateContext);
+  const dispatch = useContext(DispatchContext);
 
   // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
@@ -23,11 +29,12 @@ function App() {
       const currentUser = res.data;
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-
-      // dispatch({
-      //   type: "LOGIN_SUCCESS",
-      //   payload: currentUser,
-      // });
+      if (dispatch) {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: currentUser,
+        });
+      }
 
       console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;");
     } catch {
