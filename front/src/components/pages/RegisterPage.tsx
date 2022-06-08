@@ -38,15 +38,25 @@ const theme = createTheme();
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  //user의 가입 정보를 객체로 다룬다.
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
+  const email = userData.email;
+  const password = userData.password;
+  const name = userData.name;
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
 
-  //useState로 email 상태를 생성함.
-  const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
-  const [password, setPassword] = useState("");
-  //useState로 confirmPassword 상태를 생성함.
+  //confirmPassword는 반복되지 않으므로 state로 다룬다.
   const [confirmPassword, setConfirmPassword] = useState("");
-  //useState로 name 상태를 생성함.
-  const [name, setName] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email: string | null) => {
@@ -79,11 +89,7 @@ export default function RegisterPage() {
 
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post("user/register", {
-        email,
-        password,
-        name,
-      });
+      await Api.post("user/register", userData);
 
       // 로그인 페이지로 이동함.
       navigate("/login");
@@ -93,106 +99,88 @@ export default function RegisterPage() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <div>b</div>
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          회원가입
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="email"
+                label="이메일"
+                name="email"
+                autoComplete="email"
+              />
+              <Button variant="contained" sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}>
+                인증번호 받기
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="Certification"
+                label="인증번호"
+                name="Certification"
+              />
+              <Button variant="contained" sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}>
+                확인
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="비밀번호"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="checkPassword"
+                label="비밀번호 재확인"
+                type="password"
+                id="checkPassword"
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="given-name"
+                name="name"
+                required
+                fullWidth
+                id="name"
+                label="이름"
+                autoFocus
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id="email"
-                  label="이메일"
-                  name="email"
-                  autoComplete="email"
-                />
-                <Button variant="contained" sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}>
-                  인증번호 받기
-                </Button>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id="Certification"
-                  label="인증번호"
-                  name="Certification"
-                />
-                <Button variant="contained" sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}>
-                  확인
-                </Button>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="비밀번호"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="checkPassword"
-                  label="비밀번호 재확인"
-                  type="password"
-                  id="checkPassword"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="이름"
-                  autoFocus
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              가입완료
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  이미 계정이 있나요?
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+            가입완료
+          </Button>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
 }
