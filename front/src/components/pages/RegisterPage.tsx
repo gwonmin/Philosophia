@@ -49,7 +49,7 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  const validateEmail = (email) => {
+  const validateEmail = (email: string): string => {
     return email
       .toLowerCase()
       .match(
