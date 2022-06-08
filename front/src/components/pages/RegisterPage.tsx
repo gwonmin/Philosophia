@@ -3,38 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 import * as Api from "../../api";
 
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
+import { Certification } from "../molecules/certification";
+import { TextFieldAtom } from "../atoms/textInput";
+import { GreenButton } from "../atoms/buttons";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -56,6 +34,7 @@ export default function RegisterPage() {
   };
 
   //confirmPassword는 반복되지 않으므로 state로 다룬다.
+  const [certification, setCertification] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
@@ -98,6 +77,16 @@ export default function RegisterPage() {
     }
   };
 
+  const mailHandler = () => {
+    //나중에 메일 관련 api를 만들고 채울 부분
+    console.log("메일로 인증번호가 발송됩니다.");
+  };
+  const certificationHandler = () => {
+    //나중에 인증 관련 api와 연결할 함수
+    console.log("인증번호를 확인합니다.");
+  };
+  const submitHandler = () => {};
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -114,73 +103,62 @@ export default function RegisterPage() {
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                required
+              <Certification
                 id="email"
                 label="이메일"
                 name="email"
                 autoComplete="email"
+                onChange={onChange}
+                onClick={mailHandler}
+                buttonText="인증번호 받기"
               />
-              <Button variant="contained" sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}>
-                인증번호 받기
-              </Button>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
+              <Certification
                 id="Certification"
                 label="인증번호"
                 name="Certification"
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => {
+                  setCertification(e.target.value);
+                }}
+                onClick={certificationHandler}
+                buttonText="확인"
               />
-              <Button variant="contained" sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}>
-                확인
-              </Button>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="비밀번호"
-                type="password"
+              <TextFieldAtom
                 id="password"
+                label="비밀번호"
+                name="passowrd"
                 autoComplete="new-password"
+                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
+              <TextFieldAtom
                 name="checkPassword"
                 label="비밀번호 재확인"
                 type="password"
                 id="checkPassword"
                 autoComplete="new-password"
+                onChange={onChange}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <TextFieldAtom
                 autoComplete="given-name"
                 name="name"
-                required
-                fullWidth
                 id="name"
                 label="이름"
-                autoFocus
+                onChange={onChange}
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            가입완료
-          </Button>
+          <GreenButton onClick={submitHandler}>가입완료</GreenButton>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
     </Container>
   );
 }
