@@ -15,14 +15,14 @@ class Devate {
     static async findAll(newFilter) {
         const posts = await DevateModel.find(newFilter)
         .find({ tag: { $in: newFilter.tag } })
-        .populate('author', 'id email name')
+        .populate('author', 'id name')
 
         return posts;
     }
 
     static async findAllNoTag(newFilter) {
         const posts = await DevateModel.find(newFilter)
-        .populate('author', 'id email name')
+        .populate('author', 'id name')
 
         return posts;
     }

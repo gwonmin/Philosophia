@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const DevateSchema = new Schema(
     {
-        userId: {
+        author: {
             type: Schema.Types.ObjectId,
             ref: '', // 유저 스키마 참조
             required: true,

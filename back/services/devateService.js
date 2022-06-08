@@ -1,4 +1,4 @@
-const { Devate, User } = require('../db');
+const { Devate } = require('../db');
 
 class devateService {
     // 게시글 작성
