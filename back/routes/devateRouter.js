@@ -80,7 +80,7 @@ devateRouter.delete('/devates/:id', async (req, res, next) => {
             throw new Error(deletedPost.errorMessage);
         }
 
-        res.status(200).send("삭제가 완료되었습니다.")
+        res.status(200).send(deletedPost)
     } catch (error) {
         next(error);
     }

@@ -42,6 +42,6 @@ const DevateSchema = new Schema(
     }
 )
 
-const devateModel = model('Devate', DevateSchema);
+const DevateModel = model('Devate', DevateSchema);
 
-module.exports = { devateModel };
+module.exports = { DevateModel };
