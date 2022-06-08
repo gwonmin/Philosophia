@@ -1,8 +1,8 @@
 import { userModel } from "../schemas/user";
 
 class User {
-  static async addUser({ newUser }) {
-    const addNewUser = await userModel.create({ newUser });
+  static async addUser(newUser) {
+    const addNewUser = await userModel.create(newUser);
     return addNewUser;
   }
 

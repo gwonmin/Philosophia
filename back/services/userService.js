@@ -16,7 +16,7 @@ class userService {
 
     const newUser = { email, password: hashedPassword, name };
 
-    const addnewUser = await User.create({ newUser });
+    const addnewUser = await User.addUser(newUser);
 
     return addnewUser;
   }
@@ -70,19 +70,24 @@ class userService {
 
   static async getUser({ email, password }) {
     const user = await User.findByEmail({ email });
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      user.password
+    );
+    const userId = String(user._id);
+
 
     if (!user) {
       const errorMessage =
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
-    } else if (user.password === hashedPassword) {
+    } else if (isPasswordCorrect) {
       const accessToken = makeToken({ userId: userId });
       const refreshToken = makeRefreshToken();
-      //   const setRefreshToken = await Token.updateRefresh({
-      //     _id: userId,
-      //     refreshToken,
-      //   });
+        const setRefreshToken = await Token.updateRefresh({
+          _id: userId,
+          refreshToken,
+        });
 
       return {
         user,

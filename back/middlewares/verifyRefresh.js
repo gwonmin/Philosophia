@@ -34,7 +34,7 @@ const verifyRefresh = async function (req, res, next) {
       if (refreshResult === false) {
         res.status(401).send({
           ok: false,
-          message: "No authorized! 다시 로그인해주세요.",
+          message: "No authorization! 다시 로그인해주세요.",
         });
       } else {
         // 2. access token이 만료되고, refresh token은 만료되지 않은 경우 => 새로운 access token을 발급

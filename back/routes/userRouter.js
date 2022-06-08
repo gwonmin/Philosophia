@@ -6,19 +6,18 @@ import { verifyRefresh } from "../middlewares/verifyRefresh";
 
 const userRouter = Router();
 
-userRouter.post(
-  "/user/register",
-  registerValidation,
-  async function (req, res, next) {
+userRouter.post("/user/register", registerValidation, async function (req, res, next) {
     try {
       const { email, password, name } = req.body;
+      
       const newUser = await userService.addUser({ email, password, name });
+      
       if (newUser.errorMessage) {
-        // throw new Error(newUser.errorMessage);
-        return res.status(400).json({
-          status: "error",
-          error: newUser.errorMessage,
-        });
+        throw new Error(newUser.errorMessage);
+        // return res.status(400).json({
+        //   status: "error",
+        //   error: newUser.errorMessage,
+        // });
       }
 
       res.status(201).json(newUser);
