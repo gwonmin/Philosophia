@@ -1,5 +1,5 @@
 var express = require('express');
-
+const { devateService } = require('../services/devateService'); 
 const devateRouter = express.Router();
 
 // 게시글 작성
@@ -128,3 +128,5 @@ devateRouter.put('/devates/:id/no', async (req, res, next) => {
         next(error);
     }
 })
+
+module.exports = devateRouter;
