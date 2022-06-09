@@ -7,6 +7,7 @@ export function TextFieldAtom({
   name,
   value,
   autoComplete,
+  disabled,
   onChange,
 }: TextFieldProps) {
   const commonProps = {
@@ -16,6 +17,7 @@ export function TextFieldAtom({
     name,
     value,
     autoComplete,
+    disabled,
   };
   return (
     <TextField
