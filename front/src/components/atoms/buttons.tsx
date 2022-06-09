@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Button, ButtonProps } from "@mui/material";
 
 export function BlueButton({ onClick, children }: ButtonProps): JSX.Element {

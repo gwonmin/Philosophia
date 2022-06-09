@@ -1,14 +1,13 @@
-import React from "react";
-
 import { Stack } from "@mui/material";
 
-import { BlueButton, GreenButton } from "../atoms/buttons";
+import { BlueButton } from "../atoms/buttons";
 import { TextFieldAtom } from "../atoms/textInputs";
 
 type T = {
   id: string;
   label: string;
   name: string;
+  value: string;
   autoComplete?: string;
   onChange: any;
   onClick: any;
@@ -19,6 +18,7 @@ export function Certification({
   id,
   label,
   name,
+  value,
   autoComplete,
   onChange,
   onClick,
@@ -30,6 +30,7 @@ export function Certification({
         id={id}
         label={label}
         name={name}
+        value={value}
         autoComplete={autoComplete}
         onChange={onChange}
       />
