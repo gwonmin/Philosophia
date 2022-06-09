@@ -100,7 +100,7 @@ export default function LoginForm({
             <TextFieldAtom
               id="password"
               label="비밀번호"
-              name="passowrd"
+              name="password"
               value={password}
               autoComplete="new-password"
               onChange={onChange}

@@ -30,10 +30,12 @@ export default function RegisterForm({
   const name = userData.name;
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    console.log(name, value);
     setUserData({
       ...userData,
       [name]: value,
     });
+    console.log(userData);
   };
 
   //confirmPassword는 반복되지 않으므로 state로 다룬다.
@@ -127,9 +129,8 @@ export default function RegisterForm({
             <TextFieldAtom
               id="password"
               label={register ? "비밀번호" : "변경 비밀번호"}
-              name="passowrd"
+              name="password"
               value={password}
-              autoComplete="new-password"
               onChange={onChange}
             />
           </Grid>
@@ -140,8 +141,9 @@ export default function RegisterForm({
               type="password"
               id="confirmPassword"
               value={confirmPassword}
-              autoComplete="new-password"
-              onChange={onChange}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
             />
           </Grid>
           <Grid item xs={12}>
