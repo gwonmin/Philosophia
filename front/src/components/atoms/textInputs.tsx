@@ -1,5 +1,3 @@
-import React from "react";
-
 import { TextField, TextFieldProps } from "@mui/material";
 
 export function TextFieldAtom({
@@ -7,6 +5,7 @@ export function TextFieldAtom({
   id,
   label,
   name,
+  value,
   autoComplete,
   onChange,
 }: TextFieldProps) {
@@ -15,6 +14,7 @@ export function TextFieldAtom({
     id,
     label,
     name,
+    value,
     autoComplete,
   };
   return (

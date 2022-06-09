@@ -2,7 +2,23 @@ import Container from "@mui/material/Container";
 
 import RegisterForm from "../organisms/RegisterForm";
 
-export default function RegisterTemplate() {
+type User = {
+  email: string;
+  password: string;
+  name: string;
+};
+export default function RegisterTemplate({
+  register,
+  userInfo,
+}: {
+  register?: boolean;
+  userInfo?: User;
+}) {
+  const initUser: User = {
+    email: "",
+    password: "",
+    name: "",
+  };
   const Header = () => {
     return <p>헤더가 올 예정입니다.</p>;
   };
@@ -12,7 +28,10 @@ export default function RegisterTemplate() {
   return (
     <Container component="main" maxWidth="xs">
       <Header />
-      <RegisterForm />
+      <RegisterForm
+        register={register ?? true}
+        userInfo={userInfo ?? initUser}
+      />
       <Footer />
     </Container>
   );

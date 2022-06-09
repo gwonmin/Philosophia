@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 
 import * as Api from "../../api";
 
@@ -15,14 +11,16 @@ import { TextFieldAtom } from "../atoms/textInputs";
 import { GreenButton } from "../atoms/buttons";
 import { Certification } from "../molecules/certification";
 
-export default function RegisterForm() {
+export default function RegisterForm({
+  register,
+  userInfo,
+}: {
+  register: boolean;
+  userInfo: any;
+}) {
   const navigate = useNavigate();
   //user의 가입 정보를 객체로 다룬다.
-  const [userData, setUserData] = useState({
-    email: "",
-    password: "",
-    name: "",
-  });
+  const [userData, setUserData] = useState(userInfo);
   const email = userData.email;
   const password = userData.password;
   const name = userData.name;
@@ -48,17 +46,10 @@ export default function RegisterForm() {
         );
     }
   };
-
-  //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
-  // 비밀번호가 4글자 이상인지 여부를 확인함.
   const isPasswordValid = password.length >= 4;
-  // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
   const isPasswordSame = password === confirmPassword;
-  // 이름이 2글자 이상인지 여부를 확인함.
   const isNameValid = name.length >= 2;
-
-  // 위 4개 조건이 모두 동시에 만족되는지 여부를 확인함.
   const isFormValid =
     isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
 
@@ -107,6 +98,7 @@ export default function RegisterForm() {
               id="email"
               label="이메일"
               name="email"
+              value={email}
               autoComplete="email"
               onChange={onChange}
               onClick={mailHandler}
@@ -118,6 +110,7 @@ export default function RegisterForm() {
               id="Certification"
               label="인증번호"
               name="Certification"
+              value={certification}
               onChange={(e: {
                 target: { value: React.SetStateAction<string> };
               }) => {
@@ -130,18 +123,20 @@ export default function RegisterForm() {
           <Grid item xs={12}>
             <TextFieldAtom
               id="password"
-              label="비밀번호"
+              label={register ? "비밀번호" : "변경 비밀번호"}
               name="passowrd"
+              value={password}
               autoComplete="new-password"
               onChange={onChange}
             />
           </Grid>
           <Grid item xs={12}>
             <TextFieldAtom
-              name="checkPassword"
+              name="confirmPassword"
               label="비밀번호 재확인"
               type="password"
-              id="checkPassword"
+              id="confirmPassword"
+              value={confirmPassword}
               autoComplete="new-password"
               onChange={onChange}
             />
@@ -152,11 +147,14 @@ export default function RegisterForm() {
               name="name"
               id="name"
               label="이름"
+              value={name}
               onChange={onChange}
             />
           </Grid>
         </Grid>
-        <GreenButton onClick={submitHandler}>가입완료</GreenButton>
+        <GreenButton onClick={submitHandler}>
+          {register ? "가입완료" : "수정완료"}
+        </GreenButton>
       </Box>
     </Box>
   );
