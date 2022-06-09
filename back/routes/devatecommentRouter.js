@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { devatecommentService } from "../services/devatecommentService"; 
+import { verifyToken } from "../middlewares/verifyToken";
+import { verifyRefresh } from "../middlewares/verifyRefresh";
 
 const devatecommentRouter = Router();
 
 // 댓글 작성
-devatecommentRouter.post('/devatecomments', async (req, res, next) => {
+devatecommentRouter.post('/devatecomments', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.currentUserId;
+        const userId = req.req.user;
         const postId = req.query.postId;
         const { content } = req.body;
 
@@ -27,9 +29,9 @@ devatecommentRouter.post('/devatecomments', async (req, res, next) => {
 });
 
 // 댓글 수정
-devatecommentRouter.pust('/devatecomments/:id', async (req, res, next) => {
+devatecommentRouter.put('/devatecomments/:id', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.currentUserId;
+        const userId = req.req.user;
         const commentId = req.params.id;
         const content = req.body.content ?? null;
 
@@ -51,7 +53,7 @@ devatecommentRouter.pust('/devatecomments/:id', async (req, res, next) => {
 });
 
 // 댓글 삭제
-devatecommentRouter.delete('/devatecomments/:id', async (req, res, next) => {
+devatecommentRouter.delete('/devatecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
         const deletedComment = await devatecommentService.deleteComment({
@@ -68,7 +70,7 @@ devatecommentRouter.delete('/devatecomments/:id', async (req, res, next) => {
 })
 
 // 게시글 1개 전체 댓글 조회
-devatecommentRouter.get('/devatecommentlist', async (req, res, next) => {
+devatecommentRouter.get('/devatecommentlist', verifyToken, async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await devatecommentService.getComments({ postId });
@@ -78,5 +80,9 @@ devatecommentRouter.get('/devatecommentlist', async (req, res, next) => {
         next(error);
     }
 })
+
+/* access token을 재발급 하기 위한 router.
+  access token과 refresh token을 둘 다 헤더에 담아서 요청해야함 */
+devatecommentRouter.get("/refresh", verifyRefresh);
 
 export { devatecommentRouter };

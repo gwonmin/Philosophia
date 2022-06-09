@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { devateService } from "../services/devateService" 
+import { verifyToken } from "../middlewares/verifyToken";
+import { verifyRefresh } from "../middlewares/verifyRefresh";
 
 const devateRouter = Router();
 
 // 게시글 작성
-devateRouter.post('/devates', async (req, res, next) => {
+devateRouter.post('/devates', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.currentUserId;
+        const userId = req.user;
 
         const { title, content, tag } = req.body;
 
@@ -32,7 +34,7 @@ devateRouter.post('/devates', async (req, res, next) => {
 });
 
 // 게시글 1개 조회
-devateRouter.get('/devates/:id', async (req, res, next) => {
+devateRouter.get('/devates/:id', verifyToken, async (req, res, next) => {
     try {
         const postId = req.params.id;
         const currentPostInfo = await devateService.getPostInfo({ postId });
@@ -48,9 +50,9 @@ devateRouter.get('/devates/:id', async (req, res, next) => {
 });
 
 // 게시글 수정
-devateRouter.put('/devates/:id', async (req, res, next) => {
+devateRouter.put('/devates/:id', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.currentUserId;
+        const userId = req.req.user;
         const postId = req.params.id;
         const title = req.body.title ?? null;
         const content = req.body.content ?? null;
@@ -71,9 +73,9 @@ devateRouter.put('/devates/:id', async (req, res, next) => {
 });
 
 // 게시글 삭제
-devateRouter.delete('/devates/:id', async (req, res, next) => {
+devateRouter.delete('/devates/:id', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.currentUserId;
+        const userId = req.req.user;
         const postId = req.params.id;
         const deletedPost = await devateService.deletePost({ userId, postId });
 
@@ -88,7 +90,7 @@ devateRouter.delete('/devates/:id', async (req, res, next) => {
 });
 
 // 전체 게시글 조회
-devateRouter.get('/devates', async (req, res, next) => {
+devateRouter.get('/devates', verifyToken, async (req, res, next) => {
     try {
 
         const tag = req.query.tag ?? null;
@@ -103,9 +105,9 @@ devateRouter.get('/devates', async (req, res, next) => {
 });
 
 // 찬성
-devateRouter.put('/devates/:id/yes', async (req, res, next) => {
+devateRouter.put('/devates/:id/yes', verifyToken, async (req, res, next) => {
     try { 
-        const userId = req.currentUserId;
+        const userId = req.req.user;
         const postId = req.params.id;
 
         const yes = await devateService.setPostYes({ userId, postId });
@@ -117,9 +119,9 @@ devateRouter.put('/devates/:id/yes', async (req, res, next) => {
 })
 
 // 반대
-devateRouter.put('/devates/:id/no', async (req, res, next) => {
+devateRouter.put('/devates/:id/no', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.currentUserId;
+        const userId = req.req.user;
         const postId = req.params.id;
 
         const no = await devateService.setPostNo({ userId, postId });
@@ -129,5 +131,9 @@ devateRouter.put('/devates/:id/no', async (req, res, next) => {
         next(error);
     }
 })
+
+/* access token을 재발급 하기 위한 router.
+  access token과 refresh token을 둘 다 헤더에 담아서 요청해야함 */
+devateRouter.get("/refresh", verifyRefresh);
 
 export { devateRouter };
