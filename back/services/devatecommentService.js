@@ -1,15 +1,15 @@
-const { DevateComment, User } = require('../db');
+import { DevateComment, User } from '../db';
 
 class devatecommentService {
     static async addComment({ userId, postId, content }) {
-        const author = await User.findByUserId({ userId });
+        const author = await User.findById({ userId });
         const createNewComment = await DevateComment.createComment({ author, postId, content });
         return createNewComment;
     }
 
     static async setComment({ userId, commentId, toUpdate }) {
         const comment = await DevateComment.findByCommentId({ commentId });
-        const author = await User.findByUserId({ userId });
+        const author = await User.findById({ userId });
         if (!comment) {
             const errorMessage = '댓글 내역이 없습니다.';
             return { errorMessage };
@@ -48,4 +48,4 @@ class devatecommentService {
 
 }
 
-module.exports = { devatecommentService }
+export { devatecommentService }

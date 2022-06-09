@@ -1,6 +1,7 @@
-const { express } = require('express');
-const { devatecommentService } = require('../services/devatecommentService'); 
-const devatecommentRouter = express.Router();
+import { Router } from "express";
+import { devatecommentService } from "../services/devatecommentService"; 
+
+const devatecommentRouter = Router();
 
 // 댓글 작성
 devatecommentRouter.post('/devatecomments', async (req, res, next) => {

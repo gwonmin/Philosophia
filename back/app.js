@@ -6,8 +6,9 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const devateRouter = require('./routes/devateRouter');
 import { userRouter } from './routes/userRouter';
+import { devateRouter } from './routes/devateRouter';
+import { devatecommentRouter } from './routes/devatecommentRouter';
 
 
 var app = express();
@@ -25,8 +26,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use(devateRouter);
 app.use(userRouter);
+app.use(devateRouter);
+app.use(devatecommentRouter);
 
 
 // catch 404 and forward to error handler

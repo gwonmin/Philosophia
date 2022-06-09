@@ -1,5 +1,6 @@
-const { DevateModel } = require('../schemas/devate');
-// const { UserModel } = require('../schemas/user');
+import { DevateModel } from "../schemas/devate";
+import { userModel } from "../schemas/user";
+
 
 class Devate {
     static async create({ newPost }) {
@@ -61,4 +62,4 @@ class Devate {
     }
 }
 
-module.exports = { Devate };
+export { Devate };

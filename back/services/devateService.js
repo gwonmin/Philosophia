@@ -1,9 +1,9 @@
-const { Devate } = require('../db');
+import { Devate, User } from '../db';
 
 class devateService {
     // 게시글 작성
     static async addPost({ userId, title, content, tag }) {
-        const author = await User.findByUserId({ userId });
+        const author = await User.findById({ userId });
         const newPost = { author, title, content, tag };
         const createdNewPost = await Devate.create({ newPost });
         createdNewPost.errorMessage = null;
@@ -146,4 +146,4 @@ class devateService {
 }
 }
 
-module.exports = { devateService };
+export { devateService };

@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from "mongoose";
 
 const DevateSchema = new Schema(
     {
@@ -44,4 +44,4 @@ const DevateSchema = new Schema(
 
 const DevateModel = model('Devate', DevateSchema);
 
-module.exports = { DevateModel };
+export { DevateModel };

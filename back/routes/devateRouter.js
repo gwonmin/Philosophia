@@ -1,6 +1,7 @@
-var express = require('express');
-const { devateService } = require('../services/devateService'); 
-const devateRouter = express.Router();
+import { Router } from "express";
+import { devateService } from "../services/devateService" 
+
+const devateRouter = Router();
 
 // 게시글 작성
 devateRouter.post('/devates', async (req, res, next) => {
@@ -129,4 +130,4 @@ devateRouter.put('/devates/:id/no', async (req, res, next) => {
     }
 })
 
-module.exports = devateRouter;
+export { devateRouter };

@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from "mongoose";
 
 const DevateCommentSchema = new Schema(
     {
@@ -22,4 +22,5 @@ const DevateCommentSchema = new Schema(
 );
 
 const DevateCommentModel = model('DevateComment', DevateCommentSchema);
-module.exports = { DevateCommentModel };
+
+export { DevateCommentModel };

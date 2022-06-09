@@ -1,6 +1,7 @@
-const { DevateCommentModel } = require('../schemas/devatecomment');
-const { DevateModel } = require('../schemas/devate');
-// const { UserModel } 유저 모델 import
+import { DevateCommentModel } from "../schemas/devatecomment";
+import { DevateModel } from "../schemas/devate";
+import { userModel } from "../schemas/user";
+
 class DevateComment {
     static async createComment({ author, postId, content }) {
         const newComment = { author, postId, content };
@@ -39,3 +40,5 @@ class DevateComment {
 
     
 }
+
+export { DevateComment };
