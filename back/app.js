@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -9,17 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const devateRouter = require('./routes/devateRouter');
-=======
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
 import { userRouter } from './routes/userRouter';
->>>>>>> 943f93f10a06b00131bc9609a25114296d3c015e
+
 
 var app = express();
 
@@ -33,15 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-<<<<<<< HEAD
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use(devateRouter);
-=======
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use(userRouter);
->>>>>>> 943f93f10a06b00131bc9609a25114296d3c015e
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

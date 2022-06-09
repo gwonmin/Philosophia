@@ -3,7 +3,6 @@ const { Devate } = require('./models/Devate');
 const { DevateComment } = require('./models/DevateComment');
 
 module.exports = { Devate, DevateComment };
-import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Token } from "./models/Token";
 
