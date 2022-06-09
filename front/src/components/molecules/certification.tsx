@@ -3,7 +3,7 @@ import React from "react";
 import { Stack } from "@mui/material";
 
 import { BlueButton, GreenButton } from "../atoms/buttons";
-import { TextFieldAtom } from "../atoms/textInput";
+import { TextFieldAtom } from "../atoms/textInputs";
 
 type T = {
   id: string;
