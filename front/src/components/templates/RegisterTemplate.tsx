@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 
-import RegisterForm from "../organisms/registerForm";
+import RegisterForm from "../organisms/RegisterForm";
 
 export default function RegisterTemplate() {
   const Header = () => {
