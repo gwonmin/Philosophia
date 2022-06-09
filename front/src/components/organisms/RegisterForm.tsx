@@ -20,7 +20,11 @@ export default function RegisterForm({
 }) {
   const navigate = useNavigate();
   //user의 가입 정보를 객체로 다룬다.
-  const [userData, setUserData] = useState(userInfo);
+  const [userData, setUserData] = useState({
+    email: userInfo.email,
+    password: userInfo.password,
+    name: userInfo.name,
+  });
   const email = userData.email;
   const password = userData.password;
   const name = userData.name;
@@ -77,7 +81,6 @@ export default function RegisterForm({
     //나중에 인증 관련 api와 연결할 함수
     console.log("인증번호를 확인합니다.");
   };
-  const submitHandler = () => {};
 
   return (
     <Box
@@ -152,7 +155,7 @@ export default function RegisterForm({
             />
           </Grid>
         </Grid>
-        <GreenButton onClick={submitHandler}>
+        <GreenButton onClick={handleSubmit}>
           {register ? "가입완료" : "수정완료"}
         </GreenButton>
       </Box>

@@ -1,17 +1,17 @@
 import Container from "@mui/material/Container";
 
-import RegisterForm from "../organisms/RegisterForm";
+import LoginForm from "../organisms/LoginForm";
 
 type User = {
   email: string;
   password: string;
   name: string;
 };
-export default function RegisterTemplate({
-  register,
+export default function LoginTemplate({
+  login,
   userInfo,
 }: {
-  register?: boolean;
+  login?: boolean;
   userInfo?: User;
 }) {
   const initUser: User = {
@@ -28,11 +28,8 @@ export default function RegisterTemplate({
   return (
     <Container component="main" maxWidth="xs">
       <Header />
-      <RegisterForm
-        register={register ?? true}
-        userInfo={userInfo ?? initUser}
-      />
-      {!register && <a href="/login">로그인</a>}
+      <LoginForm login={login ?? true} userInfo={userInfo ?? initUser} />
+      {!login && <a href="/register">회원가입</a>}
       <Footer />
     </Container>
   );

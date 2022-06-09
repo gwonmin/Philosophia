@@ -20,7 +20,7 @@ async function get(endpoint: string, params = "") {
 
 async function post(
   endpoint: string,
-  data: { email: string; password: string; name: string }
+  data: { email: string; password: string; name?: string }
 ) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
