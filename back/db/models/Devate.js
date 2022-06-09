@@ -39,6 +39,26 @@ class Devate {
         await DevateModel.deleteOne({ _id: postId });
         return '삭제가 완료되었습니다.';
     }
+
+    static async findYes({ postId, userId }) {
+        const post = await DevateModel.findOne({ _id: postId }, 
+        { yes: { $elemMatch: { $eq: userId } }});
+        return post.yes;
+    }
+
+    static async findNo({ postId, userId }) {
+        const post = await DevateModel.findOne({ _id: postId },
+        { no: { $elemMatch: { $eq: userId } }});
+        return post.no;
+    }
+
+    static async updateYesNo({ postId, newValues }) {
+        const filter = { _id: postId };
+        const update = newValues;
+        const option = { returnOriginal: false };
+        const updatedPost = await DevateModel.findOneAndUpdate(filter, update, option);
+        return updatedPost
+    }
 }
 
 module.exports = { Devate };

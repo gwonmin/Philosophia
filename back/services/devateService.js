@@ -92,8 +92,58 @@ class devateService {
     }
 
     // 찬성
+    static async setPostYes({ userId, postId }) {
+        const post = await Devate.findByPostId({ postId });
+
+        if (!post) {
+            const errorMessage = '해당 포스트가 없습니다.';
+            return { errorMessage };
+        }
+
+        const yes = await Devate.findYes({ postId, userId });
+        let result;
+
+        if (yes.length != 0) {
+            result = -1;
+        } else {
+            result = 1;
+        }
+
+        const newValues = {
+            $inc: { yesCount: result }
+        }
+
+        const res = await Devate.updateYesNo({ postId, newValues });
+        return res;
+
+    }
 
     // 반대
+    static async setPostNo({ userId, postId }) {
+        const post = await Devate.findByPostId({ postId });
+
+        if (!post) {
+            const errorMessage = '해당 포스트가 없습니다.';
+            return { errorMessage };
+        }
+
+        const no = await Devate.findNo({ postId, userId });
+        let result;
+
+        if (no.length != 0) {
+            result = -1;
+        } else {
+            result = 1;
+        }
+
+        const newValues = {
+            $inc: { noCount: result }
+        }
+
+        const res = await Devate.updateYesNo({ postId, newValues });
+        return res;
+
+}
 }
 
-module.exports ={ devateService };
+module.exports = { devateService };
