@@ -5,20 +5,30 @@ import React, {
   createContext,
   useContext,
 } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useParams,
+} from "react-router-dom";
 
 import * as Api from "./api";
-import { UserProvider, UserStateContext, DispatchContext } from "./context";
-
+import {
+  UserProvider,
+  UserStateContext,
+  DispatchContext,
+  useUserDispatch,
+  useUserState,
+} from "./context";
 import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
 import UserStatusPage from "./components/pages/UserStatusPage";
 
 function App() {
   // 커스텀훅을 통해 userState 상태와 dispatch함수를 생성함.
-
-  const state = useContext(UserStateContext);
-  const dispatch = useContext(DispatchContext);
+  const params = useParams();
+  const userState = useUserState();
+  const dispatch = useUserDispatch();
 
   // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
@@ -31,12 +41,10 @@ function App() {
       const currentUser = res.data;
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-      if (dispatch) {
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: currentUser,
-        });
-      }
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: currentUser,
+      });
 
       console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;");
     } catch {
@@ -58,7 +66,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<UserStatusPage user={state} />} />
+        <Route path="/" element={<UserStatusPage user={userState} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>

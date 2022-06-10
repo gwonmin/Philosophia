@@ -20,7 +20,7 @@ type DispatchType = Dispatch<Action>;
 export const UserStateContext = createContext<State | null>(null);
 export const DispatchContext = createContext<DispatchType | null>(null);
 
-function loginReducer(userState: State, action: Action) {
+function loginReducer(userState: State, action: Action): State {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       console.log("%c로그인!", "color: #d93d1a;");
