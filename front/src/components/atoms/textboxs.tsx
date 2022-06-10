@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { HeaderProps } from "../models/TextboxProps"
 
-export function Header({level, variant, children, color}: HeaderProps){
+export function HeaderText({level, variant, children, color}: HeaderProps){
     let fontSize: string
     let fontWeight: Array<String> = []
 
