@@ -12,6 +12,7 @@ import { UserProvider, UserStateContext, DispatchContext } from "./context";
 
 import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
+import UserStatusPage from "./components/pages/UserStatusPage";
 
 function App() {
   // 커스텀훅을 통해 userState 상태와 dispatch함수를 생성함.
@@ -57,7 +58,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<RegisterPage />} />
+        <Route path="/" element={<UserStatusPage user={state} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
