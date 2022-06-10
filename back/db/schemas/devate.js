@@ -4,7 +4,7 @@ const DevateSchema = new Schema(
     {
         author: {
             type: Schema.Types.ObjectId,
-            ref: '', // 유저 스키마 참조
+            ref: 'User', // 유저 스키마 참조
             required: true,
         },
         title: {
@@ -33,7 +33,7 @@ const DevateSchema = new Schema(
         comment: [
             {
                 type: Schema.Types.ObjectId,
-                ref: '' // 댓글 스키마 참조
+                ref: 'DevateComment' // 댓글 스키마 참조
             }
         ],
     },

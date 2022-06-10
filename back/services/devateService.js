@@ -25,7 +25,7 @@ class devateService {
 
     // 게시글 수정
     static async setPost({ userId, postId, toUpdate }) {
-        const post = await Devate.findByPostId({ postId });
+        let post = await Devate.findByPostId({ postId });
 
         if (!post) {
             const errorMessage = '해당 포스트가 없습니다.';
@@ -101,21 +101,31 @@ class devateService {
         }
 
         const yes = await Devate.findYes({ postId, userId });
-        let result;
+        const no = await Devate.findNo({ postId, userId});
+        let status, result;
 
-        if (yes.length != 0) {
+        if (no.includes(userId) == true) {
+            const errorMessage = '이미 반대를 선택하였습니다.';
+            return { errorMessage };
+        } else if (yes.length != 0) {
+            status = '$pull';
             result = -1;
         } else {
+            status = '$push';
             result = 1;
         }
 
         const newValues = {
+            [status]: {
+                yes: userId,
+            },
             $inc: { yesCount: result }
-        }
+        };
 
-        const res = await Devate.updateYesNo({ postId, newValues });
+        const res = await Devate.updateYes({ userId, postId, newValues });
+        console.log(res)
         return res;
-
+        
     }
 
     // 반대
@@ -128,19 +138,29 @@ class devateService {
         }
 
         const no = await Devate.findNo({ postId, userId });
-        let result;
+        const yes = await Devate.findNo({ postId, userId});
+        let status, result;
 
-        if (no.length != 0) {
+        if (yes.includes(userId) == true) {
+            const errorMessage = '이미 찬성을 선택하였습니다.';
+            return { errorMessage };
+        } else if (no.length != 0) {
+            status = '$pull';
             result = -1;
         } else {
+            status = '$push';
             result = 1;
         }
 
         const newValues = {
+            [status]: {
+                no: userId,
+            },
             $inc: { noCount: result }
         }
 
-        const res = await Devate.updateYesNo({ postId, newValues });
+        const res = await Devate.updateNo({ postId, newValues });
+        console.log(res)
         return res;
 
 }

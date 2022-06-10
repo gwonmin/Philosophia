@@ -9,7 +9,7 @@ class Devate {
     }
     
     static async findByPostId({ postId }) {
-        const post = await DevateModel.findOne({ _id: postId }).populate('author', 'id email name');
+        const post = await DevateModel.findOne({ _id: postId }).populate('author', 'id name');
         return post;
     }
 
@@ -53,7 +53,20 @@ class Devate {
         return post.no;
     }
 
-    static async updateYesNo({ postId, newValues }) {
+    static async updateYes({ userId, postId, newValues }) {
+        const filter = { _id: postId };
+        const update = newValues;
+        const option = { returnOriginal: false };
+        const updatedPost = await DevateModel.findOneAndUpdate(filter, update, option);
+        return updatedPost
+    }
+
+    static async updateNo({ userId, postId, newValues }) {
+        // if ({ yes: { $in: userId } }){
+        //     const errorMessage = '이미 찬성을 선택하였습니다.';
+        //     return { errorMessage };
+        // }
+
         const filter = { _id: postId };
         const update = newValues;
         const option = { returnOriginal: false };

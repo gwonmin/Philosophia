@@ -52,7 +52,7 @@ devateRouter.get('/devates/:id', verifyToken, async (req, res, next) => {
 // 게시글 수정
 devateRouter.put('/devates/:id', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.req.user;
+        const userId = req.user;
         const postId = req.params.id;
         const title = req.body.title ?? null;
         const content = req.body.content ?? null;
@@ -75,7 +75,7 @@ devateRouter.put('/devates/:id', verifyToken, async (req, res, next) => {
 // 게시글 삭제
 devateRouter.delete('/devates/:id', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.req.user;
+        const userId = req.user;
         const postId = req.params.id;
         const deletedPost = await devateService.deletePost({ userId, postId });
 
@@ -107,7 +107,7 @@ devateRouter.get('/devates', verifyToken, async (req, res, next) => {
 // 찬성
 devateRouter.put('/devates/:id/yes', verifyToken, async (req, res, next) => {
     try { 
-        const userId = req.req.user;
+        const userId = req.user;
         const postId = req.params.id;
 
         const yes = await devateService.setPostYes({ userId, postId });
@@ -121,7 +121,7 @@ devateRouter.put('/devates/:id/yes', verifyToken, async (req, res, next) => {
 // 반대
 devateRouter.put('/devates/:id/no', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.req.user;
+        const userId = req.user;
         const postId = req.params.id;
 
         const no = await devateService.setPostNo({ userId, postId });

@@ -1,6 +1,6 @@
 import { DevateCommentModel } from "../schemas/devatecomment";
 import { DevateModel } from "../schemas/devate";
-import { userModel } from "../schemas/user";
+import { UserModel } from "../schemas/user";
 
 class DevateComment {
     static async createComment({ author, postId, content }) {
