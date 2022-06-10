@@ -3,6 +3,8 @@ import { registerValidation, loginValidation } from "../middlewares/validation";
 import { userService } from "../services/userService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
+import { smtpTransport } from "../config/email";
+import bcrypt from "bcrypt";
 
 const userRouter = Router();
 
@@ -100,6 +102,51 @@ userRouter.delete("/user/userId", verifyToken, async function (req, res, next) {
     next(error);
   }
 });
+
+// 이메일 인증(인증번호 전송)
+userRouter.post("/user/send-email", async function (req, res, next){
+  try{
+    const authNum = Math.random().toString().substring(2,6);
+    const hashAuthNum = await bcrypt.hash(authNum, 10);
+    res.cookie('hashAuthNum', hashAuthNum, {maxAge: 300000});
+    const mailOptions = await smtpTransport.sendMail({
+      from: {
+        name: "필로소피아(philosophia)",
+        address: "jjs_0211_@naver.com"
+      },
+      to: req.body.email,
+      subject: '회원가입을 위한 인증번호를 입력해주세요.',
+      text: "오른쪽 숫자를 입력해주세요 : " + authNum,
+    });
+    smtpTransport.sendMail(mailOptions, function (error, responses) {
+      console.log("success")
+      smtpTransport.close()
+  });
+  } catch (error){
+    next(error);
+  }
+});
+
+// 이메일 인증(인증번호 확인)
+userRouter.post("/user/email-auth", async function(req, res, next){
+  const userAuthNum = req.body.userAuthNum;
+  const hashAuthNum = req.cookies.hashAuthNum;
+
+  try {
+    const isAuthCorrect = await bcrypt.compare(
+      userAuthNum,
+      hashAuthNum
+    );
+    if(isAuthCorrect) {
+      res.send({ result : 'success' });
+    }
+    else {
+      res.send({ result : 'fail' });
+    }
+  } catch(err) {
+    next(err);
+  }
+})
 
 /* access token을 재발급 하기 위한 router.
   access token과 refresh token을 둘 다 헤더에 담아서 요청해야함 */
