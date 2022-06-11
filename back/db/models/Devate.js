@@ -1,4 +1,5 @@
 import { DevateModel } from "../schemas/devate";
+import { DevateCommentModel } from "../schemas/devatecomment";
 import { userModel } from "../schemas/user";
 
 
@@ -9,21 +10,23 @@ class Devate {
     }
     
     static async findByPostId({ postId }) {
-        const post = await DevateModel.findOne({ _id: postId }).populate('author', 'id name');
+        const post = await DevateModel.findOne({ _id: postId }).populate('author', 'id email name');
+        const comment = await DevateCommentModel.find({ postId: postId });
+        post.comment = comment;
         return post;
     }
 
     static async findAll(newFilter) {
         const posts = await DevateModel.find(newFilter)
         .find({ tag: { $in: newFilter.tag } })
-        .populate('author', 'id name')
-
+        .populate('author', 'id email name')
+    
         return posts;
     }
 
     static async findAllNoTag(newFilter) {
         const posts = await DevateModel.find(newFilter)
-        .populate('author', 'id name')
+        .populate('author', 'id email name')
 
         return posts;
     }

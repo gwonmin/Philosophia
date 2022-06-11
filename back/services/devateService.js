@@ -78,9 +78,12 @@ class devateService {
 
         if (filter.tag) {
             newFilter.tag = filter.tag.split(',');
+            console.log(newFilter.tag)
             var last = newFilter.tag[newFilter.tag.length-1].replace('/', '');
             newFilter.tag.pop();
+            console.log(newFilter.tag)
             newFilter.tag.push(last);
+            console.log(newFilter.tag)
         }
         else {
             const posts = await Devate.findAllNoTag(newFilter);

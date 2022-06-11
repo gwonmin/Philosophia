@@ -8,7 +8,7 @@ class devatecommentService {
     }
 
     static async setComment({ userId, commentId, toUpdate }) {
-        const comment = await DevateComment.findByCommentId({ commentId });
+        let comment = await DevateComment.findByCommentId({ commentId });
         const author = await User.findById({ userId });
         if (!comment) {
             const errorMessage = '댓글 내역이 없습니다.';

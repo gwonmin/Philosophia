@@ -8,7 +8,7 @@ const devatecommentRouter = Router();
 // 댓글 작성
 devatecommentRouter.post('/devatecomments', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.req.user;
+        const userId = req.user;
         const postId = req.query.postId;
         const { content } = req.body;
 
@@ -31,7 +31,7 @@ devatecommentRouter.post('/devatecomments', verifyToken, async (req, res, next) 
 // 댓글 수정
 devatecommentRouter.put('/devatecomments/:id', verifyToken, async (req, res, next) => {
     try {
-        const userId = req.req.user;
+        const userId = req.user;
         const commentId = req.params.id;
         const content = req.body.content ?? null;
 

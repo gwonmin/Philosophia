@@ -1,6 +1,6 @@
 import { DevateCommentModel } from "../schemas/devatecomment";
 import { DevateModel } from "../schemas/devate";
-import { UserModel } from "../schemas/user";
+import { userModel } from "../schemas/user";
 
 class DevateComment {
     static async createComment({ author, postId, content }) {
@@ -26,7 +26,7 @@ class DevateComment {
     static async findByCommentId({ commentId }) {
         const comment = await DevateCommentModel.findOne({ _id: commentId });
 
-        await UserModel.populate(comment, {
+        await userModel.populate(comment, {
             path: 'author',
             select: 'id email name',
         });
