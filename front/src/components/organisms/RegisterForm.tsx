@@ -62,6 +62,7 @@ export default function RegisterForm({
     try {
       // "user/register" 엔드포인트로 post요청함.
       await Api.post({ endpoint: "user/register", data: userData });
+      //dispatch
 
       // 로그인 페이지로 이동함.
       navigate("/login");
@@ -74,7 +75,7 @@ export default function RegisterForm({
     //나중에 메일 관련 api를 만들고 채울 부분
     console.log("메일로 인증번호가 발송됩니다.");
     try {
-      await Api.post({ endpoint: "user/send-email" });
+      await Api.post({ endpoint: "user/send-email", data: { email } });
     } catch (err) {
       console.log("메일 발송에 실패하였습니다.", err);
     }

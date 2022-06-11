@@ -19,7 +19,6 @@ export default function LoginForm({
   userInfo: { email: string; password: string; name: string };
 }) {
   const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext);
 
   //user의 로그인 정보를 객체로 다룬다.
   const [loginData, setLoginData] = useState({
@@ -61,13 +60,8 @@ export default function LoginForm({
       const jwtToken = user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       sessionStorage.setItem("userToken", jwtToken);
-      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      if (dispatch) {
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: user,
-        });
-      }
+
+      //dispatch
 
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });

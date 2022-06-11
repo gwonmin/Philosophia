@@ -1,12 +1,15 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { DispatchContext, useUserDispatch, useUserState } from "../../context";
+
+import { UserStateContext, DispatchContext } from "./RootPage";
 
 export default function UserStatusPage() {
   const navigate = useNavigate();
-  const user = useUserState();
-  const dispatch = useUserDispatch();
-
+  const dispatch = useContext(DispatchContext);
+  const user = useContext(UserStateContext);
+  if (!user || !dispatch) {
+    return <p>loading...</p>;
+  }
   console.log(user, dispatch);
 
   const id = user.user?.id;

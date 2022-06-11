@@ -24,7 +24,8 @@ async function post({
 }: {
   endpoint: string;
   data?:
-    | { email: string; password: string; name?: string }
+    | { email: string }
+    | { email: string; password: string; name: string }
     | { userAuthNum: string };
 }) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
