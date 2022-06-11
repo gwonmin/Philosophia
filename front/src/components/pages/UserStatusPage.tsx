@@ -6,15 +6,15 @@ import { UserStateContext, DispatchContext } from "./RootPage";
 export default function UserStatusPage() {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
-  const user = useContext(UserStateContext);
-  if (!user || !dispatch) {
-    return <p>loading...</p>;
+  const userState = useContext(UserStateContext);
+  if (!userState || !dispatch) {
+    return <p>user or dispatch do not exist...</p>;
   }
-  console.log(user, dispatch);
+  console.log(userState, ",", dispatch);
 
-  const id = user.user?.id;
-  const email = user.user?.email;
-  const name = user.user?.name;
+  const id = userState.user?._id;
+  const email = userState.user?.email;
+  const name = userState.user?.name;
 
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
@@ -23,14 +23,12 @@ export default function UserStatusPage() {
     if (dispatch) {
       dispatch({ type: "LOGOUT" });
     }
-    // 기본 페이지로 돌아감.
-    navigate("/");
   };
 
   return (
     <div>
-      <h1>상태: {user.user == null ? "로그아웃" : "로그인"}</h1>
-      {!user && (
+      <h1>상태: {userState.user == null ? "로그아웃" : "로그인"}</h1>
+      {userState.user && (
         <div>
           <p>id: {id}</p>
           <p>email: {email}</p>
@@ -39,6 +37,13 @@ export default function UserStatusPage() {
       )}
       <div>
         <button onClick={logout}>로그아웃</button>
+        <button
+          onClick={() => {
+            navigate("/login", { replace: true });
+          }}
+        >
+          로그인 페이지
+        </button>
       </div>
     </div>
   );

@@ -58,7 +58,7 @@ export default function RootPage() {
   }
 
   if (!dispatch) {
-    return <p>loading...</p>;
+    return <p>dispatch does not exist...</p>;
   }
 
   return (
