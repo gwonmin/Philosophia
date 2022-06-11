@@ -55,7 +55,7 @@ export default function LoginForm({
 
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", loginData);
+      const res = await Api.post({ endpoint: "user/login", data: loginData });
 
       const user = res.data;
       const jwtToken = user.token;
