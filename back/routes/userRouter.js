@@ -3,6 +3,9 @@ import { registerValidation, loginValidation } from "../middlewares/validation";
 import { userService } from "../services/userService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
+import { smtpTransport } from "../config/email";
+import bcrypt from "bcrypt";
+import { Auth } from "../db/models/Auth";
 
 const userRouter = Router();
 
@@ -100,6 +103,66 @@ userRouter.delete("/user/userId", verifyToken, async function (req, res, next) {
     next(error);
   }
 });
+
+// 이메일 인증(인증번호 전송)
+userRouter.post("/user/send-email", async function (req, res, next){
+  try{
+    const authNum = Math.random().toString().substring(2,6);
+    const hashedAuthNum = await bcrypt.hash(authNum, 10);
+
+    //db에 사용자가 입력한 이메일과 암호화된 인증 번호 저장
+    const email = req.body.email;
+    const newAuth = { email, hashedAuthNum }
+    const addAuthNum = await Auth.addAuth(newAuth)
+
+    const mailOptions = await smtpTransport.sendMail({
+      from: {
+        name: "필로소피아(philosophia)",
+        address: "jjs_0211_@naver.com"
+      },
+      to: req.body.email,
+      subject: '회원가입을 위한 인증번호를 입력해주세요.',
+      text: "오른쪽 숫자를 입력해주세요 : " + authNum,
+    });
+    await smtpTransport.sendMail(mailOptions, function (error, responses) {
+      if(error) {
+        console.log(error);
+      } else{
+        console.log('success');
+      }
+      smtpTransport.close();
+    });
+    res.send("success");
+    
+  } catch (error){
+    next(error);
+  }
+});
+
+// 이메일 인증(인증번호 확인)
+userRouter.post("/user/email-auth", async function(req, res, next){
+  const userAuthNum = req.body.userAuthNum;
+
+  const email = req.body.email;
+  const auth = await Auth.findByEmail({ email });
+  console.log('hasedAuthNum: ', auth.hashedAuthNum)
+  const hashedAuthNum = auth.hashedAuthNum;
+
+  try {
+    const isAuthCorrect = await bcrypt.compare(
+      userAuthNum,
+      hashedAuthNum
+    );
+    if(isAuthCorrect) {
+      res.send({ result : 'success' });
+    }
+    else {
+      res.send({ result : 'fail' });
+    }
+  } catch(err) {
+    next(err);
+  }
+})
 
 /* access token을 재발급 하기 위한 router.
   access token과 refresh token을 둘 다 헤더에 담아서 요청해야함 */
