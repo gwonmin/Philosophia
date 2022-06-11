@@ -18,6 +18,9 @@ const DevateCommentSchema = new Schema(
     },
     {
         timestamps: true,
+    },
+    {
+        versionKey: false 
     }
 );
 
