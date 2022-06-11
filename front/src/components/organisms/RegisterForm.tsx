@@ -74,7 +74,7 @@ export default function RegisterForm({
     //나중에 메일 관련 api를 만들고 채울 부분
     console.log("메일로 인증번호가 발송됩니다.");
     try {
-      await Api.post({ endpoint: "user/send-email" });
+      await Api.post({ endpoint: "user/send-email", data: userData });
     } catch (err) {
       console.log("메일 발송에 실패하였습니다.", err);
     }

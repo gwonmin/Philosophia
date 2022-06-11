@@ -5,6 +5,7 @@ import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
 import { smtpTransport } from "../config/email";
 import bcrypt from "bcrypt";
+import { Auth } from "../db/models/Auth";
 
 const userRouter = Router();
 
@@ -107,8 +108,13 @@ userRouter.delete("/user/userId", verifyToken, async function (req, res, next) {
 userRouter.post("/user/send-email", async function (req, res, next){
   try{
     const authNum = Math.random().toString().substring(2,6);
-    const hashAuthNum = await bcrypt.hash(authNum, 10);
-    res.cookie('hashAuthNum', hashAuthNum, {maxAge: 300000});
+    const hashedAuthNum = await bcrypt.hash(authNum, 10);
+
+    //db에 사용자가 입력한 이메일과 암호화된 인증 번호 저장
+    const email = req.body.email;
+    const newAuth = { email, hashedAuthNum }
+    const addAuthNum = await Auth.addAuth(newAuth)
+
     const mailOptions = await smtpTransport.sendMail({
       from: {
         name: "필로소피아(philosophia)",
@@ -118,10 +124,16 @@ userRouter.post("/user/send-email", async function (req, res, next){
       subject: '회원가입을 위한 인증번호를 입력해주세요.',
       text: "오른쪽 숫자를 입력해주세요 : " + authNum,
     });
-    smtpTransport.sendMail(mailOptions, function (error, responses) {
-      console.log("success")
-      smtpTransport.close()
-  });
+    await smtpTransport.sendMail(mailOptions, function (error, responses) {
+      if(error) {
+        console.log(error);
+      } else{
+        console.log('success');
+      }
+      smtpTransport.close();
+    });
+    res.send("success");
+    
   } catch (error){
     next(error);
   }
@@ -130,12 +142,16 @@ userRouter.post("/user/send-email", async function (req, res, next){
 // 이메일 인증(인증번호 확인)
 userRouter.post("/user/email-auth", async function(req, res, next){
   const userAuthNum = req.body.userAuthNum;
-  const hashAuthNum = req.cookies.hashAuthNum;
+
+  const email = req.body.email;
+  const auth = await Auth.findByEmail({ email });
+  console.log('hasedAuthNum: ', auth.hashedAuthNum)
+  const hashedAuthNum = auth.hashedAuthNum;
 
   try {
     const isAuthCorrect = await bcrypt.compare(
       userAuthNum,
-      hashAuthNum
+      hashedAuthNum
     );
     if(isAuthCorrect) {
       res.send({ result : 'success' });
