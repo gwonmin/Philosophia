@@ -39,6 +39,9 @@ const DevateSchema = new Schema(
     },
     {
         timestamps: true,
+    },
+    {
+        versionKey: false 
     }
 )
 
