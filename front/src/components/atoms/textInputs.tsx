@@ -15,7 +15,6 @@ export function TextFieldAtom({
     id,
     label,
     name,
-    value,
     autoComplete,
     disabled,
   };
@@ -23,6 +22,7 @@ export function TextFieldAtom({
     <TextField
       {...commonProps}
       onChange={onChange}
+      value={value}
       sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }}
     />
   );

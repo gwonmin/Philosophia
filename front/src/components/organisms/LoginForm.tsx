@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Grid from "@mui/material/Grid";
@@ -9,6 +9,7 @@ import * as Api from "../../api";
 
 import { TextFieldAtom } from "../atoms/textInputs";
 import { GreenButton } from "../atoms/buttons";
+import { DispatchContext } from "../../context";
 
 export default function LoginForm({
   login,
@@ -18,6 +19,8 @@ export default function LoginForm({
   userInfo: { email: string; password: string; name: string };
 }) {
   const navigate = useNavigate();
+  const dispatch = useContext(DispatchContext);
+
   //user의 로그인 정보를 객체로 다룬다.
   const [loginData, setLoginData] = useState({
     email: userInfo.email,
@@ -52,17 +55,19 @@ export default function LoginForm({
 
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", loginData);
+      const res = await Api.post({ endpoint: "user/login", data: loginData });
 
       const user = res.data;
       const jwtToken = user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      // dispatch({
-      //   type: "LOGIN_SUCCESS",
-      //   payload: user,
-      // });
+      if (dispatch) {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: user,
+        });
+      }
 
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
@@ -100,7 +105,7 @@ export default function LoginForm({
             <TextFieldAtom
               id="password"
               label="비밀번호"
-              name="passowrd"
+              name="password"
               value={password}
               autoComplete="new-password"
               onChange={onChange}

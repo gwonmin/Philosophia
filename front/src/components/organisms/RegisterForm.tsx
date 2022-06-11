@@ -39,6 +39,7 @@ export default function RegisterForm({
   //confirmPassword는 반복되지 않으므로 state로 다룬다.
   const [certification, setCertification] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isAuth, setIsAuth] = useState(false);
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email: string | null) => {
@@ -57,14 +58,10 @@ export default function RegisterForm({
   const isFormValid =
     isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
 
-  const handleSubmit = async (e: {
-    preventDefault: () => void;
-  }): Promise<void> => {
-    e.preventDefault();
-
+  const handleSubmit = async (): Promise<void> => {
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post("user/register", userData);
+      await Api.post({ endpoint: "user/register", data: userData });
 
       // 로그인 페이지로 이동함.
       navigate("/login");
@@ -73,13 +70,28 @@ export default function RegisterForm({
     }
   };
 
-  const mailHandler = () => {
+  const mailHandler = async () => {
     //나중에 메일 관련 api를 만들고 채울 부분
     console.log("메일로 인증번호가 발송됩니다.");
+    try {
+      await Api.post({ endpoint: "user/send-email" });
+    } catch (err) {
+      console.log("메일 발송에 실패하였습니다.", err);
+    }
   };
-  const certificationHandler = () => {
+
+  const authHandler = async () => {
     //나중에 인증 관련 api와 연결할 함수
     console.log("인증번호를 확인합니다.");
+    try {
+      await Api.post({
+        endpoint: "user/email-auth",
+        data: { userAuthNum: certification },
+      });
+      setIsAuth(true);
+    } catch (err) {
+      console.log("인증에 실패하였습니다.", err);
+    }
   };
 
   return (
@@ -119,7 +131,7 @@ export default function RegisterForm({
               }) => {
                 setCertification(e.target.value);
               }}
-              onClick={certificationHandler}
+              onClick={authHandler}
               buttonText="확인"
             />
           </Grid>
@@ -127,7 +139,7 @@ export default function RegisterForm({
             <TextFieldAtom
               id="password"
               label={register ? "비밀번호" : "변경 비밀번호"}
-              name="passowrd"
+              name="password"
               value={password}
               autoComplete="new-password"
               onChange={onChange}
@@ -141,7 +153,9 @@ export default function RegisterForm({
               id="confirmPassword"
               value={confirmPassword}
               autoComplete="new-password"
-              onChange={onChange}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
             />
           </Grid>
           <Grid item xs={12}>

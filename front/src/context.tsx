@@ -3,6 +3,7 @@ import React, { useReducer, useContext, createContext, Dispatch } from "react";
 type User = {
   id: string;
   email: string;
+  name: string;
 };
 type State = {
   user: User | null;
@@ -17,10 +18,12 @@ type Action =
     };
 type DispatchType = Dispatch<Action>;
 
-export const UserStateContext = createContext<State | null>(null);
-export const DispatchContext = createContext<DispatchType | null>(null);
+export const UserStateContext = createContext<State | undefined>(undefined);
+export const DispatchContext = createContext<DispatchType | undefined>(
+  undefined
+);
 
-function loginReducer(userState: State, action: Action) {
+function loginReducer(userState: State, action: Action): State {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       console.log("%c로그인!", "color: #d93d1a;");
@@ -45,10 +48,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const initUser = {
     user: null,
   };
-  const [state, dispatch] = useReducer(loginReducer, initUser);
-
+  const [userState, dispatch] = useReducer(loginReducer, initUser);
   return (
-    <UserStateContext.Provider value={state}>
+    <UserStateContext.Provider value={userState}>
       <DispatchContext.Provider value={dispatch}>
         {children}
       </DispatchContext.Provider>
