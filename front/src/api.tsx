@@ -18,10 +18,16 @@ async function get(endpoint: string, params = "") {
   });
 }
 
-async function post(
-  endpoint: string,
-  data: { email: string; password: string; name?: string }
-) {
+async function post({
+  endpoint,
+  data,
+}: {
+  endpoint: string;
+  data?:
+    | { email: string }
+    | { email: string; password: string; name: string }
+    | { userAuthNum: string };
+}) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
   const bodyData = JSON.stringify(data);

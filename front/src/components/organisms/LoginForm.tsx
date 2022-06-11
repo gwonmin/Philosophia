@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Grid from "@mui/material/Grid";
@@ -9,6 +9,7 @@ import * as Api from "../../api";
 
 import { TextFieldAtom } from "../atoms/textInputs";
 import { GreenButton } from "../atoms/buttons";
+import { DispatchContext } from "../pages/RootPage";
 
 export default function LoginForm({
   login,
@@ -18,6 +19,8 @@ export default function LoginForm({
   userInfo: { email: string; password: string; name: string };
 }) {
   const navigate = useNavigate();
+  const dispatch = useContext(DispatchContext);
+
   //user의 로그인 정보를 객체로 다룬다.
   const [loginData, setLoginData] = useState({
     email: userInfo.email,
@@ -47,22 +50,64 @@ export default function LoginForm({
   const isPasswordValid = password.length >= 4;
   const isFormValid = isEmailValid && isPasswordValid;
 
+  const testLogin = async () => {
+    try {
+      // "user/login" 엔드포인트로 post요청함.
+      const res = await Api.post({
+        endpoint: "user/login",
+        data: {
+          email: "test@test.com",
+          password: "0000",
+        },
+      });
+
+      const user = res.data.user;
+      console.log(user);
+
+      // JWT 토큰은 유저 정보의 token임.
+      const jwtToken = user.token;
+      // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
+      sessionStorage.setItem("userToken", jwtToken);
+      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
+      if (!dispatch) {
+        console.log("Dispatch가 존재하지 않습니다.");
+        return;
+      }
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: user,
+      });
+
+      // 기본 페이지로 이동함.
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.log("로그인에 실패하였습니다.\n", err);
+    }
+  };
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", loginData);
+      const res = await Api.post({ endpoint: "user/login", data: loginData });
 
-      const user = res.data;
+      const user = res.data.user;
+      console.log(user);
+
+      // JWT 토큰은 유저 정보의 token임.
       const jwtToken = user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      // dispatch({
-      //   type: "LOGIN_SUCCESS",
-      //   payload: user,
-      // });
+      if (!dispatch) {
+        console.log("Dispatch가 존재하지 않습니다.");
+        return;
+      }
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: user,
+      });
 
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
@@ -100,7 +145,7 @@ export default function LoginForm({
             <TextFieldAtom
               id="password"
               label="비밀번호"
-              name="passowrd"
+              name="password"
               value={password}
               autoComplete="new-password"
               onChange={onChange}
@@ -110,6 +155,7 @@ export default function LoginForm({
         <GreenButton onClick={handleSubmit}>
           {login ? "로그인" : "인증하기"}
         </GreenButton>
+        <GreenButton onClick={testLogin}>테스트 로그인</GreenButton>
       </Box>
     </Box>
   );
