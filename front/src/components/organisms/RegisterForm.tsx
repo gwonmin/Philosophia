@@ -87,7 +87,7 @@ export default function RegisterForm({
     try {
       await Api.post({
         endpoint: "user/email-auth",
-        data: { userAuthNum: certification },
+        data: { userAuthNum: certification, email: email },
       });
       setIsAuth(true);
     } catch (err) {
