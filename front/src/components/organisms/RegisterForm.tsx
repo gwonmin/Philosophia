@@ -82,11 +82,22 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
     //나중에 인증 관련 api와 연결할 함수
     console.log("인증번호를 확인합니다.")
     try {
-      await Api.post({
+      const res = await Api.post({
         endpoint: "user/email-auth",
         data: { userAuthNum: certification, email: email },
       })
-      setIsAuth(true)
+      switch (res.data.result) {
+        case "success":
+          console.log("인증에 성공했습니다.")
+          setIsAuth(true)
+          break
+        case "fail":
+          console.log("인증번호가 잘못되었습니다.")
+          setIsAuth(false)
+          break
+        default:
+          throw Error("잘못된 응답입니다.")
+      }
     } catch (err) {
       console.log("인증에 실패하였습니다.", err)
     }

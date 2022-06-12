@@ -147,6 +147,7 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
               id="password"
               label={"비밀번호"}
               name="password"
+              type="password"
               value={password}
               autoComplete="new-password"
               condition={!isPasswordValid}
