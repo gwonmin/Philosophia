@@ -1,6 +1,9 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
+
 import { User } from "./models/User";
 import { Token } from "./models/Token";
+import { Devate } from "./models/Devate"
+import { DevateComment } from "./models/DevateComment";
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -20,4 +23,4 @@ import { Token } from "./models/Token";
 //   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 // );
 
-export { User, Token };
+export { User, Token, Devate, DevateComment };
