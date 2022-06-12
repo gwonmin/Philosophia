@@ -6,6 +6,7 @@ import { verifyRefresh } from "../middlewares/verifyRefresh";
 import { smtpTransport } from "../config/email";
 import bcrypt from "bcrypt";
 import { Auth } from "../db/models/Auth";
+import upload from '../modules/multer';
 
 const userRouter = Router();
 
@@ -75,11 +76,22 @@ userRouter.get("/user/current", verifyToken, async function (req, res, next) {
 
 userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
   try {
+    const singleUpload = upload('myprofile-bucket').single('image');
+    singleUpload(req, res, async error => {
+      if (error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+
     const userId = req.params.userId;
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
     const name = req.body.name ?? null;
-    const toUpdate = { name, email, password, description, visited };
+    let image_url = null;
+    if (req.file) {
+      image_url = req.file.location;
+    }
+
+    const toUpdate = { name, email, password, image_url };
 
     const updatedUser = await userService.setUser({ userId, toUpdate });
 
@@ -87,6 +99,7 @@ userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
       throw new Error(updatedUser.errorMessage);
     }
     res.status(200).json(updatedUser);
+  });
   } catch (error) {
     next(error);
   }

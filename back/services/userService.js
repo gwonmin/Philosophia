@@ -55,6 +55,10 @@ class userService {
       const newValue = toUpdate.password;
       user = await User.update({ userId, fieldToUpdate, newValue });
     }
+
+    if (!toUpdate.image_url) {
+      toUpdate.image_url = user.image;
+    }
     return user;
   }
 

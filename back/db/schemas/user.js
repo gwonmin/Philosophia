@@ -13,6 +13,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+    required: false,
+  },
 });
 
 const userModel = model("User", UserSchema);
