@@ -1,5 +1,5 @@
-import LoginTemplate from "../templates/LoginTemplate";
+import LoginTemplate from "../templates/LoginTemplate"
 
-export default function LoginPage({ user }: any) {
-  return <LoginTemplate login={false} userInfo={user} />;
+export default function CheckUserPage({ user }: any) {
+  return <LoginTemplate login={false} userInfo={user} />
 }

@@ -60,13 +60,14 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
         },
       })
 
+      console.log(res)
       const user = res.data.user
-      console.log(user)
-
       // JWT 토큰은 유저 정보의 token임.
-      const jwtToken = user.token
+      const jwtToken = res.data.accessToken
+      console.log(jwtToken)
+
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", jwtToken)
+      sessionStorage.setItem("userToken", String(jwtToken))
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       if (!dispatch) {
         console.log("Dispatch가 존재하지 않습니다.")
@@ -76,7 +77,6 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
         type: "LOGIN_SUCCESS",
         payload: user,
       })
-
       // 기본 페이지로 이동함.
       navigate("/", { replace: true })
     } catch (err) {
@@ -84,9 +84,7 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
     }
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-
+  const handleSubmit = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post({ endpoint: "user/login", data: loginData })
@@ -98,7 +96,7 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
       console.log(jwtToken)
 
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", JSON.stringify(jwtToken))
+      sessionStorage.setItem("userToken", String(jwtToken))
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       if (!dispatch) {
         console.log("Dispatch가 존재하지 않습니다.")
