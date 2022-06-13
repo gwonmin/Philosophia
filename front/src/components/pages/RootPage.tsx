@@ -6,6 +6,8 @@ import LoginPage from "./LoginPage"
 import UserStatusPage from "./UserStatusPage"
 import CheckUserPage from "./CheckUserPage"
 import EditUserInfoPage from "./EditUserInfoPage"
+import DevateListPage from "./DevateListPage"
+import AddDevatePage from "./AddDevatePage"
 
 import * as Api from "../../api"
 import { loginReducer, Action, User } from "../../reducer"
@@ -63,6 +65,8 @@ export default function RootPage() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/checkUser" element={<CheckUserPage />} />
             <Route path="/editUser" element={<EditUserInfoPage />} />
+            <Route path="/devates" element={<DevateListPage />} />
+            <Route path="/addDevate" element={<AddDevatePage />} />
           </Routes>
         </Router>
       </UserStateContext.Provider>

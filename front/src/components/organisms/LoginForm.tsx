@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography"
 
 import * as Api from "../../api"
 
-import { TextFieldAtom } from "../atoms/textInputs"
 import { GreenButton } from "../atoms/buttons"
 import { DispatchContext } from "../pages/RootPage"
 import { NoticeTextField } from "../molecules/certification"
