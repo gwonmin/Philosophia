@@ -29,8 +29,8 @@ class Philosopher{
 
     //게시글 삭제
     static async delete({ postId }) {
-        await PhilosopherModel.deleteOne({ _id: postId });
-        return '삭제가 완료되었습니다.';
+        const deletedPost = await PhilosopherModel.deleteOne({ _id: postId });
+        return deletedPost;
     }
 };
 

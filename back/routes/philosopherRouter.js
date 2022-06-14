@@ -67,7 +67,11 @@ philosopherRouter.put("/nietzsche/:id", verifyToken, async function(req, res, ne
 
         const toUpdate = { title, content };
 
-        const updatedPost = await philosopherService.setPost({ userId, postId, toUpdate });
+        const updatedPost = await philosopherService.setPost({ 
+            userId, 
+            postId, 
+            toUpdate 
+        });
 
         if (updatedPost.errorMessage) {
             throw new Error(updatedPost.errorMessage);
