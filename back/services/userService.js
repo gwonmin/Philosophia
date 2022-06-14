@@ -22,7 +22,7 @@ class userService {
   }
 
   static async setUser({ userId, toUpdate }) {
-    const user = await User.findById({ userId });
+    let user = await User.findById({ userId });
     const email = toUpdate.email;
 
     const check = await User.findByEmail({ email });
@@ -52,7 +52,8 @@ class userService {
 
     if (toUpdate.password) {
       const fieldToUpdate = "password";
-      const newValue = toUpdate.password;
+      const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
+      const newValue = hashedPassword;
       user = await User.update({ userId, fieldToUpdate, newValue });
     }
     return user;
