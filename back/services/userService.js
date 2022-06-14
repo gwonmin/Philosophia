@@ -22,7 +22,7 @@ class userService {
   }
 
   static async setUser({ userId, toUpdate }) {
-    const user = await User.findById({ userId });
+    let user = await User.findById({ userId });
     const email = toUpdate.email;
 
     const check = await User.findByEmail({ email });
@@ -56,8 +56,10 @@ class userService {
       user = await User.update({ userId, fieldToUpdate, newValue });
     }
 
-    if (!toUpdate.image_url) {
-      toUpdate.image_url = user.image;
+    if (toUpdate.image) {
+      const fieldToUpdate = "image";
+      const newValue = toUpdate.image;
+      user = await User.update({ userId, fieldToUpdate, newValue });
     }
     return user;
   }

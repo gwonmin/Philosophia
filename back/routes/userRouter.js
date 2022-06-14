@@ -76,8 +76,9 @@ userRouter.get("/user/current", verifyToken, async function (req, res, next) {
 
 userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
   try {
-    const singleUpload = upload.single('image');
-    singleUpload (req, res, async error => {
+
+    const uploadSingle = upload.single('image');
+    uploadSingle(req, res, async error => {
       if (error) {
         return res.status(400).json({ success: false, message: error.message });
       }
@@ -86,12 +87,12 @@ userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
     const name = req.body.name ?? null;
-    let image_url = null;
+    let image = req.body.image ?? null;
     if (req.file) {
-      image_url = req.file.location;
+      image = req.file.location;
     }
 
-    const toUpdate = { name, email, password, image_url };
+    const toUpdate = { name, email, password, image };
 
     const updatedUser = await userService.setUser({ userId, toUpdate });
 
@@ -154,13 +155,14 @@ userRouter.post("/user/send-email", async function (req, res, next){
 
 // 이메일 인증(인증번호 확인)
 userRouter.post("/user/email-auth", async function(req, res, next){
+  const userAuthNum = req.body.userAuthNum;
+
+  const email = req.body.email;
+  const auth = await Auth.findByEmail({ email });
+  console.log('hasedAuthNum: ', auth.hashedAuthNum)
+  const hashedAuthNum = auth.hashedAuthNum;
+
   try {
-    const userAuthNum = req.body.userAuthNum;
-
-    const email = req.body.email;
-    const auth = await Auth.findByEmail({ email });
-    const hashedAuthNum = auth.hashedAuthNum;
-
     const isAuthCorrect = await bcrypt.compare(
       userAuthNum,
       hashedAuthNum
