@@ -63,3 +63,5 @@ class philosopherService{
     }
 
 }
+
+export { philosopherService };
