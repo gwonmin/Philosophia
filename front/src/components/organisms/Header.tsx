@@ -20,7 +20,7 @@ export default function Header() {
           navigate("/", { replace: true })
         }}
       >
-        감시 페이지로 가기
+        마스터 페이지로 가기
       </button>
     </div>
   )
