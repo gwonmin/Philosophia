@@ -79,7 +79,7 @@ userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
     const name = req.body.name ?? null;
-    const toUpdate = { name, email, password, description, visited };
+    const toUpdate = { name, email, password };
 
     const updatedUser = await userService.setUser({ userId, toUpdate });
 
