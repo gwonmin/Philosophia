@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography"
 
 import * as Api from "../../api"
 
-import { TextFieldAtom } from "../atoms/textInputs"
 import { GreenButton } from "../atoms/buttons"
 import { DispatchContext } from "../pages/RootPage"
 import { NoticeTextField } from "../molecules/certification"
@@ -123,7 +122,7 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
       }}
     >
       <Typography component="h1" variant="h5">
-        로그인
+        {login ? "로그인" : "본인 확인"}
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
