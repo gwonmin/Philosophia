@@ -12,7 +12,7 @@ export default function Header() {
   }
 
   return (
-    <div>
+    <div style={{ backgroundColor: "grey" }}>
       <p>헤더가 올 예정입니다.</p>
       <p>State: {userState.user == null ? "로그아웃" : "로그인"}</p>
       <button
