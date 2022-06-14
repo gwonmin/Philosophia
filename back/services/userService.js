@@ -52,7 +52,8 @@ class userService {
 
     if (toUpdate.password) {
       const fieldToUpdate = "password";
-      const newValue = toUpdate.password;
+      const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
+      const newValue = hashedPassword;
       user = await User.update({ userId, fieldToUpdate, newValue });
     }
 
@@ -62,7 +63,7 @@ class userService {
       user = await User.update({ userId, fieldToUpdate, newValue });
     }
     return user;
-  }
+  };
 
   static async deleteUser({ userId }) {
     const isDataDeleted = await User.delete({ userId });
