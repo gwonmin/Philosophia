@@ -58,7 +58,7 @@ userRouter.post(
 
 userRouter.get("/user/current", verifyToken, async function (req, res, next) {
   try {
-    const userId = req.userId;
+    const userId = req.user;
     const user = await userService.getUserInfo({
       userId,
     });
