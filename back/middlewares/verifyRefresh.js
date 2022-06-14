@@ -6,9 +6,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const verifyRefresh = async function (req, res, next) {
-  if (req.headers["authorization"] && req.headers["refresh"]) {
-    const token = req.headers["authorization"].split(" ")[1];
-    const refreshToken = req.headers["refresh"];
+  if (req.headers.authorization && req.headers.refresh) {
+    const token = req.headers.authorization.split(" ")[1];
+    const refreshToken = req.headers.refresh;
 
     // access token 검증 -> expired여야 함.
     const authResult = verify(token);

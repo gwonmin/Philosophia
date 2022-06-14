@@ -59,7 +59,7 @@ userRouter.post(
 
 userRouter.get("/user/current", verifyToken, async function (req, res, next) {
   try {
-    const userId = req.userId;
+    const userId = req.user;
     const user = await userService.getUserInfo({
       userId,
     });
@@ -154,14 +154,13 @@ userRouter.post("/user/send-email", async function (req, res, next){
 
 // 이메일 인증(인증번호 확인)
 userRouter.post("/user/email-auth", async function(req, res, next){
-  const userAuthNum = req.body.userAuthNum;
-
-  const email = req.body.email;
-  const auth = await Auth.findByEmail({ email });
-  console.log('hasedAuthNum: ', auth.hashedAuthNum)
-  const hashedAuthNum = auth.hashedAuthNum;
-
   try {
+    const userAuthNum = req.body.userAuthNum;
+
+    const email = req.body.email;
+    const auth = await Auth.findByEmail({ email });
+    const hashedAuthNum = auth.hashedAuthNum;
+
     const isAuthCorrect = await bcrypt.compare(
       userAuthNum,
       hashedAuthNum
