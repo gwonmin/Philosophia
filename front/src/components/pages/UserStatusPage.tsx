@@ -36,13 +36,26 @@ export default function UserStatusPage() {
       )}
       <div>
         <button onClick={logout}>로그아웃</button>
-        <button
-          onClick={() => {
-            navigate("/login", { replace: true })
-          }}
-        >
-          로그인 페이지
-        </button>
+      </div>
+      <div>
+        {[
+          { text: "로그인 페이지", to: "/login" },
+          { text: "회원가입 페이지", to: "/register" },
+          { text: "토론 페이지", to: "/devates" },
+          { text: "본인 확인 페이지", to: "/checkUser" },
+          { text: "정보 수정 페이지", to: "/EditUserPage" },
+          { text: "토론 추가 페이지", to: "/addDevate" },
+        ].map((route) => {
+          return (
+            <button
+              onClick={() => {
+                navigate(route.to)
+              }}
+            >
+              {route.text}
+            </button>
+          )
+        })}
       </div>
     </div>
   )
