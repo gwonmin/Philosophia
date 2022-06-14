@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../organisms/Header"
-import { UserStateContext } from "./RootPage"
-import * as Api from "../../api"
+import Header from "../../organisms/Header"
+import { UserStateContext } from "../RootPage"
+import * as Api from "../../../api"
 
 export default function DevateListPage() {
   const navigate = useNavigate()
@@ -16,7 +16,7 @@ export default function DevateListPage() {
   const fetchDevateList = async () => {
     try {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
-      const res = await Api.get("devates")
+      const res = await Api.get({ endpoint: "devates" })
       if (res.data) {
         setDevateList(res.data)
       }
@@ -45,17 +45,18 @@ export default function DevateListPage() {
       <Container component="main" maxWidth="xs">
         <Header />
         <p>토론 목록 페이지입니다.</p>
-        {devateList ? <p>토론 목록이 있네요.</p> : <p>토론 목록이 없네요.</p>}
+        {!devateList && <p>토론 목록이 없네요.</p>}
         {devateList != [] && (
           <div>
             <p>토론 목록:</p>
             {devateList.map((devate: any) => {
               return (
                 <div key={devate?._id} style={{ backgroundColor: "grey" }}>
-                  <p>제목: {devate?.title}</p>
-                  <p>글쓴이: {devate?.author.name}</p>
-                  <p>내용: {devate?.content}</p>
-                  <p>태그: {devate?.tag}</p>
+                  <a href={"/devate/" + devate?._id}>
+                    <p>제목: {devate?.title}</p>
+                    <p>글쓴이: {devate?.author.name}</p>
+                    <p>태그: {devate?.tag}</p>
+                  </a>
                 </div>
               )
             })}
