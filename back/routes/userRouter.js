@@ -76,8 +76,8 @@ userRouter.get("/user/current", verifyToken, async function (req, res, next) {
 
 userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
   try {
-    const singleUpload = upload('myprofile-bucket').single('image');
-    singleUpload(req, res, async error => {
+    const singleUpload = upload.single('image');
+    singleUpload (req, res, async error => {
       if (error) {
         return res.status(400).json({ success: false, message: error.message });
       }
