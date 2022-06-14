@@ -60,13 +60,14 @@ philosopherRouter.get("/nietzsche", verifyToken, async function(req, res, next){
 philosopherRouter.put("/nietzsche/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
+        const userId = req.user;
 
         const title = req.body.title ?? null;
         const content = req.body.content ?? null;
 
         const toUpdate = { title, content };
 
-        const updatedPost = await philosopherService.setPost({ postId, toUpdate });
+        const updatedPost = await philosopherService.setPost({ userId, postId, toUpdate });
 
         if (updatedPost.errorMessage) {
             throw new Error(updatedPost.errorMessage);
@@ -81,8 +82,9 @@ philosopherRouter.put("/nietzsche/:id", verifyToken, async function(req, res, ne
 philosopherRouter.delete("/nietzsche/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
+        const userId = req.user;
 
-        const deletedPost = await philosopherService.deletePost({ postId });
+        const deletedPost = await philosopherService.deletePost({ userId, postId });
         if (deletedPost.errorMessage) {
             throw new Error(deletedPost.errorMessage);
         }
@@ -149,13 +151,14 @@ philosopherRouter.get("/descartes", verifyToken, async function(req, res, next){
 philosopherRouter.put("/descartes/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
+        const uesrId = req.user;
 
         const title = req.body.title ?? null;
         const content = req.body.content ?? null;
 
         const toUpdate = { title, content };
 
-        const updatedPost = await philosopherService.setPost({ postId, toUpdate });
+        const updatedPost = await philosopherService.setPost({ uesrId, postId, toUpdate });
 
         if (updatedPost.errorMessage) {
             throw new Error(updatedPost.errorMessage);
@@ -170,8 +173,9 @@ philosopherRouter.put("/descartes/:id", verifyToken, async function(req, res, ne
 philosopherRouter.delete("/descartes/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
+        const userId = req.user;
 
-        const deletedPost = await philosopherService.deletePost({ postId });
+        const deletedPost = await philosopherService.deletePost({ userId, postId });
         if (deletedPost.errorMessage) {
             throw new Error(deletedPost.errorMessage);
         }
@@ -238,13 +242,14 @@ philosopherRouter.get("/plato", verifyToken, async function(req, res, next){
 philosopherRouter.put("/plato/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
+        const userId = req.user;
 
         const title = req.body.title ?? null;
         const content = req.body.content ?? null;
 
         const toUpdate = { title, content };
 
-        const updatedPost = await philosopherService.setPost({ postId, toUpdate });
+        const updatedPost = await philosopherService.setPost({ userId, postId, toUpdate });
 
         if (updatedPost.errorMessage) {
             throw new Error(updatedPost.errorMessage);
@@ -259,8 +264,9 @@ philosopherRouter.put("/plato/:id", verifyToken, async function(req, res, next){
 philosopherRouter.delete("/plato/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
+        const userId = req.user;
 
-        const deletedPost = await philosopherService.deletePost({ postId });
+        const deletedPost = await philosopherService.deletePost({ userId, postId });
         if (deletedPost.errorMessage) {
             throw new Error(deletedPost.errorMessage);
         }

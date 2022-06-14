@@ -29,13 +29,19 @@ class philosopherService{
     }
 
     //게시글 수정
-    static async setPost({ postId, toUpdate }){
+    static async setPost({ userId, postId, toUpdate }){
         let post = await Philosopher.findByPostId({ postId });
 
         if (!post) {
             const errorMessage = "해당 포스트가 없습니다.";
             return { errorMessage }
         }
+
+        if (post.author.id !== userId) {
+            const errorMessage = '자신이 작성한 게시글만 수정할 수 있습니다.';
+            return { errorMessage };
+        }
+
 
         if (!toUpdate.title) {
             toUpdate.title = post.title;
@@ -53,13 +59,19 @@ class philosopherService{
     }
 
     //게시글 삭제
-    static async deletePost({ postId }){
+    static async deletePost({ userId, postId }){
         const post = await Philosopher.delete({ postId });
         
         if (!post) {
             const errorMessage = '해당 포스트가 없습니다.';
             return { errorMessage };
         }
+
+        if (post.author.id !== userId) {
+            const errorMessage = '자신이 작성한 게시글만 수정할 수 있습니다.';
+            return { errorMessage };
+        }
+        
         return { status: "success" };
     }
 
