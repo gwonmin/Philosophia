@@ -19,6 +19,7 @@ class philosopherService{
             const errorMessage = "해당 포스트가 없습니다.";
             return { errorMessage };
         }
+        return post
     }
 
     //게시글 전체 조회
@@ -59,7 +60,7 @@ class philosopherService{
             const errorMessage = '해당 포스트가 없습니다.';
             return { errorMessage };
         }
-        return res.status(200).json("delete success");
+        return { status: "success" };
     }
 
 }

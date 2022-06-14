@@ -34,7 +34,7 @@ philosopherRouter.post("/nietzsche", verifyToken, async function(req, res, next)
 philosopherRouter.get("/nietzsche/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
-        const currentPostInfo  = await philosopherService.getPostInfo({ postId });
+        const currentPostInfo = await philosopherService.getPostInfo({ postId });
 
         if (currentPostInfo.errorMessage) {
             throw new Error(currentPostInfo.errorMessage);
@@ -92,3 +92,5 @@ philosopherRouter.delete("/nietzsche/:id", verifyToken, async function(req, res,
         next(error);
     };
 });
+
+export { philosopherRouter };

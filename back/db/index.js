@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Token } from "./models/Token";
+import { Philosopher } from "./models/Philosopher";
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -20,4 +21,4 @@ import { Token } from "./models/Token";
 //   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 // );
 
-export { User, Token };
+export { User, Token, Philosopher };
