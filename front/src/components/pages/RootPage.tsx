@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 import RegisterPage from "./user/RegisterPage"
 import LoginPage from "./user/LoginPage"
-import UserStatusPage from "./UserStatusPage"
+import MasterPage from "./MasterPage"
 import CheckUserPage from "./user/CheckUserPage"
 import EditUserInfoPage from "./user/EditUserInfoPage"
 import DevateListPage from "./devate/DevateListPage"
@@ -61,7 +61,7 @@ export default function RootPage() {
       <UserStateContext.Provider value={userState}>
         <Router>
           <Routes>
-            <Route path="/" element={<UserStatusPage />} />
+            <Route path="/" element={<MasterPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/checkUser" element={<CheckUserPage />} />

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 import { UserStateContext, DispatchContext } from "./RootPage"
 
-export default function UserStatusPage() {
+export default function MasterPage() {
   const navigate = useNavigate()
   const dispatch = useContext(DispatchContext)
   const userState = useContext(UserStateContext)
