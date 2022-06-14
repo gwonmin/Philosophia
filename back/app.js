@@ -10,6 +10,7 @@ var usersRouter = require("./routes/users");
 
 import { userRouter } from './routes/userRouter';
 import { philosopherRouter } from './routes/philosopherRouter';
+import { philosophercommentRouter } from './routes/philosopherCommentRouter';
 
 var app = express();
 app.use(cors());
@@ -27,6 +28,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use(userRouter);
 app.use(philosopherRouter);
+app.use(philosophercommentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
