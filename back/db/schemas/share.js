@@ -7,20 +7,15 @@ const ShareSchema = new Schema(
             ref: 'User', // 유저 스키마 참조
             required: true,
         },
-        title: {
-            type: String,
-            required: true,
-        },
         content: {
             type: String,
             required: true
         },
-        comment: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'ShareComment' // 댓글 스키마 참조
-            }
-        ],
+        like: [{ type: String }],
+        likeCount: {
+            type: Number,
+            default: 0
+        }
     },
     {
         timestamps: true,

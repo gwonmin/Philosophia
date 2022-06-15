@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 import { userRouter } from './routes/userRouter';
 import { devateRouter } from './routes/devateRouter';
 import { devatecommentRouter } from './routes/devatecommentRouter';
+import { shareRouter } from './routes/shareRouter';
 
 
 var app = express();
@@ -30,6 +31,7 @@ app.use('/users', usersRouter);
 app.use(userRouter);
 app.use(devateRouter);
 app.use(devatecommentRouter);
+app.use(shareRouter);
 
 
 // catch 404 and forward to error handler
