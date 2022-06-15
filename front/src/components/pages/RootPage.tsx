@@ -1,11 +1,14 @@
 import { createContext, Dispatch, useEffect, useReducer, useState } from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
-import RegisterPage from "./RegisterPage"
-import LoginPage from "./LoginPage"
-import UserStatusPage from "./UserStatusPage"
-import CheckUserPage from "./CheckUserPage"
-import EditUserInfoPage from "./EditUserInfoPage"
+import RegisterPage from "./user/RegisterPage"
+import LoginPage from "./user/LoginPage"
+import MasterPage from "./MasterPage"
+import CheckUserPage from "./user/CheckUserPage"
+import EditUserInfoPage from "./user/EditUserInfoPage"
+import DevateListPage from "./devate/DevateListPage"
+import DevatePage from "./devate/DevatePage"
+import AddDevatePage from "./devate/AddDevatePage"
 
 import * as Api from "../../api"
 import { loginReducer, Action, User } from "../../reducer"
@@ -23,7 +26,7 @@ export default function RootPage() {
   const fetchCurrentUser = async () => {
     try {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
-      const res = await Api.get("user/current")
+      const res = await Api.get({ endpoint: "user/current" })
       const currentUser = res.data
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
@@ -58,11 +61,14 @@ export default function RootPage() {
       <UserStateContext.Provider value={userState}>
         <Router>
           <Routes>
-            <Route path="/" element={<UserStatusPage />} />
+            <Route path="/" element={<MasterPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/checkUser" element={<CheckUserPage />} />
             <Route path="/editUser" element={<EditUserInfoPage />} />
+            <Route path="/devates" element={<DevateListPage />} />
+            <Route path="/devate/:devateId" element={<DevatePage />} />
+            <Route path="/addDevate" element={<AddDevatePage />} />
           </Routes>
         </Router>
       </UserStateContext.Provider>
