@@ -14,7 +14,7 @@ export default function DevatePage() {
   const userState = useContext(UserStateContext)
 
   if (!userState) {
-    return <p>user does not exist</p>
+    return <p>user does not exist(even null)</p>
   }
 
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)

@@ -56,6 +56,10 @@ export default function DevateListPage() {
                     <p>제목: {devate?.title}</p>
                     <p>글쓴이: {devate?.author.name}</p>
                     <p>태그: {devate?.tag}</p>
+                    <p>
+                      찬성: {devate.yesCount}, 반대: {devate.noCount}
+                    </p>
+                    <p>덧글 수: {devate.comment.length}</p>
                   </a>
                 </div>
               )
