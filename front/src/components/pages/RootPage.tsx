@@ -12,6 +12,8 @@ import AddDevatePage from "./devate/AddDevatePage"
 
 import * as Api from "../../api"
 import { loginReducer, Action, User } from "../../reducer"
+import PostPage from "./philosopher/PostPage"
+import AddPostPage from "./philosopher/AddPostPage"
 
 export const UserStateContext = createContext<{ user: User | null } | undefined>(undefined)
 export const DispatchContext = createContext<Dispatch<Action> | undefined>(undefined)
@@ -69,6 +71,8 @@ export default function RootPage() {
             <Route path="/devates" element={<DevateListPage />} />
             <Route path="/devate/:devateId" element={<DevatePage />} />
             <Route path="/addDevate" element={<AddDevatePage />} />
+            <Route path="/philosopher/:who" element={<PostPage />} />
+            <Route path="/addPost/:who" element={<AddPostPage />} />
           </Routes>
         </Router>
       </UserStateContext.Provider>
