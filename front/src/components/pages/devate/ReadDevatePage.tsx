@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 
 import { UserStateContext } from "../RootPage"
 import * as Api from "../../../api"
+import CommentList from "./CommentList"
 
 export default function ReadDevatePage({
   setIsEditing,
@@ -101,7 +102,7 @@ export default function ReadDevatePage({
           <div>현재 상태: </div>
           {didAgree && <div>찬성</div>}
           {didDisagree && <div>반대</div>}
-          {!didAgree && !didDisagree && <div>별 생각 없음</div>}
+          {!didAgree && !didDisagree && <div>중립</div>}
         </div>
       )}
       {isAuthor && (
@@ -117,6 +118,7 @@ export default function ReadDevatePage({
           <button onClick={deleteHandler}>삭제하기</button>
         </div>
       )}
+      <CommentList devateId={devateId} />
     </div>
   )
 }
