@@ -11,13 +11,10 @@ var usersRouter = require('./routes/users');
 import { userRouter } from './routes/userRouter';
 import { devateRouter } from './routes/devateRouter';
 import { devatecommentRouter } from './routes/devatecommentRouter';
-<<<<<<< HEAD
 import { shareRouter } from './routes/shareRouter';
 
-=======
 import { philosopherRouter } from './routes/philosopherRouter';
 import { philosophercommentRouter } from './routes/philosopherCommentRouter';
->>>>>>> c57265b50be1a54453876c32ab47cc037f80869c
 
 var app = express();
 app.use(cors());
@@ -38,12 +35,9 @@ app.use(userRouter);
 
 app.use(devateRouter);
 app.use(devatecommentRouter);
-<<<<<<< HEAD
 app.use(shareRouter);
-=======
 app.use(philosopherRouter);
 app.use(philosophercommentRouter);
->>>>>>> c57265b50be1a54453876c32ab47cc037f80869c
 
 
 // catch 404 and forward to error handler
