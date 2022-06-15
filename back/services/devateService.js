@@ -104,13 +104,9 @@ class devateService {
         }
 
         const yes = await Devate.findYes({ postId, userId });
-        const no = await Devate.findNo({ postId, userId});
         let status, result;
 
-        if (no.includes(userId) == true) {
-            const errorMessage = '이미 반대를 선택하였습니다.';
-            return { errorMessage };
-        } else if (yes.length != 0) {
+        if (yes.length != 0) {
             status = '$pull';
             result = -1;
         } else {
@@ -141,13 +137,9 @@ class devateService {
         }
 
         const no = await Devate.findNo({ postId, userId });
-        const yes = await Devate.findNo({ postId, userId});
         let status, result;
 
-        if (yes.includes(userId) == true) {
-            const errorMessage = '이미 찬성을 선택하였습니다.';
-            return { errorMessage };
-        } else if (no.length != 0) {
+        if (no.length != 0) {
             status = '$pull';
             result = -1;
         } else {
