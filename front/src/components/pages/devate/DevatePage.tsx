@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
@@ -19,6 +19,7 @@ export default function DevatePage() {
 
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
   const [devateInfo, setDevateInfo] = useState({
     title: "",
     content: "",
@@ -54,21 +55,21 @@ export default function DevatePage() {
     } else {
       console.log("존재하지 않는 토론입니다.")
     }
-  }, [params])
+  }, [params, somethingWasChanged])
 
   if (!isFetchCompleted) {
     return <p>loading...</p>
   }
 
   return (
-    <div>
+    <Container>
       <Header />
       <p>토론 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}</p>
       {isEditing ? (
         <EditDevatePage setIsEditing={setIsEditing} devateInfo={devateInfo} setDevateInfo={setDevateInfo} />
       ) : (
-        <ReadDevatePage setIsEditing={setIsEditing} devateInfo={devateInfo} />
+        <ReadDevatePage setIsEditing={setIsEditing} devateInfo={devateInfo} setSomethingWasChanged={setSomethingWasChanged} />
       )}
-    </div>
+    </Container>
   )
 }

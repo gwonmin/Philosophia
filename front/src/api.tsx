@@ -42,7 +42,7 @@ async function post({
   })
 }
 
-async function put({ endpoint, data }: { endpoint: string; data: any }) {
+async function put({ endpoint, data }: { endpoint: string; data?: any }) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
   const bodyData = JSON.stringify(data)
