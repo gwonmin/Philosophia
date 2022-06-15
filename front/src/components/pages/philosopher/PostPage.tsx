@@ -23,13 +23,13 @@ export default function PostPage() {
   const [postInfo, setPostInfo] = useState({
     title: "",
     content: "",
-    tag: "",
     author: { _id: "", name: "", email: "" },
     createdAt: "",
     updatedAt: "",
-    yesCount: 0,
-    noCount: 0,
   })
+
+  const postId = params.postId
+  const philosopher = params.who
 
   const fetchPost = async (postId: string | undefined) => {
     try {
@@ -44,8 +44,6 @@ export default function PostPage() {
     }
     setIsFetchCompleted(true)
   }
-
-  const postId = params.postId
 
   useEffect(() => {
     if (postId) {

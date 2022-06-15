@@ -29,6 +29,7 @@ export default function PostListPage() {
   }
 
   const fetchPostList = async () => {
+    console.log(philosopher)
     if (!philosopher) {
       console.log("URI 파라미터가 올바르지 않습니다.")
       return
@@ -64,7 +65,7 @@ export default function PostListPage() {
       <Container component="main" maxWidth="xs">
         <Header />
         <p>{korName()} 게시판 페이지입니다.</p>
-        {!postList && <p>게시글 목록이 없네요.</p>}
+        {postList.length === 0 && <p>게시글이 없네요.</p>}
         {postList != [] && (
           <div>
             <p>게시글 목록:</p>

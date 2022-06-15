@@ -52,7 +52,11 @@ export default function MasterPage() {
           { text: "플라톤 게시판 페이지", to: "/philosopher/plato" },
         ].map((route) => {
           if (route.to === "nothing") {
-            return <p style={{ backgroundColor: "grey" }}>{route.text}</p>
+            return (
+              <p key={route.text} style={{ backgroundColor: "grey" }}>
+                {route.text}
+              </p>
+            )
           }
           return (
             <button

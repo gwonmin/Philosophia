@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
 import Header from "../../organisms/Header"
@@ -9,11 +9,12 @@ import { TextFieldAtom } from "../../atoms/textInputs"
 
 export default function AddPostPage() {
   const navigate = useNavigate()
+  const params = useParams()
+  const philosopher = params.who
 
   const [postInfo, setPostInfo] = useState({
     title: "",
     content: "",
-    tag: "",
   })
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,14 +26,18 @@ export default function AddPostPage() {
   }
 
   const postPost = async () => {
+    if (!philosopher) {
+      console.log("URI의 철학자 정보가 잘못되었습니다.")
+      return
+    }
     try {
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post({
-        endpoint: "posts",
+        endpoint: philosopher,
         data: postInfo,
       })
 
-      navigate("/posts", { replace: true })
+      navigate(`/philosopher/${philosopher}`, { replace: true })
     } catch (err) {
       console.log("등록에 실패하였습니다.\n", err)
     }
@@ -45,11 +50,10 @@ export default function AddPostPage() {
         <p>토론 작성 페이지입니다.</p>
         <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
         <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
-        <TextFieldAtom id="tag" label="tag" name="tag" value={postInfo.tag} onChange={onChange} />
-        <button onClick={postPost}>토론 등록하기</button>
+        <button onClick={postPost}>게시물 등록하기</button>
         <button
           onClick={() => {
-            navigate("/posts")
+            navigate(`/philosopher/${philosopher}`)
           }}
         >
           취소
