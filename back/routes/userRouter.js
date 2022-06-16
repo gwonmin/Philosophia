@@ -87,7 +87,7 @@ userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
     const name = req.body.name ?? null;
-    let image = req.body.image ?? null;
+    let image = null;
     if (req.file) {
       image = req.file.location;
     }

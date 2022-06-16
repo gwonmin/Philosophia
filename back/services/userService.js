@@ -62,6 +62,7 @@ class userService {
       const newValue = toUpdate.image;
       user = await User.update({ userId, fieldToUpdate, newValue });
     }
+    console.log(toUpdate.image)
     return user;
   };
 

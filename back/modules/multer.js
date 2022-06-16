@@ -26,7 +26,9 @@ const upload = multer({
   storage: multerS3({
       s3: s3,
       bucket: 'myprofile-bucket',
-      acl: 'public-read',
+      metadata: function (req, file, cb) {
+        cb(null, { fieldName: file.fieldname });
+      },
       key: function(req, file, cb){
           cb(null, Date.now() + '.' + file.originalname.split('.').pop()); // 이름 설정
       }
