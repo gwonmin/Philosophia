@@ -40,6 +40,12 @@ class devatecommentService {
         return deletedComment;
     }
 
+    // 1개 댓글
+    static async getComment({ commentId }) {
+        const comment = await DevateComment.findByCommentId({ commentId });
+        return comment;
+    }
+
     // 게시글의 모든 댓글
     static async getComments({ postId }) {
         const comments = await DevateComment.findByPostId({ postId });

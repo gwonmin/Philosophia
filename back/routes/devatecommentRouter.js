@@ -15,7 +15,7 @@ devatecommentRouter.post('/devatecomments', verifyToken, async (req, res, next) 
         const newComment = await devatecommentService.addComment({
             userId,
             postId,
-            content
+            content,
         });
 
         if (newComment.errorMessage) {
@@ -64,6 +64,18 @@ devatecommentRouter.delete('/devatecomments/:id', verifyToken, async (req, res, 
             throw new Error(deletedComment.errorMessage);
         }
         res.status(200).send(deletedComment);
+    } catch (error) {
+        next(error);
+    }
+})
+
+// 댓글 1개 조회
+devatecommentRouter.get('/devatecomments/:id', verifyToken, async (req, res, next) => {
+    try {
+        const commentId = req.params.id;
+        const comment = await devatecommentService.getComment({ commentId });
+
+        res.status(200).send(comment);
     } catch (error) {
         next(error);
     }

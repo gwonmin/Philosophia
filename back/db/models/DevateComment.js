@@ -5,6 +5,7 @@ import { userModel } from "../schemas/user";
 class DevateComment {
     static async createComment({ author, postId, content }) {
         const newComment = { author, postId, content };
+        // newComment.author = newComment.author.name
         const createdNewComment = await DevateCommentModel.create(newComment);
         return createdNewComment;
     }

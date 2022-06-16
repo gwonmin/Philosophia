@@ -10,8 +10,8 @@ class Devate {
     }
     
     static async findByPostId({ postId }) {
-        const post = await DevateModel.findOne({ _id: postId }).populate('author', 'id email name');
-        const comment = await DevateCommentModel.find({ postId: postId });
+        const post = await DevateModel.findOne({ _id: postId }).populate('author', 'id name');
+        const comment = await DevateCommentModel.find({ postId: postId }).populate('author', 'id name');;
         post.comment = comment;
         return post;
     }
@@ -19,7 +19,7 @@ class Devate {
     static async findAll(newFilter) {
         const posts = await DevateModel.find(newFilter)
         .find({ tag: { $in: newFilter.tag } })
-        .populate('author', 'id email name')
+        .populate('author', 'id name')
     
         return posts;
     }
