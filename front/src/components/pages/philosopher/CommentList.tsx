@@ -6,7 +6,7 @@ import * as Api from "../../../api"
 import { TextFieldAtom } from "../../atoms/textInputs"
 import CommentCard from "./CommentCard"
 
-export default function CommentList({ devateId, yesList, noList }: { devateId: string; yesList: string[]; noList: string[] }) {
+export default function CommentList({ postId }: { postId: string }) {
   const userState = useContext(UserStateContext)
 
   if (!userState) {
@@ -19,9 +19,9 @@ export default function CommentList({ devateId, yesList, noList }: { devateId: s
   const [commentList, setCommentList] = useState([])
   const [newComment, setNewComment] = useState("")
 
-  const fetchComments = async (devateId: string | undefined) => {
+  const fetchComments = async (postId: string | undefined) => {
     try {
-      const res = await Api.get({ endpoint: "devatecommentlist", params: `?postId=${devateId}` })
+      const res = await Api.get({ endpoint: "postcommentlist", params: `?postId=${postId}` })
       if (res.data) {
         setCommentList(res.data)
       }
@@ -33,10 +33,10 @@ export default function CommentList({ devateId, yesList, noList }: { devateId: s
   }
 
   useEffect(() => {
-    if (devateId) {
+    if (postId) {
       // URI에서 토론의 Id값을 받아옵니다.
-      console.log(devateId)
-      fetchComments(devateId)
+      console.log(postId)
+      fetchComments(postId)
     } else {
       console.log("존재하지 않는 토론입니다.")
     }
@@ -49,7 +49,7 @@ export default function CommentList({ devateId, yesList, noList }: { devateId: s
   const commentHandler = async () => {
     try {
       const res = await Api.post({
-        endpoint: `devatecomments/?postId=${devateId}`,
+        endpoint: `postcomments/?postId=${postId}`,
         data: { content: newComment },
       })
       console.log("덧글을 등록했습니다.", res.data)
@@ -59,26 +59,16 @@ export default function CommentList({ devateId, yesList, noList }: { devateId: s
       console.log("덧글 등록에 실패했습니다.", err)
     }
   }
-  console.log("comments", commentList)
 
   return (
     <Container>
       <p style={{ backgroundColor: "grey" }}>덧글 창입니다.</p>
-      {commentList.length == 0 && <p>아직 덧글이 없습니다.</p>}
+      {!commentList && <p>아직 덧글이 없습니다.</p>}
       {commentList != [] && (
         <div>
           <p>덧글 목록({commentList.length}): </p>
           {commentList.map((comment: any) => {
-            return (
-              <CommentCard
-                key={comment._id}
-                comment={comment}
-                somethingWasChanged={somethingWasChanged}
-                setSomethingWasChanged={setSomethingWasChanged}
-                yesList={yesList}
-                noList={noList}
-              />
-            )
+            return <CommentCard key={comment._id} comment={comment} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
           })}
         </div>
       )}

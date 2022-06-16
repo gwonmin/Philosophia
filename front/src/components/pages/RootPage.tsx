@@ -1,17 +1,22 @@
 import { createContext, Dispatch, useEffect, useReducer, useState } from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
+import * as Api from "../../api"
+import { loginReducer, Action, User } from "../../reducer"
+
 import RegisterPage from "./user/RegisterPage"
 import LoginPage from "./user/LoginPage"
 import MasterPage from "./MasterPage"
 import CheckUserPage from "./user/CheckUserPage"
 import EditUserInfoPage from "./user/EditUserInfoPage"
+
 import DevateListPage from "./devate/DevateListPage"
 import DevatePage from "./devate/DevatePage"
 import AddDevatePage from "./devate/AddDevatePage"
 
-import * as Api from "../../api"
-import { loginReducer, Action, User } from "../../reducer"
+import PostListPage from "./philosopher/PostListPage"
+import PostPage from "./philosopher/PostPage"
+import AddPostPage from "./philosopher/AddPostPage"
 
 export const UserStateContext = createContext<{ user: User | null } | undefined>(undefined)
 export const DispatchContext = createContext<Dispatch<Action> | undefined>(undefined)
@@ -69,6 +74,9 @@ export default function RootPage() {
             <Route path="/devates" element={<DevateListPage />} />
             <Route path="/devate/:devateId" element={<DevatePage />} />
             <Route path="/addDevate" element={<AddDevatePage />} />
+            <Route path="/philosopher/:who" element={<PostListPage />} />
+            <Route path="/philosopher/:who/:postId" element={<PostPage />} />
+            <Route path="/addPost/:who" element={<AddPostPage />} />
           </Routes>
         </Router>
       </UserStateContext.Provider>
