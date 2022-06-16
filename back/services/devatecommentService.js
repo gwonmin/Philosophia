@@ -36,7 +36,7 @@ class devatecommentService {
             const errorMessage = '해당 댓글이 없습니다.';
             return { errorMessage };
         }
-        const deletedComment = await DevateComment.delete({ commentId });
+        const deletedComment = await DevateComment.delete({ comment });
         return deletedComment;
     }
 
