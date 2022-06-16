@@ -30,10 +30,26 @@ export default function PostPage() {
 
   const postId = params.postId
   const philosopher = params.who
+  const korName = () => {
+    switch (philosopher) {
+      case "nietzsche":
+        return "니체"
+      case "descartes":
+        return "데카르트"
+      case "plato":
+        return "플라톤"
+      default:
+        return "그런 철학자는 없습니다."
+    }
+  }
 
   const fetchPost = async (postId: string | undefined) => {
+    if (!philosopher) {
+      console.log("URI 파라미터가 올바르지 않습니다.")
+      return
+    }
     try {
-      const res = await Api.get({ endpoint: "posts", params: postId })
+      const res = await Api.get({ endpoint: philosopher, params: postId })
       if (res.data) {
         setPostInfo(res.data)
       }

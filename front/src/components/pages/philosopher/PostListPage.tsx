@@ -15,6 +15,8 @@ export default function PostListPage() {
   const [postList, setPostList] = useState([])
 
   const philosopher = params.who
+
+  //util에 넣을 함수
   const korName = () => {
     switch (philosopher) {
       case "nietzsche":
@@ -29,7 +31,6 @@ export default function PostListPage() {
   }
 
   const fetchPostList = async () => {
-    console.log(philosopher)
     if (!philosopher) {
       console.log("URI 파라미터가 올바르지 않습니다.")
       return
@@ -72,7 +73,7 @@ export default function PostListPage() {
             {postList.map((post: any) => {
               return (
                 <div key={post?._id} style={{ backgroundColor: "grey" }}>
-                  <a href={"/post/" + post?._id}>
+                  <a href={`/${philosopher}/` + post?._id}>
                     <p>제목: {post?.title}</p>
                     <p>글쓴이: {post?.author.name}</p>
                     <p>태그: {post?.tag}</p>

@@ -75,7 +75,7 @@ export default function RootPage() {
             <Route path="/devate/:devateId" element={<DevatePage />} />
             <Route path="/addDevate" element={<AddDevatePage />} />
             <Route path="/philosopher/:who" element={<PostListPage />} />
-            <Route path="/philosopher/:who/:devatedId" element={<PostPage />} />
+            <Route path="/philosopher/:who/:postId" element={<PostPage />} />
             <Route path="/addPost/:who" element={<AddPostPage />} />
           </Routes>
         </Router>
