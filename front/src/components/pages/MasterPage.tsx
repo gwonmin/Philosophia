@@ -48,6 +48,7 @@ export default function MasterPage() {
         ].map((route) => {
           return (
             <button
+              key={route.to}
               onClick={() => {
                 navigate(route.to)
               }}
