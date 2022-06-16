@@ -118,7 +118,7 @@ export default function ReadDevatePage({
           <button onClick={deleteHandler}>삭제하기</button>
         </div>
       )}
-      <CommentList devateId={devateId} />
+      <CommentList devateId={devateId} yesList={devateInfo.yes} noList={devateInfo.no} />
     </div>
   )
 }
