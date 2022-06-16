@@ -9,10 +9,14 @@ export default function CommentCard({
   comment,
   somethingWasChanged,
   setSomethingWasChanged,
+  yesList,
+  noList,
 }: {
   comment: any
   somethingWasChanged: any
   setSomethingWasChanged: any
+  yesList: string[]
+  noList: string[]
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [newComment, setNewComment] = useState(comment.content)
@@ -39,6 +43,16 @@ export default function CommentCard({
     }
   }
 
+  const stance = () => {
+    if (yesList.includes(comment.author._id)) {
+      return "찬성"
+    }
+    if (noList.includes(comment.author._id)) {
+      return "반대"
+    }
+    return "중립"
+  }
+
   return (
     <div>
       {isEditing && (
@@ -59,7 +73,9 @@ export default function CommentCard({
       )}{" "}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
-          <p>작성자: {comment.author}</p>
+          <p>
+            작성자: {comment.author.name}({stance()})
+          </p>
           <p>작성일: {comment.createdAt}</p>
           <p>내용: {comment.content}</p>
           <button onClick={deleteHandler}>삭제하기</button>

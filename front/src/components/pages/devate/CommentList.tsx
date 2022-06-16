@@ -6,7 +6,7 @@ import * as Api from "../../../api"
 import { TextFieldAtom } from "../../atoms/textInputs"
 import CommentCard from "./CommentCard"
 
-export default function CommentList({ devateId }: { devateId: string }) {
+export default function CommentList({ devateId, yesList, noList }: { devateId: string; yesList: string[]; noList: string[] }) {
   const userState = useContext(UserStateContext)
 
   if (!userState) {
@@ -59,6 +59,7 @@ export default function CommentList({ devateId }: { devateId: string }) {
       console.log("덧글 등록에 실패했습니다.", err)
     }
   }
+  console.log("comments", commentList)
 
   return (
     <Container>
@@ -68,7 +69,16 @@ export default function CommentList({ devateId }: { devateId: string }) {
         <div>
           <p>덧글 목록({commentList.length}): </p>
           {commentList.map((comment: any) => {
-            return <CommentCard key={comment._id} comment={comment} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+            return (
+              <CommentCard
+                key={comment._id}
+                comment={comment}
+                somethingWasChanged={somethingWasChanged}
+                setSomethingWasChanged={setSomethingWasChanged}
+                yesList={yesList}
+                noList={noList}
+              />
+            )
           })}
         </div>
       )}
