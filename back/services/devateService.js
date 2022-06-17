@@ -94,8 +94,8 @@ class devateService {
         return posts;
     }
 
-    // 찬성
-    static async setPostYes({ userId, postId }) {
+
+    static async setPostStance({ userId, postId, stance }) {
         const post = await Devate.findByPostId({ postId });
 
         if (!post) {
@@ -104,24 +104,53 @@ class devateService {
         }
 
         const yes = await Devate.findYes({ postId, userId });
-        let status, result;
-
-        if (yes.length != 0) {
-            status = '$pull';
-            result = -1;
-        } else {
-            status = '$push';
-            result = 1;
+        const no = await Devate.findNo({ postId, userId });
+        let newValues;
+        if (stance == 1) {
+            if (no.includes(userId)) {
+                newValues = {
+                    ['$push']: {
+                        no: userId,
+                    },
+                    $inc: { noCount: -1 },
+                    ['$pull']: {
+                        yes: userId,
+                    },
+                    $inc: { yesCount: 1 }
+                };
+            } else {
+                newValues = {
+                    ['$push']: {
+                        yes: userId,
+                    },
+                    $inc: { yesCount: 1 }
+                };
+            }
         }
 
-        const newValues = {
-            [status]: {
-                yes: userId,
-            },
-            $inc: { yesCount: result }
-        };
+        else if (stance == 0) {
+            if (yes.includes(userId)) {
+                newValues = {
+                    ['$pull']: {
+                        yes: userId,
+                    },
+                    $inc: { yesCount: -1 },
+                    ['$push']: {
+                        no: userId,
+                    },
+                    $inc: { noCount: 1 }
+                };
+            } else {
+                newValues = {
+                    ['$push']: {
+                        no: userId,
+                    },
+                    $inc: { noCount: 1 }
+                };
+            }
+        }
 
-        const res = await Devate.updateYes({ userId, postId, newValues });
+        const res = await Devate.updateStance({ userId, postId, newValues });
         console.log(res)
         return res;
         

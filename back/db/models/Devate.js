@@ -56,7 +56,7 @@ class Devate {
         return post.no;
     }
 
-    static async updateYes({ userId, postId, newValues }) {
+    static async updateStance({ userId, postId, newValues }) {
         const filter = { _id: postId };
         const update = newValues;
         const option = { returnOriginal: false };
