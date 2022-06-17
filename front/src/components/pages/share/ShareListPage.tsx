@@ -5,11 +5,13 @@ import { Container } from "@mui/material"
 import Header from "../../organisms/Header"
 import { UserStateContext } from "../RootPage"
 import * as Api from "../../../api"
+import ShareCard from "./ShareCard"
 
 export default function ShareListPage() {
   const navigate = useNavigate()
-  const userState = useContext(UserStateContext)
+  const userState = useContext(UserStateContext) ?? { user: null }
 
+  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [shareList, setShareList] = useState([])
 
@@ -50,20 +52,7 @@ export default function ShareListPage() {
           <div>
             <p>글 목록:</p>
             {shareList.map((share: any) => {
-              return (
-                <div key={share?._id} style={{ backgroundColor: "grey" }}>
-                  <a href={"/share/" + share?._id}>
-                    <p>
-                      철학자 {share.philosopher}가 생각하는 {share.subject}란?
-                    </p>
-                    <p>본문: {share.content}</p>
-                    <p>
-                      좋아요 수: {share.like.length}
-                      <button>좋아요</button>
-                    </p>
-                  </a>
-                </div>
-              )
+              return <ShareCard share={share} user={userState.user} setSomethingWasChanged={setSomethingWasChanged} />
             })}
           </div>
         )}
