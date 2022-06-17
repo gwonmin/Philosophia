@@ -29,8 +29,18 @@ class DevateComment {
         return comment;
     }
 
-    static async delete({ commentId }) {
-        const deletedComment = await DevateCommentModel.deleteOne({ _id: commentId });
+    static async delete({ comment }) {
+        const deletedComment = await DevateCommentModel.deleteOne({ 
+            _id: comment._id
+         });
+        await DevateModel.findOneAndUpdate(
+            { _id: comment.postId },
+            {
+              $pull: {
+                comment: comment._id,
+              }
+            }
+          );
         return deletedComment;
     }
 
@@ -45,7 +55,13 @@ class DevateComment {
     }
 
     static async findByPostId({ postId }){
-        const comments = await DevateCommentModel.find({ postId });
+        const comments = await DevateCommentModel.find({ postId });        
+        
+        await userModel.populate(comments, {
+            path: 'author',
+            select: 'id email name',
+        });
+        
         return comments;
     }
 

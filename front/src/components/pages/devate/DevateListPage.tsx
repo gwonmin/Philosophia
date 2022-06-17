@@ -45,7 +45,7 @@ export default function DevateListPage() {
       <Container component="main" maxWidth="xs">
         <Header />
         <p>토론 목록 페이지입니다.</p>
-        {!devateList && <p>토론 목록이 없네요.</p>}
+        {devateList.length == 0 && <p>아직 토론이 없네요.</p>}
         {devateList != [] && (
           <div>
             <p>토론 목록:</p>

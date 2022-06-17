@@ -1,20 +1,20 @@
-import { PhilosopherModel } from "../schemas/philosopher";
+import { NietzscheModel } from "../schemas/nietzsche";
 
-class Philosopher{
+class Nietzsche{
     //입력받은 정보로 게시글 생성
     static async create({ newPost }){
-        const creatednewPost = await PhilosopherModel.create(newPost);
+        const creatednewPost = await NietzscheModel.create(newPost);
         return creatednewPost;
     }
 
     //게시글의 고유 id로 게시글 검색
     static async findByPostId({ postId }){
-        const post = await PhilosopherModel.findOne({ _id: postId }).populate("author", "id email name");
+        const post = await NietzscheModel.findOne({ _id: postId }).populate("author", "id email name");
         return post;
     }
 
     static async findAll(){
-        const posts = await PhilosopherModel.findAll({});
+        const posts = await NietzscheModel.findAll({});
         return posts;
     }
 
@@ -23,15 +23,15 @@ class Philosopher{
         const filter = { _id: postId };
         const update = { $set: newValues };
         const option = { returnOriginal: false };
-        const updatedPost = await PhilosopherModel.findOneAndUpdate(filter, update, option);
+        const updatedPost = await NietzscheModel.findOneAndUpdate(filter, update, option);
         return updatedPost;
     }
 
     //게시글 삭제
     static async delete({ postId }) {
-        const deletedPost = await PhilosopherModel.deleteOne({ _id: postId });
+        const deletedPost = await NietzscheModel.deleteOne({ _id: postId });
         return deletedPost;
     }
 };
 
-export { Philosopher };
+export { Nietzsche };
