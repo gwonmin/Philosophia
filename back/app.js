@@ -11,6 +11,8 @@ var usersRouter = require('./routes/users');
 import { userRouter } from './routes/userRouter';
 import { devateRouter } from './routes/devateRouter';
 import { devatecommentRouter } from './routes/devatecommentRouter';
+import { shareRouter } from './routes/shareRouter';
+
 import { philosopherRouter } from './routes/philosopherRouter';
 import { philosophercommentRouter } from './routes/philosopherCommentRouter';
 
@@ -33,6 +35,7 @@ app.use(userRouter);
 
 app.use(devateRouter);
 app.use(devatecommentRouter);
+app.use(shareRouter);
 app.use(philosopherRouter);
 app.use(philosophercommentRouter);
 

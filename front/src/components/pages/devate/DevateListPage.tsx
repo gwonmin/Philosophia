@@ -45,7 +45,7 @@ export default function DevateListPage() {
       <Container component="main" maxWidth="xs">
         <Header />
         <p>토론 목록 페이지입니다.</p>
-        {!devateList && <p>토론 목록이 없네요.</p>}
+        {devateList.length == 0 && <p>아직 토론이 없네요.</p>}
         {devateList != [] && (
           <div>
             <p>토론 목록:</p>
@@ -56,6 +56,10 @@ export default function DevateListPage() {
                     <p>제목: {devate?.title}</p>
                     <p>글쓴이: {devate?.author.name}</p>
                     <p>태그: {devate?.tag}</p>
+                    <p>
+                      찬성: {devate.yesCount}, 반대: {devate.noCount}
+                    </p>
+                    <p>덧글 수: {devate.comment.length}</p>
                   </a>
                 </div>
               )

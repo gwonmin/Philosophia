@@ -39,15 +39,28 @@ export default function MasterPage() {
       </div>
       <div>
         {[
+          { text: "유저 관련 페이지", to: "nothing" },
           { text: "로그인 페이지", to: "/login" },
           { text: "회원가입 페이지", to: "/register" },
-          { text: "토론 페이지", to: "/devates" },
           { text: "본인 확인 페이지", to: "/checkUser" },
           { text: "정보 수정 페이지", to: "/EditUserPage" },
+          { text: "메인 게시판", to: "nothing" },
+          { text: "토론 페이지", to: "/devates" },
           { text: "토론 추가 페이지", to: "/addDevate" },
+          { text: "니체 게시판 페이지", to: "/philosopher/nietzsche" },
+          { text: "데카르트 게시판 페이지", to: "/philosopher/descartes" },
+          { text: "플라톤 게시판 페이지", to: "/philosopher/plato" },
         ].map((route) => {
+          if (route.to === "nothing") {
+            return (
+              <p key={route.text} style={{ backgroundColor: "grey" }}>
+                {route.text}
+              </p>
+            )
+          }
           return (
             <button
+              key={route.to}
               onClick={() => {
                 navigate(route.to)
               }}

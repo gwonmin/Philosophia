@@ -27,6 +27,7 @@ async function post({
     | { email: string; password: string; name: string }
     | { userAuthNum: string; email: string }
     | { title: string; content: string; tag: string }
+    | { content: string }
 }) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
@@ -42,7 +43,7 @@ async function post({
   })
 }
 
-async function put({ endpoint, data }: { endpoint: string; data: any }) {
+async function put({ endpoint, data }: { endpoint: string; data?: any }) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
   const bodyData = JSON.stringify(data)

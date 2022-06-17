@@ -33,7 +33,7 @@ const DevateSchema = new Schema(
         comment: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'DevateComment' // 댓글 스키마 참조
+                ref: 'DevateComment', // 댓글 스키마 참조
             }
         ],
     },

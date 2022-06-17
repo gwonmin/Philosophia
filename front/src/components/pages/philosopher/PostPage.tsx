@@ -5,10 +5,10 @@ import { Container } from "@mui/material"
 import Header from "../../organisms/Header"
 import { UserStateContext } from "../RootPage"
 import * as Api from "../../../api"
-import EditDevatePage from "./EditDevatePage"
-import ReadDevatePage from "./ReadDevatePage"
+import EditPostPage from "./EditPostPage"
+import ReadPostPage from "./ReadPostPage"
 
-export default function DevatePage() {
+export default function PostPage() {
   const navigate = useNavigate()
   const params = useParams()
   const userState = useContext(UserStateContext)
@@ -20,22 +20,38 @@ export default function DevatePage() {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState(false)
-  const [devateInfo, setDevateInfo] = useState({
+  const [postInfo, setPostInfo] = useState({
     title: "",
     content: "",
-    tag: "",
     author: { _id: "", name: "", email: "" },
     createdAt: "",
     updatedAt: "",
-    yesCount: 0,
-    noCount: 0,
   })
 
-  const fetchDevate = async (devateId: string | undefined) => {
+  const postId = params.postId
+  const philosopher = params.who
+  const korName = () => {
+    switch (philosopher) {
+      case "nietzsche":
+        return "니체"
+      case "descartes":
+        return "데카르트"
+      case "plato":
+        return "플라톤"
+      default:
+        return "그런 철학자는 없습니다."
+    }
+  }
+
+  const fetchPost = async (postId: string | undefined) => {
+    if (!philosopher) {
+      console.log("URI 파라미터가 올바르지 않습니다.")
+      return
+    }
     try {
-      const res = await Api.get({ endpoint: "devates", params: devateId })
+      const res = await Api.get({ endpoint: philosopher, params: postId })
       if (res.data) {
-        setDevateInfo(res.data)
+        setPostInfo(res.data)
       }
       console.log("토론 정보를 정상적으로 받아왔습니다.", "color: #d93d1a;")
       console.log(res.data)
@@ -45,13 +61,11 @@ export default function DevatePage() {
     setIsFetchCompleted(true)
   }
 
-  const devateId = params.devateId
-
   useEffect(() => {
-    if (devateId) {
+    if (postId) {
       // URI에서 토론의 Id값을 받아옵니다.
-      console.log(devateId)
-      fetchDevate(devateId)
+      console.log(postId)
+      fetchPost(postId)
     } else {
       console.log("존재하지 않는 토론입니다.")
     }
@@ -66,9 +80,9 @@ export default function DevatePage() {
       <Header />
       <p>토론 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}</p>
       {isEditing ? (
-        <EditDevatePage setIsEditing={setIsEditing} devateInfo={devateInfo} setDevateInfo={setDevateInfo} />
+        <EditPostPage setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
       ) : (
-        <ReadDevatePage setIsEditing={setIsEditing} devateInfo={devateInfo} setSomethingWasChanged={setSomethingWasChanged} />
+        <ReadPostPage setIsEditing={setIsEditing} postInfo={postInfo} setSomethingWasChanged={setSomethingWasChanged} />
       )}
     </Container>
   )

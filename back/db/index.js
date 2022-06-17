@@ -10,7 +10,7 @@ import { Aristotle } from "./models/Aristotle";
 import { NietzscheComment } from "./models/NietzscheComment";
 import { AristotleComment } from "./models/AristotleComment";
 import { DescartesComment } from "./models/DescartesComment";
-
+import { Share } from "./models/Share";
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -30,5 +30,6 @@ import { DescartesComment } from "./models/DescartesComment";
 //   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 // );
 
-export { User, Token, Devate, DevateComment, Nietzsche, Descartes, Aristotle, NietzscheComment, AristotleComment, DescartesComment };
+export { User, Token, Devate, DevateComment, Share, Nietzsche, Descartes, Aristotle, NietzscheComment, AristotleComment, DescartesComment };
+
 
