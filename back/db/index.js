@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Token } from "./models/Token";
-import { Philosopher } from "./models/Philosopher";
-import { PhilosopherComment } from "./models/PhilosopherComment";
+import { Nietzsche } from "./models/Nietzsche";
+import { Descartes } from "./models/Descartes";
+import { Aristotle } from "./models/Aristotle";
+import { NietzscheComment } from "./models/NietzscheComment";
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -22,4 +24,4 @@ import { PhilosopherComment } from "./models/PhilosopherComment";
 //   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 // );
 
-export { User, Token, Philosopher, PhilosopherComment };
+export { User, Token, Nietzsche, Descartes, Aristotle, NietzscheComment };

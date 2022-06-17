@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { philosophercommentService } from "../services/philosophercommentService"; 
+import { nietzschecommentService } from "../services/nietzschecommentService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
 
@@ -12,7 +12,7 @@ philosophercommentRouter.post("/nietzschecomments", verifyToken, async function(
         const postId = req.query.postId;
         const { content } = req.body;
 
-        const newComment = await philosophercommentService.addComment({
+        const newComment = await nietzschecommentService.addComment({
             userId,
             postId,
             content
@@ -32,7 +32,7 @@ philosophercommentRouter.post("/nietzschecomments", verifyToken, async function(
 philosophercommentRouter.get('/nietzschecommentlist', verifyToken, async (req, res, next) => {
     try {
         const postId = req.query.postId;
-        const comments = await philosophercommentService.getComments({ postId });
+        const comments = await nietzschecommentService.getComments({ postId });
 
         res.status(200).send(comments);
     } catch (error) {
@@ -48,7 +48,7 @@ philosophercommentRouter.put('/nietzschecomments/:id', verifyToken, async (req, 
         const content = req.body.content ?? null;
 
         const toUpdate = { content };
-        const updatedComment = await philosophercommentService.setComment({
+        const updatedComment = await nietzschecommentService.setComment({
             userId,
             commentId,
             toUpdate,
@@ -65,10 +65,10 @@ philosophercommentRouter.put('/nietzschecomments/:id', verifyToken, async (req, 
 });
 
 // 니체 게시판 댓글 삭제
-philosophercommentRouter.delete('/descartescomments/:id', verifyToken, async (req, res, next) => {
+philosophercommentRouter.delete('/nietzschecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
-        const deletedComment = await philosophercommentService.deleteComment({
+        const deletedComment = await nietzschecommentService.deleteComment({
             commentId,
         });
 
