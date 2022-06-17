@@ -16,7 +16,7 @@ export default function RegisterTemplate({ register, userInfo }: { register?: bo
   }
 
   const Footer = () => {
-    return <p>푸터도 오게 될까요?</p>
+    return <p>푸터가 올 예정입니다.</p>
   }
   return (
     <Container component="main" maxWidth="xs">

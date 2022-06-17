@@ -23,8 +23,8 @@ export default function PostListPage() {
         return "니체"
       case "descartes":
         return "데카르트"
-      case "plato":
-        return "플라톤"
+      case "aristotle":
+        return "아리스토텔레스"
       default:
         return "그런 철학자는 없습니다."
     }
