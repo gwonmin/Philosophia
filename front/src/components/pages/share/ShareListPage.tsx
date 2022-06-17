@@ -44,29 +44,30 @@ export default function ShareListPage() {
     <div>
       <Container component="main" maxWidth="xs">
         <Header />
-        <p>토론 목록 페이지입니다.</p>
-        {shareList.length == 0 && <p>아직 토론이 없네요.</p>}
+        <p>글 목록 페이지입니다.</p>
+        {shareList.length == 0 && <p>아직 글이 없네요.</p>}
         {shareList != [] && (
           <div>
-            <p>토론 목록:</p>
+            <p>글 목록:</p>
             {shareList.map((share: any) => {
               return (
                 <div key={share?._id} style={{ backgroundColor: "grey" }}>
                   <a href={"/share/" + share?._id}>
-                    <p>제목: {share?.title}</p>
-                    <p>글쓴이: {share?.author.name}</p>
-                    <p>태그: {share?.tag}</p>
                     <p>
-                      찬성: {share.yesCount}, 반대: {share.noCount}
+                      철학자 {share.philosopher}가 생각하는 {share.subject}란?
                     </p>
-                    <p>덧글 수: {share.comment.length}</p>
+                    <p>본문: {share.content}</p>
+                    <p>
+                      좋아요 수: {share.like.length}
+                      <button>좋아요</button>
+                    </p>
                   </a>
                 </div>
               )
             })}
           </div>
         )}
-        {userState?.user && <button onClick={addPost}>토론을 만들어 볼까요?</button>}
+        {userState?.user && <button onClick={addPost}>글 공유하러 가기(임시)</button>}
       </Container>
     </div>
   )
