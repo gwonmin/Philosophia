@@ -50,6 +50,8 @@ export default function MasterPage() {
           { text: "니체 게시판 페이지", to: "/philosopher/nietzsche" },
           { text: "데카르트 게시판 페이지", to: "/philosopher/descartes" },
           { text: "플라톤 게시판 페이지", to: "/philosopher/plato" },
+          { text: "서브 게시판", to: "nothing" },
+          { text: "글 공유 게시판", to: "/share" },
         ].map((route) => {
           if (route.to === "nothing") {
             return (
