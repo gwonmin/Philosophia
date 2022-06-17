@@ -32,7 +32,7 @@ export default function ShareListPage() {
 
   useEffect(() => {
     fetchShareList()
-  }, [])
+  }, [somethingWasChanged])
 
   if (!isFetchCompleted) {
     return <p>loading...</p>
@@ -52,11 +52,24 @@ export default function ShareListPage() {
           <div>
             <p>글 목록:</p>
             {shareList.map((share: any) => {
-              return <ShareCard share={share} user={userState.user} setSomethingWasChanged={setSomethingWasChanged} />
+              return (
+                <ShareCard
+                  key={share._id}
+                  share={share}
+                  user={userState.user}
+                  somethingWasChanged={somethingWasChanged}
+                  setSomethingWasChanged={setSomethingWasChanged}
+                />
+              )
             })}
           </div>
         )}
-        {userState?.user && <button onClick={addPost}>글 공유하러 가기(임시)</button>}
+        {userState?.user && (
+          <p style={{ backgroundColor: "grey" }}>
+            여기서부터는 로그인한 유저에게만 보입니다. 나중에는 addPost를 누르면 AI 철학자 게시판으로 이동시켜야 합니다.
+            <button onClick={addPost}>글 공유하러 가기(임시)</button>
+          </p>
+        )}
       </Container>
     </div>
   )

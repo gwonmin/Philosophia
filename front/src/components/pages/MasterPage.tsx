@@ -7,6 +7,7 @@ export default function MasterPage() {
   const navigate = useNavigate()
   const dispatch = useContext(DispatchContext)
   const userState = useContext(UserStateContext)
+  console.log("dispatch", dispatch, "userState", userState)
   if (!userState || !dispatch) {
     return <p>user or dispatch do not exist...</p>
   }
