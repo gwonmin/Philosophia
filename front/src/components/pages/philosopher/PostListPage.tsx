@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
 import Header from "../../organisms/Header"
@@ -10,7 +10,7 @@ export default function PostListPage() {
   const navigate = useNavigate()
   const params = useParams()
   const userState = useContext(UserStateContext)
-
+  console.log(params)
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [postList, setPostList] = useState([])
 
@@ -23,8 +23,8 @@ export default function PostListPage() {
         return "니체"
       case "descartes":
         return "데카르트"
-      case "plato":
-        return "플라톤"
+      case "aristotle":
+        return "아리스토텔레스"
       default:
         return "그런 철학자는 없습니다."
     }
@@ -73,15 +73,10 @@ export default function PostListPage() {
             {postList.map((post: any) => {
               return (
                 <div key={post?._id} style={{ backgroundColor: "grey" }}>
-                  <a href={`/${philosopher}/` + post?._id}>
+                  <Link to={post?._id}>
                     <p>제목: {post?.title}</p>
-                    <p>글쓴이: {post?.author.name}</p>
-                    <p>태그: {post?.tag}</p>
-                    <p>
-                      찬성: {post.yesCount}, 반대: {post.noCount}
-                    </p>
                     <p>덧글 수: {post.comment.length}</p>
-                  </a>
+                  </Link>
                 </div>
               )
             })}

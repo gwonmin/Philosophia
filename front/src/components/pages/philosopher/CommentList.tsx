@@ -6,7 +6,7 @@ import * as Api from "../../../api"
 import { TextFieldAtom } from "../../atoms/textInputs"
 import CommentCard from "./CommentCard"
 
-export default function CommentList({ postId }: { postId: string }) {
+export default function CommentList({ postId, philosopher }: { postId: string; philosopher: string }) {
   const userState = useContext(UserStateContext)
 
   if (!userState) {
@@ -21,7 +21,7 @@ export default function CommentList({ postId }: { postId: string }) {
 
   const fetchComments = async (postId: string | undefined) => {
     try {
-      const res = await Api.get({ endpoint: "postcommentlist", params: `?postId=${postId}` })
+      const res = await Api.get({ endpoint: `${philosopher}commentlist`, params: `?postId=${postId}` })
       if (res.data) {
         setCommentList(res.data)
       }
@@ -49,7 +49,7 @@ export default function CommentList({ postId }: { postId: string }) {
   const commentHandler = async () => {
     try {
       const res = await Api.post({
-        endpoint: `postcomments/?postId=${postId}`,
+        endpoint: `${philosopher}comments/?postId=${postId}`,
         data: { content: newComment },
       })
       console.log("덧글을 등록했습니다.", res.data)
@@ -68,7 +68,15 @@ export default function CommentList({ postId }: { postId: string }) {
         <div>
           <p>덧글 목록({commentList.length}): </p>
           {commentList.map((comment: any) => {
-            return <CommentCard key={comment._id} comment={comment} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+            return (
+              <CommentCard
+                key={comment._id}
+                comment={comment}
+                philosopher={philosopher}
+                somethingWasChanged={somethingWasChanged}
+                setSomethingWasChanged={setSomethingWasChanged}
+              />
+            )
           })}
         </div>
       )}

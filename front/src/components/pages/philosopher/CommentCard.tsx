@@ -7,10 +7,12 @@ import { TextFieldAtom } from "../../atoms/textInputs"
 
 export default function CommentCard({
   comment,
+  philosopher,
   somethingWasChanged,
   setSomethingWasChanged,
 }: {
   comment: any
+  philosopher: string
   somethingWasChanged: any
   setSomethingWasChanged: any
 }) {
@@ -20,7 +22,7 @@ export default function CommentCard({
   const editHandler = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.put({ endpoint: `postcomments/${comment._id}`, data: { content: newComment } })
+      const res = await Api.put({ endpoint: `${philosopher}comments/${comment._id}`, data: { content: newComment } })
       console.log("수정에 성공했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
       setIsEditing(false)
@@ -31,7 +33,7 @@ export default function CommentCard({
 
   const deleteHandler = async () => {
     try {
-      const res = await Api.delete({ endpoint: "postcomments", params: String(comment._id) })
+      const res = await Api.delete({ endpoint: `${philosopher}comments`, params: String(comment._id) })
       console.log("덧글을 삭제했습니다.", res.data)
       setSomethingWasChanged(!somethingWasChanged)
     } catch (err) {
