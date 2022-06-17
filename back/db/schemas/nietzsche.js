@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const PhilosopherSchema = new Schema({
+const NietzscheSchema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User', // 유저 스키마 참조
@@ -17,7 +17,7 @@ const PhilosopherSchema = new Schema({
     comment: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'PhilosopherComment' // 댓글 스키마 참조
+            ref: 'NietzscheComment' // 댓글 스키마 참조
         }
     ],
     },
@@ -26,6 +26,6 @@ const PhilosopherSchema = new Schema({
     }
 );
 
-const PhilosopherModel = model("Philosopher", PhilosopherSchema);
+const NietzscheModel = model("Nietzsche", NietzscheSchema);
 
-export { PhilosopherModel };
+export { NietzscheModel };

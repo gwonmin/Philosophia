@@ -1,11 +1,11 @@
-import { Philosopher, User } from "../db";
+import { Nietzsche, User } from "../db";
 
-class philosopherService{
+class nietzscheService{
     //게시글 작성
     static async addPost({ userId, title, content }){
         const author = await User.findById({ userId });
         const newPost = { author, title, content };
-        const creatednewPost = await Philosopher.create({ newPost });
+        const creatednewPost = await Nietzsche.create({ newPost });
         creatednewPost.errorMessage = null;
 
         return creatednewPost;
@@ -13,7 +13,7 @@ class philosopherService{
 
     //게시글 상세 조회
     static async getPostInfo({ postId }){
-        const post = await Philosopher.findByPostId({ postId });
+        const post = await Nietzsche.findByPostId({ postId });
 
         if (!post) {
             const errorMessage = "해당 포스트가 없습니다.";
@@ -24,13 +24,13 @@ class philosopherService{
 
     //게시글 전체 조회
     static async getPostList(){
-        const posts = await Philosopher.findAll();
+        const posts = await Nietzsche.findAll();
         return posts;
     }
 
     //게시글 수정
     static async setPost({ userId, postId, toUpdate }){
-        let post = await Philosopher.findByPostId({ postId });
+        let post = await Nietzsche.findByPostId({ postId });
 
         if (!post) {
             const errorMessage = "해당 포스트가 없습니다.";
@@ -54,13 +54,13 @@ class philosopherService{
             title: toUpdate.title,
             content: toUpdate.content,
         };
-        post = await Philosopher.update({ postId, newValues });
+        post = await Nietzsche.update({ postId, newValues });
         return post;
     }
 
     //게시글 삭제
     static async deletePost({ userId, postId }){
-        const post = await Philosopher.delete({ postId });
+        const post = await Nietzsche.findByPostId({ postId });
         
         if (!post) {
             const errorMessage = '해당 포스트가 없습니다.';
@@ -68,13 +68,13 @@ class philosopherService{
         }
 
         if (post.author.id !== userId) {
-            const errorMessage = '자신이 작성한 게시글만 수정할 수 있습니다.';
+            const errorMessage = '자신이 작성한 게시글만 삭제할 수 있습니다.';
             return { errorMessage };
         }
-        
+        const res = await Nietzsche.delete({ postId });
         return { status: "success" };
     }
 
 }
 
-export { philosopherService };
+export { nietzscheService };
