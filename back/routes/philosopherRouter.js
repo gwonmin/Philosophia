@@ -157,14 +157,18 @@ philosopherRouter.get("/descartes", verifyToken, async function(req, res, next){
 philosopherRouter.put("/descartes/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
-        const uesrId = req.user;
+        const userId = req.user;
 
         const title = req.body.title ?? null;
         const content = req.body.content ?? null;
 
         const toUpdate = { title, content };
 
-        const updatedPost = await descartesService.setPost({ uesrId, postId, toUpdate });
+        const updatedPost = await descartesService.setPost({ 
+            userId, 
+            postId, 
+            toUpdate 
+        });
 
         if (updatedPost.errorMessage) {
             throw new Error(updatedPost.errorMessage);
@@ -255,7 +259,11 @@ philosopherRouter.put("/aristotle/:id", verifyToken, async function(req, res, ne
 
         const toUpdate = { title, content };
 
-        const updatedPost = await aristotleService.setPost({ userId, postId, toUpdate });
+        const updatedPost = await aristotleService.setPost({ 
+            userId, 
+            postId, 
+            toUpdate 
+        });
 
         if (updatedPost.errorMessage) {
             throw new Error(updatedPost.errorMessage);

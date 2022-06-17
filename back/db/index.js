@@ -5,6 +5,8 @@ import { Nietzsche } from "./models/Nietzsche";
 import { Descartes } from "./models/Descartes";
 import { Aristotle } from "./models/Aristotle";
 import { NietzscheComment } from "./models/NietzscheComment";
+import { AristotleComment } from "./models/AristotleComment";
+import { DescartesComment } from "./models/DescartesComment";
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -24,4 +26,4 @@ import { NietzscheComment } from "./models/NietzscheComment";
 //   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 // );
 
-export { User, Token, Nietzsche, Descartes, Aristotle, NietzscheComment };
+export { User, Token, Nietzsche, Descartes, Aristotle, NietzscheComment, AristotleComment, DescartesComment };

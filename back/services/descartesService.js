@@ -42,7 +42,6 @@ class descartesService{
             return { errorMessage };
         }
 
-
         if (!toUpdate.title) {
             toUpdate.title = post.title;
         }

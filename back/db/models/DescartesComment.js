@@ -1,15 +1,15 @@
-import { PhilosopherCommentModel } from "../schemas/philosophercomment";
+import { DescartesCommentModel } from "../schemas/descartescomment";
 import { userModel } from "../schemas/user";
 
-class PhilosopherComment{
+class DescartesComment{
     static async createComment({ author, postId, content }){
         const newComment = { author, postId, content };
-        const createdNewComment = await PhilosopherCommentModel.create(newComment);
+        const createdNewComment = await DescartesCommentModel.create(newComment);
         return createdNewComment;
     };
 
     static async findByCommentId({ commentId }){
-        const comment = await PhilosopherCommentModel.findOne({ _id: commentId });
+        const comment = await DescartesCommentModel.findOne({ _id: commentId });
 
         await userModel.populate(comment, {
             path: 'author',
@@ -19,7 +19,7 @@ class PhilosopherComment{
     };
 
     static async findByPostId({ postId }){
-        const comments = await PhilosopherCommentModel.find({ postId });
+        const comments = await DescartesCommentModel.find({ postId });
         return comments;
     };
 
@@ -28,14 +28,14 @@ class PhilosopherComment{
         const update = { $set: newValues };
         const option = { returnOriginal: false };
         
-        const comment = await PhilosopherCommentModel.findOneAndUpdate(filter, update, option);
+        const comment = await DescartesCommentModel.findOneAndUpdate(filter, update, option);
         return comment;
     }
 
     static async delete({ commentId }){
-        const deletedComment = await PhilosopherCommentModel.deleteOne({ _id: commentId });
+        const deletedComment = await DescartesCommentModel.deleteOne({ _id: commentId });
         return deletedComment;
     }
 }
 
-export { PhilosopherComment };
+export { DescartesComment };
