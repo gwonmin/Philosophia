@@ -4,12 +4,9 @@ import { User } from "./models/User";
 import { Token } from "./models/Token";
 import { Devate } from "./models/Devate"
 import { DevateComment } from "./models/DevateComment";
-<<<<<<< HEAD
 import { Share } from "./models/Share";
-=======
 import { Philosopher } from "./models/Philosopher";
 import { PhilosopherComment } from "./models/PhilosopherComment";
->>>>>>> c57265b50be1a54453876c32ab47cc037f80869c
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -29,10 +26,6 @@ import { PhilosopherComment } from "./models/PhilosopherComment";
 //   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 // );
 
-<<<<<<< HEAD
-export { User, Token, Devate, DevateComment, Share };
-=======
 
-export { User, Token, Devate, DevateComment, Philosopher, PhilosopherComment };
+export { User, Token, Devate, DevateComment, Share, Philosopher, PhilosopherComment };
 
->>>>>>> c57265b50be1a54453876c32ab47cc037f80869c
