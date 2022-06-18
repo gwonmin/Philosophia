@@ -18,6 +18,10 @@ import PostListPage from "./philosopher/PostListPage"
 import PostPage from "./philosopher/PostPage"
 import AddPostPage from "./philosopher/AddPostPage"
 
+import ShareListPage from "./share/ShareListPage"
+import AddSharePage from "./share/AddSharePage"
+import SharePage from "./share/SharePage"
+
 export const UserStateContext = createContext<{ user: User | null } | undefined>(undefined)
 export const DispatchContext = createContext<Dispatch<Action> | undefined>(undefined)
 
@@ -77,6 +81,9 @@ export default function RootPage() {
             <Route path="/philosopher/:who" element={<PostListPage />} />
             <Route path="/philosopher/:who/:postId" element={<PostPage />} />
             <Route path="/addPost/:who" element={<AddPostPage />} />
+            <Route path="/shares" element={<ShareListPage />} />
+            <Route path="/share/:shareId" element={<SharePage />} />
+            <Route path="/addShare" element={<AddSharePage />} />
           </Routes>
         </Router>
       </UserStateContext.Provider>

@@ -8,7 +8,7 @@ export default function Header() {
   const dispatch = useContext(DispatchContext)
   const userState = useContext(UserStateContext)
   if (!userState || !dispatch) {
-    return <p>user or dispatch do not exist...</p>
+    return <p>Header: user or dispatch do not exist...</p>
   }
 
   return (
