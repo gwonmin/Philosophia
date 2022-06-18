@@ -7,7 +7,7 @@ export default function MyRouter() {
       <BrowserRouter>
         <Routes>
           {ROUTES_ARR.map((el) => {
-            return <Route path={el.path} element={el.component} />
+            return <Route key={el.path ?? ""} path={el.path ?? ""} element={<el.component /> ?? <p>컴포넌트가 없습니다.</p>} />
           })}
         </Routes>
       </BrowserRouter>

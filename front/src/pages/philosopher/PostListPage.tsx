@@ -57,7 +57,7 @@ export default function PostListPage() {
   }
 
   const addPost = () => {
-    navigate(`/addPost/${philosopher}`, { replace: true })
+    navigate(`add`)
   }
 
   return (

@@ -32,7 +32,7 @@ export default function AddDevatePage() {
         data: devateInfo,
       })
 
-      navigate("/devates", { replace: true })
+      navigate(-1)
     } catch (err) {
       console.log("등록에 실패하였습니다.\n", err)
     }
@@ -49,7 +49,7 @@ export default function AddDevatePage() {
         <button onClick={postDevate}>토론 등록하기</button>
         <button
           onClick={() => {
-            navigate("/devates")
+            navigate(-1)
           }}
         >
           취소

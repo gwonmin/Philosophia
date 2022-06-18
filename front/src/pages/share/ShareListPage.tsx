@@ -39,7 +39,7 @@ export default function ShareListPage() {
   }
 
   const addPost = () => {
-    navigate("/addShare", { replace: true })
+    navigate("add")
   }
 
   return (

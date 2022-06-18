@@ -41,7 +41,7 @@ export default function SharePage() {
     setIsFetchCompleted(true)
   }
 
-  const shareId = params.shareId
+  const shareId = params.id
 
   useEffect(() => {
     if (shareId) {
@@ -77,7 +77,7 @@ export default function SharePage() {
       try {
         await Api.delete({ endpoint: "shares", params: shareId })
         console.log("글이 삭제되었습니다.")
-        navigate("/shares")
+        navigate(-1)
       } catch (err) {
         console.log("글 삭제에 실패했습니다.", err)
       }
@@ -97,7 +97,7 @@ export default function SharePage() {
       <p>좋아요 수: {shareInfo.like.length}</p>
       <button
         onClick={() => {
-          navigate("/shares")
+          navigate(-1)
         }}
       >
         목록

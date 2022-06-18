@@ -1,19 +1,21 @@
-import { Route } from "react-router-dom"
+import MasterPage from "../pages/MasterPage"
+
+import RegisterPage from "../pages/user/RegisterPage"
+import LoginPage from "../pages/user/LoginPage"
+import CheckUserPage from "../pages/user/CheckUserPage"
+import EditUserInfoPage from "../pages/user/EditUserInfoPage"
+
 import AddDevatePage from "../pages/devate/AddDevatePage"
 import DevateListPage from "../pages/devate/DevateListPage"
 import DevatePage from "../pages/devate/DevatePage"
-import MasterPage from "../pages/MasterPage"
+
 import AddPostPage from "../pages/philosopher/AddPostPage"
 import PostListPage from "../pages/philosopher/PostListPage"
 import PostPage from "../pages/philosopher/PostPage"
+
 import AddSharePage from "../pages/share/AddSharePage"
 import ShareListPage from "../pages/share/ShareListPage"
 import SharePage from "../pages/share/SharePage"
-import CheckUserPage from "../pages/user/CheckUserPage"
-
-import EditUserInfoPage from "../pages/user/EditUserInfoPage"
-import LoginPage from "../pages/user/LoginPage"
-import RegisterPage from "../pages/user/RegisterPage"
 
 import { RoutePath, ActionPath } from "./RoutesURL"
 
@@ -36,7 +38,7 @@ export const ROUTES: ROUTES_GROUP = {
     DEFAULT: {
       path: RoutePath.MASTER,
       component: MasterPage,
-      label: "마스터 페이지",
+      label: "마스터",
     },
   },
   USER: {
@@ -46,7 +48,7 @@ export const ROUTES: ROUTES_GROUP = {
       label: "마이",
     },
     REGISTER: {
-      path: ActionPath.ADD,
+      path: ActionPath.REGISTER,
       component: RegisterPage,
       label: "회원가입",
     },
@@ -133,7 +135,7 @@ for (const key in ROUTES) {
       ROUTES_ARR.push(ROUTES[key][index])
     } else {
       let newRoute = ROUTES[key][index]
-      newRoute.path = ROUTES[key].path + "/" + newRoute.path
+      newRoute.path = ROUTES[key]["DEFAULT"].path + "/" + newRoute.path
       ROUTES_ARR.push(newRoute)
     }
   }

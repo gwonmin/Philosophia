@@ -45,7 +45,7 @@ export default function DevatePage() {
     setIsFetchCompleted(true)
   }
 
-  const devateId = params.devateId
+  const devateId = params.id
 
   useEffect(() => {
     if (devateId) {

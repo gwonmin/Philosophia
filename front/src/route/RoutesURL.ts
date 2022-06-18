@@ -7,10 +7,11 @@ export enum RoutePath {
 }
 
 export enum ActionPath {
-  ADD = "add",
   LOGIN = "login",
-  EDIT = "edit",
+  REGISTER = "register",
   CHECK = "check",
+  ADD = "add",
+  EDIT = "edit",
   DETAIL = ":id",
   PHILOSOPHER = ":who",
 }

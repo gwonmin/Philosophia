@@ -28,7 +28,7 @@ export default function PostPage() {
     updatedAt: "",
   })
 
-  const postId = params.postId
+  const postId = params.id
   const philosopher = params.who
   const korName = () => {
     switch (philosopher) {
