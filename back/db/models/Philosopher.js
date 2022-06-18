@@ -1,5 +1,5 @@
 import { PhilosopherModel } from "../schemas/philosopher";
-import { NietzscheCommentModel } from "../schemas/nietzschecomment";
+import { PhilosopherCommentModel } from "../schemas/philosophercomment";
 
 class Philosopher{
     //입력받은 정보로 게시글 생성
@@ -11,7 +11,7 @@ class Philosopher{
     //게시글의 고유 id로 게시글 검색
     static async findByPostId({ postId }){
         const post = await PhilosopherModel.findOne({ _id: postId }).populate("author", "id name");
-        const comment = await NietzscheCommentModel.find({ postId: postId }).populate('author', 'id name');
+        const comment = await PhilosopherCommentModel.find({ postId: postId }).populate('author', 'id name');
         post.comment = comment;
 
         return post;
