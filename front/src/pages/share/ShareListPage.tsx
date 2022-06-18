@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
+import * as Api from "../../api"
 import ShareCard from "./ShareCard"
 
 export default function ShareListPage() {
@@ -39,7 +39,7 @@ export default function ShareListPage() {
   }
 
   const addPost = () => {
-    navigate("/addShare", { replace: true })
+    navigate("add")
   }
 
   return (

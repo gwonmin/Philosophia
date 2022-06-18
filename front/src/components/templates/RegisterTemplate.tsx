@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Container from "@mui/material/Container"
 
 import RegisterForm from "../organisms/RegisterForm"
@@ -22,7 +23,7 @@ export default function RegisterTemplate({ register, userInfo }: { register?: bo
     <Container component="main" maxWidth="xs">
       <Header />
       <RegisterForm register={register ?? true} userInfo={userInfo ?? initUser} />
-      {!register && <a href="/login">로그인</a>}
+      {!register && <Link to="/user/login">로그인</Link>}
       <Footer />
     </Container>
   )

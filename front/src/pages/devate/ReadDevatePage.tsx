@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
+import * as Api from "../../api"
 import CommentList from "./CommentList"
 
 export default function ReadDevatePage({
@@ -31,7 +31,7 @@ export default function ReadDevatePage({
       try {
         await Api.delete({ endpoint: "devates", params: devateId })
         console.log("토론이 삭제되었습니다.")
-        navigate("/devates")
+        navigate(-1)
       } catch (err) {
         console.log("토론 삭제에 실패했습니다.", err)
       }
@@ -82,7 +82,7 @@ export default function ReadDevatePage({
       <div>
         <button
           onClick={() => {
-            navigate("/devates")
+            navigate(-1)
           }}
         >
           목록

@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { UserStateContext, DispatchContext } from "../pages/RootPage"
+import { UserStateContext, DispatchContext } from "../../pages/RootPage"
 
 export default function Header() {
   const navigate = useNavigate()

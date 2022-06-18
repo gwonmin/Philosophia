@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
+import * as Api from "../../api"
 import CommentList from "./CommentList"
 
 export default function ReadPostPage({ setIsEditing, postInfo, setSomethingWasChanged }: { setIsEditing: any; postInfo: any; setSomethingWasChanged: any }) {
@@ -19,7 +19,7 @@ export default function ReadPostPage({ setIsEditing, postInfo, setSomethingWasCh
       try {
         await Api.delete({ endpoint: philosopher, params: postId })
         console.log("토론이 삭제되었습니다.")
-        navigate(`/philosopher/${philosopher}`)
+        navigate(-1)
       } catch (err) {
         console.log("토론 삭제에 실패했습니다.", err)
       }
@@ -39,7 +39,7 @@ export default function ReadPostPage({ setIsEditing, postInfo, setSomethingWasCh
       <div>
         <button
           onClick={() => {
-            navigate(`/philosopher/${params.who}`)
+            navigate(-1)
           }}
         >
           목록

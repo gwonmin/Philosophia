@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
-import { TextFieldAtom } from "../../atoms/textInputs"
+import * as Api from "../../api"
+import { TextFieldAtom } from "../../components/atoms/textInputs"
+import { Link } from "react-router-dom"
 
 export default function ShareCard({
   share,
@@ -31,13 +32,13 @@ export default function ShareCard({
   }
   return (
     <div style={{ backgroundColor: "grey" }}>
-      <a href={"/share/" + share?._id}>
+      <Link to={share?._id}>
         <p>
           철학자 {share.philosopher}가 생각하는 {share.subject}란?
         </p>
         <p>본문: {share.content.substr(0, 40)}...(중략)</p>
         <p>좋아요 수: {share.like.length}</p>
-      </a>
+      </Link>
       {user && (
         <div>
           <button onClick={likeHandler}>{didLike ? "좋아요 취소" : "좋아요"}</button>

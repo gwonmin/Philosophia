@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { DispatchContext } from "../RootPage"
-import * as Api from "../../../api"
-import { TextFieldAtom } from "../../atoms/textInputs"
+import * as Api from "../../api"
+import { TextFieldAtom } from "../../components/atoms/textInputs"
 
 export default function AddPostPage() {
   const navigate = useNavigate()
@@ -37,7 +37,7 @@ export default function AddPostPage() {
         data: postInfo,
       })
 
-      navigate(`/philosopher/${philosopher}`, { replace: true })
+      navigate(-1)
     } catch (err) {
       console.log("등록에 실패하였습니다.\n", err)
     }
@@ -47,13 +47,13 @@ export default function AddPostPage() {
     <div>
       <Container component="main" maxWidth="xs">
         <Header />
-        <p>토론 작성 페이지입니다.</p>
+        <p>{philosopher} 게시판 작성 페이지입니다.</p>
         <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
         <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
         <button onClick={postPost}>게시물 등록하기</button>
         <button
           onClick={() => {
-            navigate(`/philosopher/${philosopher}`)
+            navigate(-1)
           }}
         >
           취소

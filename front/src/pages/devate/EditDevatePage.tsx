@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { DispatchContext } from "../RootPage"
-import * as Api from "../../../api"
-import { TextFieldAtom } from "../../atoms/textInputs"
+import * as Api from "../../api"
+import { TextFieldAtom } from "../../components/atoms/textInputs"
 
 export default function EditDevatePage({ setIsEditing, devateInfo, setDevateInfo }: { setIsEditing: any; devateInfo: any; setDevateInfo: any }) {
   const navigate = useNavigate()
@@ -23,7 +23,7 @@ export default function EditDevatePage({ setIsEditing, devateInfo, setDevateInfo
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.put({ endpoint: `devates/${devateInfo._id}`, data: devateInfo })
       console.log("수정에 성공했습니다.")
-      navigate(`/devates/${devateInfo._id}`, { replace: true })
+      setIsEditing(false)
     } catch (err) {
       console.log("수정에 실패하였습니다.\n", err)
     }

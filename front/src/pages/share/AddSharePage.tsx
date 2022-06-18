@@ -2,8 +2,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
-import * as Api from "../../../api"
+import Header from "../../components/organisms/Header"
+import * as Api from "../../api"
 
 export default function AddSharePage(aiShare: any) {
   const navigate = useNavigate()
@@ -23,7 +23,7 @@ export default function AddSharePage(aiShare: any) {
         data: shareInfo,
       })
 
-      navigate("/shares", { replace: true })
+      navigate(-1)
     } catch (err) {
       console.log("등록에 실패하였습니다.\n", err)
     }
@@ -43,7 +43,7 @@ export default function AddSharePage(aiShare: any) {
         <button onClick={postShare}>공유하기</button>
         <button
           onClick={() => {
-            navigate("/shares")
+            navigate(-1)
           }}
         >
           취소
