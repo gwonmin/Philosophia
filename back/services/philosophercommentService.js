@@ -1,19 +1,19 @@
-import { AristotleComment, User } from "../db/";
+import { PhilosopherComment, User } from "../db/";
 
-class aristotlecommentService{
+class philosophercommentService{
     static async addComment({ userId, postId, content }){
         const author = await User.findById({ userId });
-        const createNewComment = await AristotleComment.createComment({ author, postId, content });
+        const createNewComment = await PhilosopherComment.createComment({ author, postId, content });
         return createNewComment;
     }
 
     static async getComments({ postId }){
-        const comments = await AristotleComment.findByPostId({ postId });
+        const comments = await PhilosopherComment.findByPostId({ postId });
         return comments;
     }
 
     static async setComment({ userId, commentId, toUpdate }){
-        let comment = await AristotleComment.findByCommentId({ commentId });
+        let comment = await PhilosopherComment.findByCommentId({ commentId });
         const author = await User.findById({ userId });
 
         if (!comment) {
@@ -32,21 +32,21 @@ class aristotlecommentService{
         const newValues = {
             content: toUpdate.content,
         };
-        comment = await AristotleComment.update({ commentId, newValues });
+        comment = await PhilosopherComment.update({ commentId, newValues });
 
         return comment;
     }
 
     static async deleteComment({ commentId }){
-        const comment = await AristotleComment.findByCommentId({ commentId });
+        const comment = await PhilosopherComment.findByCommentId({ commentId });
         if (!comment) {
             const errorMessage = '해당 댓글이 없습니다.';
             return { errorMessage };
         }
-        const deletedComment = await AristotleComment.delete({ commentId });
+        const deletedComment = await PhilosopherComment.delete({ commentId });
         return deletedComment;
 
     }
 }
 
-export { aristotlecommentService };
+export { philosophercommentService };

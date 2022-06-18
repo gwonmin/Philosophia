@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const DescartesCommentSchema = new Schema(
+const PhilosopherCommentSchema = new Schema(
     {
         author: {
             type: Schema.Types.ObjectId,
@@ -24,6 +24,6 @@ const DescartesCommentSchema = new Schema(
     }
 );
 
-const DescartesCommentModel = model('Descartescomment', DescartesCommentSchema);
+const PhilosopherCommentModel = model('Philosophercomment', PhilosopherCommentSchema);
 
-export { DescartesCommentModel };
+export { PhilosopherCommentModel };
