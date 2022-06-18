@@ -14,7 +14,7 @@ class Nietzsche{
     }
 
     static async findAll(){
-        const posts = await NietzscheModel.findAll({});
+        const posts = await NietzscheModel.find({});
         return posts;
     }
 
