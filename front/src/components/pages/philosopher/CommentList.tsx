@@ -26,6 +26,7 @@ export default function CommentList({ postId, philosopher }: { postId: string; p
         setCommentList(res.data)
       }
       console.log("덧글 정보를 정상적으로 받아왔습니다.", "color: #d93d1a;")
+      console.log(res.data)
     } catch {
       console.log("덧글 정보를 받아오는 데에 실패했습니다.", "color: #d93d1a;")
     }
