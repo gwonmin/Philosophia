@@ -1,7 +1,5 @@
 import { Router } from "express";
-import { nietzschecommentService } from "../services/nietzschecommentService";
-import { aristotlecommentService } from "../services/aristotlecommentService";
-import { descartescommentService } from "../services/descartescommentService";
+import { philosophercommentService } from "../services/philosophercommentService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
 
@@ -14,7 +12,7 @@ philosophercommentRouter.post("/nietzschecomments", verifyToken, async function(
         const postId = req.query.postId;
         const { content } = req.body;
 
-        const newComment = await nietzschecommentService.addComment({
+        const newComment = await philosophercommentService.addComment({
             userId,
             postId,
             content
@@ -34,7 +32,7 @@ philosophercommentRouter.post("/nietzschecomments", verifyToken, async function(
 philosophercommentRouter.get('/nietzschecommentlist', verifyToken, async (req, res, next) => {
     try {
         const postId = req.query.postId;
-        const comments = await nietzschecommentService.getComments({ postId });
+        const comments = await philosophercommentService.getComments({ postId });
 
         res.status(200).send(comments);
     } catch (error) {
@@ -50,7 +48,7 @@ philosophercommentRouter.put('/nietzschecomments/:id', verifyToken, async (req, 
         const content = req.body.content ?? null;
 
         const toUpdate = { content };
-        const updatedComment = await nietzschecommentService.setComment({
+        const updatedComment = await philosophercommentService.setComment({
             userId,
             commentId,
             toUpdate,
@@ -70,7 +68,7 @@ philosophercommentRouter.put('/nietzschecomments/:id', verifyToken, async (req, 
 philosophercommentRouter.delete('/nietzschecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
-        const deletedComment = await nietzschecommentService.deleteComment({
+        const deletedComment = await philosophercommentService.deleteComment({
             commentId,
         });
 
@@ -91,7 +89,7 @@ philosophercommentRouter.post("/descartescomments", verifyToken, async function(
         const postId = req.query.postId;
         const { content } = req.body;
 
-        const newComment = await descartescommentService.addComment({
+        const newComment = await philosophercommentService.addComment({
             userId,
             postId,
             content
@@ -111,7 +109,7 @@ philosophercommentRouter.post("/descartescomments", verifyToken, async function(
 philosophercommentRouter.get('/descartescommentlist', verifyToken, async (req, res, next) => {
     try {
         const postId = req.query.postId;
-        const comments = await descartescommentService.getComments({ postId });
+        const comments = await philosophercommentService.getComments({ postId });
 
         res.status(200).send(comments);
     } catch (error) {
@@ -127,7 +125,7 @@ philosophercommentRouter.put('/descartescomments/:id', verifyToken, async (req, 
         const content = req.body.content ?? null;
 
         const toUpdate = { content };
-        const updatedComment = await descartescommentService.setComment({
+        const updatedComment = await philosophercommentService.setComment({
             userId,
             commentId,
             toUpdate,
@@ -147,7 +145,7 @@ philosophercommentRouter.put('/descartescomments/:id', verifyToken, async (req, 
 philosophercommentRouter.delete('/descartescomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
-        const deletedComment = await descartescommentService.deleteComment({
+        const deletedComment = await philosophercommentService.deleteComment({
             commentId,
         });
 
@@ -168,7 +166,7 @@ philosophercommentRouter.post("/aristotlecomments", verifyToken, async function(
         const postId = req.query.postId;
         const { content } = req.body;
 
-        const newComment = await aristotlecommentService.addComment({
+        const newComment = await philosophercommentService.addComment({
             userId,
             postId,
             content
@@ -188,7 +186,7 @@ philosophercommentRouter.post("/aristotlecomments", verifyToken, async function(
 philosophercommentRouter.get('/aristotlecommentlist', verifyToken, async (req, res, next) => {
     try {
         const postId = req.query.postId;
-        const comments = await aristotlecommentService.getComments({ postId });
+        const comments = await philosophercommentService.getComments({ postId });
 
         res.status(200).send(comments);
     } catch (error) {
@@ -204,7 +202,7 @@ philosophercommentRouter.put('/aristotlecomments/:id', verifyToken, async (req, 
         const content = req.body.content ?? null;
 
         const toUpdate = { content };
-        const updatedComment = await aristotlecommentService.setComment({
+        const updatedComment = await philosophercommentService.setComment({
             userId,
             commentId,
             toUpdate,
@@ -224,7 +222,7 @@ philosophercommentRouter.put('/aristotlecomments/:id', verifyToken, async (req, 
 philosophercommentRouter.delete('/aristotlecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
-        const deletedComment = await aristotlecommentService.deleteComment({
+        const deletedComment = await philosophercommentService.deleteComment({
             commentId,
         });
 

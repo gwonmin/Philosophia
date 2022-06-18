@@ -1,6 +1,10 @@
 import { Schema, model } from "mongoose";
 
-const DescartesSchema = new Schema({
+const PhilosopherSchema = new Schema({
+    philosopherName:{
+        type: String,
+        required: true,
+    },
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User', // 유저 스키마 참조
@@ -17,7 +21,7 @@ const DescartesSchema = new Schema({
     comment: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'DescartesComment' // 댓글 스키마 참조
+            ref: 'NietzscheComment' // 댓글 스키마 참조
         }
     ],
     },
@@ -30,6 +34,6 @@ const DescartesSchema = new Schema({
     
 );
 
-const DescartesModel = model("Descartes", DescartesSchema);
+const PhilosopherModel = model("Philosopher", PhilosopherSchema);
 
-export { DescartesModel };
+export { PhilosopherModel };
