@@ -18,7 +18,7 @@ class Nietzsche{
     }
 
     static async findAll(){
-        const posts = await NietzscheModel.findAll({});
+        const posts = await NietzscheModel.find({}).populate('author', 'id name');
         return posts;
     }
 

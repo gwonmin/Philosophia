@@ -23,7 +23,11 @@ const DescartesSchema = new Schema({
     },
     {
         timestamps: true,
+    },
+    {
+        versionKey: false,
     }
+    
 );
 
 const DescartesModel = model("Descartes", DescartesSchema);

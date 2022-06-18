@@ -23,7 +23,11 @@ const NietzscheSchema = new Schema({
     },
     {
         timestamps: true,
+    },
+    {
+        versionKey: false,
     }
+    
 );
 
 const NietzscheModel = model("Nietzsche", NietzscheSchema);

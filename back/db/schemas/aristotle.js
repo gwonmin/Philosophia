@@ -23,7 +23,11 @@ const AristotleSchema = new Schema({
     },
     {
         timestamps: true,
+    },
+    {
+        versionKey: false,
     }
+    
 );
 
 const AristotleModel = model("Aristotle", AristotleSchema);

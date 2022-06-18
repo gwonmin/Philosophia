@@ -18,7 +18,7 @@ class Aristotle{
     }
 
     static async findAll(){
-        const posts = await AristotleModel.findAll({});
+        const posts = await AristotleModel.find({}).populate('author', 'id name');
         return posts;
     }
 

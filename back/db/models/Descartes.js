@@ -18,7 +18,7 @@ class Descartes{
     }
 
     static async findAll(){
-        const posts = await DescartesModel.findAll({});
+        const posts = await DescartesModel.find({}).populate('author', 'id name');
         return posts;
     }
 
