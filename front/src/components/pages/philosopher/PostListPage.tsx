@@ -10,7 +10,6 @@ export default function PostListPage() {
   const navigate = useNavigate()
   const params = useParams()
   const userState = useContext(UserStateContext)
-  console.log(params)
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [postList, setPostList] = useState([])
 
@@ -75,6 +74,7 @@ export default function PostListPage() {
                 <div key={post?._id} style={{ backgroundColor: "grey" }}>
                   <Link to={post?._id}>
                     <p>제목: {post?.title}</p>
+                    <p>글쓴이: {post.author.name}</p>
                     <p>덧글 수: {post.comment.length}</p>
                   </Link>
                 </div>
