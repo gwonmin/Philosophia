@@ -73,9 +73,8 @@ export default function CommentCard({
       )}{" "}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
-          <p>
-            작성자: {comment.author.name}({stance()})
-          </p>
+          <p>입장: ({stance()})</p>
+          <p>작성자: {comment.author.name}</p>
           <p>작성일: {comment.createdAt}</p>
           <p>내용: {comment.content}</p>
           <button onClick={deleteHandler}>삭제하기</button>

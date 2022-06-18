@@ -8,10 +8,12 @@ import CommentList from "./CommentList"
 export default function ReadDevatePage({
   setIsEditing,
   devateInfo,
+  somethingWasChanged,
   setSomethingWasChanged,
 }: {
   setIsEditing: any
   devateInfo: any
+  somethingWasChanged: any
   setSomethingWasChanged: any
 }) {
   const navigate = useNavigate()
@@ -40,33 +42,25 @@ export default function ReadDevatePage({
 
   const agreeHandler = async () => {
     if (didAgree) {
-      console.log("이미 찬성하였습니다.")
-      return
-    }
-    if (didDisagree) {
-      console.log("이미 반대하셨습니다.")
+      console.log("이미 찬성하셨습니다.")
       return
     }
     try {
-      const res = await Api.put({ endpoint: `devates/${devateId}/yes` })
-      setSomethingWasChanged(true)
+      const res = await Api.put({ endpoint: `devates/${devateId}/stance`, data: { stance: "1" } })
+      setSomethingWasChanged(!somethingWasChanged)
       console.log("찬성하였습니다.", res.data)
     } catch (err) {
       console.log("찬성에 실패했습니다.", err)
     }
   }
   const disagreeHandler = async () => {
-    if (didAgree) {
-      console.log("이미 찬성하였습니다.")
-      return
-    }
     if (didDisagree) {
-      console.log("이미 반대하셨습니다.")
+      console.log("이미 반대하였습니다.")
       return
     }
     try {
-      const res = await Api.put({ endpoint: `devates/${devateId}/no` })
-      setSomethingWasChanged(true)
+      const res = await Api.put({ endpoint: `devates/${devateId}/stance`, data: { stance: "0" } })
+      setSomethingWasChanged(!somethingWasChanged)
       console.log("반대하였습니다.", res.data)
     } catch (err) {
       console.log("반대에 실패했습니다.", err)
@@ -83,7 +77,7 @@ export default function ReadDevatePage({
       <p>내용: {devateInfo.content}</p>
       <p>태그: {devateInfo.tag}</p>
       <p>
-        찬성: {devateInfo.yesCount}, 반대: {devateInfo.noCount}
+        찬성: {devateInfo.yes.length}, 반대: {devateInfo.no.length}
       </p>
       <div>
         <button
