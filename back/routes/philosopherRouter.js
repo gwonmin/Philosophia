@@ -1,7 +1,4 @@
 import { Router } from "express";
-import { nietzscheService } from "../services/nietzscheService";
-import { descartesService } from "../services/descartesService";
-import { aristotleService } from "../services/aristotleService";
 import { philosopherService } from "../services/philosopherService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";

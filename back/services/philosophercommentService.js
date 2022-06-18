@@ -43,13 +43,8 @@ class philosophercommentService{
             const errorMessage = '해당 댓글이 없습니다.';
             return { errorMessage };
         }
-<<<<<<< HEAD:back/services/aristotlecommentService.js
-        const deletedComment = await AristotleComment.delete({ comment });
-=======
         const deletedComment = await PhilosopherComment.delete({ commentId });
->>>>>>> be_philosopher_js:back/services/philosophercommentService.js
         return deletedComment;
-
     }
 }
 
