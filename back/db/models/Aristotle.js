@@ -1,4 +1,5 @@
 import { AristotleModel } from "../schemas/aristotle";
+import { AristotleCommentModel } from "../schemas/aristotlecomment"
 
 class Aristotle{
     //입력받은 정보로 게시글 생성
@@ -10,6 +11,9 @@ class Aristotle{
     //게시글의 고유 id로 게시글 검색
     static async findByPostId({ postId }){
         const post = await AristotleModel.findOne({ _id: postId }).populate("author", "id email name");
+        const comment = await AristotleCommentModel.find({ postId: postId }).populate('author', 'id name');
+        post.comment = comment;
+
         return post;
     }
 
