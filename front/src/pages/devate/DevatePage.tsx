@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
+import * as Api from "../../api"
 import EditDevatePage from "./EditDevatePage"
 import ReadDevatePage from "./ReadDevatePage"
 
@@ -45,7 +45,7 @@ export default function DevatePage() {
     setIsFetchCompleted(true)
   }
 
-  const devateId = params.devateId
+  const devateId = params.id
 
   useEffect(() => {
     if (devateId) {

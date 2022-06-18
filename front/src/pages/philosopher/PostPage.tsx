@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
+import * as Api from "../../api"
 import EditPostPage from "./EditPostPage"
 import ReadPostPage from "./ReadPostPage"
 
@@ -28,7 +28,7 @@ export default function PostPage() {
     updatedAt: "",
   })
 
-  const postId = params.postId
+  const postId = params.id
   const philosopher = params.who
   const korName = () => {
     switch (philosopher) {

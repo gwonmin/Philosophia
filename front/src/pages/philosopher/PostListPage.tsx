@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
+import * as Api from "../../api"
 
 export default function PostListPage() {
   const navigate = useNavigate()
@@ -57,7 +57,7 @@ export default function PostListPage() {
   }
 
   const addPost = () => {
-    navigate(`/addPost/${philosopher}`, { replace: true })
+    navigate(`add`)
   }
 
   return (

@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography"
 import * as Api from "../../api"
 
 import { GreenButton } from "../atoms/buttons"
-import { DispatchContext } from "../pages/RootPage"
+import { DispatchContext } from "../../pages/RootPage"
 import { NoticeTextField } from "../molecules/certification"
 
 export default function LoginForm({ login, userInfo }: { login: boolean; userInfo: { email: string; password: string; name: string } }) {
@@ -95,7 +95,7 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
       console.log(jwtToken)
 
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", String(jwtToken))
+      sessionStorage.setItem("userToken", jwtToken)
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       if (!dispatch) {
         console.log("Dispatch가 존재하지 않습니다.")

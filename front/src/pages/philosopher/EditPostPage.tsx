@@ -2,14 +2,12 @@ import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { DispatchContext } from "../RootPage"
-import * as Api from "../../../api"
-import { TextFieldAtom } from "../../atoms/textInputs"
+import * as Api from "../../api"
+import { TextFieldAtom } from "../../components/atoms/textInputs"
 
 export default function EditPostPage({ setIsEditing, postInfo, setPostInfo }: { setIsEditing: any; postInfo: any; setPostInfo: any }) {
-  const navigate = useNavigate()
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setPostInfo({
@@ -23,7 +21,7 @@ export default function EditPostPage({ setIsEditing, postInfo, setPostInfo }: { 
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.put({ endpoint: `posts/${postInfo._id}`, data: postInfo })
       console.log("수정에 성공했습니다.")
-      navigate("/posts", { replace: true })
+      setIsEditing(false)
     } catch (err) {
       console.log("수정에 실패하였습니다.\n", err)
     }
