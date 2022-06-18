@@ -52,7 +52,7 @@ export default function DevateListPage() {
             {devateList.map((devate: any) => {
               return (
                 <div key={devate?._id} style={{ backgroundColor: "grey" }}>
-                  <a href={"/devate/" + devate?._id}>
+                  <a href={"/devates/" + devate?._id}>
                     <p>제목: {devate?.title}</p>
                     <p>글쓴이: {devate?.author.name}</p>
                     <p>태그: {devate?.tag}</p>

@@ -23,7 +23,7 @@ export default function EditDevatePage({ setIsEditing, devateInfo, setDevateInfo
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.put({ endpoint: `devates/${devateInfo._id}`, data: devateInfo })
       console.log("수정에 성공했습니다.")
-      navigate("/devates", { replace: true })
+      navigate(`/devates/${devateInfo._id}`, { replace: true })
     } catch (err) {
       console.log("수정에 실패하였습니다.\n", err)
     }

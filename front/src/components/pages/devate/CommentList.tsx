@@ -59,7 +59,6 @@ export default function CommentList({ devateId, yesList, noList }: { devateId: s
       console.log("덧글 등록에 실패했습니다.", err)
     }
   }
-  console.log("comments", commentList)
 
   return (
     <Container>

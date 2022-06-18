@@ -68,7 +68,12 @@ export default function DevatePage() {
       {isEditing ? (
         <EditDevatePage setIsEditing={setIsEditing} devateInfo={devateInfo} setDevateInfo={setDevateInfo} />
       ) : (
-        <ReadDevatePage setIsEditing={setIsEditing} devateInfo={devateInfo} setSomethingWasChanged={setSomethingWasChanged} />
+        <ReadDevatePage
+          setIsEditing={setIsEditing}
+          devateInfo={devateInfo}
+          somethingWasChanged={somethingWasChanged}
+          setSomethingWasChanged={setSomethingWasChanged}
+        />
       )}
     </Container>
   )
