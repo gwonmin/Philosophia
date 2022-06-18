@@ -43,7 +43,7 @@ class nietzschecommentService{
             const errorMessage = '해당 댓글이 없습니다.';
             return { errorMessage };
         }
-        const deletedComment = await NietzscheComment.delete({ commentId });
+        const deletedComment = await NietzscheComment.delete({ comment });
         return deletedComment;
 
     }

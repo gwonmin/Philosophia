@@ -43,7 +43,7 @@ class descartescommentService{
             const errorMessage = '해당 댓글이 없습니다.';
             return { errorMessage };
         }
-        const deletedComment = await DescartesComment.delete({ commentId });
+        const deletedComment = await DescartesComment.delete({ comment });
         return deletedComment;
 
     }
