@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography"
 import * as Api from "../../api"
 
 import { GreenButton } from "../atoms/buttons"
-import { DispatchContext } from "../pages/RootPage"
+import { DispatchContext } from "../../pages/RootPage"
 import { NoticeTextField } from "../molecules/certification"
 
 export default function LoginForm({ login, userInfo }: { login: boolean; userInfo: { email: string; password: string; name: string } }) {

@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
+import * as Api from "../../api"
 import CommentList from "./CommentList"
 
 export default function ReadPostPage({ setIsEditing, postInfo, setSomethingWasChanged }: { setIsEditing: any; postInfo: any; setSomethingWasChanged: any }) {

@@ -2,8 +2,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
-import * as Api from "../../../api"
+import Header from "../../components/organisms/Header"
+import * as Api from "../../api"
 
 export default function AddSharePage(aiShare: any) {
   const navigate = useNavigate()

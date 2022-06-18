@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { DispatchContext } from "../RootPage"
-import * as Api from "../../../api"
-import { TextFieldAtom } from "../../atoms/textInputs"
+import * as Api from "../../api"
+import { TextFieldAtom } from "../../components/atoms/textInputs"
 
 export default function EditPostPage({ setIsEditing, postInfo, setPostInfo }: { setIsEditing: any; postInfo: any; setPostInfo: any }) {
   const navigate = useNavigate()

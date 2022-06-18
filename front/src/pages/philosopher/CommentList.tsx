@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
-import { TextFieldAtom } from "../../atoms/textInputs"
+import * as Api from "../../api"
+import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./CommentCard"
 
 export default function CommentList({ postId, philosopher }: { postId: string; philosopher: string }) {
