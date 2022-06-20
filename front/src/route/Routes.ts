@@ -19,15 +19,19 @@ import SharePage from "../pages/share/SharePage"
 
 import { RoutePath, ActionPath } from "./RoutesURL"
 
+//배열화를 위해 인덱스 시그니쳐 설정
+interface INDEX_SIGNITURE {
+  [key: string]: any
+}
+
+//가장 기본적인 최소 타입 정의
 interface ROUTE {
   path: string | undefined
   component: any
   label: string
 }
-interface INDEX_SIGNITURE {
-  [key: string]: any
-}
 
+//타입별 서브 루트 명시
 interface ALL_ROUTE extends INDEX_SIGNITURE {
   DEFAULT: ROUTE
 }
@@ -45,6 +49,7 @@ interface PHILOSOPHER_ROUTE extends COMMON_ROUTE {
   PHILOSOPHER: ROUTE
 }
 
+//메인 루트 목록 명시
 interface ROUTES_GROUP extends INDEX_SIGNITURE {
   MASTER: ALL_ROUTE
   USER: USER_ROUTE
