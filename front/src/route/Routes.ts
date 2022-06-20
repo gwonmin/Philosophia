@@ -19,18 +19,38 @@ import SharePage from "../pages/share/SharePage"
 
 import { RoutePath, ActionPath } from "./RoutesURL"
 
-interface SUB_ROUTES {
+interface ROUTE {
   path: string | undefined
   component: any
   label: string
 }
-
-interface ROUTE_TYPE {
-  [index: string]: SUB_ROUTES
+interface INDEX_SIGNITURE {
+  [key: string]: any
 }
 
-interface ROUTES_GROUP {
-  [index: string]: ROUTE_TYPE
+interface ALL_ROUTE extends INDEX_SIGNITURE {
+  DEFAULT: ROUTE
+}
+interface COMMON_ROUTE extends ALL_ROUTE {
+  POST: ROUTE
+  DETAIL: ROUTE
+}
+interface USER_ROUTE extends ALL_ROUTE {
+  REGISTER: ROUTE
+  LOGIN: ROUTE
+  EDIT: ROUTE
+  CHECK: ROUTE
+}
+interface PHILOSOPHER_ROUTE extends COMMON_ROUTE {
+  PHILOSOPHER: ROUTE
+}
+
+interface ROUTES_GROUP extends INDEX_SIGNITURE {
+  MASTER: ALL_ROUTE
+  USER: USER_ROUTE
+  DEVATES: COMMON_ROUTE
+  PHILOSOPHER: PHILOSOPHER_ROUTE
+  SHARE: COMMON_ROUTE
 }
 
 export const ROUTES: ROUTES_GROUP = {
