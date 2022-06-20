@@ -6,7 +6,7 @@ import CheckUserPage from "../pages/user/CheckUserPage"
 import EditUserInfoPage from "../pages/user/EditUserInfoPage"
 
 import AddDevatePage from "../pages/devate/AddDevatePage"
-import DevateListPage from "../pages/devate/DevateListPage"
+import DevatesPage from "../pages/devate/DevatesPage"
 import DevatePage from "../pages/devate/DevatePage"
 
 import AddPostPage from "../pages/philosopher/AddPostPage"
@@ -33,8 +33,10 @@ interface ROUTE {
 
 //타입별 서브 루트 명시
 interface ALL_ROUTE extends INDEX_SIGNITURE {
+  type: string
   DEFAULT: ROUTE
 }
+
 interface COMMON_ROUTE extends ALL_ROUTE {
   POST: ROUTE
   DETAIL: ROUTE
@@ -60,6 +62,7 @@ interface ROUTES_GROUP extends INDEX_SIGNITURE {
 
 export const ROUTES: ROUTES_GROUP = {
   MASTER: {
+    type: "MASTER",
     DEFAULT: {
       path: RoutePath.MASTER,
       component: MasterPage,
@@ -67,6 +70,7 @@ export const ROUTES: ROUTES_GROUP = {
     },
   },
   USER: {
+    type: "USER",
     DEFAULT: {
       path: RoutePath.USER,
       component: undefined,
@@ -94,9 +98,10 @@ export const ROUTES: ROUTES_GROUP = {
     },
   },
   DEVATES: {
+    type: "COMMON",
     DEFAULT: {
       path: RoutePath.DEVATES,
-      component: DevateListPage,
+      component: DevatesPage,
       label: "토론 목록",
     },
     POST: {
@@ -111,6 +116,7 @@ export const ROUTES: ROUTES_GROUP = {
     },
   },
   PHILOSOPHER: {
+    type: "PHILOSOPHER",
     DEFAULT: {
       path: RoutePath.PHILOSOPHER,
       component: PostListPage,
@@ -133,6 +139,7 @@ export const ROUTES: ROUTES_GROUP = {
     },
   },
   SHARE: {
+    type: "COMMON",
     DEFAULT: {
       path: RoutePath.SHARE,
       component: ShareListPage,
@@ -156,7 +163,8 @@ export const ROUTES: ROUTES_GROUP = {
 export const ROUTES_ARR: any[] = []
 for (const key in ROUTES) {
   for (const index in ROUTES[key]) {
-    if (index === "DEFAULT") {
+    if (index === "type") {
+    } else if (index === "DEFAULT") {
       ROUTES_ARR.push(ROUTES[key][index])
     } else {
       let newRoute = ROUTES[key][index]

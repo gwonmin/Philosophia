@@ -5,39 +5,29 @@ import { Container } from "@mui/material"
 import Header from "../../components/organisms/Header"
 import { UserStateContext } from "../RootPage"
 import * as Api from "../../api"
+import { ROUTES } from "../../route/Routes"
+import { fetch } from "../../util"
 
-export default function DevateListPage() {
+export default function DevatesPage() {
+  //변수 초기화
+  const currentPage = ROUTES.DEVATES
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
-
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [devateList, setDevateList] = useState([])
-
-  const fetchDevateList = async () => {
-    try {
-      // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
-      const res = await Api.get({ endpoint: "devates" })
-      if (res.data) {
-        setDevateList(res.data)
-      }
-      console.log("토론 목록을 정상적으로 받아왔습니다.", "color: #d93d1a;")
-      console.log(res.data)
-    } catch {
-      console.log("토론 목록을 받아오는 데에 실패했습니다.", "color: #d93d1a;")
-    }
-    setIsFetchCompleted(true)
-  }
-
+  //초기화 확인
+  console.log("currentPage: ", currentPage)
+  console.log("userState: ", userState)
+  //fetch
   useEffect(() => {
-    fetchDevateList()
+    fetch({
+      endpoint: "devates",
+      setValue: setDevateList,
+      callback: setIsFetchCompleted,
+    })
   }, [])
-
   if (!isFetchCompleted) {
     return <p>loading...</p>
-  }
-
-  const addPost = () => {
-    navigate("add")
   }
 
   return (
@@ -66,7 +56,15 @@ export default function DevateListPage() {
             })}
           </div>
         )}
-        {userState?.user && <button onClick={addPost}>토론을 만들어 볼까요?</button>}
+        {userState?.user && (
+          <button
+            onClick={() => {
+              navigate("add")
+            }}
+          >
+            토론을 만들어 볼까요?
+          </button>
+        )}
       </Container>
     </div>
   )
