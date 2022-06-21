@@ -10,7 +10,7 @@ const upload = require("../modules/multer");
 dataRouter.post("/data", verifyToken, async function(req, res, next){
     try{
         const userId = req.user;
-        const { title, content } = req.body;
+        const { title, content, filePath } = req.body;
 
         if (!title || !content){
             throw new Error("제목과 내용을 입력해주세요.");
@@ -20,6 +20,7 @@ dataRouter.post("/data", verifyToken, async function(req, res, next){
             userId,
             title,
             content,
+            filePath,
         });
 
         if (newPost.errorMessage) {

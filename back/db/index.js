@@ -7,6 +7,7 @@ import { DevateComment } from "./models/DevateComment";
 import { Philosopher } from "./models/Philosopher";
 import { PhilosopherComment } from "./models/PhilosopherComment";
 import { Data } from "./models/Data";
+import { DataComment } from "./models/DataComment";
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -27,5 +28,5 @@ import { Data } from "./models/Data";
 // );
 
 
-export { User, Token, Devate, DevateComment, Philosopher, PhilosopherComment, Data };
+export { User, Token, Devate, DevateComment, Philosopher, PhilosopherComment, Data, DataComment };
 

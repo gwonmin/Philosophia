@@ -14,6 +14,7 @@ import { devatecommentRouter } from './routes/devatecommentRouter';
 import { philosopherRouter } from './routes/philosopherRouter';
 import { philosophercommentRouter } from './routes/philosopherCommentRouter';
 import { dataRouter } from './routes/dataRouter';
+import { datacommentRouter } from './routes/datacommentRouter';
 
 var app = express();
 app.use(cors());
@@ -37,6 +38,7 @@ app.use(devatecommentRouter);
 app.use(philosopherRouter);
 app.use(philosophercommentRouter);
 app.use(dataRouter);
+app.use(datacommentRouter);
 
 
 // catch 404 and forward to error handler

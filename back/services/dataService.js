@@ -2,9 +2,9 @@ import { Data, User } from "../db";
 
 class dataService{
     //게시글 작성
-    static async addPost({ userId, title, content }){
+    static async addPost({ userId, title, content, filePath }){
         const author = await User.findById({ userId });
-        const newPost = { author, title, content };
+        const newPost = { author, title, content, filePath };
         const creatednewPost = await Data.create({ newPost });
         creatednewPost.errorMessage = null;
 
