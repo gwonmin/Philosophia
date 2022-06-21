@@ -38,12 +38,8 @@ app.use(devatecommentRouter);
 app.use(shareRouter);
 app.use(philosopherRouter);
 app.use(philosophercommentRouter);
-<<<<<<< HEAD
-
-=======
 app.use(freetopicRouter);
 app.use(freetopiccommentRouter);
->>>>>>> e018c31e0043ec3800dacaf660ab56b2ebdb7cf2
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
