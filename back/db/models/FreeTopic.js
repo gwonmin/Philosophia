@@ -1,5 +1,5 @@
 import { FreeTopicModel } from '../schemas/freetopic';
-// import { FreeTopicCommentModel } from '../schemas/freetopiccomment';
+import { FreeTopicCommentModel } from '../schemas/freetopiccomment';
 import { userModel } from '../schemas/user';
 
 class FreeTopic {
@@ -10,8 +10,8 @@ class FreeTopic {
 
   static async findByPostId({ postId }) {
     const post = await FreeTopicModel.findOne({ _id: postId }).populate('author', 'id name');
-    // const comment = await FreeTopicCommentModel.find({ postId: postId }).populate('author', 'id name');
-    // post.comment = comment;
+    const comment = await FreeTopicCommentModel.find({ postId: postId }).populate('author', 'id name');
+    post.comment = comment;
     return post;
   }
 
