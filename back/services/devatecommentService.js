@@ -36,8 +36,14 @@ class devatecommentService {
             const errorMessage = '해당 댓글이 없습니다.';
             return { errorMessage };
         }
-        const deletedComment = await DevateComment.delete({ commentId });
+        const deletedComment = await DevateComment.delete({ comment });
         return deletedComment;
+    }
+
+    // 1개 댓글
+    static async getComment({ commentId }) {
+        const comment = await DevateComment.findByCommentId({ commentId });
+        return comment;
     }
 
     // 게시글의 모든 댓글

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { philosophercommentService } from "../services/philosophercommentService"; 
+import { philosophercommentService } from "../services/philosophercommentService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
 
@@ -65,7 +65,7 @@ philosophercommentRouter.put('/nietzschecomments/:id', verifyToken, async (req, 
 });
 
 // 니체 게시판 댓글 삭제
-philosophercommentRouter.delete('/descartescomments/:id', verifyToken, async (req, res, next) => {
+philosophercommentRouter.delete('/nietzschecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
         const deletedComment = await philosophercommentService.deleteComment({
@@ -159,8 +159,8 @@ philosophercommentRouter.delete('/descartescomments/:id', verifyToken, async (re
 });
 
 
-// 플라톤 게시판 댓글 작성
-philosophercommentRouter.post("/platocomments", verifyToken, async function(req, res, next){
+// 아리스토텔레스 게시판 댓글 작성
+philosophercommentRouter.post("/aristotlecomments", verifyToken, async function(req, res, next){
     try {
         const userId = req.user;
         const postId = req.query.postId;
@@ -182,8 +182,8 @@ philosophercommentRouter.post("/platocomments", verifyToken, async function(req,
     }
 });
 
-// 플라톤 게시판 게시글 1개 댓글 조회
-philosophercommentRouter.get('/platocommentlist', verifyToken, async (req, res, next) => {
+// 아리스토텔레스 게시판 게시글 1개 댓글 조회
+philosophercommentRouter.get('/aristotlecommentlist', verifyToken, async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await philosophercommentService.getComments({ postId });
@@ -194,8 +194,8 @@ philosophercommentRouter.get('/platocommentlist', verifyToken, async (req, res, 
     }
 });
 
-// 플라톤 게시판 댓글 수정
-philosophercommentRouter.put('/platocomments/:id', verifyToken, async (req, res, next) => {
+// 아리스토텔레스 게시판 댓글 수정
+philosophercommentRouter.put('/aristotlecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const userId = req.user;
         const commentId = req.params.id;
@@ -218,8 +218,8 @@ philosophercommentRouter.put('/platocomments/:id', verifyToken, async (req, res,
     }
 });
 
-// 플라톤 게시판 댓글 삭제
-philosophercommentRouter.delete('/platocomments/:id', verifyToken, async (req, res, next) => {
+// 아리스토텔레스 게시판 댓글 삭제
+philosophercommentRouter.delete('/aristotlecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
         const deletedComment = await philosophercommentService.deleteComment({

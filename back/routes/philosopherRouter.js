@@ -10,12 +10,14 @@ philosopherRouter.post("/nietzsche", verifyToken, async function(req, res, next)
     try{
         const userId = req.user;
         const { title, content } = req.body;
+        const philosopherName = '니체';
 
         if (!title || !content){
             throw new Error("제목과 내용을 입력해주세요.");
         };
 
         const newPost = await philosopherService.addPost({
+            philosopherName,
             userId,
             title,
             content,
@@ -49,7 +51,8 @@ philosopherRouter.get("/nietzsche/:id", verifyToken, async function(req, res, ne
 // 니체 게시판 게시글 전체 조회
 philosopherRouter.get("/nietzsche", verifyToken, async function(req, res, next){
     try{
-        const posts = await philosopherService.getPostList();
+        const philosopherName = '니체';
+        const posts = await philosopherService.getPostList({ philosopherName });
         res.status(200).send(posts);
     } catch (error){
         next(error);
@@ -104,6 +107,7 @@ philosopherRouter.delete("/nietzsche/:id", verifyToken, async function(req, res,
 philosopherRouter.post("/descartes", verifyToken, async function(req, res, next){
     try{
         const userId = req.user;
+        const philosopherName = '데카르트';
         const { title, content } = req.body;
 
         if (!title || !content){
@@ -111,6 +115,7 @@ philosopherRouter.post("/descartes", verifyToken, async function(req, res, next)
         };
 
         const newPost = await philosopherService.addPost({
+            philosopherName,
             userId,
             title,
             content,
@@ -144,7 +149,8 @@ philosopherRouter.get("/descartes/:id", verifyToken, async function(req, res, ne
 // 데카르트 게시판 게시글 전체 조회
 philosopherRouter.get("/descartes", verifyToken, async function(req, res, next){
     try{
-        const posts = await philosopherService.getPostList();
+        const philosopherName = '데카르트';
+        const posts = await philosopherService.getPostList({ philosopherName });
         res.status(200).send(posts);
     } catch (error){
         next(error);
@@ -155,14 +161,18 @@ philosopherRouter.get("/descartes", verifyToken, async function(req, res, next){
 philosopherRouter.put("/descartes/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
-        const uesrId = req.user;
+        const userId = req.user;
 
         const title = req.body.title ?? null;
         const content = req.body.content ?? null;
 
         const toUpdate = { title, content };
 
-        const updatedPost = await philosopherService.setPost({ uesrId, postId, toUpdate });
+        const updatedPost = await philosopherService.setPost({ 
+            userId, 
+            postId, 
+            toUpdate 
+        });
 
         if (updatedPost.errorMessage) {
             throw new Error(updatedPost.errorMessage);
@@ -191,10 +201,11 @@ philosopherRouter.delete("/descartes/:id", verifyToken, async function(req, res,
 });
 
 
-// 플라톤 게시판 게시글 작성
-philosopherRouter.post("/plato", verifyToken, async function(req, res, next){
+// 아리스토텔레스 게시판 게시글 작성
+philosopherRouter.post("/aristotle", verifyToken, async function(req, res, next){
     try{
         const userId = req.user;
+        const philosopherName = '아리스토텔레스';
         const { title, content } = req.body;
 
         if (!title || !content){
@@ -202,6 +213,7 @@ philosopherRouter.post("/plato", verifyToken, async function(req, res, next){
         };
 
         const newPost = await philosopherService.addPost({
+            philosopherName,
             userId,
             title,
             content,
@@ -216,8 +228,8 @@ philosopherRouter.post("/plato", verifyToken, async function(req, res, next){
         };
 });
 
-// 플라톤 게시판 게시글 상세 조회
-philosopherRouter.get("/plato/:id", verifyToken, async function(req, res, next){
+// 아리스토텔레스 게시판 게시글 상세 조회
+philosopherRouter.get("/aristotle/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await philosopherService.getPostInfo({ postId });
@@ -232,18 +244,19 @@ philosopherRouter.get("/plato/:id", verifyToken, async function(req, res, next){
     };
 });
 
-// 플라톤 게시판 게시글 전체 조회
-philosopherRouter.get("/plato", verifyToken, async function(req, res, next){
+// 아리스토텔레스 게시판 게시글 전체 조회
+philosopherRouter.get("/aristotle", verifyToken, async function(req, res, next){
     try{
-        const posts = await philosopherService.getPostList();
+        const philosopherName = '아리스토텔레스';
+        const posts = await philosopherService.getPostList({ philosopherName });
         res.status(200).send(posts);
     } catch (error){
         next(error);
     };
 });
 
-// 플라톤 게시판 게시글 수정
-philosopherRouter.put("/plato/:id", verifyToken, async function(req, res, next){
+// 아리스토텔레스 게시판 게시글 수정
+philosopherRouter.put("/aristotle/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
         const userId = req.user;
@@ -253,7 +266,11 @@ philosopherRouter.put("/plato/:id", verifyToken, async function(req, res, next){
 
         const toUpdate = { title, content };
 
-        const updatedPost = await philosopherService.setPost({ userId, postId, toUpdate });
+        const updatedPost = await philosopherService.setPost({ 
+            userId, 
+            postId, 
+            toUpdate 
+        });
 
         if (updatedPost.errorMessage) {
             throw new Error(updatedPost.errorMessage);
@@ -264,8 +281,8 @@ philosopherRouter.put("/plato/:id", verifyToken, async function(req, res, next){
     };
 });
 
-// 플라톤 게시판 게시글 삭제
-philosopherRouter.delete("/plato/:id", verifyToken, async function(req, res, next){
+// 아리스토텔레스 게시판 게시글 삭제
+philosopherRouter.delete("/aristotle/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
         const userId = req.user;

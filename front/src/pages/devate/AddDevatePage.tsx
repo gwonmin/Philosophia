@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { DispatchContext } from "../RootPage"
-import * as Api from "../../../api"
-import { TextFieldAtom } from "../../atoms/textInputs"
+import * as Api from "../../api"
+import { TextFieldAtom } from "../../components/atoms/textInputs"
 
 export default function AddDevatePage() {
   const navigate = useNavigate()
@@ -32,7 +32,7 @@ export default function AddDevatePage() {
         data: devateInfo,
       })
 
-      navigate("/devates", { replace: true })
+      navigate(-1)
     } catch (err) {
       console.log("등록에 실패하였습니다.\n", err)
     }
@@ -49,7 +49,7 @@ export default function AddDevatePage() {
         <button onClick={postDevate}>토론 등록하기</button>
         <button
           onClick={() => {
-            navigate("/devates")
+            navigate(-1)
           }}
         >
           취소

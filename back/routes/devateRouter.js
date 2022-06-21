@@ -104,15 +104,16 @@ devateRouter.get('/devates', verifyToken, async (req, res, next) => {
 
 });
 
-// 찬성
-devateRouter.put('/devates/:id/yes', verifyToken, async (req, res, next) => {
+
+devateRouter.put('/devates/:id/stance', verifyToken, async (req, res, next) => {
     try { 
         const userId = req.user;
         const postId = req.params.id;
+        const { stance } = req.body;
 
-        const yes = await devateService.setPostYes({ userId, postId });
+        const support = await devateService.setPostStance({ userId, postId, stance });
 
-        res.status(200).send(yes);
+        res.status(200).send(support);
     } catch (error) {
         next(error);
     }

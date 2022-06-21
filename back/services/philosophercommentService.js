@@ -45,7 +45,6 @@ class philosophercommentService{
         }
         const deletedComment = await PhilosopherComment.delete({ commentId });
         return deletedComment;
-
     }
 }
 

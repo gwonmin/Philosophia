@@ -56,6 +56,13 @@ class userService {
       const newValue = hashedPassword;
       user = await User.update({ userId, fieldToUpdate, newValue });
     }
+
+    if (toUpdate.image) {
+      const fieldToUpdate = "image";
+      const newValue = toUpdate.image;
+      user = await User.update({ userId, fieldToUpdate, newValue });
+    }
+    console.log(toUpdate.image)
     return user;
   };
 

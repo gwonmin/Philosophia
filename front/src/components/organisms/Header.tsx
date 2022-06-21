@@ -1,14 +1,14 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { UserStateContext, DispatchContext } from "../pages/RootPage"
+import { UserStateContext, DispatchContext } from "../../pages/RootPage"
 
 export default function Header() {
   const navigate = useNavigate()
   const dispatch = useContext(DispatchContext)
   const userState = useContext(UserStateContext)
   if (!userState || !dispatch) {
-    return <p>user or dispatch do not exist...</p>
+    return <p>Header: user or dispatch do not exist...</p>
   }
 
   return (

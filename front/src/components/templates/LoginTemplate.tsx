@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Container from "@mui/material/Container"
 
 import LoginForm from "../organisms/LoginForm"
@@ -22,7 +23,7 @@ export default function LoginTemplate({ login, userInfo }: { login?: boolean; us
     <Container component="main" maxWidth="xs">
       <Header />
       <LoginForm login={login ?? true} userInfo={userInfo ?? initUser} />
-      {!login && <a href="/register">회원가입</a>}
+      {!login && <Link to="/user/register">회원가입</Link>}
       <Footer />
     </Container>
   )

@@ -1,10 +1,9 @@
 import cors from 'cors';
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,19 +14,20 @@ import { shareRouter } from './routes/shareRouter';
 
 import { philosopherRouter } from './routes/philosopherRouter';
 import { philosophercommentRouter } from './routes/philosopherCommentRouter';
+import { freetopicRouter } from './routes/freetopicRouter';
+import { freetopiccommentRouter } from './routes/freetopiccommentRouter';
 
 var app = express();
 app.use(cors());
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -38,7 +38,12 @@ app.use(devatecommentRouter);
 app.use(shareRouter);
 app.use(philosopherRouter);
 app.use(philosophercommentRouter);
+<<<<<<< HEAD
 
+=======
+app.use(freetopicRouter);
+app.use(freetopiccommentRouter);
+>>>>>>> e018c31e0043ec3800dacaf660ab56b2ebdb7cf2
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -49,14 +54,14 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // err 출력
-  console.log("\x1b[33m%s\x1b[0m", err);
+  console.log('\x1b[33m%s\x1b[0m', err);
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render('error');
 });
 
 module.exports = app;

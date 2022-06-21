@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { Container } from "@mui/material"
 
-import Header from "../../organisms/Header"
+import Header from "../../components/organisms/Header"
 import { UserStateContext } from "../RootPage"
-import * as Api from "../../../api"
+import * as Api from "../../api"
 
 export default function DevateListPage() {
   const navigate = useNavigate()
@@ -37,7 +37,7 @@ export default function DevateListPage() {
   }
 
   const addPost = () => {
-    navigate("/addDevate", { replace: true })
+    navigate("add")
   }
 
   return (
@@ -45,18 +45,22 @@ export default function DevateListPage() {
       <Container component="main" maxWidth="xs">
         <Header />
         <p>토론 목록 페이지입니다.</p>
-        {!devateList && <p>토론 목록이 없네요.</p>}
+        {devateList.length == 0 && <p>아직 토론이 없네요.</p>}
         {devateList != [] && (
           <div>
             <p>토론 목록:</p>
             {devateList.map((devate: any) => {
               return (
                 <div key={devate?._id} style={{ backgroundColor: "grey" }}>
-                  <a href={"/devate/" + devate?._id}>
+                  <Link to={"/devates/" + devate?._id}>
                     <p>제목: {devate?.title}</p>
                     <p>글쓴이: {devate?.author.name}</p>
                     <p>태그: {devate?.tag}</p>
-                  </a>
+                    <p>
+                      찬성: {devate.yes.length}, 반대: {devate.no.length}
+                    </p>
+                    <p>덧글 수: {devate.comment.length}</p>
+                  </Link>
                 </div>
               )
             })}

@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import { ROUTES, ROUTES_ARR } from "../route/Routes"
 
 import { UserStateContext, DispatchContext } from "./RootPage"
 
@@ -7,10 +8,22 @@ export default function MasterPage() {
   const navigate = useNavigate()
   const dispatch = useContext(DispatchContext)
   const userState = useContext(UserStateContext)
+  console.log("dispatch", dispatch, "userState", userState)
   if (!userState || !dispatch) {
     return <p>user or dispatch do not exist...</p>
   }
-
+  console.log(ROUTES_ARR)
+  const ARR = [
+    { path: "구분선", label: "유저 관련 기능" },
+    ...ROUTES_ARR.slice(1, 6),
+    { path: "구분선", label: "메인 게시판" },
+    ...ROUTES_ARR.slice(6, 8),
+    { path: "philosopher/nietzsche", label: "니체" },
+    { path: "philosopher/descartes", label: "데카르트" },
+    { path: "philosopher/aristotle", label: "아리스토텔레스" },
+    { path: "구분선", label: "서브 게시판" },
+    ...ROUTES_ARR.slice(13, 15),
+  ]
   const id = userState.user?._id
   const email = userState.user?.email
   const name = userState.user?.name
@@ -38,21 +51,18 @@ export default function MasterPage() {
         <button onClick={logout}>로그아웃</button>
       </div>
       <div>
-        {[
-          { text: "로그인 페이지", to: "/login" },
-          { text: "회원가입 페이지", to: "/register" },
-          { text: "토론 페이지", to: "/devates" },
-          { text: "본인 확인 페이지", to: "/checkUser" },
-          { text: "정보 수정 페이지", to: "/EditUserPage" },
-          { text: "토론 추가 페이지", to: "/addDevate" },
-        ].map((route) => {
+        {ARR.map((route) => {
+          if (route.path === "구분선") {
+            return <p style={{ backgroundColor: "grey" }}>{route.label}</p>
+          }
           return (
             <button
+              key={route.label}
               onClick={() => {
-                navigate(route.to)
+                navigate(route.path)
               }}
             >
-              {route.text}
+              {route.label} 페이지
             </button>
           )
         })}

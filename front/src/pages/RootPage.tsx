@@ -1,17 +1,10 @@
 import { createContext, Dispatch, useEffect, useReducer, useState } from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
-import RegisterPage from "./user/RegisterPage"
-import LoginPage from "./user/LoginPage"
-import MasterPage from "./MasterPage"
-import CheckUserPage from "./user/CheckUserPage"
-import EditUserInfoPage from "./user/EditUserInfoPage"
-import DevateListPage from "./devate/DevateListPage"
-import DevatePage from "./devate/DevatePage"
-import AddDevatePage from "./devate/AddDevatePage"
+import * as Api from "../api"
+import { loginReducer, Action, User } from "../reducer"
 
-import * as Api from "../../api"
-import { loginReducer, Action, User } from "../../reducer"
+import MyRouter from "../route/Router"
 
 export const UserStateContext = createContext<{ user: User | null } | undefined>(undefined)
 export const DispatchContext = createContext<Dispatch<Action> | undefined>(undefined)
@@ -59,18 +52,7 @@ export default function RootPage() {
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<MasterPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/checkUser" element={<CheckUserPage />} />
-            <Route path="/editUser" element={<EditUserInfoPage />} />
-            <Route path="/devates" element={<DevateListPage />} />
-            <Route path="/devate/:devateId" element={<DevatePage />} />
-            <Route path="/addDevate" element={<AddDevatePage />} />
-          </Routes>
-        </Router>
+        <MyRouter />
       </UserStateContext.Provider>
     </DispatchContext.Provider>
   )
