@@ -1,8 +1,7 @@
-import { UserProvider } from "./context";
-import RootPage from "./components/pages/RootPage";
+import RootPage from "./pages/RootPage"
 
 function App() {
-  return <RootPage />;
+  return <RootPage />
 }
 
-export default App;
+export default App

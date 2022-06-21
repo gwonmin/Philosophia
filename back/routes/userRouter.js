@@ -6,6 +6,7 @@ import { verifyRefresh } from "../middlewares/verifyRefresh";
 import { smtpTransport } from "../config/email";
 import bcrypt from "bcrypt";
 import { Auth } from "../db/models/Auth";
+import upload from '../modules/multer';
 
 const userRouter = Router();
 
@@ -73,13 +74,25 @@ userRouter.get("/user/current", verifyToken, async function (req, res, next) {
   }
 });
 
-userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
+userRouter.put("/user/:userId", async function (req, res, next) {
   try {
+
+    const uploadSingle = upload.single('image');
+    uploadSingle(req, res, async error => {
+      if (error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+
     const userId = req.params.userId;
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
     const name = req.body.name ?? null;
-    const toUpdate = { name, email, password, description, visited };
+    let image = null;
+    if (req.file) {
+      image = req.file.location;
+    }
+
+    const toUpdate = { name, email, password, image };
 
     const updatedUser = await userService.setUser({ userId, toUpdate });
 
@@ -87,12 +100,13 @@ userRouter.put("/user/:userId", verifyToken, async function (req, res, next) {
       throw new Error(updatedUser.errorMessage);
     }
     res.status(200).json(updatedUser);
+  });
   } catch (error) {
     next(error);
   }
 });
 
-userRouter.delete("/user/userId", verifyToken, async function (req, res, next) {
+userRouter.delete("/user/:userId", verifyToken, async function (req, res, next) {
   try {
     const userId = req.params.userid;
 
@@ -141,13 +155,14 @@ userRouter.post("/user/send-email", async function (req, res, next){
 
 // 이메일 인증(인증번호 확인)
 userRouter.post("/user/email-auth", async function(req, res, next){
+  const userAuthNum = req.body.userAuthNum;
+
+  const email = req.body.email;
+  const auth = await Auth.findByEmail({ email });
+  console.log('hasedAuthNum: ', auth.hashedAuthNum)
+  const hashedAuthNum = auth.hashedAuthNum;
+
   try {
-    const userAuthNum = req.body.userAuthNum;
-
-    const email = req.body.email;
-    const auth = await Auth.findByEmail({ email });
-    const hashedAuthNum = auth.hashedAuthNum;
-
     const isAuthCorrect = await bcrypt.compare(
       userAuthNum,
       hashedAuthNum
