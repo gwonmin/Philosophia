@@ -33,7 +33,6 @@ interface ROUTE {
 
 //타입별 서브 루트 명시
 interface ALL_ROUTE extends INDEX_SIGNITURE {
-  type: string
   DEFAULT: ROUTE
 }
 
@@ -62,7 +61,6 @@ interface ROUTES_GROUP extends INDEX_SIGNITURE {
 
 export const ROUTES: ROUTES_GROUP = {
   MASTER: {
-    type: "MASTER",
     DEFAULT: {
       path: RoutePath.MASTER,
       component: MasterPage,
@@ -70,7 +68,6 @@ export const ROUTES: ROUTES_GROUP = {
     },
   },
   USER: {
-    type: "USER",
     DEFAULT: {
       path: RoutePath.USER,
       component: undefined,
@@ -98,7 +95,6 @@ export const ROUTES: ROUTES_GROUP = {
     },
   },
   DEVATES: {
-    type: "COMMON",
     DEFAULT: {
       path: RoutePath.DEVATES,
       component: DevatesPage,
@@ -116,7 +112,6 @@ export const ROUTES: ROUTES_GROUP = {
     },
   },
   PHILOSOPHER: {
-    type: "PHILOSOPHER",
     DEFAULT: {
       path: RoutePath.PHILOSOPHER,
       component: PostListPage,
@@ -139,7 +134,6 @@ export const ROUTES: ROUTES_GROUP = {
     },
   },
   SHARE: {
-    type: "COMMON",
     DEFAULT: {
       path: RoutePath.SHARE,
       component: ShareListPage,

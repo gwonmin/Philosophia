@@ -1,7 +1,3 @@
-import React, { useContext, useEffect, useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import { Container } from "@mui/material"
-
 import { ROUTES } from "../../route/Routes"
 import CommonPageTemplate from "../../components/templates/CommonPageTemplate"
 

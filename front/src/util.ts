@@ -1,6 +1,14 @@
 import { Dispatch, SetStateAction } from "react"
 import * as Api from "./api"
 
+async function handleChange({ event, someState, setSomeState }: { event: React.ChangeEvent<HTMLInputElement>; someState: any; setSomeState: any }) {
+  const { name, value } = event.target
+  setSomeState({
+    ...someState,
+    [name]: value,
+  })
+}
+
 async function fetch({ endpoint, setValue, callback }: { endpoint: string; setValue: Function; callback: Dispatch<SetStateAction<boolean>> }) {
   try {
     // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
@@ -16,4 +24,4 @@ async function fetch({ endpoint, setValue, callback }: { endpoint: string; setVa
   callback(true)
 }
 
-export { fetch }
+export { handleChange, fetch }
