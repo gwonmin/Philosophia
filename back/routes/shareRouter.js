@@ -1,7 +1,7 @@
-import { Router } from "express";
-import { shareService } from "../services/shareService" 
-import { verifyToken } from "../middlewares/verifyToken";
-import { verifyRefresh } from "../middlewares/verifyRefresh";
+import { Router } from 'express';
+import { shareService } from '../services/shareService';
+import { verifyToken } from '../middlewares/verifyToken';
+import { verifyRefresh } from '../middlewares/verifyRefresh';
 
 const shareRouter = Router();
 
@@ -9,11 +9,13 @@ const shareRouter = Router();
 shareRouter.post('/shares', verifyToken, async function (req, res, next) {
   try {
     const userId = req.user;
-    const { content } = req.body;
+    const { philosopher, subject, content } = req.body;
 
     const newShare = await shareService.addShare({
       userId,
-      content
+      philosopher,
+      subject,
+      content,
     });
 
     if (newShare.errorMessage) {
@@ -21,7 +23,29 @@ shareRouter.post('/shares', verifyToken, async function (req, res, next) {
     }
 
     res.status(201).json(newShare);
-   
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 글 수정
+shareRouter.put('/shares/:id', verifyToken, async (req, res, next) => {
+  try {
+    const userId = req.user;
+    const shareId = req.params.id;
+    const philosopher = req.body.title ?? null;
+    const subject = req.body.subject ?? null;
+    const content = req.body.content ?? null;
+
+    const toUpdate = { philosopher, subject, content };
+
+    const updatedPost = await shareService.setPost({ userId, shareId, toUpdate });
+
+    if (updatedPost.errorMessage) {
+      throw new Error(updatedPost.errorMessage);
+    }
+
+    res.status(200).json(updatedPost);
   } catch (error) {
     next(error);
   }
@@ -29,7 +53,7 @@ shareRouter.post('/shares', verifyToken, async function (req, res, next) {
 
 // 글 1개 조회
 shareRouter.get('/shares/:id', verifyToken, async function (req, res, next) {
-  try{
+  try {
     const shareId = req.params.id;
     const currentShareInfo = await shareService.getShareInfo({ shareId });
 
@@ -69,7 +93,7 @@ shareRouter.get('/shares', verifyToken, async function (req, res, next) {
   } catch (error) {
     next(error);
   }
-})
+});
 
 // 좋아요
 shareRouter.put('/shares/:id/like', verifyToken, async function (req, res, next) {
@@ -87,6 +111,6 @@ shareRouter.put('/shares/:id/like', verifyToken, async function (req, res, next)
 
 /* access token을 재발급 하기 위한 router.
   access token과 refresh token을 둘 다 헤더에 담아서 요청해야함 */
-shareRouter.get("/refresh", verifyRefresh);
+shareRouter.get('/refresh', verifyRefresh);
 
 export { shareRouter };
