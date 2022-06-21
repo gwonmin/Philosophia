@@ -1,4 +1,4 @@
-import { DevateComment, User } from '../db';
+import { Devate, DevateComment, User } from '../db';
 
 class devatecommentService {
     static async addComment({ userId, postId, content }) {
@@ -43,6 +43,21 @@ class devatecommentService {
     // 1개 댓글
     static async getComment({ commentId }) {
         const comment = await DevateComment.findByCommentId({ commentId });
+        const author = await DevateComment.findAuthor({ commentId });
+        const postId = await DevateComment.findPost({ commentId });
+        const yes = await DevateComment.findYeses({ postId });
+        const no = await DevateComment.findNos({ postId });
+        // console.log("yes: ",yes)
+        // console.log("no: ",no)
+        // console.log("author: ", author);
+        if (yes.includes(author)) {
+            comment.stance = 'yes'
+        } else if (no.includes(author)) {
+            comment.stance = 'no'
+        } else {
+            comment.stance = '투표를 하지 않았습니다.'
+        }
+
         return comment;
     }
 

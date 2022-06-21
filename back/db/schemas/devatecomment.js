@@ -15,6 +15,10 @@ const DevateCommentSchema = new Schema(
             type: String,
             required: true,
         },
+        stance: {
+            type: String,
+            required: false,
+        }
     },
     {
         timestamps: true,
