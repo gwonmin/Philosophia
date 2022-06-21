@@ -21,6 +21,7 @@ export default function MasterPage() {
     { path: "philosopher/nietzsche", label: "니체" },
     { path: "philosopher/descartes", label: "데카르트" },
     { path: "philosopher/aristotle", label: "아리스토텔레스" },
+    { path: "freetopics", label: "자유 주제" },
     { path: "구분선", label: "서브 게시판" },
     ...ROUTES_ARR.slice(13, 15),
   ]
