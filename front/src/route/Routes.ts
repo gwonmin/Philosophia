@@ -18,6 +18,9 @@ import ShareListPage from "../pages/share/ShareListPage"
 import SharePage from "../pages/share/SharePage"
 
 import { RoutePath, ActionPath } from "./RoutesURL"
+import FreePage from "../pages/free/FreePage"
+import AddFreePage from "../pages/free/AddFreePage"
+import FreesPage from "../pages/free/FreesPage"
 
 //배열화를 위해 인덱스 시그니쳐 설정
 interface INDEX_SIGNITURE {
@@ -148,6 +151,23 @@ export const ROUTES: ROUTES_GROUP = {
       path: ActionPath.DETAIL,
       component: SharePage,
       label: "공유된 글",
+    },
+  },
+  FREE: {
+    DEFAULT: {
+      path: RoutePath.FREE,
+      component: FreesPage,
+      label: "자유 주제 토론",
+    },
+    POST: {
+      path: ActionPath.ADD,
+      component: AddFreePage,
+      label: "토론 작성",
+    },
+    DETAIL: {
+      path: ActionPath.DETAIL,
+      component: FreePage,
+      label: "토론 상세 정보",
     },
   },
 }

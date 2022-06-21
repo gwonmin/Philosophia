@@ -4,6 +4,7 @@ export enum RoutePath {
   DEVATES = "devates",
   PHILOSOPHER = "philosopher",
   SHARE = "shares",
+  FREE = "freetopics",
 }
 
 export enum ActionPath {
