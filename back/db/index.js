@@ -8,6 +8,7 @@ import { Share } from './models/Share';
 import { Philosopher } from './models/Philosopher';
 import { PhilosopherComment } from './models/PhilosopherComment';
 import { FreeTopic } from './models/FreeTopic';
+import { FreeTopicComment } from './models/FreeTopicComment';
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -27,4 +28,4 @@ import { FreeTopic } from './models/FreeTopic';
 //   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 // );
 
-export { User, Token, Devate, DevateComment, Share, Philosopher, PhilosopherComment, FreeTopic };
+export { User, Token, Devate, DevateComment, Share, Philosopher, PhilosopherComment, FreeTopic, FreeTopicComment };
