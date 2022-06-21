@@ -9,12 +9,6 @@ import { Philosopher } from './models/Philosopher';
 import { PhilosopherComment } from './models/PhilosopherComment';
 import { FreeTopic } from './models/FreeTopic';
 import { FreeTopicComment } from './models/FreeTopicComment';
-import { User } from "./models/User";
-import { Token } from "./models/Token";
-import { Devate } from "./models/Devate"
-import { DevateComment } from "./models/DevateComment";
-import { Philosopher } from "./models/Philosopher";
-import { PhilosopherComment } from "./models/PhilosopherComment";
 import { Data } from "./models/Data";
 import { DataComment } from "./models/DataComment";
 
