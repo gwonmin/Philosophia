@@ -16,6 +16,8 @@ import { philosopherRouter } from './routes/philosopherRouter';
 import { philosophercommentRouter } from './routes/philosopherCommentRouter';
 import { freetopicRouter } from './routes/freetopicRouter';
 import { freetopiccommentRouter } from './routes/freetopiccommentRouter';
+import { dataRouter } from './routes/dataRouter';
+import { datacommentRouter } from './routes/datacommentRouter';
 
 var app = express();
 app.use(cors());
@@ -40,6 +42,8 @@ app.use(philosopherRouter);
 app.use(philosophercommentRouter);
 app.use(freetopicRouter);
 app.use(freetopiccommentRouter);
+app.use(dataRouter);
+app.use(datacommentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
