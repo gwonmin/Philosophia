@@ -37,11 +37,11 @@ interface ALL_ROUTE extends INDEX_SIGNITURE {
   DEFAULT: ROUTE
 }
 
-interface COMMON_ROUTE extends ALL_ROUTE {
+export interface COMMON_ROUTE extends ALL_ROUTE {
   POST: ROUTE
   DETAIL: ROUTE
 }
-interface USER_ROUTE extends ALL_ROUTE {
+export interface USER_ROUTE extends ALL_ROUTE {
   REGISTER: ROUTE
   LOGIN: ROUTE
   EDIT: ROUTE
