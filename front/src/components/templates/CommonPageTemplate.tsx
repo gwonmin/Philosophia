@@ -51,7 +51,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   //컴포넌트 리턴
   const CondtionalCard = () => {
     switch (currentSub.path) {
-      case "devate":
+      case "devates":
         return <DevateCards postList={postList} />
       case "freetopics":
         return <CommonPostCards postList={postList} />

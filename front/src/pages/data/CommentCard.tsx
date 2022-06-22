@@ -20,7 +20,7 @@ export default function CommentCard({
   const editHandler = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.put({ endpoint: `freetopiccomments/${comment._id}`, data: { content: newComment } })
+      const res = await Api.put({ endpoint: `datacomments/${comment._id}`, data: { content: newComment } })
       console.log("수정에 성공했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
       setIsEditing(false)
@@ -31,7 +31,7 @@ export default function CommentCard({
 
   const deleteHandler = async () => {
     try {
-      const res = await Api.delete({ endpoint: "freetopiccomments", params: String(comment._id) })
+      const res = await Api.delete({ endpoint: "datacomments", params: String(comment._id) })
       console.log("덧글을 삭제했습니다.", res.data)
       setSomethingWasChanged(!somethingWasChanged)
     } catch (err) {
