@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
 
 import { UserStateContext } from "../../pages/RootPage"
@@ -33,10 +33,30 @@ export default function ReadPostForm({
 
   //함수 정의
   const deleteHandler = () => handleDelete({ endpoint: path, id: postId, callback: navigate(-1) })
-  const handleAgree = () =>
-    handleStance({ endpoint: path, id: postId, stance: "yes", changeStance: "1", callback: setSomethingWasChanged(!somethingWasChanged) })
+  let stopper: boolean
+  const handleAgree = () => {
+    if (stopper == somethingWasChanged) {
+      return
+    }
+    stopper = somethingWasChanged
+    handleStance({
+      endpoint: path,
+      id: postId,
+      stance: postInfo.yes.includes(userState.user?._id),
+      changeStance: "1",
+      value: somethingWasChanged,
+      callback: setSomethingWasChanged,
+    })
+  }
   const handleDisagree = () =>
-    handleStance({ endpoint: path, id: postId, stance: "yes", changeStance: "0", callback: setSomethingWasChanged(!somethingWasChanged) })
+    handleStance({
+      endpoint: path,
+      id: postId,
+      stance: postInfo.no.includes(userState.user?._id),
+      changeStance: "0",
+      value: somethingWasChanged,
+      callback: setSomethingWasChanged,
+    })
 
   return (
     <div>

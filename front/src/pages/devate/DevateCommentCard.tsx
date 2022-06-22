@@ -9,14 +9,10 @@ export default function CommentCard({
   comment,
   somethingWasChanged,
   setSomethingWasChanged,
-  yesList,
-  noList,
 }: {
   comment: any
   somethingWasChanged: any
   setSomethingWasChanged: any
-  yesList: string[]
-  noList: string[]
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [newComment, setNewComment] = useState(comment.content)
@@ -60,7 +56,7 @@ export default function CommentCard({
           ></TextFieldAtom>
           <button onClick={editHandler}>등록</button>
         </div>
-      )}{" "}
+      )}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
           <p>입장: {comment.stance}</p>

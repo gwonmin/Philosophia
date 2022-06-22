@@ -36,22 +36,24 @@ const handleStance = async ({
   id,
   stance,
   changeStance,
+  value,
   callback,
 }: {
   endpoint: string
   stance: any
   changeStance: string
   id: string
-  callback: any
+  value: boolean
+  callback: Dispatch<SetStateAction<boolean>>
 }) => {
-  if (stance == changeStance) {
-    console.log(stance == "yes" ? "이미 찬성하셨습니다." : "이미 반대하셨습니다.")
+  if (stance) {
+    console.log(changeStance == "1" ? "이미 찬성하셨습니다." : "이미 반대하셨습니다.")
     return
   }
   try {
-    const res = await Api.put({ endpoint: `${endpoint}/${id}/stance`, data: { stance: changeStance } })
-    callback
-    console.log(`${changeStance == "yes" ? "찬성" : "반대"}하였습니다.`, res.data)
+    await Api.put({ endpoint: `${endpoint}/${id}/stance`, data: { stance: changeStance } })
+    console.log(`${changeStance == "1" ? "찬성" : "반대"}하였습니다.`)
+    callback(!value)
   } catch (err) {
     console.log("찬성에 실패했습니다.", err)
   }
