@@ -12,7 +12,7 @@ model = GPT2LMHeadModel.from_pretrained('gpt2')
 tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
 
 #load models
-model.load_state_dict(torch.load('./Nietzsche.pt', map_location=torch.device('cpu')))
+model.load_state_dict(torch.load('./model.pt', map_location=torch.device('cpu')))
 
 #Function to generate word
 def generate(
@@ -20,7 +20,7 @@ def generate(
     tokenizer,
     prompt,
     entry_count=10,
-    entry_length=200, #maximum number of words
+    entry_length=150, #maximum number of words
     top_p=0.8,
     temperature=1.,
 ):
