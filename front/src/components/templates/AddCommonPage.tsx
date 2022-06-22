@@ -16,7 +16,6 @@ export default function AddDevatePage({ currentPage }: { currentPage: COMMON_ROU
   })
   const navigate = useNavigate()
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
-
   const handlePost = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
