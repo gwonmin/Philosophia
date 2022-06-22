@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
-import { UserStateContext } from "../RootPage"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
 
@@ -43,6 +42,16 @@ export default function CommentCard({
     }
   }
 
+  const stance = () => {
+    if (yesList.includes(comment.author._id)) {
+      return "찬성"
+    }
+    if (noList.includes(comment.author._id)) {
+      return "반대"
+    }
+    return "중립"
+  }
+
   return (
     <div>
       {isEditing && (
@@ -63,7 +72,7 @@ export default function CommentCard({
       )}{" "}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
-          <p>입장: {comment.stance}</p>
+          <p>입장: ({stance()})</p>
           <p>작성자: {comment.author.name}</p>
           <p>작성일: {comment.createdAt}</p>
           <p>내용: {comment.content}</p>

@@ -8,7 +8,6 @@ import { customFetch } from "../../util"
 import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
-import DevateCards from "../organisms/DevateCards"
 import CommonPostCards from "../organisms/CommonPostCard"
 
 type User = {
@@ -48,24 +47,12 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
     return <p>loading...</p>
   }
 
-  //컴포넌트 리턴
-  const CondtionalCard = () => {
-    switch (currentSub.path) {
-      case "devates":
-        return <DevateCards postList={postList} />
-      case "freetopics":
-        return <CommonPostCards postList={postList} />
-      default:
-        return <p>경로가 잘못되었습니다.</p>
-    }
-  }
-
   return (
     <div>
       <Container component="main" maxWidth="xs">
         <Header />
         <p>{currentSub.label} 페이지입니다.</p>
-        <CondtionalCard />
+        <CommonPostCards currentPage={currentPage} postList={postList} />
         {userState?.user && (
           <button
             onClick={() => {

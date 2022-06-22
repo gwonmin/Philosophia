@@ -6,10 +6,10 @@ import { customFetch } from "../../util"
 
 import Header from "../organisms/Header"
 import { UserStateContext } from "../../pages/RootPage"
-import * as Api from "../../api"
-import EditDevatePage from "../../pages/devate/EditDevatePage"
 import ReadDevatePage from "../../pages/devate/ReadDevatePage"
 import { COMMON_ROUTE } from "../../route/Routes"
+import EditPostForm from "../organisms/EditPostForm"
+import ReadPostForm from "../organisms/ReadPostForm"
 
 type User = {
   _id: string
@@ -27,6 +27,7 @@ export type Post = DevatePost & PhilosopherPost & SharePost
 
 export default function DevatePage({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
+  const currentPath = currentPage.DEFAULT.path
   const params = useParams()
   const postId = params.id
   const userState = useContext(UserStateContext)
@@ -43,7 +44,7 @@ export default function DevatePage({ currentPage }: { currentPage: COMMON_ROUTE 
   //fetch + 새로고침 로직
   useEffect(() => {
     customFetch({
-      endpoint: currentPage.DEFAULT.path + "/" + postId,
+      endpoint: currentPath + "/" + postId,
       setValue: setPostInfo,
       callback: setIsFetchCompleted,
     })
@@ -53,7 +54,7 @@ export default function DevatePage({ currentPage }: { currentPage: COMMON_ROUTE 
   if (!userState) {
     return <p>user does not exist(even null)</p>
   }
-  if (!currentPage.DEFAULT.path) {
+  if (!currentPath) {
     return <p>Path is not valid</p>
   }
   if (!postId) {
@@ -68,9 +69,10 @@ export default function DevatePage({ currentPage }: { currentPage: COMMON_ROUTE 
       <Header />
       <p>토론 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}</p>
       {isEditing ? (
-        <EditDevatePage setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
+        <EditPostForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
       ) : (
-        <ReadDevatePage
+        <ReadPostForm
+          path={currentPath}
           setIsEditing={setIsEditing}
           postInfo={postInfo}
           somethingWasChanged={somethingWasChanged}
