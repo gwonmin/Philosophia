@@ -6,10 +6,10 @@ const serverUrl = "http://" + window.location.hostname + ":" + backendPortNumber
 async function get({ endpoint, params }: { endpoint: string; params?: string | undefined }) {
   const edpnt = endpoint
   const prms = params ?? ""
+  const uri = prms ? serverUrl + edpnt + "/" + prms : serverUrl + edpnt
+  console.log(`%cGET 요청 ${uri}`, "color: #a25cd1;")
 
-  console.log(`%cGET 요청 ${serverUrl + edpnt + "/" + prms}`, "color: #a25cd1;")
-
-  return axios.get(serverUrl + edpnt + "/" + prms, {
+  return axios.get(uri, {
     // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

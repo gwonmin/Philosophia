@@ -9,6 +9,7 @@ import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import DevateCards from "../organisms/DevateCards"
+import CommonPostCards from "../organisms/CommonPostCard"
 
 type User = {
   _id: string
@@ -48,12 +49,23 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   }
 
   //컴포넌트 리턴
+  const CondtionalCard = () => {
+    switch (currentSub.path) {
+      case "devate":
+        return <DevateCards postList={postList} />
+      case "freetopics":
+        return <CommonPostCards postList={postList} />
+      default:
+        return <p>경로가 잘못되었습니다.</p>
+    }
+  }
+
   return (
     <div>
       <Container component="main" maxWidth="xs">
         <Header />
         <p>{currentSub.label} 페이지입니다.</p>
-        <DevateCards postList={postList} />
+        <CondtionalCard />
         {userState?.user && (
           <button
             onClick={() => {
