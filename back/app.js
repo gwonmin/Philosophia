@@ -18,6 +18,7 @@ import { freetopicRouter } from './routes/freetopicRouter';
 import { freetopiccommentRouter } from './routes/freetopiccommentRouter';
 import { dataRouter } from './routes/dataRouter';
 import { datacommentRouter } from './routes/datacommentRouter';
+import { translateRouter } from './routes/translateRouter';
 
 var app = express();
 app.use(cors());
@@ -44,6 +45,7 @@ app.use(freetopicRouter);
 app.use(freetopiccommentRouter);
 app.use(dataRouter);
 app.use(datacommentRouter);
+app.use(translateRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
