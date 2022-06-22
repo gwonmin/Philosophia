@@ -17,7 +17,6 @@ const DevateCommentSchema = new Schema(
         },
         stance: {
             type: String,
-            required: false,
         }
     },
     {

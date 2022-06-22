@@ -1,4 +1,4 @@
-import { Devate, User } from '../db';
+import { Devate, DevateComment, User } from '../db';
 
 class devateService {
   // 게시글 작성
@@ -103,7 +103,8 @@ class devateService {
 
     const yes = await Devate.findYes({ postId, userId });
     const no = await Devate.findNo({ postId, userId });
-    let newValues;
+  
+    let newValues, updateStance;
     if (stance == 1) {
       console.log(no);
       if (no.length != 0) {
