@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
-import { UserStateContext } from "../RootPage"
+import { UserStateContext } from "../../pages/RootPage"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./DevateCommentCard"
@@ -36,7 +36,6 @@ export default function CommentList({ postId, yesList, noList }: { postId: strin
   useEffect(() => {
     if (postId) {
       // URI에서 토론의 Id값을 받아옵니다.
-      console.log(postId)
       fetchComments(postId)
     } else {
       console.log("존재하지 않는 토론입니다.")

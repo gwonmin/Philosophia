@@ -7,12 +7,12 @@ import CommentList from "./CommentList"
 
 export default function ReadDevatePage({
   setIsEditing,
-  devateInfo,
+  postInfo,
   somethingWasChanged,
   setSomethingWasChanged,
 }: {
   setIsEditing: any
-  devateInfo: any
+  postInfo: any
   somethingWasChanged: any
   setSomethingWasChanged: any
 }) {
@@ -20,16 +20,16 @@ export default function ReadDevatePage({
   const params = useParams()
   const userState = useContext(UserStateContext) ?? { user: null }
 
-  const devateId = devateInfo._id
-  const isAuthor = devateInfo.author._id === userState.user?._id
+  const postId = postInfo._id
+  const isAuthor = postInfo.author._id === userState.user?._id
 
-  const didAgree = devateInfo.yes.includes(userState.user?._id)
-  const didDisagree = devateInfo.no.includes(userState.user?._id)
+  const didAgree = postInfo.yes.includes(userState.user?._id)
+  const didDisagree = postInfo.no.includes(userState.user?._id)
 
   const deleteHandler = async () => {
-    if (devateId) {
+    if (postId) {
       try {
-        await Api.delete({ endpoint: "devates", params: devateId })
+        await Api.delete({ endpoint: "posts", params: postId })
         console.log("토론이 삭제되었습니다.")
         navigate(-1)
       } catch (err) {
@@ -46,7 +46,7 @@ export default function ReadDevatePage({
       return
     }
     try {
-      const res = await Api.put({ endpoint: `devates/${devateId}/stance`, data: { stance: "1" } })
+      const res = await Api.put({ endpoint: `posts/${postId}/stance`, data: { stance: "1" } })
       setSomethingWasChanged(!somethingWasChanged)
       console.log("찬성하였습니다.", res.data)
     } catch (err) {
@@ -59,7 +59,7 @@ export default function ReadDevatePage({
       return
     }
     try {
-      const res = await Api.put({ endpoint: `devates/${devateId}/stance`, data: { stance: "0" } })
+      const res = await Api.put({ endpoint: `posts/${postId}/stance`, data: { stance: "0" } })
       setSomethingWasChanged(!somethingWasChanged)
       console.log("반대하였습니다.", res.data)
     } catch (err) {
@@ -69,15 +69,15 @@ export default function ReadDevatePage({
 
   return (
     <div>
-      <p>제목: {devateInfo.title}</p>
+      <p>제목: {postInfo.title}</p>
       <p>
-        글쓴이: {devateInfo.author.name}({devateInfo.author.email})
+        글쓴이: {postInfo.author.name}({postInfo.author.email})
       </p>
-      <p>작성일: {devateInfo.createdAt}</p>
-      <p>내용: {devateInfo.content}</p>
-      <p>태그: {devateInfo.tag}</p>
+      <p>작성일: {postInfo.createdAt}</p>
+      <p>내용: {postInfo.content}</p>
+      <p>태그: {postInfo.tag}</p>
       <p>
-        찬성: {devateInfo.yes.length}, 반대: {devateInfo.no.length}
+        찬성: {postInfo.yes.length}, 반대: {postInfo.no.length}
       </p>
       <div>
         <button
@@ -112,7 +112,7 @@ export default function ReadDevatePage({
           <button onClick={deleteHandler}>삭제하기</button>
         </div>
       )}
-      <CommentList devateId={devateId} yesList={devateInfo.yes} noList={devateInfo.no} />
+      <CommentList postId={postId} yesList={postInfo.yes} noList={postInfo.no} />
     </div>
   )
 }

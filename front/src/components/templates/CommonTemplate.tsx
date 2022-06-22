@@ -3,12 +3,11 @@ import { useNavigate, Link } from "react-router-dom"
 import Container from "@mui/material/Container"
 
 import { COMMON_ROUTE } from "../../route/Routes"
-import { fetch } from "../../util"
+import { customFetch } from "../../util"
 
 import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
-import DevateCards from "../organisms/DevateCards"
 import CommonPostCards from "../organisms/CommonPostCard"
 
 type User = {
@@ -27,9 +26,9 @@ export type Post = DevatePost & PhilosopherPost & SharePost
 export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
   const currentSub = currentPage.DEFAULT
-  const [postList, setPostList] = useState<Post[]>([])
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
+  const [postList, setPostList] = useState<Post[]>([])
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
 
   //초기화 확인
@@ -38,7 +37,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
 
   //fetch
   useEffect(() => {
-    fetch({
+    customFetch({
       endpoint: currentSub.path ?? "",
       setValue: setPostList,
       callback: setIsFetchCompleted,
@@ -48,24 +47,12 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
     return <p>loading...</p>
   }
 
-  //컴포넌트 리턴
-  const CondtionalCard = () => {
-    switch (currentSub.path) {
-      case "devates":
-        return <DevateCards postList={postList} />
-      case "freetopics":
-        return <CommonPostCards postList={postList} />
-      default:
-        return <p>경로가 잘못되었습니다.</p>
-    }
-  }
-
   return (
     <div>
       <Container component="main" maxWidth="xs">
         <Header />
         <p>{currentSub.label} 페이지입니다.</p>
-        <CondtionalCard />
+        <CommonPostCards currentPage={currentPage} postList={postList} />
         {userState?.user && (
           <button
             onClick={() => {

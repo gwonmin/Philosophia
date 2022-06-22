@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
-
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
 import * as Api from "../../api"
-
 import { GreenButton } from "../atoms/buttons"
 import { DispatchContext } from "../../pages/RootPage"
 import { NoticeTextField } from "../molecules/certification"
