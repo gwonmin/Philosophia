@@ -20,7 +20,7 @@ export default function CommentCard({
   const editHandler = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.put({ endpoint: `freetopiccomments/${comment._id}`, data: { content: newComment } })
+      const res = await Api.put({ endpoint: `devatecomments/${comment._id}`, data: { content: newComment } })
       console.log("수정에 성공했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
       setIsEditing(false)
@@ -31,7 +31,7 @@ export default function CommentCard({
 
   const deleteHandler = async () => {
     try {
-      const res = await Api.delete({ endpoint: "freetopiccomments", params: String(comment._id) })
+      const res = await Api.delete({ endpoint: "devatecomments", params: String(comment._id) })
       console.log("덧글을 삭제했습니다.", res.data)
       setSomethingWasChanged(!somethingWasChanged)
     } catch (err) {
@@ -56,9 +56,10 @@ export default function CommentCard({
           ></TextFieldAtom>
           <button onClick={editHandler}>등록</button>
         </div>
-      )}{" "}
+      )}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
+          <p>입장: {comment.stance}</p>
           <p>작성자: {comment.author.name}</p>
           <p>작성일: {comment.createdAt}</p>
           <p>내용: {comment.content}</p>

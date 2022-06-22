@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
-import { UserStateContext } from "../RootPage"
+import { UserStateContext } from "../../pages/RootPage"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
-import CommentCard from "./CommentCard"
+import CommentCard from "./DevateCommentCard"
 
-export default function CommentList({ freeId }: { freeId: string }) {
+export default function CommentList({ postId, yesList, noList }: { postId: string; yesList: string[]; noList: string[] }) {
   const userState = useContext(UserStateContext)
 
   if (!userState) {
@@ -19,9 +19,9 @@ export default function CommentList({ freeId }: { freeId: string }) {
   const [commentList, setCommentList] = useState([])
   const [newComment, setNewComment] = useState("")
 
-  const fetchComments = async (freeId: string | undefined) => {
+  const fetchComments = async (postId: string | undefined) => {
     try {
-      const res = await Api.get({ endpoint: "freetopiccommentlist", params: `?postId=${freeId}` })
+      const res = await Api.get({ endpoint: "devatecommentlist", params: `?postId=${postId}` })
       if (res.data) {
         setCommentList(res.data)
       }
@@ -34,10 +34,9 @@ export default function CommentList({ freeId }: { freeId: string }) {
   }
 
   useEffect(() => {
-    if (freeId) {
+    if (postId) {
       // URI에서 토론의 Id값을 받아옵니다.
-      console.log(freeId)
-      fetchComments(freeId)
+      fetchComments(postId)
     } else {
       console.log("존재하지 않는 토론입니다.")
     }
@@ -50,7 +49,7 @@ export default function CommentList({ freeId }: { freeId: string }) {
   const commentHandler = async () => {
     try {
       const res = await Api.post({
-        endpoint: `freetopiccommentlist/?postId=${freeId}`,
+        endpoint: `devatecomments/?postId=${postId}`,
         data: { content: newComment },
       })
       console.log("덧글을 등록했습니다.", res.data)
@@ -69,7 +68,16 @@ export default function CommentList({ freeId }: { freeId: string }) {
         <div>
           <p>덧글 목록({commentList.length}): </p>
           {commentList.map((comment: any) => {
-            return <CommentCard key={comment._id} comment={comment} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+            return (
+              <CommentCard
+                key={comment._id}
+                comment={comment}
+                somethingWasChanged={somethingWasChanged}
+                setSomethingWasChanged={setSomethingWasChanged}
+                yesList={yesList}
+                noList={noList}
+              />
+            )
           })}
         </div>
       )}

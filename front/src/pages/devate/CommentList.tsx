@@ -4,9 +4,9 @@ import { Container } from "@mui/material"
 import { UserStateContext } from "../RootPage"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
-import CommentCard from "./CommentCard"
+import CommentCard from "./DevateCommentCard"
 
-export default function CommentList({ devateId, yesList, noList }: { devateId: string; yesList: string[]; noList: string[] }) {
+export default function CommentList({ postId, yesList, noList }: { postId: string; yesList: string[]; noList: string[] }) {
   const userState = useContext(UserStateContext)
 
   if (!userState) {
@@ -19,9 +19,9 @@ export default function CommentList({ devateId, yesList, noList }: { devateId: s
   const [commentList, setCommentList] = useState([])
   const [newComment, setNewComment] = useState("")
 
-  const fetchComments = async (devateId: string | undefined) => {
+  const fetchComments = async (postId: string | undefined) => {
     try {
-      const res = await Api.get({ endpoint: "devatecommentlist", params: `?postId=${devateId}` })
+      const res = await Api.get({ endpoint: "devatecommentlist", params: `?postId=${postId}` })
       if (res.data) {
         setCommentList(res.data)
       }
@@ -34,10 +34,10 @@ export default function CommentList({ devateId, yesList, noList }: { devateId: s
   }
 
   useEffect(() => {
-    if (devateId) {
+    if (postId) {
       // URI에서 토론의 Id값을 받아옵니다.
-      console.log(devateId)
-      fetchComments(devateId)
+      console.log(postId)
+      fetchComments(postId)
     } else {
       console.log("존재하지 않는 토론입니다.")
     }
@@ -50,7 +50,7 @@ export default function CommentList({ devateId, yesList, noList }: { devateId: s
   const commentHandler = async () => {
     try {
       const res = await Api.post({
-        endpoint: `devatecomments/?postId=${devateId}`,
+        endpoint: `devatecomments/?postId=${postId}`,
         data: { content: newComment },
       })
       console.log("덧글을 등록했습니다.", res.data)
