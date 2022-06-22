@@ -9,7 +9,7 @@ async function handleChange({ event, someState, setSomeState }: { event: React.C
   })
 }
 
-async function fetch({ endpoint, setValue, callback }: { endpoint: string; setValue: Function; callback: Dispatch<SetStateAction<boolean>> }) {
+async function customFetch({ endpoint, setValue, callback }: { endpoint: string; setValue: Function; callback: Dispatch<SetStateAction<boolean>> }) {
   try {
     // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
     const res = await Api.get({ endpoint: endpoint })
@@ -24,4 +24,4 @@ async function fetch({ endpoint, setValue, callback }: { endpoint: string; setVa
   callback(true)
 }
 
-export { handleChange, fetch }
+export { handleChange, customFetch }

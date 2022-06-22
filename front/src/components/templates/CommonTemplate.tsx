@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom"
 import Container from "@mui/material/Container"
 
 import { COMMON_ROUTE } from "../../route/Routes"
-import { fetch } from "../../util"
+import { customFetch } from "../../util"
 
 import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
@@ -27,9 +27,9 @@ export type Post = DevatePost & PhilosopherPost & SharePost
 export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
   const currentSub = currentPage.DEFAULT
-  const [postList, setPostList] = useState<Post[]>([])
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
+  const [postList, setPostList] = useState<Post[]>([])
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
 
   //초기화 확인
@@ -38,7 +38,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
 
   //fetch
   useEffect(() => {
-    fetch({
+    customFetch({
       endpoint: currentSub.path ?? "",
       setValue: setPostList,
       callback: setIsFetchCompleted,
