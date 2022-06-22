@@ -171,10 +171,26 @@ export const ROUTES: ROUTES_GROUP = {
       label: "토론 상세 정보",
     },
   },
+  DATA: {
+    DEFAULT: {
+      path: RoutePath.DATA,
+      component: FreesPage,
+      label: "자유 주제 토론",
+    },
+    POST: {
+      path: ActionPath.ADD,
+      component: AddFreePage,
+      label: "토론 작성",
+    },
+    DETAIL: {
+      path: ActionPath.DETAIL,
+      component: FreePage,
+      label: "토론 상세 정보",
+    },
+  },
 }
 
 // derived data
-
 export const ROUTES_ARR: any[] = []
 for (const key in ROUTES) {
   for (const index in ROUTES[key]) {

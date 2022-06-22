@@ -6,7 +6,7 @@ import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./CommentCard"
 
-export default function CommentList({ freeId }: { freeId: string }) {
+export default function CommentList({ dataId }: { dataId: string }) {
   const userState = useContext(UserStateContext)
 
   if (!userState) {
@@ -19,9 +19,9 @@ export default function CommentList({ freeId }: { freeId: string }) {
   const [commentList, setCommentList] = useState([])
   const [newComment, setNewComment] = useState("")
 
-  const fetchComments = async (freeId: string | undefined) => {
+  const fetchComments = async (dataId: string | undefined) => {
     try {
-      const res = await Api.get({ endpoint: "freetopiccommentlist", params: `?postId=${freeId}` })
+      const res = await Api.get({ endpoint: "datacommentlist", params: `?postId=${dataId}` })
       if (res.data) {
         setCommentList(res.data)
       }
@@ -34,10 +34,10 @@ export default function CommentList({ freeId }: { freeId: string }) {
   }
 
   useEffect(() => {
-    if (freeId) {
+    if (dataId) {
       // URI에서 토론의 Id값을 받아옵니다.
-      console.log(freeId)
-      fetchComments(freeId)
+      console.log(dataId)
+      fetchComments(dataId)
     } else {
       console.log("존재하지 않는 토론입니다.")
     }
@@ -50,7 +50,7 @@ export default function CommentList({ freeId }: { freeId: string }) {
   const commentHandler = async () => {
     try {
       const res = await Api.post({
-        endpoint: `freetopiccommentlist/?postId=${freeId}`,
+        endpoint: `datacomments/?postId=${dataId}`,
         data: { content: newComment },
       })
       console.log("덧글을 등록했습니다.", res.data)
