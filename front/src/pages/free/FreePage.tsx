@@ -33,7 +33,7 @@ export default function FreePage() {
 
   const fetchFree = async (freeId: string | undefined) => {
     try {
-      const res = await Api.get({ endpoint: "frees", params: freeId })
+      const res = await Api.get({ endpoint: "freetopics", params: freeId })
       if (res.data) {
         setFreeInfo(res.data)
       }

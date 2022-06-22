@@ -6,7 +6,7 @@ import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./CommentCard"
 
-export default function CommentList({ freeId, yesList, noList }: { freeId: string; yesList: string[]; noList: string[] }) {
+export default function CommentList({ freeId }: { freeId: string }) {
   const userState = useContext(UserStateContext)
 
   if (!userState) {
@@ -69,16 +69,7 @@ export default function CommentList({ freeId, yesList, noList }: { freeId: strin
         <div>
           <p>덧글 목록({commentList.length}): </p>
           {commentList.map((comment: any) => {
-            return (
-              <CommentCard
-                key={comment._id}
-                comment={comment}
-                somethingWasChanged={somethingWasChanged}
-                setSomethingWasChanged={setSomethingWasChanged}
-                yesList={yesList}
-                noList={noList}
-              />
-            )
+            return <CommentCard key={comment._id} comment={comment} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
           })}
         </div>
       )}
