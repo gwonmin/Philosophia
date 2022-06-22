@@ -6,7 +6,7 @@ import CheckUserPage from "../pages/user/CheckUserPage"
 import EditUserInfoPage from "../pages/user/EditUserInfoPage"
 
 import AddDevatePage from "../pages/devate/AddDevatePage"
-import DevateListPage from "../pages/devate/DevateListPage"
+import DevatesPage from "../pages/devate/DevatesPage"
 import DevatePage from "../pages/devate/DevatePage"
 
 import AddPostPage from "../pages/philosopher/AddPostPage"
@@ -17,20 +17,50 @@ import AddSharePage from "../pages/share/AddSharePage"
 import ShareListPage from "../pages/share/ShareListPage"
 import SharePage from "../pages/share/SharePage"
 
+import AddFreePage from "../pages/free/AddFreePage"
+import FreesPage from "../pages/free/FreesPage"
+import FreePage from "../pages/free/FreePage"
+
 import { RoutePath, ActionPath } from "./RoutesURL"
 
-interface SUB_ROUTES {
+//배열화를 위해 인덱스 시그니쳐 설정
+interface INDEX_SIGNITURE {
+  [key: string]: any
+}
+
+//가장 기본적인 최소 타입 정의
+interface ROUTE {
   path: string | undefined
   component: any
   label: string
 }
 
-interface ROUTE_TYPE {
-  [index: string]: SUB_ROUTES
+//타입별 서브 루트 명시
+interface ALL_ROUTE extends INDEX_SIGNITURE {
+  DEFAULT: ROUTE
 }
 
-interface ROUTES_GROUP {
-  [index: string]: ROUTE_TYPE
+export interface COMMON_ROUTE extends ALL_ROUTE {
+  POST: ROUTE
+  DETAIL: ROUTE
+}
+export interface USER_ROUTE extends ALL_ROUTE {
+  REGISTER: ROUTE
+  LOGIN: ROUTE
+  EDIT: ROUTE
+  CHECK: ROUTE
+}
+interface PHILOSOPHER_ROUTE extends COMMON_ROUTE {
+  PHILOSOPHER: ROUTE
+}
+
+//메인 루트 목록 명시
+interface ROUTES_GROUP extends INDEX_SIGNITURE {
+  MASTER: ALL_ROUTE
+  USER: USER_ROUTE
+  DEVATES: COMMON_ROUTE
+  PHILOSOPHER: PHILOSOPHER_ROUTE
+  SHARE: COMMON_ROUTE
 }
 
 export const ROUTES: ROUTES_GROUP = {
@@ -71,7 +101,7 @@ export const ROUTES: ROUTES_GROUP = {
   DEVATES: {
     DEFAULT: {
       path: RoutePath.DEVATES,
-      component: DevateListPage,
+      component: DevatesPage,
       label: "토론 목록",
     },
     POST: {
@@ -124,6 +154,23 @@ export const ROUTES: ROUTES_GROUP = {
       label: "공유된 글",
     },
   },
+  FREE: {
+    DEFAULT: {
+      path: RoutePath.FREE,
+      component: FreesPage,
+      label: "자유 주제 토론",
+    },
+    POST: {
+      path: ActionPath.ADD,
+      component: AddFreePage,
+      label: "토론 작성",
+    },
+    DETAIL: {
+      path: ActionPath.DETAIL,
+      component: FreePage,
+      label: "토론 상세 정보",
+    },
+  },
 }
 
 // derived data
@@ -131,7 +178,8 @@ export const ROUTES: ROUTES_GROUP = {
 export const ROUTES_ARR: any[] = []
 for (const key in ROUTES) {
   for (const index in ROUTES[key]) {
-    if (index === "DEFAULT") {
+    if (index === "type") {
+    } else if (index === "DEFAULT") {
       ROUTES_ARR.push(ROUTES[key][index])
     } else {
       let newRoute = ROUTES[key][index]
