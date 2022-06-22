@@ -3,9 +3,23 @@ import { Devate, DevateComment, User } from '../db';
 class devatecommentService {
     static async addComment({ userId, postId, content }) {
         const author = await User.findById({ userId });
-        const createNewComment = await DevateComment.createComment({ author, postId, content });
+        const yes = await DevateComment.findYeses({ postId });
+        const no = await DevateComment.findNos({ postId });
+        let stance;
+        if (yes.includes(author._id)) {
+            stance = 'yes'
+        } else if (no.includes(author._id)) {
+            stance = 'no'
+        } else {
+            stance = '투표를 하지 않았습니다'
+        }
+
+        const createNewComment = await DevateComment.createComment({ author, postId, content, stance });
+
+
         return createNewComment;
     }
+
 
     static async setComment({ userId, commentId, toUpdate }) {
         let comment = await DevateComment.findByCommentId({ commentId });

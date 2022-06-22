@@ -4,10 +4,10 @@ import { DevateModel } from "../schemas/devate";
 import { userModel } from "../schemas/user";
 
 class DevateComment {
-    static async createComment({ author, postId, content }) {
-        const newComment = { author, postId, content };
-        // newComment.author = newComment.author.name
+    static async createComment({ author, postId, content, stance }) {
+        const newComment = { author, postId, content, stance};
         const createdNewComment = await DevateCommentModel.create(newComment);
+        
         const id = mongoose.Types.ObjectId(postId);
         await DevateModel.findOneAndUpdate(
         { _id: id },
@@ -65,7 +65,7 @@ class DevateComment {
     }
 
     static async findByPostId({ postId }){
-        const comments = await DevateCommentModel.find({ postId });  
+        const comments = await DevateCommentModel.find({ postId }).select('author postId content stance');  
 
         await userModel.populate(comments, {
             path: 'author',
