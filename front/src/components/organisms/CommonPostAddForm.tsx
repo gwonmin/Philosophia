@@ -101,6 +101,6 @@ export default function ComoonPostAddForm({ path }: { path: string }) {
     case "philosopher":
       return <Philosopher path={path} />
     default:
-      return <p>잘못된 경로입니다.</p>
+      return <p>잘못된 경로입니 다.</p>
   }
 }
