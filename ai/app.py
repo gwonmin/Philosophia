@@ -3,9 +3,11 @@ import numpy as np
 import pandas as pd
 import torch.nn.functional as F
 import string
+
 from flask import Flask, request
 from tqdm import trange
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from flask_cors import CORS
 
 #Get the tokenizer and model
 model = GPT2LMHeadModel.from_pretrained('gpt2')
@@ -77,6 +79,8 @@ def generate(
     return generated_list
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/": {"origins": ""}})
+
 @app.route('/inference', methods=['POST'])
 #Function to generate multiple sentences. data should be a dataframe
 def text_generation():
