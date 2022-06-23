@@ -1,10 +1,10 @@
 import torch
 import numpy as np
 import pandas as pd
-from flask import Flask, request
-from tqdm import trange
 import torch.nn.functional as F
 import string
+from flask import Flask, request
+from tqdm import trange
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 #Get the tokenizer and model
@@ -95,10 +95,5 @@ def text_generation():
   result = result.replace("endoftext", "")
   return result
 
-#test
-@app.route('/')
-def test():
-    return 'hello'
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5002,threaded = False)
+    app.run(host='0.0.0.0', port=5000,threaded = False)
