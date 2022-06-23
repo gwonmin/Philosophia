@@ -53,7 +53,7 @@ function Exchange({ path, postList }: { path: string; postList: Post[] }) {
   switch (path) {
     case "devates":
       return <Devate postList={postList} />
-    case "philosopher":
+    case ":who":
       return <Philosopher postList={postList} />
     default:
       return <p>잘못된 경로입니다.</p>

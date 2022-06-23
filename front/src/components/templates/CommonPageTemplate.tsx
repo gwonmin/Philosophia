@@ -33,7 +33,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const currentSub = currentPage.DEFAULT
   const path = () => {
-    if (currentPage.DEFAULT.path === "philosopher") {
+    if (currentPage.DEFAULT.path === ":who") {
       return philosopher
     }
     return currentPage.DEFAULT.path

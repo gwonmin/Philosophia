@@ -50,16 +50,13 @@ export interface USER_ROUTE extends ALL_ROUTE {
   EDIT: ROUTE
   CHECK: ROUTE
 }
-interface PHILOSOPHER_ROUTE extends COMMON_ROUTE {
-  PHILOSOPHER: ROUTE
-}
 
 //메인 루트 목록 명시
 interface ROUTES_GROUP extends INDEX_SIGNITURE {
   MASTER: ALL_ROUTE
   USER: USER_ROUTE
   DEVATES: COMMON_ROUTE
-  PHILOSOPHER: PHILOSOPHER_ROUTE
+  PHILOSOPHER: COMMON_ROUTE
   SHARE: COMMON_ROUTE
 }
 
@@ -119,20 +116,15 @@ export const ROUTES: ROUTES_GROUP = {
     DEFAULT: {
       path: RoutePath.PHILOSOPHER,
       component: PhilosopherPage,
-      label: "철학자 전체",
-    },
-    PHILOSOPHER: {
-      path: ActionPath.PHILOSOPHER,
-      component: PhilosopherPage,
       label: "철학자",
     },
     POST: {
-      path: ActionPath.PHILOSOPHER + "/" + ActionPath.ADD,
+      path: ActionPath.ADD,
       component: PhilosopherAddPage,
       label: "글 등록",
     },
     DETAIL: {
-      path: ActionPath.PHILOSOPHER + "/" + ActionPath.DETAIL,
+      path: ActionPath.DETAIL,
       component: PhilosopherDetailPage,
       label: "글 상세 정보",
     },
@@ -194,8 +186,7 @@ export const ROUTES: ROUTES_GROUP = {
 export const ROUTES_ARR: any[] = []
 for (const key in ROUTES) {
   for (const index in ROUTES[key]) {
-    if (index === "type") {
-    } else if (index === "DEFAULT") {
+    if (index === "DEFAULT") {
       ROUTES_ARR.push(ROUTES[key][index])
     } else {
       let newRoute = ROUTES[key][index]

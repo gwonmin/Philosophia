@@ -26,9 +26,10 @@ export type Post = DevatePost & PhilosopherPost & SharePost
 
 export default function CommonPageDetailTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
-  const currentPath = currentPage.DEFAULT.path
   const params = useParams()
   const postId = params.id
+  const philosopher = params.who
+  const currentPath = currentPage.DEFAULT.path === ":who" ? philosopher : currentPage.DEFAULT.path
   const userState = useContext(UserStateContext)
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
