@@ -9,7 +9,7 @@ trendRouter.get("/trend", async function(req, res, next){
         res.status(200).send(posts);
     } catch(error){
         next(error);
-    }
+    };
 });
 
 export { trendRouter };
