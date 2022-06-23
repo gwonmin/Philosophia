@@ -8,7 +8,7 @@ import { customFetch } from "../../util"
 import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
-import CommonPostCards from "../organisms/CommonPostCard"
+import CommonPostCards from "../organisms/CommonPostCards"
 
 type User = {
   _id: string
