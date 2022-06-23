@@ -6,7 +6,6 @@ import { customFetch } from "../../util"
 
 import Header from "../organisms/Header"
 import { UserStateContext } from "../../pages/RootPage"
-import ReadDevatePage from "../../pages/devate/ReadDevatePage"
 import { COMMON_ROUTE } from "../../route/Routes"
 import EditPostForm from "../organisms/EditPostForm"
 import ReadPostForm from "../organisms/ReadPostForm"
@@ -25,7 +24,7 @@ export type SharePost = CommonPost & {}
 
 export type Post = DevatePost & PhilosopherPost & SharePost
 
-export default function DevatePage({ currentPage }: { currentPage: COMMON_ROUTE }) {
+export default function CommonPageDetailTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
   const currentPath = currentPage.DEFAULT.path
   const params = useParams()
@@ -67,7 +66,9 @@ export default function DevatePage({ currentPage }: { currentPage: COMMON_ROUTE 
   return (
     <Container>
       <Header />
-      <p>토론 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}</p>
+      <p>
+        {currentPath} 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}
+      </p>
       {isEditing ? (
         <EditPostForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
       ) : (

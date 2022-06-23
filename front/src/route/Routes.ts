@@ -5,13 +5,13 @@ import LoginPage from "../pages/user/LoginPage"
 import CheckUserPage from "../pages/user/CheckUserPage"
 import EditUserInfoPage from "../pages/user/EditUserInfoPage"
 
-import AddDevatePage from "../pages/devate/AddDevatePage"
 import DevatesPage from "../pages/devate/DevatesPage"
-import DevatePage from "../pages/devate/DevatePage"
+import DevateAddPage from "../pages/devate/DevateAddPage"
+import DevateDetailPage from "../pages/devate/DevateDetailPage"
 
-import AddPostPage from "../pages/philosopher/AddPostPage"
-import PostListPage from "../pages/philosopher/PostListPage"
-import PostPage from "../pages/philosopher/PostPage"
+import PhilosopherPage from "../pages/philosopher/PhilosopherPage"
+import PhilosopherAddPage from "../pages/philosopher/PhilosopherAddPage"
+import PhilosopherDetailPage from "../pages/philosopher/PhilosopherDetailPage"
 
 import AddSharePage from "../pages/share/AddSharePage"
 import ShareListPage from "../pages/share/ShareListPage"
@@ -106,34 +106,34 @@ export const ROUTES: ROUTES_GROUP = {
     },
     POST: {
       path: ActionPath.ADD,
-      component: AddDevatePage,
+      component: DevateAddPage,
       label: "토론 등록",
     },
     DETAIL: {
       path: ActionPath.DETAIL,
-      component: DevatePage,
+      component: DevateDetailPage,
       label: "토론 상세 정보",
     },
   },
   PHILOSOPHER: {
     DEFAULT: {
       path: RoutePath.PHILOSOPHER,
-      component: PostListPage,
+      component: PhilosopherPage,
       label: "철학자 전체",
     },
     PHILOSOPHER: {
       path: ActionPath.PHILOSOPHER,
-      component: PostListPage,
+      component: PhilosopherPage,
       label: "철학자",
     },
     POST: {
       path: ActionPath.PHILOSOPHER + "/" + ActionPath.ADD,
-      component: AddPostPage,
+      component: PhilosopherAddPage,
       label: "글 등록",
     },
     DETAIL: {
       path: ActionPath.PHILOSOPHER + "/" + ActionPath.DETAIL,
-      component: PostPage,
+      component: PhilosopherDetailPage,
       label: "글 상세 정보",
     },
   },

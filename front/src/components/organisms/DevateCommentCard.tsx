@@ -8,14 +8,10 @@ export default function CommentCard({
   comment,
   somethingWasChanged,
   setSomethingWasChanged,
-  yesList,
-  noList,
 }: {
   comment: any
   somethingWasChanged: any
   setSomethingWasChanged: any
-  yesList: string[]
-  noList: string[]
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [newComment, setNewComment] = useState(comment.content)
@@ -31,7 +27,6 @@ export default function CommentCard({
       console.log("수정에 실패하였습니다.\n", err)
     }
   }
-
   const deleteHandler = async () => {
     try {
       const res = await Api.delete({ endpoint: "devatecomments", params: String(comment._id) })
@@ -40,16 +35,6 @@ export default function CommentCard({
     } catch (err) {
       console.log("덧글 삭제에 실패했습니다.", err)
     }
-  }
-
-  const stance = () => {
-    if (yesList.includes(comment.author._id)) {
-      return "찬성"
-    }
-    if (noList.includes(comment.author._id)) {
-      return "반대"
-    }
-    return "중립"
   }
 
   return (
@@ -72,7 +57,7 @@ export default function CommentCard({
       )}{" "}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
-          <p>입장: ({stance()})</p>
+          <p>입장: ({comment.stance})</p>
           <p>작성자: {comment.author.name}</p>
           <p>작성일: {comment.createdAt}</p>
           <p>내용: {comment.content}</p>
