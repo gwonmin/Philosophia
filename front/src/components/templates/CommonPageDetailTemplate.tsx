@@ -7,7 +7,7 @@ import { customFetch } from "../../util"
 import Header from "../organisms/Header"
 import { UserStateContext } from "../../pages/RootPage"
 import { COMMON_ROUTE } from "../../route/Routes"
-import EditPostForm from "../organisms/EditPostForm"
+import CommonPostEditForm from "../organisms/CommonPostEditForm"
 import ReadPostForm from "../organisms/ReadPostForm"
 
 type User = {
@@ -70,7 +70,7 @@ export default function CommonPageDetailTemplate({ currentPage }: { currentPage:
         {currentPath} 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}
       </p>
       {isEditing ? (
-        <EditPostForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
+        <CommonPostEditForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
       ) : (
         <ReadPostForm
           path={currentPath}

@@ -1,27 +1,6 @@
 import { Link } from "react-router-dom"
 import { Post } from "../templates/CommonPageTemplate"
 
-export default function CommonPostCards({ currentPage, postList }: { currentPage: any; postList: Post[] }) {
-  return (
-    <div>
-      {postList.length == 0 && <p>아직 게시물이 없네요.</p>}
-      {postList != [] && <Exchange path={currentPage.DEFAULT.path} postList={postList} />}
-    </div>
-  )
-}
-
-//-------------------------------------------exchange-------------------------------------------//
-function Exchange({ path, postList }: { path: string; postList: Post[] }) {
-  switch (path) {
-    case "devates":
-      return <Devate postList={postList} />
-    case "philosopher":
-      return <Philosopher postList={postList} />
-    default:
-      return <p>잘못된 경로입니다.</p>
-  }
-}
-
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ postList }: { postList: Post[] }) {
   console.log("location: Devate, postList: ", postList)
@@ -50,6 +29,7 @@ function Devate({ postList }: { postList: Post[] }) {
 //-------------------------------------------Philosopher-------------------------------------------//
 function Philosopher({ postList }: { postList: Post[] }) {
   console.log("location: Philosopher, postList: ", postList)
+
   return (
     <>
       <p>토론 목록:</p>
@@ -65,5 +45,26 @@ function Philosopher({ postList }: { postList: Post[] }) {
         )
       })}
     </>
+  )
+}
+
+//-------------------------------------------exchange-------------------------------------------//
+function Exchange({ path, postList }: { path: string; postList: Post[] }) {
+  switch (path) {
+    case "devates":
+      return <Devate postList={postList} />
+    case "philosopher":
+      return <Philosopher postList={postList} />
+    default:
+      return <p>잘못된 경로입니다.</p>
+  }
+}
+
+export default function CommonPostCards({ currentPage, postList }: { currentPage: any; postList: Post[] }) {
+  return (
+    <div>
+      {postList.length == 0 && <p>아직 게시물이 없네요.</p>}
+      {postList != [] && <Exchange path={currentPage.DEFAULT.path} postList={postList} />}
+    </div>
   )
 }
