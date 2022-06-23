@@ -1,5 +1,5 @@
 import { ROUTES } from "../../route/Routes"
-import CommonPageTemplate from "../../components/templates/CommonTemplate"
+import CommonPageTemplate from "../../components/templates/CommonPageTemplate"
 
 export default function FreesPage() {
   //변수 초기화

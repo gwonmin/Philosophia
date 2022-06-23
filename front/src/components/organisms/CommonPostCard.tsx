@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { Post } from "../templates/CommonTemplate"
+import { Post } from "../templates/CommonPageTemplate"
 
 export default function CommonPostCards({ currentPage, postList }: { currentPage: any; postList: Post[] }) {
   return (

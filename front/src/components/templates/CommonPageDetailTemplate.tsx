@@ -24,7 +24,7 @@ export type SharePost = CommonPost & {}
 
 export type Post = DevatePost & PhilosopherPost & SharePost
 
-export default function DevatePage({ currentPage }: { currentPage: COMMON_ROUTE }) {
+export default function CommonPageDetailTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
   const currentPath = currentPage.DEFAULT.path
   const params = useParams()

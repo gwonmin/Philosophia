@@ -1,5 +1,5 @@
 import { ROUTES } from "../../route/Routes"
-import CommonTemplate from "../../components/templates/CommonTemplate"
+import CommonTemplate from "../../components/templates/CommonPageTemplate"
 
 export default function DevatesPage() {
   //변수 초기화
