@@ -34,19 +34,6 @@ export default function CommonPostCards({
     )
   }
 
-  //-------------------------------------------Philosopher-------------------------------------------//
-  function Philosopher({ post }: { post: any }) {
-    return (
-      <div key={post._id} style={{ backgroundColor: "grey" }}>
-        <Link to={post._id}>
-          <p>제목: {post.title}</p>
-          <p>글쓴이: {post.author.name}</p>
-          <p>덧글 수: {post.comment.length}</p>
-        </Link>
-      </div>
-    )
-  }
-
   //-------------------------------------------Share-------------------------------------------//
   function Share({ post }: { post: any }) {
     const didLike = post.like.includes(user?._id)
@@ -80,18 +67,29 @@ export default function CommonPostCards({
     )
   }
 
+  //-------------------------------------------Default-------------------------------------------//
+  function Default({ post }: { post: any }) {
+    return (
+      <div key={post._id} style={{ backgroundColor: "grey" }}>
+        <Link to={post._id}>
+          <p>제목: {post.title}</p>
+          <p>글쓴이: {post.author.name}</p>
+          <p>덧글 수: {post.comment.length}</p>
+        </Link>
+      </div>
+    )
+  }
+
   //-------------------------------------------exchange-------------------------------------------//
   function Exchange({ post }: { post: any }) {
     console.log("locatiom: Exchange, post: ", post)
     switch (currentPage.DEFAULT.path) {
       case "devates":
         return <Devate post={post} />
-      case ":who":
-        return <Philosopher post={post} />
       case "shares":
         return <Share post={post} />
       default:
-        return <p>잘못된 경로입니다.</p>
+        return <Default post={post} />
     }
   }
 
