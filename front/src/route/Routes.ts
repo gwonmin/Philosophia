@@ -171,17 +171,17 @@ export const ROUTES: ROUTES_GROUP = {
     DEFAULT: {
       path: RoutePath.DATA,
       component: DataPage,
-      label: "자유 주제 토론",
+      label: "자료 공유",
     },
     POST: {
       path: ActionPath.ADD,
       component: DataAddPage,
-      label: "토론 작성",
+      label: "게시글 작성",
     },
     DETAIL: {
       path: ActionPath.DETAIL,
       component: DataDetailPage,
-      label: "토론 상세 정보",
+      label: "게시글 상세 정보",
     },
   },
 }

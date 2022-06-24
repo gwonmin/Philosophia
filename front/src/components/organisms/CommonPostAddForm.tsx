@@ -56,13 +56,25 @@ export default function ComoonPostAddForm({ path }: { path: string }) {
     )
   }
 
+  //-------------------------------------------Philosopher-------------------------------------------//
+  function Data() {
+    return (
+      <>
+        <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
+        <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
+      </>
+    )
+  }
+
   //-------------------------------------------exchange-------------------------------------------//
   function Exchange() {
     switch (path) {
       case "devates":
         return <Devate />
-      case "philosopher":
+      case ":who":
         return <Philosopher />
+      case "data":
+        return <Data />
       default:
         return <p>location: ComoonPostAddForm, err: post 경로가 잘못되었습니다.</p>
     }
