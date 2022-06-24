@@ -7,6 +7,7 @@ import ShowPostInfo from "../molecules/ShowPostInfo"
 import ForUserMolcule from "../molecules/ForUserMolcule"
 import { handleDelete, handleStance } from "../../util"
 import ForAuthorMolcule from "../molecules/ForAuthorMolcule"
+import * as Api from "../../api"
 
 export default function CommonPostReadForm({
   path,
@@ -28,6 +29,7 @@ export default function CommonPostReadForm({
   const isAuthor = postInfo.author._id === userState.user?._id
   const didAgree = postInfo.yes ? postInfo.yes.includes(userState.user?._id) : null
   const didDisagree = postInfo.no ? postInfo.no.includes(userState.user?._id) : null
+  const didLike = postInfo.like?.includes(userState.user?._id)
 
   //초기화 확인
   console.log("path: ", path)
@@ -56,6 +58,18 @@ export default function CommonPostReadForm({
       callback: setSomethingWasChanged,
     })
   }
+  const handleLike = async () => {
+    if (!userState.user) {
+      return <p>user does not exist(even null)</p>
+    }
+    try {
+      const res = await Api.put({ endpoint: `shares/${postInfo._id}/like` })
+      setSomethingWasChanged(!somethingWasChanged)
+      console.log("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."))
+    } catch (err) {
+      console.log("좋아요에 실패했습니다.", err)
+    }
+  }
   return (
     <div>
       <ShowPostInfo postInfo={postInfo} />
@@ -66,9 +80,12 @@ export default function CommonPostReadForm({
         didDisagree={didDisagree}
         handleAgree={handleAgree}
         handleDisagree={handleDisagree}
+        like={postInfo.like != undefined}
+        didLike={didLike}
+        handleLike={handleLike}
       />
       <ForAuthorMolcule isAuthor={isAuthor} setIsEditing={setIsEditing} deleteHandler={deleteHandler} />
-      <CommentList path={path} postId={postId} />
+      {path != "shares" && <CommentList path={path} postId={postId} />}
     </div>
   )
 }

@@ -4,7 +4,7 @@ export default function showPostInfo({ postInfo }: { postInfo: any }) {
   const navigate = useNavigate()
   return (
     <div style={{ border: "3px solid black" }}>
-      <p>제목: {postInfo.title}</p>
+      {postInfo.title && <p>제목: {postInfo.title}</p>}
       <p>글쓴이: {postInfo.author.name}</p>
       <p>작성일: {postInfo.createdAt}</p>
       <p>내용: {postInfo.content}</p>

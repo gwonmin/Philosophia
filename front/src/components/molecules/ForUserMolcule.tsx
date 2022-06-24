@@ -8,6 +8,9 @@ export default function ForUserMolcule({
   didDisagree,
   handleAgree,
   handleDisagree,
+  like,
+  didLike,
+  handleLike,
 }: {
   isYesList: boolean
   isUser: boolean
@@ -15,6 +18,9 @@ export default function ForUserMolcule({
   didDisagree: any
   handleAgree: any
   handleDisagree: any
+  like: any
+  didLike: any
+  handleLike: any
 }) {
   return (
     <>
@@ -34,6 +40,7 @@ export default function ForUserMolcule({
           )}
         </div>
       )}
+      {like && <button onClick={handleLike}>{didLike ? "좋아요 취소" : "좋아요"}</button>}
     </>
   )
 }
