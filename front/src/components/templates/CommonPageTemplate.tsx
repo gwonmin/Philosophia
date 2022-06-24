@@ -31,6 +31,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
   const currentSub = currentPage.DEFAULT
   const path = () => {
     if (currentPage.DEFAULT.path === ":who") {
@@ -50,7 +51,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
       setValue: setPostList,
       callback: setIsFetchCompleted,
     })
-  }, [])
+  }, [somethingWasChanged])
   if (!isFetchCompleted) {
     return <p>loading...</p>
   }
@@ -60,7 +61,12 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
       <Container component="main" maxWidth="xs">
         <Header />
         <p>{currentSub.label} 페이지입니다.</p>
-        <CommonPostCards currentPage={currentPage} postList={postList} />
+        <CommonPostCards
+          currentPage={currentPage}
+          postList={postList}
+          somethingWasChanged={somethingWasChanged}
+          setSomethingWasChanged={setSomethingWasChanged}
+        />
         {userState?.user && (
           <button
             onClick={() => {

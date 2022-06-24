@@ -1,5 +1,5 @@
 import { ROUTES } from "../../route/Routes"
-import CommonPageAddTemplate from "../../components/templates/CommonPageAddTemplate"
+import CommonPageAddTemplate from "../../components/templates/CommonAddPageTemplate"
 
 export default function DevateAddPage() {
   //변수 초기화

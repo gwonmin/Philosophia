@@ -29,7 +29,7 @@ export default function CommentList({ path, postId }: { path: string; postId: st
   //fetch + 새로고침 로직
   useEffect(() => {
     customFetch({
-      endpoint: endpoint() + `list/?postId=${postId}`,
+      endpoint: path === "shares" ? path : endpoint() + `list/?postId=${postId}`,
       setValue: setCommentList,
       callback: setIsFetchCompleted,
     })
@@ -38,7 +38,7 @@ export default function CommentList({ path, postId }: { path: string; postId: st
   const commentHandler = async () => {
     try {
       const res = await Api.post({
-        endpoint: endpoint() + `s/?postId=${postId}`,
+        endpoint: path === "shares" ? path : endpoint() + `s/?postId=${postId}`,
         data: { content: newComment },
       })
       console.log("덧글을 등록했습니다.", res.data)
