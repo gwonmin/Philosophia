@@ -1,6 +1,16 @@
-import { TextField, TextFieldProps } from "@mui/material"
+import { TextField, TextFieldProps } from "@mui/material";
 
-export function TextFieldAtom({ required = true, id, label, name, type, value, autoComplete, disabled, onChange }: TextFieldProps) {
+export function TextFieldAtom({
+  required = true,
+  id,
+  label,
+  name,
+  type,
+  value,
+  autoComplete,
+  disabled,
+  onChange,
+}: TextFieldProps) {
   const commonProps = {
     required,
     id,
@@ -9,6 +19,17 @@ export function TextFieldAtom({ required = true, id, label, name, type, value, a
     type,
     autoComplete,
     disabled,
-  }
-  return <TextField {...commonProps} onChange={onChange} value={value} sx={{ mt: 1, mb: 1, ml: 1, mr: 1 }} />
+  };
+  return (
+    <TextField
+      {...commonProps}
+      onChange={onChange}
+      value={value}
+      sx={{
+        width: "100%",
+        boxSizing: "border-box",
+        p: 1,
+      }}
+    />
+  );
 }
