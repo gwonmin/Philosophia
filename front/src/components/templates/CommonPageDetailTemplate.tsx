@@ -8,7 +8,7 @@ import Header from "../organisms/Header"
 import { UserStateContext } from "../../pages/RootPage"
 import { COMMON_ROUTE } from "../../route/Routes"
 import CommonPostEditForm from "../organisms/CommonPostEditForm"
-import ReadPostForm from "../organisms/ReadPostForm"
+import CommonPostReadForm from "../organisms/CommonPostReadForm"
 
 type User = {
   _id: string
@@ -73,7 +73,7 @@ export default function CommonPageDetailTemplate({ currentPage }: { currentPage:
       {isEditing ? (
         <CommonPostEditForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
       ) : (
-        <ReadPostForm
+        <CommonPostReadForm
           path={currentPath}
           setIsEditing={setIsEditing}
           postInfo={postInfo}

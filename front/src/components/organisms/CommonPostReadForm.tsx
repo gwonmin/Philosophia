@@ -8,7 +8,7 @@ import ForUserMolcule from "../molecules/ForUserMolcule"
 import { handleDelete, handleStance } from "../../util"
 import ForAuthorMolcule from "../molecules/ForAuthorMolcule"
 
-export default function ReadPostForm({
+export default function CommonPostReadForm({
   path,
   setIsEditing,
   postInfo,
@@ -26,8 +26,8 @@ export default function ReadPostForm({
   const userState = useContext(UserStateContext) ?? { user: null }
   const postId = postInfo._id
   const isAuthor = postInfo.author._id === userState.user?._id
-  const didAgree = postInfo.yes.includes(userState.user?._id)
-  const didDisagree = postInfo.no.includes(userState.user?._id)
+  const didAgree = postInfo.yes ? postInfo.yes.includes(userState.user?._id) : null
+  const didDisagree = postInfo.no ? postInfo.no.includes(userState.user?._id) : null
 
   //초기화 확인
   console.log("path: ", path)
@@ -59,9 +59,16 @@ export default function ReadPostForm({
   return (
     <div>
       <ShowPostInfo postInfo={postInfo} />
-      <ForUserMolcule isUser={userState.user != null} didAgree={didAgree} didDisagree={didDisagree} handleAgree={handleAgree} handleDisagree={handleDisagree} />
+      <ForUserMolcule
+        isYesList={postInfo.yes != undefined}
+        isUser={userState.user != null}
+        didAgree={didAgree}
+        didDisagree={didDisagree}
+        handleAgree={handleAgree}
+        handleDisagree={handleDisagree}
+      />
       <ForAuthorMolcule isAuthor={isAuthor} setIsEditing={setIsEditing} deleteHandler={deleteHandler} />
-      <CommentList postId={postId} yesList={postInfo.yes} noList={postInfo.no} />
+      <CommentList path={path} postId={postId} />
     </div>
   )
 }
