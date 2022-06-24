@@ -13,9 +13,9 @@ import PhilosopherPage from "../pages/philosopher/PhilosopherPage"
 import PhilosopherAddPage from "../pages/philosopher/PhilosopherAddPage"
 import PhilosopherDetailPage from "../pages/philosopher/PhilosopherDetailPage"
 
-import AddSharePage from "../pages/share/AddSharePage"
-import ShareListPage from "../pages/share/ShareListPage"
 import SharePage from "../pages/share/SharePage"
+import ShareAddPage from "../pages/share/ShareAddPage"
+import ShareDetailPage from "../pages/share/ShareDetailPage"
 
 import AddFreePage from "../pages/free/AddFreePage"
 import FreesPage from "../pages/free/FreesPage"
@@ -132,17 +132,17 @@ export const ROUTES: ROUTES_GROUP = {
   SHARE: {
     DEFAULT: {
       path: RoutePath.SHARE,
-      component: ShareListPage,
+      component: SharePage,
       label: "글 공유",
     },
     POST: {
       path: ActionPath.ADD,
-      component: AddSharePage,
+      component: ShareAddPage,
       label: "글 공유하기",
     },
     DETAIL: {
       path: ActionPath.DETAIL,
-      component: SharePage,
+      component: ShareDetailPage,
       label: "공유된 글",
     },
   },

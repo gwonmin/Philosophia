@@ -4,7 +4,7 @@ import Header from "../organisms/Header"
 import { COMMON_ROUTE } from "../../route/Routes"
 import CommonPostAddForm from "../organisms/CommonPostAddForm"
 
-export default function CommonPageAddTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
+export default function CommonAddPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   return (
     <div>
       <Container component="main" maxWidth="xs">

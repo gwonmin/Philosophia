@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
-import { UserStateContext } from "../RootPage"
+import { UserStateContext } from "../../pages/RootPage"
 import * as Api from "../../api"
-import { TextFieldAtom } from "../../components/atoms/textInputs"
+import { TextFieldAtom } from "../atoms/textInputs"
 import { Link } from "react-router-dom"
 
 export default function ShareCard({
