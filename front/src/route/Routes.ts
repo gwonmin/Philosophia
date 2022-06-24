@@ -17,6 +17,10 @@ import SharePage from "../pages/share/SharePage"
 import ShareAddPage from "../pages/share/ShareAddPage"
 import ShareDetailPage from "../pages/share/ShareDetailPage"
 
+import DataPage from "../pages/data/DataPage"
+import DataAddPage from "../pages/data/DataAddPage"
+import DataDetailPage from "../pages/data/DataDetailPage"
+
 import AddFreePage from "../pages/free/AddFreePage"
 import FreesPage from "../pages/free/FreesPage"
 import FreePage from "../pages/free/FreePage"
@@ -166,17 +170,17 @@ export const ROUTES: ROUTES_GROUP = {
   DATA: {
     DEFAULT: {
       path: RoutePath.DATA,
-      component: FreesPage,
+      component: DataPage,
       label: "자유 주제 토론",
     },
     POST: {
       path: ActionPath.ADD,
-      component: AddFreePage,
+      component: DataAddPage,
       label: "토론 작성",
     },
     DETAIL: {
       path: ActionPath.DETAIL,
-      component: FreePage,
+      component: DataDetailPage,
       label: "토론 상세 정보",
     },
   },
