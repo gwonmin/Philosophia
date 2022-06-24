@@ -156,10 +156,12 @@ export default function LoginForm({
             />
           </Grid>
         </Grid>
-        <GreenButton onClick={handleSubmit} disabled={!isFormValid}>
-          {login ? "로그인" : "인증하기"}
-        </GreenButton>
-        <GreenButton onClick={testLogin}>테스트 로그인</GreenButton>
+        <Grid item xs={12} sx={{ display: "flex", justifyContent: "right" }}>
+          <GreenButton onClick={handleSubmit} disabled={!isFormValid}>
+            {login ? "로그인" : "인증하기"}
+          </GreenButton>
+          <GreenButton onClick={testLogin}>테스트 로그인</GreenButton>
+        </Grid>
       </Box>
     </Box>
   );

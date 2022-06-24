@@ -40,7 +40,14 @@ export default function LoginTemplate({
         </Grid>
         <Grid item xs={12}>
           <LoginForm login={login ?? true} userInfo={userInfo ?? initUser} />
-          {!login && <Link to="/user/register">회원가입</Link>}
+        </Grid>
+        <Grid xs={12} sx={{ display: "flex", justifyContent: "right", mr: 1 }}>
+          {!login && (
+            <>
+              아직 회원이 아니신가요?
+              <Link to="/user/register">회원가입</Link>
+            </>
+          )}
         </Grid>
       </Grid>
       <Footer />
