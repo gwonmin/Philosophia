@@ -2,13 +2,15 @@ import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
 import * as Api from "../../api"
-import { TextFieldAtom } from "../../components/atoms/textInputs"
+import { TextFieldAtom } from "../atoms/textInputs"
 
 export default function CommentCard({
+  path,
   comment,
   somethingWasChanged,
   setSomethingWasChanged,
 }: {
+  path: string
   comment: any
   somethingWasChanged: any
   setSomethingWasChanged: any
@@ -57,9 +59,8 @@ export default function CommentCard({
       )}{" "}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
-          <p>입장: ({comment.stance})</p>
+          {comment.stance && <p>입장: ({comment.stance == "yes" ? "찬성" : "반대"})</p>}
           <p>작성자: {comment.author.name}</p>
-          <p>작성일: {comment.createdAt}</p>
           <p>내용: {comment.content}</p>
           <button onClick={deleteHandler}>삭제하기</button>
           <button

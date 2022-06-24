@@ -5,20 +5,31 @@ import { UserStateContext } from "../../pages/RootPage"
 import { customFetch } from "../../util"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
-import CommentCard from "./DevateCommentCard"
+import CommentCard from "./CommentCard"
+import { useParams } from "react-router-dom"
 
-export default function CommentList({ postId, yesList, noList }: { postId: string; yesList: string[]; noList: string[] }) {
+export default function CommentList({ path, postId }: { path: string; postId: string }) {
   //변수 초기화
+  const params = useParams()
+  const philosopher = params.who
   const userState = useContext(UserStateContext)
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState(false)
   const [commentList, setCommentList] = useState([])
   const [newComment, setNewComment] = useState("")
 
+  const endpoint = () => {
+    switch (path) {
+      case "devates":
+        return `devatecomment`
+      default:
+        return `${philosopher}comment`
+    }
+  }
   //fetch + 새로고침 로직
   useEffect(() => {
     customFetch({
-      endpoint: `devatecommentlist/?postId=${postId}` ?? "",
+      endpoint: endpoint() + `list/?postId=${postId}`,
       setValue: setCommentList,
       callback: setIsFetchCompleted,
     })
@@ -27,7 +38,7 @@ export default function CommentList({ postId, yesList, noList }: { postId: strin
   const commentHandler = async () => {
     try {
       const res = await Api.post({
-        endpoint: `devatecomments/?postId=${postId}`,
+        endpoint: endpoint() + `s/?postId=${postId}`,
         data: { content: newComment },
       })
       console.log("덧글을 등록했습니다.", res.data)
@@ -54,7 +65,15 @@ export default function CommentList({ postId, yesList, noList }: { postId: strin
         <div>
           <p>덧글 목록({commentList.length}): </p>
           {commentList.map((comment: any) => {
-            return <CommentCard key={comment._id} comment={comment} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+            return (
+              <CommentCard
+                path={path}
+                key={comment._id}
+                comment={comment}
+                somethingWasChanged={somethingWasChanged}
+                setSomethingWasChanged={setSomethingWasChanged}
+              />
+            )
           })}
         </div>
       )}

@@ -7,8 +7,8 @@ import { customFetch } from "../../util"
 import Header from "../organisms/Header"
 import { UserStateContext } from "../../pages/RootPage"
 import { COMMON_ROUTE } from "../../route/Routes"
-import EditPostForm from "../organisms/EditPostForm"
-import ReadPostForm from "../organisms/ReadPostForm"
+import CommonPostEditForm from "../organisms/CommonPostEditForm"
+import CommonPostReadForm from "../organisms/CommonPostReadForm"
 
 type User = {
   _id: string
@@ -26,9 +26,10 @@ export type Post = DevatePost & PhilosopherPost & SharePost
 
 export default function CommonPageDetailTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
-  const currentPath = currentPage.DEFAULT.path
   const params = useParams()
   const postId = params.id
+  const philosopher = params.who
+  const currentPath = currentPage.DEFAULT.path === ":who" ? philosopher : currentPage.DEFAULT.path
   const userState = useContext(UserStateContext)
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
@@ -70,9 +71,9 @@ export default function CommonPageDetailTemplate({ currentPage }: { currentPage:
         {currentPath} 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}
       </p>
       {isEditing ? (
-        <EditPostForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
+        <CommonPostEditForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
       ) : (
-        <ReadPostForm
+        <CommonPostReadForm
           path={currentPath}
           setIsEditing={setIsEditing}
           postInfo={postInfo}
