@@ -3,11 +3,15 @@ import numpy as np
 import pandas as pd
 import torch.nn.functional as F
 import string
+import flask
 
 from flask import Flask, request
 from tqdm import trange
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app, resources={r'*': {'origins': '*'}})
 
 #Get the tokenizer and model
 model = GPT2LMHeadModel.from_pretrained('gpt2')
@@ -78,14 +82,11 @@ def generate(
                 
     return generated_list
 
-app = Flask(__name__)
-cors = CORS(app, resources={r"/api/": {"origins": ""}})
-
 @app.route('/inference', methods=['POST'])
 #Function to generate multiple sentences. data should be a dataframe
 def text_generation():
   req_data = request.json
-  data = pd.DataFrame(data=[req_data['word']], index=range(0,1), columns=['0'])
+  data = pd.DataFrame(data=[req_data], index=range(0,1), columns=['0'])
   generated = []
   for i in range(len(data)):
     x = generate(model.to('cpu'), tokenizer, data['0'][i], entry_count=1)
@@ -97,6 +98,9 @@ def text_generation():
   result = result.translate(str.maketrans('', '', string.punctuation))
   #endoftext 제거
   result = result.replace("endoftext", "")
+  #CORS 설정
+  result = flask.Response(result)
+  result.headers["Access-Control-Allow-Origin"] = "*"
   return result
 
 if __name__ == '__main__':
