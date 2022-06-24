@@ -23,7 +23,7 @@ export default function MasterPage() {
     { path: "aristotle", label: "아리스토텔레스" },
     { path: "freetopics", label: "자유 주제" },
     { path: "구분선", label: "서브 게시판" },
-    ...ROUTES_ARR.slice(12, 15),
+    ...ROUTES_ARR.slice(12, 14),
     { path: "data", label: "자료 공유" },
   ]
   const id = userState.user?._id

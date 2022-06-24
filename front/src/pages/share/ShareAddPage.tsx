@@ -1,8 +1,8 @@
 import { ROUTES } from "../../route/Routes"
-import CommonPageAddTemplate from "../../components/templates/CommonAddPageTemplate"
+import ShareAddPageTemplate from "../../components/templates/ShareAddPageTemplate"
 
 export default function ShareAddPage() {
   //변수 초기화
   const currentPage = ROUTES.SHARE
-  return <CommonPageAddTemplate currentPage={currentPage} />
+  return <ShareAddPageTemplate />
 }
