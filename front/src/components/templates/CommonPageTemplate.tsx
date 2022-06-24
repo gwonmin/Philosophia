@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link, useParams } from "react-router-dom"
 import Container from "@mui/material/Container"
 
 import { COMMON_ROUTE } from "../../route/Routes"
@@ -25,11 +25,19 @@ export type Post = DevatePost & PhilosopherPost & SharePost
 
 export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
-  const currentSub = currentPage.DEFAULT
+  const params = useParams()
+  const philosopher = params.who ?? ""
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
+  const currentSub = currentPage.DEFAULT
+  const path = () => {
+    if (currentPage.DEFAULT.path === ":who") {
+      return philosopher
+    }
+    return currentPage.DEFAULT.path
+  }
 
   //초기화 확인
   console.log("location: ", currentPage)
@@ -38,7 +46,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   //fetch
   useEffect(() => {
     customFetch({
-      endpoint: currentSub.path ?? "",
+      endpoint: path() ?? "",
       setValue: setPostList,
       callback: setIsFetchCompleted,
     })

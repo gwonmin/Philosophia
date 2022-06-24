@@ -8,10 +8,12 @@ export default function showPostInfo({ postInfo }: { postInfo: any }) {
       <p>글쓴이: {postInfo.author.name}</p>
       <p>작성일: {postInfo.createdAt}</p>
       <p>내용: {postInfo.content}</p>
-      <p>태그: {postInfo.tag}</p>
-      <p>
-        찬성: {postInfo.yes.length}, 반대: {postInfo.no.length}
-      </p>
+      {postInfo.tag && <p>태그: {postInfo.tag}</p>}
+      {postInfo.yes && postInfo.no && (
+        <p>
+          찬성: {postInfo.yes.length}, 반대: {postInfo.no.length}
+        </p>
+      )}
       <button
         onClick={() => {
           navigate(-1)
