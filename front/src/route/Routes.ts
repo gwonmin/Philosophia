@@ -17,9 +17,13 @@ import SharePage from "../pages/share/SharePage"
 import ShareAddPage from "../pages/share/ShareAddPage"
 import ShareDetailPage from "../pages/share/ShareDetailPage"
 
-import AddFreePage from "../pages/free/AddFreePage"
-import FreesPage from "../pages/free/FreesPage"
+import DataPage from "../pages/data/DataPage"
+import DataAddPage from "../pages/data/DataAddPage"
+import DataDetailPage from "../pages/data/DataDetailPage"
+
 import FreePage from "../pages/free/FreePage"
+import FreeAddPage from "../pages/free/FreeAddPage"
+import FreeDetailPage from "../pages/free/FreeDetailPage"
 
 import { RoutePath, ActionPath } from "./RoutesURL"
 
@@ -149,35 +153,35 @@ export const ROUTES: ROUTES_GROUP = {
   FREE: {
     DEFAULT: {
       path: RoutePath.FREE,
-      component: FreesPage,
+      component: FreePage,
       label: "자유 주제 토론",
     },
     POST: {
       path: ActionPath.ADD,
-      component: AddFreePage,
+      component: FreeAddPage,
       label: "토론 작성",
     },
     DETAIL: {
       path: ActionPath.DETAIL,
-      component: FreePage,
+      component: FreeDetailPage,
       label: "토론 상세 정보",
     },
   },
   DATA: {
     DEFAULT: {
       path: RoutePath.DATA,
-      component: FreesPage,
-      label: "자유 주제 토론",
+      component: DataPage,
+      label: "자료 공유",
     },
     POST: {
       path: ActionPath.ADD,
-      component: AddFreePage,
-      label: "토론 작성",
+      component: DataAddPage,
+      label: "게시글 작성",
     },
     DETAIL: {
       path: ActionPath.DETAIL,
-      component: FreePage,
-      label: "토론 상세 정보",
+      component: DataDetailPage,
+      label: "게시글 상세 정보",
     },
   },
 }

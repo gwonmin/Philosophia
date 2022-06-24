@@ -73,7 +73,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
               navigate("add")
             }}
           >
-            토론을 만들어 볼까요?
+            글쓰기
           </button>
         )}
         <Footer />
