@@ -34,8 +34,8 @@ class FreeTopic {
   }
 
   static async getTop3(){
-    // 게시물 조회수로 내림차순 정렬하고 조회수가 같다면 댓글 수로 내림차순, 댓글 수도 같다면 _id를 기준으로 오름차순 정렬
-    // const posts = await FreeTopicModel.find().sort({"visited":-1, "comment":-1, "_id":1}).limit(3);
+    // calVisited: 해당 게시물의 조회수를 현재 시간에서 게시물이 생성된 시간을 뺀 값으로 나눈 결과
+    // => 생성된지 오래된 게시물일수록 조회수에 대한 가중치가 낮아짐
     const posts = await FreeTopicModel.aggregate([
       {$project:{
         calVisited:{'$divide':['$visited', {'$subtract':[new Date(), '$createdAt']}]}
