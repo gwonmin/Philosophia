@@ -12,8 +12,19 @@ class devateService {
   }
 
   // 게시글 1개 조회
-  static async getPostInfo({ postId }) {
-    const post = await Devate.findByPostId({ postId });
+  static async getPostInfo({ postId, userId }) {
+    const post = await Devate.findByPostId({ postId, userId });
+
+    const yes = await DevateComment.findYeses({ postId });
+    const no = await DevateComment.findNos({ postId });
+    
+    if (yes.includes(userId)) {
+      post.userStance = 'yes'
+    } else if (no.includes(userId)) {
+      post.userStance = 'no'
+    } else {
+      post.userStance = '투표를 하지 않았습니다'
+    }
 
     if (!post) {
       const errorMessage = '해당 포스트가 없습니다.';

@@ -2,9 +2,10 @@ export enum RoutePath {
   MASTER = "",
   USER = "user",
   DEVATES = "devates",
-  PHILOSOPHER = "philosopher",
+  PHILOSOPHER = ":who",
   SHARE = "shares",
   FREE = "freetopics",
+  DATA = "data",
 }
 
 export enum ActionPath {
@@ -12,8 +13,6 @@ export enum ActionPath {
   LOGIN = "login",
   REGISTER = "register",
   CHECK = "check",
-  //Philosopher Action
-  PHILOSOPHER = ":who",
   //Common Action
   ADD = "add",
   EDIT = "edit",

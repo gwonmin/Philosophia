@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { freetopicService } from '../services/freetopicService';
 import { verifyToken } from '../middlewares/verifyToken';
 import { verifyRefresh } from '../middlewares/verifyRefresh';
+import { FreeTopic } from '../db';
 
 const freetopicRouter = Router();
 
@@ -37,6 +38,10 @@ freetopicRouter.get('/freetopics/:id', verifyToken, async (req, res, next) => {
   try {
     const postId = req.params.id;
     const currentPostInfo = await freetopicService.getPostInfo({ postId });
+    const article = await FreeTopic.findByPostId({ postId });
+
+    article.visited++;
+    await article.save();
 
     if (currentPostInfo.errorMessage) {
       throw new Error(currentPostInfo.errorMessage);

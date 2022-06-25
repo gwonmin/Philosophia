@@ -36,8 +36,9 @@ devateRouter.post('/devates', verifyToken, async (req, res, next) => {
 // 게시글 1개 조회
 devateRouter.get('/devates/:id', verifyToken, async (req, res, next) => {
     try {
+        const userId = req.user;
         const postId = req.params.id;
-        const currentPostInfo = await devateService.getPostInfo({ postId });
+        const currentPostInfo = await devateService.getPostInfo({ postId, userId });
 
         if (currentPostInfo.errorMessage) {
             throw new Error(currentPostInfo.errorMessage);
