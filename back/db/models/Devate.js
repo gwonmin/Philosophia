@@ -77,6 +77,25 @@ class Devate {
         const updatedPost = await DevateModel.findOneAndUpdate(filter, update, option);
         return updatedPost
     }
+
+    static async getTop3(){
+        const posts = await DevateModel.aggregate([
+            {$project:{
+                countOfAll:{ '$add': [ { '$size': '$yes' }, { '$size': '$no' } ] }
+             }},
+            {$sort:{countOfAll:-1}},
+            {$limit:3}
+        ]);
+
+        var postObj = []
+        for(var i in posts){
+            const postId = posts[i]._id;
+            const post = await DevateModel.findOne({ _id: postId });
+            postObj.push(post)
+        }
+
+        return postObj;
+    }
 }
 
 export { Devate };
