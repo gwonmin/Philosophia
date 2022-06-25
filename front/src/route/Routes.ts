@@ -1,5 +1,6 @@
 import MasterPage from "../pages/MasterPage"
 
+import MyPage from "../pages/user/MyPage"
 import RegisterPage from "../pages/user/RegisterPage"
 import LoginPage from "../pages/user/LoginPage"
 import CheckUserPage from "../pages/user/CheckUserPage"
@@ -75,7 +76,7 @@ export const ROUTES: ROUTES_GROUP = {
   USER: {
     DEFAULT: {
       path: RoutePath.USER,
-      component: undefined,
+      component: MyPage,
       label: "마이",
     },
     REGISTER: {
