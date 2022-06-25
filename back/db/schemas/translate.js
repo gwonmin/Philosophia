@@ -6,6 +6,9 @@ const TranslateSchema = new Schema(
             type: String,
             required: true,
         },
+        afterText: {
+            type: String,
+        }
     }
 )
     
