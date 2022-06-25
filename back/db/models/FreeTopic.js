@@ -35,8 +35,23 @@ class FreeTopic {
 
   static async getTop3(){
     // 게시물 조회수로 내림차순 정렬하고 조회수가 같다면 댓글 수로 내림차순, 댓글 수도 같다면 _id를 기준으로 오름차순 정렬
-    const posts = await FreeTopicModel.find().sort({"visited":-1, "comment":-1, "_id":1}).limit(3);
-    return posts;
+    // const posts = await FreeTopicModel.find().sort({"visited":-1, "comment":-1, "_id":1}).limit(3);
+    const posts = await FreeTopicModel.aggregate([
+      {$project:{
+        calVisited:{'$divide':['$visited', {'$subtract':[new Date(), '$createdAt']}]}
+      }},
+      {$sort:{calVisited:-1}},
+      {$limit:3}
+    ]);
+
+    var postObj = []
+        for(var i in posts){
+            const postId = posts[i]._id;
+            const post = await FreeTopicModel.findOne({ _id: postId });
+            postObj.push(post)
+        }
+
+        return postObj;
   }
 }
 
