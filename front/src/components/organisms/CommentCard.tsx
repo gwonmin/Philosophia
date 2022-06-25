@@ -4,6 +4,7 @@ import { Container } from "@mui/material"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../atoms/textInputs"
 import { useParams } from "react-router-dom"
+import { UserStateContext } from "../../pages/RootPage"
 
 export default function CommentCard({
   path,
@@ -20,6 +21,7 @@ export default function CommentCard({
   const philosopher = params.who
   const [isEditing, setIsEditing] = useState(false)
   const [newComment, setNewComment] = useState(comment.content)
+  const user = useContext(UserStateContext)?.user ?? null
 
   const endpoint = () => {
     switch (path) {
@@ -70,20 +72,24 @@ export default function CommentCard({
           ></TextFieldAtom>
           <button onClick={editHandler}>등록</button>
         </div>
-      )}{" "}
+      )}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
           {comment.stance && <p>입장: ({comment.stance == "yes" ? "찬성" : "반대"})</p>}
           <p>작성자: {comment.author.name}</p>
           <p>내용: {comment.content}</p>
-          <button onClick={deleteHandler}>삭제하기</button>
-          <button
-            onClick={() => {
-              setIsEditing(true)
-            }}
-          >
-            수정하기
-          </button>
+          {comment.author._id === user?._id && (
+            <>
+              <button onClick={deleteHandler}>삭제하기</button>
+              <button
+                onClick={() => {
+                  setIsEditing(true)
+                }}
+              >
+                수정하기
+              </button>
+            </>
+          )}
         </div>
       )}
     </div>
