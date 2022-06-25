@@ -6,13 +6,27 @@ import WroteArticles from "../molecules/WroteArticles"
 import AgreedTopics from "../molecules/AgreedTopics"
 import OpposingTopics from "../molecules/OpposingTopics"
 
+import {Grid} from "@mui/material"
+
 export default function UserDetail(){
     return <>
-        <LikedPhilosopher />
-        <LikedBooks />
-        <SharedArticles />
-        <WroteArticles />
-        <AgreedTopics />
-        <OpposingTopics />
+            <Grid item xs={12}>
+                <LikedPhilosopher />
+            </Grid>
+            <Grid item xs={12}>
+                <LikedBooks />
+            </Grid>
+            <Grid item xs={12}>
+                <SharedArticles />
+            </Grid>
+            <Grid item xs={12}>
+                <WroteArticles />
+            </Grid>
+            <Grid item xs={12}>
+                <AgreedTopics />
+            </Grid>
+            <Grid item xs={12}>
+                <OpposingTopics />
+            </Grid>
     </>
 }
