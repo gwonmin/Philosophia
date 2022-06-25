@@ -5,7 +5,38 @@ import { TextFieldAtom } from "../atoms/textInputs"
 import { handleChange } from "../../util"
 import * as Api from "../../api"
 
-export default function ComoonPostAddForm({ path }: { path: string }) {
+//-------------------------------------------Devate-------------------------------------------//
+function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
+  return (
+    <>
+      <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
+      <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
+      <TextFieldAtom id="tag" label="tag" name="tag" value={postInfo.tag} onChange={onChange} />
+    </>
+  )
+}
+
+//-------------------------------------------Default-------------------------------------------//
+function Default({ postInfo, onChange }: { postInfo: any; onChange: any }) {
+  return (
+    <>
+      <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
+      <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
+    </>
+  )
+}
+
+//-------------------------------------------exchange-------------------------------------------//
+function Exchange({ path, postInfo, onChange }: { path: string; postInfo: any; onChange: any }) {
+  switch (path) {
+    case "devates":
+      return <Devate postInfo={postInfo} onChange={onChange} />
+    default:
+      return <Default postInfo={postInfo} onChange={onChange} />
+  }
+}
+
+export default function CommonPostAddForm({ path }: { path: string }) {
   const [postInfo, setPostInfo] = useState({
     title: "",
     content: "",
@@ -19,7 +50,7 @@ export default function ComoonPostAddForm({ path }: { path: string }) {
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const handlePost = async () => {
     if (!endpoint) {
-      console.log("location: ComoonPostAddForm, err: post 경로가 잘못되었습니다.")
+      console.log("location: CommonPostAddForm, err: post 경로가 잘못되었습니다.")
       return
     }
     try {
@@ -35,40 +66,9 @@ export default function ComoonPostAddForm({ path }: { path: string }) {
     }
   }
 
-  //-------------------------------------------Devate-------------------------------------------//
-  function Devate() {
-    return (
-      <>
-        <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
-        <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
-        <TextFieldAtom id="tag" label="tag" name="tag" value={postInfo.tag} onChange={onChange} />
-      </>
-    )
-  }
-
-  //-------------------------------------------Default-------------------------------------------//
-  function Default() {
-    return (
-      <>
-        <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
-        <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
-      </>
-    )
-  }
-
-  //-------------------------------------------exchange-------------------------------------------//
-  function Exchange() {
-    switch (path) {
-      case "devates":
-        return <Devate />
-      default:
-        return <Default />
-    }
-  }
-
   return (
     <>
-      <Exchange />
+      <Exchange path={path} postInfo={postInfo} onChange={onChange} />
       <button onClick={handlePost}>게시글 등록하기</button>
       <button
         onClick={() => {
