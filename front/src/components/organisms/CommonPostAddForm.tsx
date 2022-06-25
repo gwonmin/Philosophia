@@ -46,8 +46,8 @@ export default function ComoonPostAddForm({ path }: { path: string }) {
     )
   }
 
-  //-------------------------------------------Philosopher-------------------------------------------//
-  function Philosopher() {
+  //-------------------------------------------Default-------------------------------------------//
+  function Default() {
     return (
       <>
         <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
@@ -61,10 +61,8 @@ export default function ComoonPostAddForm({ path }: { path: string }) {
     switch (path) {
       case "devates":
         return <Devate />
-      case "philosopher":
-        return <Philosopher />
       default:
-        return <p>location: ComoonPostAddForm, err: post 경로가 잘못되었습니다.</p>
+        return <Default />
     }
   }
 
