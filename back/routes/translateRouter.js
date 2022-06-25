@@ -1,11 +1,12 @@
 import { Router } from 'express';
+import { TranslateModel } from '../db/schemas/translate';
 
 const translateRouter = Router();
 
 var clientId = 'cWXKKLuZac0rDz5TV7Ge';
 var clientSecret = 'erjOvXikVv';
 
-translateRouter.post('/translate', function (req, res) {
+translateRouter.post('/translate', async function (req, res) {
     var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
     var request = require('request');
     const { text } = req.body;
@@ -28,14 +29,16 @@ translateRouter.post('/translate', function (req, res) {
         }
      }
 
-    request.post(options, function (error, response, body) {
+    request.post(options, async function (error, response, body) {
       if (!error && response.statusCode == 200) {
         res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
         res.end(body);
         const a = JSON.parse(response.body);
         const content = a.message.result.translatedText;
-        const text = makeText(content);
-        return text;
+        const text = options.form.text;
+        const afterText = makeText(content);
+        const createdNewText = await TranslateModel.create({text, afterText});
+        return createdNewText;
 
       } else {
         res.status(response.statusCode).end();
