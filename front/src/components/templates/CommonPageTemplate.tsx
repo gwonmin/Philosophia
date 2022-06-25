@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link, useParams } from "react-router-dom"
 import Container from "@mui/material/Container"
 
 import { COMMON_ROUTE } from "../../route/Routes"
-import { fetch } from "../../util"
+import { customFetch } from "../../util"
 
 import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
-import DevateCards from "../organisms/DevateCards"
-import CommonPostCards from "../organisms/CommonPostCard"
+import CommonPostCards from "../organisms/CommonPostCards"
 
 type User = {
   _id: string
@@ -26,11 +25,20 @@ export type Post = DevatePost & PhilosopherPost & SharePost
 
 export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
-  const currentSub = currentPage.DEFAULT
-  const [postList, setPostList] = useState<Post[]>([])
+  const params = useParams()
+  const philosopher = params.who ?? ""
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
+  const [postList, setPostList] = useState<Post[]>([])
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
+  const currentSub = currentPage.DEFAULT
+  const path = () => {
+    if (currentPage.DEFAULT.path === ":who") {
+      return philosopher
+    }
+    return currentPage.DEFAULT.path
+  }
 
   //초기화 확인
   console.log("location: ", currentPage)
@@ -38,26 +46,14 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
 
   //fetch
   useEffect(() => {
-    fetch({
-      endpoint: currentSub.path ?? "",
+    customFetch({
+      endpoint: path() ?? "",
       setValue: setPostList,
       callback: setIsFetchCompleted,
     })
-  }, [])
+  }, [somethingWasChanged])
   if (!isFetchCompleted) {
     return <p>loading...</p>
-  }
-
-  //컴포넌트 리턴
-  const CondtionalCard = () => {
-    switch (currentSub.path) {
-      case "devate":
-        return <DevateCards postList={postList} />
-      case "freetopics":
-        return <CommonPostCards postList={postList} />
-      default:
-        return <p>경로가 잘못되었습니다.</p>
-    }
   }
 
   return (
@@ -65,14 +61,19 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
       <Container component="main" maxWidth="xs">
         <Header />
         <p>{currentSub.label} 페이지입니다.</p>
-        <CondtionalCard />
+        <CommonPostCards
+          currentPage={currentPage}
+          postList={postList}
+          somethingWasChanged={somethingWasChanged}
+          setSomethingWasChanged={setSomethingWasChanged}
+        />
         {userState?.user && (
           <button
             onClick={() => {
               navigate("add")
             }}
           >
-            토론을 만들어 볼까요?
+            글쓰기
           </button>
         )}
         <Footer />

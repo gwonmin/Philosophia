@@ -1,56 +1,46 @@
 import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
-import { UserStateContext } from "../RootPage"
+import { UserStateContext } from "../../pages/RootPage"
+import { customFetch } from "../../util"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./CommentCard"
+import { useParams } from "react-router-dom"
 
-export default function CommentList({ postId, philosopher }: { postId: string; philosopher: string }) {
+export default function CommentList({ path, postId }: { path: string; postId: string }) {
+  //변수 초기화
+  const params = useParams()
+  const philosopher = params.who
   const userState = useContext(UserStateContext)
-
-  if (!userState) {
-    return <p>userState does not exist(even null)</p>
-  }
-
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState(false)
-
   const [commentList, setCommentList] = useState([])
   const [newComment, setNewComment] = useState("")
 
-  const fetchComments = async (postId: string | undefined) => {
-    try {
-      const res = await Api.get({ endpoint: `${philosopher}commentlist`, params: `?postId=${postId}` })
-      if (res.data) {
-        setCommentList(res.data)
-      }
-      console.log("덧글 정보를 정상적으로 받아왔습니다.", "color: #d93d1a;")
-      console.log(res.data)
-    } catch {
-      console.log("덧글 정보를 받아오는 데에 실패했습니다.", "color: #d93d1a;")
+  const endpoint = () => {
+    switch (path) {
+      case "devates":
+        return `devatecomment`
+      case "freetopics":
+        return "freetopiccomment"
+      default:
+        return `${philosopher}comment`
     }
-    setIsFetchCompleted(true)
   }
-
+  //fetch + 새로고침 로직
   useEffect(() => {
-    if (postId) {
-      // URI에서 토론의 Id값을 받아옵니다.
-      console.log(postId)
-      fetchComments(postId)
-    } else {
-      console.log("존재하지 않는 토론입니다.")
-    }
+    customFetch({
+      endpoint: endpoint() + `list/?postId=${postId}`,
+      setValue: setCommentList,
+      callback: setIsFetchCompleted,
+    })
   }, [somethingWasChanged])
-
-  if (!isFetchCompleted) {
-    return <p>loading...</p>
-  }
 
   const commentHandler = async () => {
     try {
       const res = await Api.post({
-        endpoint: `${philosopher}comments/?postId=${postId}`,
+        endpoint: endpoint() + `s/?postId=${postId}`,
         data: { content: newComment },
       })
       console.log("덧글을 등록했습니다.", res.data)
@@ -61,10 +51,18 @@ export default function CommentList({ postId, philosopher }: { postId: string; p
     }
   }
 
+  //유효성 검사
+  if (!userState) {
+    return <p>userState does not exist(even null)</p>
+  }
+  if (!isFetchCompleted) {
+    return <p>loading...</p>
+  }
+
   return (
     <Container>
       <p style={{ backgroundColor: "grey" }}>덧글 창입니다.</p>
-      {!commentList && <p>아직 덧글이 없습니다.</p>}
+      {commentList.length == 0 && <p>아직 덧글이 없습니다.</p>}
       {commentList != [] && (
         <div>
           <p>덧글 목록({commentList.length}): </p>
@@ -72,8 +70,8 @@ export default function CommentList({ postId, philosopher }: { postId: string; p
             return (
               <CommentCard
                 key={comment._id}
+                path={path}
                 comment={comment}
-                philosopher={philosopher}
                 somethingWasChanged={somethingWasChanged}
                 setSomethingWasChanged={setSomethingWasChanged}
               />
