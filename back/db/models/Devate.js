@@ -13,6 +13,7 @@ class Devate {
         const post = await DevateModel.findOne({ _id: postId }).populate('author', 'id name');
         const comment = await DevateCommentModel.find({ postId: postId }).populate('author', 'id name');
         post.comment = comment;
+
         return post;
     }
 
