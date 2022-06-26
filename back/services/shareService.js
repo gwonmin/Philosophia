@@ -40,8 +40,15 @@ class shareService {
     return share;
   }
 
-  static async getShareInfo({ shareId }) {
+  static async getShareInfo({ shareId, userId }) {
     const share = await Share.findByShareId({ shareId });
+    const like = await Share.findLike({ shareId, userId });
+    
+    if (like.includes(userId)) {
+      share.userLike = 'like'
+    } else {
+      share.userLike = '좋아요를 누르지 않았습니다.'
+    } 
 
     if (!share) {
       const errorMessage = '해당하는 글이 없습니다.';
