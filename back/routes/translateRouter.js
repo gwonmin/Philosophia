@@ -61,4 +61,21 @@ translateRouter.post("/translate", async function (req, res) {
   });
 });
 
+translateRouter.get("/translate", async function (req, res, next) {
+  // const text = req.query.text;
+  // const translatedText = await TranslateModel.findOne({ text });
+  // res.status(200).json(translatedText);
+  // console.log(translatedText.afterText);
+  // return translatedText.afterText;
+    try { 
+      const translatedText = await TranslateModel.findOne().sort({ createdAt: -1 });
+      res.status(200).json(translatedText);
+      console.log(translatedText.afterText)
+      return translatedText.afterText;
+      
+    } catch (error) {
+      next(error);
+    }
+})
+
 export { translateRouter };
