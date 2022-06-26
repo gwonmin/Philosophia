@@ -45,9 +45,9 @@ class shareService {
     const like = await Share.findLike({ shareId, userId });
     
     if (like.includes(userId)) {
-      share.userLike = 'like'
+      share.userLike = true;
     } else {
-      share.userLike = '좋아요를 누르지 않았습니다.'
+      share.userLike = false;
     } 
 
     if (!share) {

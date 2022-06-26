@@ -25,7 +25,7 @@ const ShareSchema = new Schema(
             default: 0
         },
         userLike: {
-            type: String,
+            type: Boolean,
         }
     },
     {
