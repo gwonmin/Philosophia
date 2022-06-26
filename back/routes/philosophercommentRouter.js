@@ -82,8 +82,8 @@ philosophercommentRouter.delete('/nietzschecomments/:id', verifyToken, async (re
 });
 
 
-// 데카르트 게시판 댓글 작성
-philosophercommentRouter.post("/descartescomments", verifyToken, async function(req, res, next){
+// 칸트 게시판 댓글 작성
+philosophercommentRouter.post("/kantcomments", verifyToken, async function(req, res, next){
     try {
         const userId = req.user;
         const postId = req.query.postId;
@@ -105,8 +105,8 @@ philosophercommentRouter.post("/descartescomments", verifyToken, async function(
     }
 });
 
-// 데카르트 게시판 게시글 1개 댓글 조회
-philosophercommentRouter.get('/descartescommentlist', verifyToken, async (req, res, next) => {
+// 칸트 게시판 게시글 1개 댓글 조회
+philosophercommentRouter.get('/kantcommentlist', verifyToken, async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await philosophercommentService.getComments({ postId });
@@ -117,8 +117,8 @@ philosophercommentRouter.get('/descartescommentlist', verifyToken, async (req, r
     }
 });
 
-//데카르트 게시판 댓글 수정
-philosophercommentRouter.put('/descartescomments/:id', verifyToken, async (req, res, next) => {
+//칸트 게시판 댓글 수정
+philosophercommentRouter.put('/kantcomments/:id', verifyToken, async (req, res, next) => {
     try {
         const userId = req.user;
         const commentId = req.params.id;
@@ -141,8 +141,8 @@ philosophercommentRouter.put('/descartescomments/:id', verifyToken, async (req, 
     }
 });
 
-// 데카르트 게시판 댓글 삭제
-philosophercommentRouter.delete('/descartescomments/:id', verifyToken, async (req, res, next) => {
+// 칸트 게시판 댓글 삭제
+philosophercommentRouter.delete('/kantcomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
         const deletedComment = await philosophercommentService.deleteComment({
