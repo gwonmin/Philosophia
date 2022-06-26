@@ -31,8 +31,10 @@ export default function SharePostAddForm(aiShare?: any) {
     }
   }
   const connectAI = async () => {
-    const serverUrl = "http://" + window.location.hostname + ":5000/inference"
-    const bodyData = JSON.stringify(philosopher + " " + word)
+    const serverUrl = "http://" + window.location.hostname + ":5001/translate"
+    const data = { data: `${philosopher} ${word}` }
+    const bodyData = JSON.stringify(data)
+
     console.log(`%cPOST 요청: ${serverUrl}`, "color: #296aba;")
     console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;")
     const res = await axios.post(serverUrl, bodyData, {

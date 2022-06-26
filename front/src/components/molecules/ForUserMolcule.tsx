@@ -1,11 +1,7 @@
-import { useContext } from "react"
-import { UserStateContext } from "../../pages/RootPage"
-
 export default function ForUserMolcule({
   isYesList,
   isUser,
-  didAgree,
-  didDisagree,
+  stance,
   handleAgree,
   handleDisagree,
   like,
@@ -14,8 +10,7 @@ export default function ForUserMolcule({
 }: {
   isYesList: boolean
   isUser: boolean
-  didAgree: any
-  didDisagree: any
+  stance: any
   handleAgree: any
   handleDisagree: any
   like: any
@@ -33,9 +28,9 @@ export default function ForUserMolcule({
               <button onClick={handleAgree}>찬성</button>
               <button onClick={handleDisagree}>반대</button>
               <div>현재 상태: </div>
-              {didAgree && <div>찬성</div>}
-              {didDisagree && <div>반대</div>}
-              {!didAgree && !didDisagree && <div>중립</div>}
+              {stance === "yes" && "찬성"}
+              {stance === "no" && "반대"}
+              {stance === "grey" && "중립"}
             </div>
           )}
         </div>
