@@ -86,7 +86,8 @@ def generate(
 #Function to generate multiple sentences. data should be a dataframe
 def text_generation():
   req_data = request.json
-  data = pd.DataFrame(data=[req_data], index=range(0,1), columns=['0'])
+  print(req_data)
+  data = pd.DataFrame(data=[req_data['content']], index=range(0,1), columns=['0'])
   generated = []
   for i in range(len(data)):
     x = generate(model.to('cpu'), tokenizer, data['0'][i], entry_count=1)

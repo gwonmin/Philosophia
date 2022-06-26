@@ -32,14 +32,17 @@ export default function SharePostAddForm(aiShare?: any) {
   };
   const connectAI = async () => {
     // const serverUrl = "http://" + window.location.hostname + ":5000/inference"
-    const serverUrl = "http://localhost:5001/translate";
-    const bodyData = JSON.stringify(philosopher + " " + word).replace("\"", "").replace("\"", "");
+    const serverUrl = "http://" + window.location.hostname + ":5001/translate"
+    const data = { data: `${philosopher} ${word}` }
+    const bodyData = JSON.stringify(data)
+    // const serverUrl = "http://localhost:5001/translate";
+    // const bodyData = JSON.stringify(philosopher + " " + word).replace("\"", "").replace("\"", "");
     console.log(`%cPOST 요청: ${serverUrl}`, "color: #296aba;");
     console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
     const res = await axios.post(serverUrl, bodyData , {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      //   // Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       },
     });
     let newPost = postInfo;
