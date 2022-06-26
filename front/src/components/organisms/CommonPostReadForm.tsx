@@ -27,7 +27,6 @@ export default function CommonPostReadForm({
   const userState = useContext(UserStateContext) ?? { user: null }
   const postId = postInfo._id
   const isAuthor = postInfo.author._id === userState.user?._id
-  const didLike = postInfo.like?.includes(userState.user?._id)
   let isUpdating = false
 
   //초기화 확인
@@ -59,7 +58,7 @@ export default function CommonPostReadForm({
     try {
       const res = await Api.put({ endpoint: `shares/${postInfo._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
-      console.log("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."))
+      console.log("좋아요를 " + (postInfo.userLike === "yes" ? "취소하였습니다." : "눌렀습니다."))
     } catch (err) {
       console.log("좋아요에 실패했습니다.", err)
     }
@@ -67,16 +66,7 @@ export default function CommonPostReadForm({
   return (
     <div>
       <ShowPostInfo postInfo={postInfo} />
-      <ForUserMolcule
-        isYesList={postInfo.yes != undefined}
-        isUser={userState.user != null}
-        stance={postInfo.userStance}
-        handleAgree={() => handleChangeStance("yes")}
-        handleDisagree={() => handleChangeStance("no")}
-        like={postInfo.like != undefined}
-        didLike={didLike}
-        handleLike={handleLike}
-      />
+      <ForUserMolcule postInfo={postInfo} isUser={userState.user != null} handleChangeStance={handleChangeStance} handleLike={handleLike} />
       <ForAuthorMolcule isAuthor={isAuthor} setIsEditing={setIsEditing} deleteHandler={deleteHandler} />
       {path != "shares" && <CommentList path={path} postId={postId} />}
     </div>
