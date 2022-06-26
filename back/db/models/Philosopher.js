@@ -22,8 +22,8 @@ class Philosopher{
         if(philosopherName === '니체'){
             const posts = await PhilosopherModel.find({philosopherName:'니체'}).populate('author', 'id name');
             return posts;
-        } else if(philosopherName === '데카르트'){
-            const posts = await PhilosopherModel.find({philosopherName:'데카르트'}).populate('author', 'id name');
+        } else if(philosopherName === '칸트'){
+            const posts = await PhilosopherModel.find({philosopherName:'칸트'}).populate('author', 'id name');
             return posts;
         } else if(philosopherName === '아리스토텔레스'){
             const posts = await PhilosopherModel.find({philosopherName:'아리스토텔레스'}).populate('author', 'id name');
