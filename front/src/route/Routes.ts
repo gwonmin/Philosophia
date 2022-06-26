@@ -5,6 +5,8 @@ import LoginPage from "../pages/user/LoginPage"
 import CheckUserPage from "../pages/user/CheckUserPage"
 import EditUserInfoPage from "../pages/user/EditUserInfoPage"
 
+import TrendPage from "../pages/TrendPage"
+
 import DevatesPage from "../pages/devate/DevatesPage"
 import DevateAddPage from "../pages/devate/DevateAddPage"
 import DevateDetailPage from "../pages/devate/DevateDetailPage"
@@ -59,6 +61,7 @@ export interface USER_ROUTE extends ALL_ROUTE {
 interface ROUTES_GROUP extends INDEX_SIGNITURE {
   MASTER: ALL_ROUTE
   USER: USER_ROUTE
+  TREND: ALL_ROUTE
   DEVATES: COMMON_ROUTE
   PHILOSOPHER: COMMON_ROUTE
   SHARE: COMMON_ROUTE
@@ -97,6 +100,13 @@ export const ROUTES: ROUTES_GROUP = {
       path: ActionPath.CHECK,
       component: CheckUserPage,
       label: "본인 확인",
+    },
+  },
+  TREND: {
+    DEFAULT: {
+      path: RoutePath.TREND,
+      component: TrendPage,
+      label: "트렌드",
     },
   },
   DEVATES: {
