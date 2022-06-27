@@ -3,6 +3,7 @@ import Container from "@mui/material/Container"
 
 import RegisterForm from "../organisms/RegisterForm"
 import Header from "../organisms/Header"
+import Footer from "../organisms/Footer"
 
 type User = {
   email: string
@@ -16,15 +17,14 @@ export default function RegisterTemplate({ register, userInfo }: { register?: bo
     name: "",
   }
 
-  const Footer = () => {
-    return <p>푸터가 올 예정입니다.</p>
-  }
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
       <Header />
-      <RegisterForm register={register ?? true} userInfo={userInfo ?? initUser} />
-      {!register && <Link to="/user/login">로그인</Link>}
+      <Container component="main" maxWidth="xs">
+        <RegisterForm register={register ?? true} userInfo={userInfo ?? initUser} />
+        {!register && <Link to="/user/login">로그인</Link>}
+      </Container>
       <Footer />
-    </Container>
+    </div>
   )
 }

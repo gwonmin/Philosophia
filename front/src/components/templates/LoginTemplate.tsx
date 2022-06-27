@@ -3,6 +3,7 @@ import Container from "@mui/material/Container"
 
 import LoginForm from "../organisms/LoginForm"
 import Header from "../organisms/Header"
+import Footer from "../organisms/Footer"
 
 type User = {
   email: string
@@ -16,15 +17,14 @@ export default function LoginTemplate({ login, userInfo }: { login?: boolean; us
     name: "",
   }
 
-  const Footer = () => {
-    return <p>푸터도 오게 될까요?</p>
-  }
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
       <Header />
-      <LoginForm login={login ?? true} userInfo={userInfo ?? initUser} />
-      {!login && <Link to="/user/register">회원가입</Link>}
+      <Container component="main" maxWidth="xs">
+        <LoginForm login={login ?? true} userInfo={userInfo ?? initUser} />
+        {!login && <Link to="/user/register">회원가입</Link>}
+      </Container>{" "}
       <Footer />
-    </Container>
+    </div>
   )
 }

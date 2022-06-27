@@ -7,6 +7,14 @@ const ShareSchema = new Schema(
             ref: 'User', // 유저 스키마 참조
             required: true,
         },
+        philosopher: {
+            type: String,
+            required: true,
+        },
+        subject: {
+            type: String,
+            required: true,
+        },
         content: {
             type: String,
             required: true
@@ -15,6 +23,9 @@ const ShareSchema = new Schema(
         likeCount: {
             type: Number,
             default: 0
+        },
+        userLike: {
+            type: Boolean,
         }
     },
     {

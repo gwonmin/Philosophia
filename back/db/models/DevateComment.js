@@ -4,10 +4,10 @@ import { DevateModel } from "../schemas/devate";
 import { userModel } from "../schemas/user";
 
 class DevateComment {
-    static async createComment({ author, postId, content }) {
-        const newComment = { author, postId, content };
-        // newComment.author = newComment.author.name
+    static async createComment({ author, postId, content, stance }) {
+        const newComment = { author, postId, content, stance};
         const createdNewComment = await DevateCommentModel.create(newComment);
+        
         const id = mongoose.Types.ObjectId(postId);
         await DevateModel.findOneAndUpdate(
         { _id: id },
@@ -46,7 +46,7 @@ class DevateComment {
 
     static async findByCommentId({ commentId }) {
         const comment = await DevateCommentModel.findOne({ _id: commentId });
-
+    
         await userModel.populate(comment, {
             path: 'author',
             select: 'id email name',
@@ -54,15 +54,36 @@ class DevateComment {
         return comment;
     }
 
+    static async findAuthor({ commentId }) {
+        const post = await DevateCommentModel.findOne({ _id: commentId });
+        return post.author;
+    }
+
+    static async findPost({ commentId }) {
+        const post = await DevateCommentModel.findOne({ _id: commentId });
+        return post.postId;
+    }
+
     static async findByPostId({ postId }){
-        const comments = await DevateCommentModel.find({ postId });        
-        
+        const comments = await DevateCommentModel.find({ postId }).select('author postId content stance');  
+
         await userModel.populate(comments, {
             path: 'author',
             select: 'id email name',
         });
         
         return comments;
+    }
+
+    static async findYeses({ postId }) {
+        const post = await DevateModel.findOne({ _id: postId });
+        return post.yes;
+        
+    }
+
+    static async findNos({ postId }) {
+        const post = await DevateModel.findOne({ _id: postId });
+        return post.no;
     }
 
     
