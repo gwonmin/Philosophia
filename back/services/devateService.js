@@ -115,7 +115,7 @@ class devateService {
     const yes = await Devate.findYes({ postId, userId });
     const no = await Devate.findNo({ postId, userId });
   
-    let newValues, updateStance;
+    let newValues, message;
     if (stance == 1) {
       console.log(no);
       if (no.length != 0) {
@@ -129,6 +129,10 @@ class devateService {
           },
           $inc: { yesCount: 1 },
         };
+      } else if (yes.length != 0) {
+        message = '중복 투표 불가';
+        console.log(message);
+        return message;
       } else {
         newValues = {
           ['$push']: {
@@ -149,6 +153,10 @@ class devateService {
           },
           $inc: { noCount: 1 },
         };
+      } else if (no.length != 0) {
+        message = '중복 투표 불가';
+        console.log(message);
+        return message;
       } else {
         newValues = {
           ['$push']: {
