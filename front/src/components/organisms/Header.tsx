@@ -11,7 +11,7 @@ import Stack from "@mui/material/Stack"
 const HEADER_ROUTES = [
   { path: RoutePath.MASTER, label: "마스터 페이지" },
   { path: RoutePath.DEVATES, label: "토론 게시판" },
-  { path: "descartes", label: "철학자 게시판" },
+  { path: "philosopher", label: "철학자 게시판" },
   { path: RoutePath.SHARE, label: "글 공유 게시판" },
   { path: RoutePath.DATA, label: "자료 게시판" },
   { path: "team", label: "팀 소개 게시판" },
