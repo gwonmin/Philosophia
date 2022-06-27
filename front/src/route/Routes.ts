@@ -45,7 +45,6 @@ interface ROUTE {
 interface ALL_ROUTE extends INDEX_SIGNITURE {
   DEFAULT: ROUTE
 }
-
 export interface COMMON_ROUTE extends ALL_ROUTE {
   POST: ROUTE
   DETAIL: ROUTE

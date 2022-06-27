@@ -18,11 +18,13 @@ export default function RegisterTemplate({ register, userInfo }: { register?: bo
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
       <Header />
-      <RegisterForm register={register ?? true} userInfo={userInfo ?? initUser} />
-      {!register && <Link to="/user/login">로그인</Link>}
+      <Container component="main" maxWidth="xs">
+        <RegisterForm register={register ?? true} userInfo={userInfo ?? initUser} />
+        {!register && <Link to="/user/login">로그인</Link>}
+      </Container>
       <Footer />
-    </Container>
+    </div>
   )
 }
