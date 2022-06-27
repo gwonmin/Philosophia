@@ -1,27 +1,47 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
+import { ROUTES } from "../../route/Routes"
+import { RoutePath, ActionPath } from "../../route/RoutesURL"
 import { UserStateContext, DispatchContext } from "../../pages/RootPage"
+import { HeaderText } from "../atoms/textboxs"
+import Divider from "@mui/material/Divider/Divider"
+import Stack from "@mui/material/Stack"
+
+const HEADER_ROUTES = [
+  { path: RoutePath.MASTER, label: "마스터 페이지" },
+  { path: RoutePath.DEVATES, label: "토론 게시판" },
+  { path: "philosopher", label: "철학자 게시판" },
+  { path: RoutePath.SHARE, label: "글 공유 게시판" },
+  { path: RoutePath.DATA, label: "자료 게시판" },
+  { path: "team", label: "팀 소개 게시판" },
+]
 
 export default function Header() {
   const navigate = useNavigate()
-  const dispatch = useContext(DispatchContext)
-  const userState = useContext(UserStateContext)
-  if (!userState || !dispatch) {
-    return <p>Header: user or dispatch do not exist...</p>
-  }
 
   return (
-    <div style={{ backgroundColor: "grey" }}>
-      <p>헤더가 올 예정입니다.</p>
-      <p>State: {userState.user == null ? "로그아웃" : "로그인"}</p>
-      <button
-        onClick={() => {
-          navigate("/", { replace: true })
-        }}
-      >
-        마스터 페이지로 가기
-      </button>
+    <div>
+      <div>로고</div>
+      <HeaderText level={"h1"} variant={""} color={"black"}>
+        Philosophia
+      </HeaderText>
+      <Divider>
+        <Stack direction="row" spacing={2}>
+          {HEADER_ROUTES.map((route) => {
+            return (
+              <button
+                key={route.label}
+                onClick={() => {
+                  navigate("/" + route.path)
+                }}
+              >
+                {route.label}
+              </button>
+            )
+          })}
+        </Stack>
+      </Divider>
     </div>
   )
 }

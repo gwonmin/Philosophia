@@ -6,8 +6,8 @@ import SharePostAddForm from "../organisms/SharePostAddForm"
 export default function ShareAddPageTemplate() {
   return (
     <div>
+      <Header />
       <Container component="main" maxWidth="xs">
-        <Header />
         <p>글 공유 페이지입니다.</p>
         <SharePostAddForm />
       </Container>

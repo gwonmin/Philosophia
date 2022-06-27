@@ -18,11 +18,13 @@ export default function LoginTemplate({ login, userInfo }: { login?: boolean; us
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
       <Header />
-      <LoginForm login={login ?? true} userInfo={userInfo ?? initUser} />
-      {!login && <Link to="/user/register">회원가입</Link>}
+      <Container component="main" maxWidth="xs">
+        <LoginForm login={login ?? true} userInfo={userInfo ?? initUser} />
+        {!login && <Link to="/user/register">회원가입</Link>}
+      </Container>{" "}
       <Footer />
-    </Container>
+    </div>
   )
 }
