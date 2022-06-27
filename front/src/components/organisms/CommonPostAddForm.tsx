@@ -45,7 +45,7 @@ export default function CommonPostAddForm({ path }: { path: string }) {
   const params = useParams()
   const philosopher = params.who
   const navigate = useNavigate()
-  const endpoint = path === "philosopher" ? philosopher : path
+  const endpoint = path === ":who" ? philosopher : path
 
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const handlePost = async () => {
