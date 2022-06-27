@@ -105,7 +105,7 @@ devateRouter.get('/devates', verifyToken, async (req, res, next) => {
 
 });
 
-
+// 찬성, 반대
 devateRouter.put('/devates/:id/stance', verifyToken, async (req, res, next) => {
     try { 
         const userId = req.user;
@@ -120,19 +120,6 @@ devateRouter.put('/devates/:id/stance', verifyToken, async (req, res, next) => {
     }
 })
 
-// 반대
-devateRouter.put('/devates/:id/no', verifyToken, async (req, res, next) => {
-    try {
-        const userId = req.user;
-        const postId = req.params.id;
-
-        const no = await devateService.setPostNo({ userId, postId });
-
-        res.status(200).send(no);
-    } catch (error) {
-        next(error);
-    }
-})
 
 /* access token을 재발급 하기 위한 router.
   access token과 refresh token을 둘 다 헤더에 담아서 요청해야함 */
