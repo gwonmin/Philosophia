@@ -18,12 +18,6 @@ export default function UserDetail() {
         <LikedBooks />
       </Grid>
       <Grid item xs={12}>
-        <SharedArticles />
-      </Grid>
-      <Grid item xs={12}>
-        <WroteArticles />
-      </Grid>
-      <Grid item xs={12}>
         <AgreedTopics />
       </Grid>
       <Grid item xs={12}>
