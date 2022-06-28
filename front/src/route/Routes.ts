@@ -78,7 +78,7 @@ export const ROUTES: ROUTES_GROUP = {
     DEFAULT: {
       path: RoutePath.USER,
       component: undefined,
-      label: "마이",
+      label: "마이(아직 안됨)",
     },
     REGISTER: {
       path: ActionPath.REGISTER,
