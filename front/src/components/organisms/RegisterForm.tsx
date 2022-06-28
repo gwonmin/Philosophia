@@ -21,11 +21,12 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
     name: userInfo.name,
   })
   const email = userData.email
-  const [certification, setCertification] = useState("인증을 진행해주세요.")
+  const [certification, setCertification] = useState<string>("인증을 진행해주세요.")
   const password = userData.password
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState<string>("")
   const name = userData.name
-  const [timer, setTimer] = useState(false)
+  const [timer, setTimer] = useState<boolean>(false)
+  const [meaningless, setMeaningless] = useState<number>(0)
 
   const onChange = (e: any) => handleChange({ event: e, someState: userData, setSomeState: setUserData })
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
@@ -63,6 +64,7 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
   const mailHandler = async () => {
     //나중에 메일 관련 api를 만들고 채울 부분
     console.log("메일로 인증번호가 발송됩니다.")
+    setMeaningless(meaningless + 1)
     setTimer(true)
     try {
       await Api.post({ endpoint: "user/send-email", data: { email } })
@@ -124,7 +126,7 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
               buttonText="인증번호 받기"
             />
           </Grid>
-          {timer && <Timer />}
+          {timer && <Timer key={meaningless} />}
           <p></p>
           <Grid item xs={12}>
             <Certification
