@@ -15,6 +15,11 @@ const FreeTopicSchema = new Schema(
       type: String,
       required: true,
     },
+    visited: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
     comment: [
       {
         type: Schema.Types.ObjectId,

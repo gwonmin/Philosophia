@@ -1,5 +1,5 @@
 import { ROUTES } from "../../route/Routes"
-import CommonPageDetailTemplate from "../../components/templates/CommonPageDetailTemplate"
+import CommonPageDetailTemplate from "../../components/templates/CommonDetailPageTemplate"
 
 export default function PhilosopherDetailPage() {
   //변수 초기화

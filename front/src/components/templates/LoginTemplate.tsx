@@ -30,7 +30,7 @@ export default function LoginTemplate({
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
       <Header />
       <Grid container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
@@ -51,6 +51,6 @@ export default function LoginTemplate({
         </Grid>
       </Grid>
       <Footer />
-    </Container>
+    </div>
   );
 }

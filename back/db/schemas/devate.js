@@ -29,6 +29,10 @@ const DevateSchema = new Schema(
         ref: 'DevateComment', // 댓글 스키마 참조
       },
     ],
+    userStance: {
+      type: String,
+      required: false,
+    }
   },
   {
     timestamps: true,
