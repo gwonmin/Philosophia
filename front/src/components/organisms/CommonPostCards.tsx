@@ -1,8 +1,8 @@
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { UserStateContext } from "../../pages/RootPage"
-import { Post } from "../templates/CommonPageTemplate"
-import * as Api from "../../api"
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserStateContext } from "../../pages/RootPage";
+import { Post } from "../templates/CommonPageTemplate";
+import * as Api from "../../api";
 
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ post }: { post: any }) {
@@ -18,41 +18,61 @@ function Devate({ post }: { post: any }) {
         <p>덧글 수: {post.comment.length}</p>
       </Link>
     </div>
-  )
+  );
 }
 
 //-------------------------------------------Share-------------------------------------------//
-function Share({ post, somethingWasChanged, setSomethingWasChanged }: { post: any; somethingWasChanged: any; setSomethingWasChanged: any }) {
-  const user = useContext(UserStateContext)?.user
-  const didLike = post.like.includes(user?._id)
+function Share({
+  post,
+  somethingWasChanged,
+  setSomethingWasChanged,
+}: {
+  post: any;
+  somethingWasChanged: any;
+  setSomethingWasChanged: any;
+}) {
+  const user = useContext(UserStateContext)?.user;
+  const didLike = post.like.includes(user?._id);
   const likeHandler = async () => {
     if (!user) {
-      return <p>user does not exist(even null)</p>
+      return <p>user does not exist(even null)</p>;
     }
     try {
-      const res = await Api.put({ endpoint: `shares/${post._id}/like` })
-      setSomethingWasChanged(!somethingWasChanged)
-      console.log("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."), res.data, post.like, user)
+      const res = await Api.put({ endpoint: `shares/${post._id}/like` });
+      setSomethingWasChanged(!somethingWasChanged);
+      console.log(
+        "좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."),
+        res.data,
+        post.like,
+        user
+      );
     } catch (err) {
-      console.log("좋아요에 실패했습니다.", err)
+      console.log("좋아요에 실패했습니다.", err);
     }
-  }
+  };
   return (
     <div key={post._id} style={{ backgroundColor: "grey" }}>
       <Link to={post?._id}>
         <p>
           철학자 {post.philosopher}(이)가 생각하는 {post.subject}(이)란?
         </p>
-        <p>본문: {post.content.length > 40 ? post.content.substr(0, 40) + "...(중략)" : post.content}</p>
+        <p>
+          본문:{" "}
+          {post.content.length > 40
+            ? post.content.substr(0, 40) + "...(중략)"
+            : post.content}
+        </p>
         <p>좋아요 수: {post.like.length}</p>
       </Link>
       {user && (
         <div>
-          <button onClick={likeHandler}>{didLike ? "좋아요 취소" : "좋아요"}</button>
+          <button onClick={likeHandler}>
+            {didLike ? "좋아요 취소" : "좋아요"}
+          </button>
         </div>
       )}
     </div>
-  )
+  );
 }
 
 //-------------------------------------------Default-------------------------------------------//
@@ -65,7 +85,7 @@ function Default({ post }: { post: any }) {
         <p>덧글 수: {post.comment.length}</p>
       </Link>
     </div>
-  )
+  );
 }
 
 //-------------------------------------------exchange-------------------------------------------//
@@ -75,19 +95,25 @@ function Exchange({
   somethingWasChanged,
   setSomethingWasChanged,
 }: {
-  path: string
-  post: any
-  somethingWasChanged: any
-  setSomethingWasChanged: any
+  path: string;
+  post: any;
+  somethingWasChanged: any;
+  setSomethingWasChanged: any;
 }) {
-  console.log("locatiom: Exchange, post: ", post)
+  console.log("locatiom: Exchange, post: ", post);
   switch (path) {
     case "devates":
-      return <Devate post={post} />
+      return <Devate post={post} />;
     case "shares":
-      return <Share post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+      return (
+        <Share
+          post={post}
+          somethingWasChanged={somethingWasChanged}
+          setSomethingWasChanged={setSomethingWasChanged}
+        />
+      );
     default:
-      return <Default post={post} />
+      return <Default post={post} />;
   }
 }
 
@@ -97,10 +123,10 @@ export default function CommonPostCards({
   somethingWasChanged,
   setSomethingWasChanged,
 }: {
-  currentPage: any
-  postList: Post[]
-  somethingWasChanged: any
-  setSomethingWasChanged: any
+  currentPage: any;
+  postList: Post[];
+  somethingWasChanged: any;
+  setSomethingWasChanged: any;
 }) {
   return (
     <div>
@@ -118,10 +144,10 @@ export default function CommonPostCards({
                   setSomethingWasChanged={setSomethingWasChanged}
                 />
               </div>
-            )
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }
