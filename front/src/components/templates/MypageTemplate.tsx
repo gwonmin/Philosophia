@@ -9,16 +9,14 @@ import { Grid, Typography } from "@mui/material"
 export default function MypageTemplate({ userInfo }: any) {
   return (
     <>
-      <Header />
-      <Grid container columnSpacing={2}>
-        <Grid item xs={2} sx={{ border: "1px black solid" }}>
+      <Grid container>
+        <Grid item xs={12} sx={{ border: "1px black solid" }}>
           <UserInfoCardMolecule />
         </Grid>
-        <Grid item xs={10} sx={{ border: "1px black solid" }}>
+        <Grid item xs={12} sx={{ border: "1px black solid" }}>
           <UserDetail />
         </Grid>
       </Grid>
-      <Footer />
     </>
   )
 }
