@@ -14,6 +14,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r'*': {'origins': '*'}})
 
+
+#----------------------------------------------------------------
+#1. GPT2 문장 생성 모델
+
 #Get the tokenizer and model
 model = GPT2LMHeadModel.from_pretrained('gpt2')
 tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
@@ -84,6 +88,36 @@ def generate(
     return generated_list
 
 
+@app.route('/inference', methods=['POST'])
+#Function to generate multiple sentences. data should be a dataframe
+def text_generation():
+  req_data = request.json
+  
+  #generate 함수 입력 형식에 맞게 pandas DataFrame으로 변경
+  data = pd.DataFrame(data=[req_data['content']], index=range(0,1), columns=['0'])
+  
+  #문장 생성
+  generated = []
+  for i in range(len(data)):
+    x = generate(model.to('cpu'), tokenizer, data['0'][i], entry_count=1)
+    generated.append(x)
+
+  #개행문자 제거
+  result = str(generated[0]).replace("\n", "")
+  #특수문자 제거
+  result = result.translate(str.maketrans('', '', string.punctuation))
+  #endoftext 제거
+  result = result.replace("endoftext", "")
+
+  #CORS 설정
+  result = flask.Response(result)
+  result.headers["Access-Control-Allow-Origin"] = "*"
+  return result
+
+
+#----------------------------------------------------------------
+#2. BERT 비속어 Classification 모델
+
 #Get the tokenizer and model
 model_hate = BertForSequenceClassification.from_pretrained("bert-base-multilingual-cased", num_labels=2)
 tokenizer_hate = BertTokenizer.from_pretrained('bert-base-multilingual-cased', do_lower_case=False)
@@ -121,62 +155,30 @@ def convert_input_data(sentences):
 
     return inputs, masks
 
-
-@app.route('/inference', methods=['POST'])
-#Function to generate multiple sentences. data should be a dataframe
-def text_generation():
-  req_data = request.json
-  data = pd.DataFrame(data=[req_data['content']], index=range(0,1), columns=['0'])
-  generated = []
-  for i in range(len(data)):
-    x = generate(model.to('cpu'), tokenizer, data['0'][i], entry_count=1)
-    generated.append(x)
-
-  #개행문자 제거
-  result = str(generated[0]).replace("\n", "")
-  #특수문자 제거
-  result = result.translate(str.maketrans('', '', string.punctuation))
-  #endoftext 제거
-  result = result.replace("endoftext", "")
-  #CORS 설정
-  result = flask.Response(result)
-  result.headers["Access-Control-Allow-Origin"] = "*"
-  return result
-
 @app.route('/checkcomment', methods=['POST'])
 # 문장 테스트
 def test_sentences():
-
-    sentences = request.body
-    print(sentences)
+    req_data = request.json
 
     # 평가모드로 변경
     model_hate.eval()
 
     # 문장을 입력 데이터로 변환
-    inputs, masks = convert_input_data(sentences)
+    inputs, masks = convert_input_data([req_data['word']])
 
-    # 데이터를 CPU에 넣음
-    device = torch.device("cpu")
-    b_input_ids = inputs.to(device)
-    b_input_mask = masks.to(device)
-            
     # 그래디언트 계산 안함
     with torch.no_grad():     
         # Forward 수행
-        outputs = model_hate(b_input_ids, 
+        outputs = model_hate(inputs, 
                         token_type_ids=None, 
-                        attention_mask=b_input_mask)
+                        attention_mask=masks)
 
     # 출력 로짓 구함
     logits = outputs[0]
+    result = str(int(np.argmax(logits)))
 
-    # CPU로 데이터 이동
-    logits = logits.detach().cpu().numpy()
-    result = np.argmax(logits)
-    
     #CORS 설정
-    result = flask.Response(result)
+    result = flask.Response(result) #result는 iterable 해야함 / **type(result) == str
     result.headers["Access-Control-Allow-Origin"] = "*"
     return result
 
