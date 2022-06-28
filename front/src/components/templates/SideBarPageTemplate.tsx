@@ -18,22 +18,23 @@ type User = {
   name: string
 }
 
-const Nietzsche = ({ path }: { path: string }) => {
-  return <div>니체 게시판 {path}</div>
-}
-const Kant = ({ path }: { path: string }) => {
-  return <div>칸트 게시판 {path}</div>
-}
-const Aristotle = ({ path }: { path: string }) => {
-  return <div>아리스토텔레스 게시판 {path}</div>
-}
-
-
-
-const pageList = [
+const philosopherList = [
   { index: 0, label: "니체", path: "nietzsche" },
-  { index: 1, label: "칸트", path: "kant",},
-  { index: 2, label: "아리스토텔레스", path: "aristotle",  },
+  { index: 1, label: "칸트", path: "kant" },
+  { index: 2, label: "아리스토텔레스", path: "aristotle" },
+]
+const devateList = [
+  { index: 0, label: "찬반 토론", path: "devates" },
+  { index: 1, label: "자유 주제", path: "freetopics" },
+]
+const data = [
+  { index: 0, label: "니체", path: "nietzsche" },
+  { index: 1, label: "칸트", path: "kant" },
+  { index: 2, label: "아리스토텔레스", path: "aristotle" },
+]
+const share = [
+  { index: 0, label: "글 공유", path: "share" },
+  { index: 1, label: "칸트", path: "share/add" },
 ]
 
 export type Post = { _id: string; author: User; title: string; content: string; comment: string[] }
@@ -50,7 +51,7 @@ export default function SideBarPageTemplate({ currentPage }: { currentPage: COMM
   return (
     <div>
       <Header />
-      <SideBarOrgan pages={pageList}></SideBarOrgan>
+      <SideBarOrgan pages={philosopherList}></SideBarOrgan>
       <Footer />
     </div>
   )

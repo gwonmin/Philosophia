@@ -9,12 +9,13 @@ import Divider from "@mui/material/Divider/Divider"
 import Stack from "@mui/material/Stack"
 
 const HEADER_ROUTES = [
-  { path: RoutePath.MASTER, label: "마스터 페이지" },
+  { path: RoutePath.MASTER, label: "마스터 페이지(삭제예정)" },
+  { path: RoutePath.TREND, label: "트렌드 페이지" },
   { path: RoutePath.DEVATES, label: "토론 게시판" },
   { path: "philosopher", label: "철학자 게시판" },
   { path: RoutePath.SHARE, label: "글 공유 게시판" },
   { path: RoutePath.DATA, label: "자료 게시판" },
-  { path: "team", label: "팀 소개 게시판" },
+  { path: "service", label: "필로소피아" },
 ]
 
 export default function Header() {
