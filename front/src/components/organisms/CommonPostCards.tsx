@@ -75,6 +75,20 @@ function Share({
   );
 }
 
+//---------------------------------------------Data---------------------------------------------//
+function Data({ post }: { post: any }) {
+  console.log("in Data function");
+  return (
+    <div key={post._id} style={{ backgroundColor: "grey" }}>
+      <Link to={post._id}>
+        <p>제목: {post.title}</p>
+        <p>공유 날짜: {post.createdAt}</p>
+        <p>마지막 업데이트: {post.updatedAt}</p>
+      </Link>
+    </div>
+  );
+}
+
 //-------------------------------------------Default-------------------------------------------//
 function Default({ post }: { post: any }) {
   return (
@@ -112,6 +126,9 @@ function Exchange({
           setSomethingWasChanged={setSomethingWasChanged}
         />
       );
+    case "data":
+      console.log("in data case");
+      return <Data post={post} />;
     default:
       return <Default post={post} />;
   }
