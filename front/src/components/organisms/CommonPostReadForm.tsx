@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom"
 import { UserStateContext } from "../../pages/RootPage"
 import CommentList from "./CommentList"
 import ShowPostInfo from "../molecules/ShowPostInfo"
-import ForUserMolcule from "../molecules/ForUserMolcule"
+import ForUserMolcule from "../molecules/ForUserMolecule"
 import { handleDelete, handleStance } from "../../util"
-import ForAuthorMolcule from "../molecules/ForAuthorMolcule"
+import ForAuthorMolcule from "../molecules/ForAuthorMolecule"
 import * as Api from "../../api"
 
 export default function CommonPostReadForm({
@@ -56,7 +56,7 @@ export default function CommonPostReadForm({
       return <p>user does not exist(even null)</p>
     }
     try {
-      const res = await Api.put({ endpoint: `shares/${postInfo._id}/like` })
+      await Api.put({ endpoint: `shares/${postInfo._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
       console.log("좋아요를 " + (postInfo.userLike === "yes" ? "취소하였습니다." : "눌렀습니다."))
     } catch (err) {
