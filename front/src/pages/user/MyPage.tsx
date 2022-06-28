@@ -5,6 +5,10 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import Modal from "@mui/material/Modal"
+import {Grid} from "@mui/material"
+
+import * as Api from "../../api"
+import { UserStateContext } from "../RootPage"
 
 const style = {
   position: "absolute" as "absolute",
@@ -33,9 +37,6 @@ export default function MyPage({ user }: any) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            마이페이지
-          </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <MypageTemplate userInfo={user} />
           </Typography>
