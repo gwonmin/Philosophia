@@ -54,8 +54,9 @@ shareRouter.put('/shares/:id', verifyToken, async (req, res, next) => {
 // 글 1개 조회
 shareRouter.get('/shares/:id', verifyToken, async function (req, res, next) {
   try {
+    const userId = req.user;
     const shareId = req.params.id;
-    const currentShareInfo = await shareService.getShareInfo({ shareId });
+    const currentShareInfo = await shareService.getShareInfo({ shareId, userId });
 
     if (currentShareInfo.errorMessage) {
       throw new Error(currentShareInfo.errorMessage);

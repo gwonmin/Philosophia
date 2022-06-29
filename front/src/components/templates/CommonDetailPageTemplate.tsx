@@ -5,6 +5,7 @@ import { Container } from "@mui/material"
 import { customFetch } from "../../util"
 
 import Header from "../organisms/Header"
+import Footer from "../organisms/Footer"
 import { UserStateContext } from "../../pages/RootPage"
 import { COMMON_ROUTE } from "../../route/Routes"
 import CommonPostEditForm from "../organisms/CommonPostEditForm"
@@ -65,22 +66,25 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
   }
 
   return (
-    <Container>
+    <div>
       <Header />
-      <p>
-        {currentPath} 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}
-      </p>
-      {isEditing ? (
-        <CommonPostEditForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
-      ) : (
-        <CommonPostReadForm
-          path={currentPath}
-          setIsEditing={setIsEditing}
-          postInfo={postInfo}
-          somethingWasChanged={somethingWasChanged}
-          setSomethingWasChanged={setSomethingWasChanged}
-        />
-      )}
-    </Container>
+      <Container>
+        <p>
+          {currentPath} 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}
+        </p>
+        {isEditing ? (
+          <CommonPostEditForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
+        ) : (
+          <CommonPostReadForm
+            path={currentPath}
+            setIsEditing={setIsEditing}
+            postInfo={postInfo}
+            somethingWasChanged={somethingWasChanged}
+            setSomethingWasChanged={setSomethingWasChanged}
+          />
+        )}
+      </Container>
+      <Footer />
+    </div>
   )
 }
