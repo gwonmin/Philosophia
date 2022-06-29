@@ -18,12 +18,12 @@ export default function MasterPage() {
     ...ROUTES_ARR.slice(1, 6),
     { path: "구분선", label: "메인 게시판" },
     ...ROUTES_ARR.slice(6, 8),
-    { path: "philosopher/nietzsche", label: "니체" },
-    { path: "philosopher/descartes", label: "데카르트" },
-    { path: "philosopher/aristotle", label: "아리스토텔레스" },
+    { path: "nietzsche", label: "니체" },
+    { path: "descartes", label: "데카르트" },
+    { path: "aristotle", label: "아리스토텔레스" },
     { path: "freetopics", label: "자유 주제" },
     { path: "구분선", label: "서브 게시판" },
-    ...ROUTES_ARR.slice(13, 15),
+    ...ROUTES_ARR.slice(12, 14),
     { path: "data", label: "자료 공유" },
   ]
   const id = userState.user?._id

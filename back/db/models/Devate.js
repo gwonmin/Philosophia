@@ -13,6 +13,7 @@ class Devate {
         const post = await DevateModel.findOne({ _id: postId }).populate('author', 'id name');
         const comment = await DevateCommentModel.find({ postId: postId }).populate('author', 'id name');
         post.comment = comment;
+
         return post;
     }
 
@@ -75,6 +76,25 @@ class Devate {
         const option = { returnOriginal: false };
         const updatedPost = await DevateModel.findOneAndUpdate(filter, update, option);
         return updatedPost
+    }
+
+    static async getTop3(){
+        const posts = await DevateModel.aggregate([
+            {$project:{
+                countOfAll:{ '$add': [ { '$size': '$yes' }, { '$size': '$no' } ] }
+             }},
+            {$sort:{countOfAll:-1}},
+            {$limit:3}
+        ]);
+
+        var postObj = []
+        for(var i in posts){
+            const postId = posts[i]._id;
+            const post = await DevateModel.findOne({ _id: postId });
+            postObj.push(post)
+        }
+
+        return postObj;
     }
 }
 

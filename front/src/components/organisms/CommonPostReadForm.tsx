@@ -7,8 +7,9 @@ import ShowPostInfo from "../molecules/ShowPostInfo"
 import ForUserMolcule from "../molecules/ForUserMolcule"
 import { handleDelete, handleStance } from "../../util"
 import ForAuthorMolcule from "../molecules/ForAuthorMolcule"
+import * as Api from "../../api"
 
-export default function ReadPostForm({
+export default function CommonPostReadForm({
   path,
   setIsEditing,
   postInfo,
@@ -26,8 +27,9 @@ export default function ReadPostForm({
   const userState = useContext(UserStateContext) ?? { user: null }
   const postId = postInfo._id
   const isAuthor = postInfo.author._id === userState.user?._id
-  const didAgree = postInfo.yes.includes(userState.user?._id)
-  const didDisagree = postInfo.no.includes(userState.user?._id)
+  const didAgree = postInfo.yes ? postInfo.yes.includes(userState.user?._id) : null
+  const didDisagree = postInfo.no ? postInfo.no.includes(userState.user?._id) : null
+  const didLike = postInfo.like?.includes(userState.user?._id)
 
   //초기화 확인
   console.log("path: ", path)
@@ -56,12 +58,34 @@ export default function ReadPostForm({
       callback: setSomethingWasChanged,
     })
   }
+  const handleLike = async () => {
+    if (!userState.user) {
+      return <p>user does not exist(even null)</p>
+    }
+    try {
+      const res = await Api.put({ endpoint: `shares/${postInfo._id}/like` })
+      setSomethingWasChanged(!somethingWasChanged)
+      console.log("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."))
+    } catch (err) {
+      console.log("좋아요에 실패했습니다.", err)
+    }
+  }
   return (
     <div>
       <ShowPostInfo postInfo={postInfo} />
-      <ForUserMolcule isUser={userState.user != null} didAgree={didAgree} didDisagree={didDisagree} handleAgree={handleAgree} handleDisagree={handleDisagree} />
+      <ForUserMolcule
+        isYesList={postInfo.yes != undefined}
+        isUser={userState.user != null}
+        didAgree={didAgree}
+        didDisagree={didDisagree}
+        handleAgree={handleAgree}
+        handleDisagree={handleDisagree}
+        like={postInfo.like != undefined}
+        didLike={didLike}
+        handleLike={handleLike}
+      />
       <ForAuthorMolcule isAuthor={isAuthor} setIsEditing={setIsEditing} deleteHandler={deleteHandler} />
-      <CommentList postId={postId} yesList={postInfo.yes} noList={postInfo.no} />
+      {path != "shares" && <CommentList path={path} postId={postId} />}
     </div>
   )
 }

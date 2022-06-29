@@ -1,9 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom"
-import { useState } from "react"
+import { Container } from "@mui/material"
 
 import { TextFieldAtom } from "../atoms/textInputs"
-import { handleChange } from "../../util"
-import * as Api from "../../api"
+import { handleChange, handleEdit } from "../../util"
 
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
@@ -36,47 +34,33 @@ function Exchange({ path, postInfo, onChange }: { path: string; postInfo: any; o
   }
 }
 
-export default function CommonPostAddForm({ path }: { path: string }) {
-  const [postInfo, setPostInfo] = useState({
-    title: "",
-    content: "",
-    tag: "",
-  })
-  const params = useParams()
-  const philosopher = params.who
-  const navigate = useNavigate()
-  const endpoint = path === "philosopher" ? philosopher : path
-
+export default function CommonPostEditForm({
+  path,
+  setIsEditing,
+  postInfo,
+  setPostInfo,
+}: {
+  path: string
+  setIsEditing: any
+  postInfo: any
+  setPostInfo: any
+}) {
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
-  const handlePost = async () => {
-    if (!endpoint) {
-      console.log("location: CommonPostAddForm, err: post 경로가 잘못되었습니다.")
-      return
-    }
-    try {
-      // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post({
-        endpoint: endpoint,
-        data: postInfo,
-      })
-      console.log(path, "의 post요청이 성공했습니다. data: ", res.data)
-      navigate(-1)
-    } catch (err) {
-      console.log("게시글 등록에 실패하였습니다.\n", err)
-    }
-  }
+  const onClick = () => handleEdit({ endpoint: `${path}/${postInfo._id}`, data: postInfo, callback: setIsEditing })
 
   return (
-    <>
-      <Exchange path={path} postInfo={postInfo} onChange={onChange} />
-      <button onClick={handlePost}>게시글 등록하기</button>
-      <button
-        onClick={() => {
-          navigate(-1)
-        }}
-      >
-        취소
-      </button>
-    </>
+    <div>
+      <Container component="main" maxWidth="xs">
+        <Exchange path={path} postInfo={postInfo} onChange={onChange} />
+        <button onClick={onClick}>게시글 수정하기</button>
+        <button
+          onClick={() => {
+            setIsEditing(false)
+          }}
+        >
+          취소
+        </button>
+      </Container>
+    </div>
   )
 }
