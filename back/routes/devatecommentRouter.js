@@ -12,13 +12,13 @@ devatecommentRouter.post('/devatecomments', verifyToken, async (req, res, next) 
         const userId = req.user;
         const postId = req.query.postId;
         let { content } = req.body;
-        console.log(content);
+
         await axios.post("http://127.0.0.1:5000/checkcomment", {
             content: JSON.stringify(content),
           }).then(async function (response) {
             // 1이면 비속어
             const text = response.data
-            console.log(text);
+            
             if (text == '1') {
                 content = '비속어가 포함된 댓글입니다.'
             } else {
