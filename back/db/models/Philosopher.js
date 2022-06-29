@@ -20,13 +20,13 @@ class Philosopher{
     // 철학자 게시판 별 전체 글 조회
     static async findAll({ philosopherName }){
         if(philosopherName === '니체'){
-            const posts = await PhilosopherModel.find({philosopherName:'니체'}).populate('author', 'id name');
+            const posts = await PhilosopherModel.find({philosopherName:'니체'}).populate('author', 'id name').sort({createdAt: -1 });
             return posts;
         } else if(philosopherName === '칸트'){
-            const posts = await PhilosopherModel.find({philosopherName:'칸트'}).populate('author', 'id name');
+            const posts = await PhilosopherModel.find({philosopherName:'칸트'}).populate('author', 'id name').sort({createdAt: -1 });
             return posts;
         } else if(philosopherName === '아리스토텔레스'){
-            const posts = await PhilosopherModel.find({philosopherName:'아리스토텔레스'}).populate('author', 'id name');
+            const posts = await PhilosopherModel.find({philosopherName:'아리스토텔레스'}).populate('author', 'id name').sort({createdAt: -1 });
             return posts;
         };
     }
