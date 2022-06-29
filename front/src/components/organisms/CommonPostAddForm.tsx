@@ -9,6 +9,7 @@ import { NewPost } from "../../types"
 
 import "../../../public/index.scss"
 import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
 import { Typography } from "@mui/material"
 
 //-------------------------------------------Devate-------------------------------------------//
@@ -115,14 +116,27 @@ export default function CommonPostAddForm({ path }: { path: string }) {
   return (
     <>
       <Exchange path={path} postInfo={postInfo} onChange={onChange} />
-      <button onClick={handlePost}>게시글 등록하기</button>
-      <button
-        onClick={() => {
-          navigate(-1)
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          mr: 1,
         }}
       >
-        취소
-      </button>
+        <Button
+          sx={{ mr: 1.5 }}
+          variant="outlined"
+          onClick={() => {
+            navigate(-1)
+          }}
+        >
+          취소
+        </Button>
+        <Button variant="contained" onClick={handlePost}>
+          게시글 등록하기
+        </Button>
+      </Box>
     </>
   )
 }
