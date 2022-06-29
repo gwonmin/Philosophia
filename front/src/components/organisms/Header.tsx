@@ -7,6 +7,10 @@ import { UserStateContext, DispatchContext } from "../../pages/RootPage"
 import { HeaderText } from "../atoms/textboxs"
 import Divider from "@mui/material/Divider/Divider"
 import Stack from "@mui/material/Stack"
+import { Grid } from "@mui/material"
+
+import logo from "../../../public/img/logo.png"
+import banner from "../../../public/img/banner.png"
 
 const HEADER_ROUTES = [
   { path: RoutePath.MASTER, label: "마스터 페이지(삭제예정)" },
@@ -22,27 +26,54 @@ export default function Header() {
   const navigate = useNavigate()
 
   return (
-    <div>
-      <div>로고</div>
-      <HeaderText level={"h1"} variant={""} color={"black"}>
-        Philosophia
-      </HeaderText>
-      <Divider>
-        <Stack direction="row" spacing={2}>
-          {HEADER_ROUTES.map((route) => {
-            return (
-              <button
-                key={route.label}
-                onClick={() => {
-                  navigate("/" + route.path)
-                }}
-              >
-                {route.label}
-              </button>
-            )
-          })}
-        </Stack>
-      </Divider>
-    </div>
+    <Grid container>
+      <Grid item xs={2}>
+        {/* 로고 중앙정렬을 위한 빈 그리드 */}
+      </Grid>
+      <Grid
+        item
+        xs={8}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img
+          src={banner}
+          style={{
+            height: "20vh",
+          }}
+        ></img>
+      </Grid>
+      <Grid
+        item
+        xs={2}
+        sx={{
+          display: "flex",
+          justifyContent: "right",
+          alignItems: "center",
+          pr: 5,
+        }}
+      ></Grid>
+      <Grid item xs={12}>
+        <Divider>
+          <Stack direction="row" spacing={2}>
+            {HEADER_ROUTES.map((route) => {
+              return (
+                <button
+                  key={route.label}
+                  onClick={() => {
+                    navigate("/" + route.path)
+                  }}
+                >
+                  {route.label}
+                </button>
+              )
+            })}
+          </Stack>
+        </Divider>
+      </Grid>
+    </Grid>
   )
 }
