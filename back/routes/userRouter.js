@@ -180,7 +180,6 @@ userRouter.post("/user/email-auth", async function(req, res, next){
 
   const email = req.body.email;
   const auth = await Auth.findByEmail({ email });
-  console.log('hasedAuthNum: ', auth.hashedAuthNum)
   const hashedAuthNum = auth.hashedAuthNum;
 
   try {
