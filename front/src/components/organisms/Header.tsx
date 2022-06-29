@@ -31,7 +31,7 @@ export default function Header() {
   const user = userStateContext.user
 
   return (
-    <Grid container>
+    <Grid container rowSpacing={2} sx={{ mb: 3 }}>
       <Grid
         item
         xs={2}
