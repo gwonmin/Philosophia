@@ -44,7 +44,7 @@ export default function TrendPage() {
                 <Link to={"/devates/" + post._id}>
                   <p>제목: {post.title}</p>
                   <p>찬성: {yesRatio.toFixed(2)}%</p>
-                  <p>반성: {noRatio.toFixed(2)}%</p>
+                  <p>반대: {noRatio.toFixed(2)}%</p>
                 </Link>
               </div>
             )
