@@ -159,12 +159,12 @@ def convert_input_data(sentences):
 # 문장 테스트
 def test_sentences():
     req_data = request.json
-
+    
     # 평가모드로 변경
     model_hate.eval()
 
     # 문장을 입력 데이터로 변환
-    inputs, masks = convert_input_data([req_data['word']])
+    inputs, masks = convert_input_data([req_data['content']])
 
     # 그래디언트 계산 안함
     with torch.no_grad():     
