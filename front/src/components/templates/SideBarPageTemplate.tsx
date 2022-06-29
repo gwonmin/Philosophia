@@ -10,12 +10,7 @@ import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import SideBarOrgan from "../organisms/SideBarOrgan"
 
-type User = {
-  _id: string
-  email: string
-  password: string
-  name: string
-}
+import { User } from "../../types"
 
 const philosopherList = [
   { index: 0, label: "니체", path: "nietzsche" },

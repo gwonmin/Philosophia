@@ -54,7 +54,6 @@ export default function CommonPostAddForm({ path }: { path: string }) {
       return
     }
     try {
-      // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post({
         endpoint: endpoint,
         data: postInfo,

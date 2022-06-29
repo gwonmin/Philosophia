@@ -9,13 +9,7 @@ import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import Exchange from "../organisms/PostCards"
-
-type User = {
-  _id: string
-  email: string
-  password: string
-  name: string
-}
+import { User } from "../../types"
 
 export type Post = { _id: string; author: User; title: string; content: string; comment: string[] }
 

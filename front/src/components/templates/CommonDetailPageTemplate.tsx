@@ -3,20 +3,13 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
 import { customFetch } from "../../util"
-
+import { User } from "../../types"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import { UserStateContext } from "../../pages/RootPage"
 import { COMMON_ROUTE } from "../../route/Routes"
 import CommonPostEditForm from "../organisms/CommonPostEditForm"
 import CommonPostReadForm from "../organisms/CommonPostReadForm"
-
-type User = {
-  _id: string
-  email: string
-  password: string
-  name: string
-}
 
 type CommonPost = { _id: string; author: User; title: string; content: string; comment: string[] }
 export type DevatePost = CommonPost & { yes: string[]; no: string[]; tag: string[] }
