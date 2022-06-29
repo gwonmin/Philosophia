@@ -41,14 +41,14 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export default function SideBarOrgan({ pages }: { pages: Page[] }) {
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState<number>(0)
   const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue)
 
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
 
   //fetch
   useEffect(() => {

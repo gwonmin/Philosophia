@@ -10,5 +10,17 @@ export interface Post {
   author: User
   title: string
   content: string
+  //optional
   comment?: string[]
+  tag?: string
+  userStance?: any
+  userLike?: any
+}
+
+export interface NewPost {
+  title: string
+  content: string
+  //optional
+  comment?: string[]
+  tag?: string
 }

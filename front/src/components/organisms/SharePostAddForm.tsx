@@ -14,8 +14,8 @@ export default function SharePostAddForm(aiShare?: any) {
     subject: "",
     content: "",
   })
-  const [philosopher, setPhilosopher] = useState("철학자")
-  const [word, setWord] = useState("")
+  const [philosopher, setPhilosopher] = useState<string>("Nietzsche")
+  const [word, setWord] = useState<string>("")
   const navigate = useNavigate()
 
   const handlePost = async () => {

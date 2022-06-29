@@ -20,10 +20,10 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
   const philosopher = params.who
   const currentPath = currentPage.DEFAULT.path === ":who" ? philosopher : currentPage.DEFAULT.path
   const userState = useContext(UserStateContext)
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
-  const [postInfo, setPostInfo] = useState<Post | undefined>(undefined)
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
+  const [postInfo, setPostInfo] = useState<Post | null>(null)
 
   //초기화 확인
   console.log("location: ", currentPage)
@@ -50,6 +50,9 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
     return <p>Param is not valid</p>
   }
   if (!isFetchCompleted) {
+    return <p>loading...</p>
+  }
+  if (!postInfo) {
     return <p>loading...</p>
   }
 

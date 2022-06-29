@@ -10,7 +10,7 @@ export default function TrendPage() {
     freePosts: any[]
   }
   const [trend, setTrend] = useState<Trend | null>(null)
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
 
   useEffect(() => {
     customFetch({ endpoint: "trend", setValue: setTrend, callback: setIsFetchCompleted })
