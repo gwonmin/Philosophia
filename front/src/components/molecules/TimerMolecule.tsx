@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react"
 export default function Timer() {
   const [min, setMin] = useState<number>(3)
   const [sec, setSec] = useState<number>(0)
-  const time = useRef<number>(180)
+  const time = useRef<number>(179)
   const timerId = useRef(0)
 
   useEffect(() => {

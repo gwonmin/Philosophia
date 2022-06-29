@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction } from "react"
 import * as Api from "./api"
 
 //공통적으로 쓰이는 hanlde 함수

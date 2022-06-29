@@ -2,7 +2,8 @@ import { createContext, Dispatch, useEffect, useReducer, useState } from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 import * as Api from "../api"
-import { loginReducer, Action, User } from "../reducer"
+import { loginReducer, Action } from "../reducer"
+import { User } from "../types"
 
 import { customFetch } from "../util"
 import MyRouter from "../route/Router"
@@ -14,7 +15,7 @@ export default function RootPage() {
   const [userState, dispatch] = useReducer(loginReducer, {
     user: null,
   })
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
 
   const setValue = (data: any) => {
     dispatch({

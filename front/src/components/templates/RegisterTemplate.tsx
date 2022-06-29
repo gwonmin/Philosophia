@@ -5,11 +5,8 @@ import RegisterForm from "../organisms/RegisterForm"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 
-type User = {
-  email: string
-  password: string
-  name: string
-}
+import { User } from "../../types"
+
 export default function RegisterTemplate({ register, userInfo }: { register?: boolean; userInfo?: User }) {
   const initUser: User = {
     email: "",

@@ -13,10 +13,10 @@ export default function CommentList({ path, postId }: { path: string; postId: st
   const params = useParams()
   const philosopher = params.who
   const userState = useContext(UserStateContext)
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
-  const [commentList, setCommentList] = useState([])
-  const [newComment, setNewComment] = useState("")
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
+  const [commentList, setCommentList] = useState<string[]>([])
+  const [newComment, setNewComment] = useState<string>("")
 
   const endpoint = () => {
     switch (path) {
