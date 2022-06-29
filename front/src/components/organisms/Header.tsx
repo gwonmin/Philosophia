@@ -11,6 +11,7 @@ import { Grid, Typography, Link } from "@mui/material"
 
 import logo from "../../../public/img/logo.png"
 import banner from "../../../public/img/banner.png"
+import "../../../public/index.scss"
 
 import MyPage from "../../pages/user/MyPage"
 
@@ -86,18 +87,17 @@ export default function Header() {
       <Grid item xs={12}>
         <Divider>
           <Stack direction="row" spacing={2}>
-            {HEADER_ROUTES.map((route) => {
-              return (
-                <button
-                  key={route.label}
-                  onClick={() => {
-                    navigate("/" + route.path)
-                  }}
-                >
-                  {route.label}
-                </button>
-              )
-            })}
+            {HEADER_ROUTES.map((route) => (
+              <button
+                className="fill"
+                key={route.label}
+                onClick={() => {
+                  navigate("/" + route.path)
+                }}
+              >
+                {route.label}
+              </button>
+            ))}
           </Stack>
         </Divider>
       </Grid>
