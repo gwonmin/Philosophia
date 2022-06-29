@@ -3,7 +3,6 @@ import { devatecommentService } from "../services/devatecommentService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
 import { checkComment } from "../middlewares/checkComment";
-import axios from "axios";
 
 const devatecommentRouter = Router();
 
@@ -51,7 +50,7 @@ devatecommentRouter.put('/devatecomments/:id', verifyToken, checkComment, async 
         }
 
         res.status(200).json(updatedComment);
-        
+
     } catch (error) {
         next(error);
     }
