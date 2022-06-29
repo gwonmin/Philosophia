@@ -79,7 +79,7 @@ $colors: (
 }
 
 // Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties.
-button {  
+button.fill {
   color: var(--color);
   transition: 0.25s;
   
@@ -91,7 +91,7 @@ button {
 }
 
 // Basic button styles
-button {
+button.fill {
   background: none;
   border: 2px solid;
   font: inherit;
