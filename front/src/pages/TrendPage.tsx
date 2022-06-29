@@ -4,10 +4,12 @@ import { Link } from "react-router-dom"
 import { customFetch } from "../util"
 import Header from "../components/organisms/Header"
 
+import { Devate_Post, Free_Post, Post } from "../types"
+
 export default function TrendPage() {
   type Trend = {
-    devatePosts: any[]
-    freePosts: any[]
+    devatePosts: Devate_Post[]
+    freePosts: Free_Post[]
   }
   const [trend, setTrend] = useState<Trend | null>(null)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
