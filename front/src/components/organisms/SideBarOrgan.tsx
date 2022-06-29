@@ -15,7 +15,8 @@ import { customFetch } from "../../util"
 
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
-import CommonPostCards from "../organisms/CommonPostCards"
+import Exchange from "../organisms/PostCards"
+import SharePostAddForm from "./SharePostAddForm"
 import { Post } from "../templates/CommonPageTemplate"
 
 interface TabPanelProps {
@@ -34,27 +35,15 @@ function TabPanel(props: TabPanelProps) {
 
   return (
     <div role="tabpanel" hidden={value !== index} id={`vertical-tabpanel-${index}`} aria-labelledby={`vertical-tab-${index}`} {...other}>
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   )
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
-  }
-}
-
 export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   const [value, setValue] = useState(0)
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue)
+
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
@@ -73,18 +62,6 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
     return <p>loading...</p>
   }
 
-  function Default({ post }: { post: any }) {
-    return (
-      <div key={post._id} style={{ backgroundColor: "grey" }}>
-        <Link to={"/" + pages[value].path + "/" + post._id}>
-          <p>제목: {post.title}</p>
-          <p>글쓴이: {post.author.name}</p>
-          <p>덧글 수: {post.comment.length}</p>
-        </Link>
-      </div>
-    )
-  }
-
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     return (
       <div>
@@ -94,7 +71,7 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
             {postList.map((post: Post) => {
               return (
                 <div key={post._id} style={{ backgroundColor: "grey" }}>
-                  <Default post={post} />
+                  <Exchange path={pages[value].path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
                 </div>
               )
             })}
@@ -122,6 +99,13 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
         })}
       </Tabs>
       {pages.map((page) => {
+        if (page.label === "AI 철학자") {
+          return (
+            <TabPanel key={page.index} index={page.index} value={value}>
+              <SharePostAddForm />
+            </TabPanel>
+          )
+        }
         return (
           <TabPanel key={page.index} index={page.index} value={value}>
             <GoodComponent postList={postList} />
