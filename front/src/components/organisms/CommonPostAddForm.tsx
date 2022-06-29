@@ -2,9 +2,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useState } from "react"
 
 import { TextFieldAtom } from "../atoms/textInputs"
+import { TextFieldMultilineAtom } from "../atoms/textInputsMultiline"
 import { handleChange } from "../../util"
 import * as Api from "../../api"
 import { NewPost } from "../../types"
+
+import "../../../public/index.scss"
+import Box from "@mui/material/Box"
+import { Typography } from "@mui/material"
 
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
@@ -38,22 +43,22 @@ function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
 //-------------------------------------------Default-------------------------------------------//
 function Default({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
-    <>
+    <Box sx={{ p: 1, mb: 3, mt: 4 }}>
       <TextFieldAtom
         id="title"
-        label="title"
+        placeholder="제목을 입력해주세요"
         name="title"
         value={postInfo.title}
         onChange={onChange}
       />
-      <TextFieldAtom
+      <TextFieldMultilineAtom
         id="content"
-        label="content"
+        placeholder="본문을 입력해주세요"
         name="content"
         value={postInfo.content}
         onChange={onChange}
       />
-    </>
+    </Box>
   )
 }
 
