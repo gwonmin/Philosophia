@@ -10,9 +10,27 @@ import { NewPost } from "../../types"
 function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
     <>
-      <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
-      <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
-      <TextFieldAtom id="tag" label="tag" name="tag" value={postInfo.tag} onChange={onChange} />
+      <TextFieldAtom
+        id="title"
+        label="title"
+        name="title"
+        value={postInfo.title}
+        onChange={onChange}
+      />
+      <TextFieldAtom
+        id="content"
+        label="content"
+        name="content"
+        value={postInfo.content}
+        onChange={onChange}
+      />
+      <TextFieldAtom
+        id="tag"
+        label="tag"
+        name="tag"
+        value={postInfo.tag}
+        onChange={onChange}
+      />
     </>
   )
 }
@@ -21,14 +39,34 @@ function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
 function Default({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
     <>
-      <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
-      <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
+      <TextFieldAtom
+        id="title"
+        label="title"
+        name="title"
+        value={postInfo.title}
+        onChange={onChange}
+      />
+      <TextFieldAtom
+        id="content"
+        label="content"
+        name="content"
+        value={postInfo.content}
+        onChange={onChange}
+      />
     </>
   )
 }
 
 //-------------------------------------------exchange-------------------------------------------//
-function Exchange({ path, postInfo, onChange }: { path: string; postInfo: any; onChange: any }) {
+function Exchange({
+  path,
+  postInfo,
+  onChange,
+}: {
+  path: string
+  postInfo: any
+  onChange: any
+}) {
   switch (path) {
     case "devates":
       return <Devate postInfo={postInfo} onChange={onChange} />
@@ -48,10 +86,13 @@ export default function CommonPostAddForm({ path }: { path: string }) {
   const navigate = useNavigate()
   const endpoint = path === ":who" ? philosopher : path
 
-  const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
+  const onChange = (e: any) =>
+    handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const handlePost = async () => {
     if (!endpoint) {
-      console.log("location: CommonPostAddForm, err: post 경로가 잘못되었습니다.")
+      console.log(
+        "location: CommonPostAddForm, err: post 경로가 잘못되었습니다."
+      )
       return
     }
     try {
