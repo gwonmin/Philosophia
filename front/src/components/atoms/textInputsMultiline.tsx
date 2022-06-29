@@ -30,7 +30,6 @@ export function TextFieldMultilineAtom({
       multiline
       placeholder={placeholder}
       rows={15}
-      defaultValue="Default Value"
       fullWidth
     />
   )
