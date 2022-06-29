@@ -18,21 +18,21 @@ function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
     <>
       <TextFieldAtom
         id="title"
-        label="title"
+        placeholder="제목을 입력해주세요"
         name="title"
         value={postInfo.title}
         onChange={onChange}
       />
-      <TextFieldAtom
+      <TextFieldMultilineAtom
         id="content"
-        label="content"
+        placeholder="본문은 입력해주세요"
         name="content"
         value={postInfo.content}
         onChange={onChange}
       />
       <TextFieldAtom
         id="tag"
-        label="tag"
+        placeholder="태그를 입력해주세요"
         name="tag"
         value={postInfo.tag}
         onChange={onChange}

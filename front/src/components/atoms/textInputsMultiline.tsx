@@ -31,6 +31,7 @@ export function TextFieldMultilineAtom({
       placeholder={placeholder}
       rows={15}
       fullWidth
+      sx={{ mb: 3 }}
     />
   )
 }
