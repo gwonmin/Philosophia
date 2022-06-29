@@ -14,7 +14,7 @@ class Data{
     }
 
     static async findAll(){
-        const posts = await DataModel.findAll({});
+        const posts = await DataModel.find({});
         return posts;
     }
 

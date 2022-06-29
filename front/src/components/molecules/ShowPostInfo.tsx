@@ -14,6 +14,7 @@ export default function showPostInfo({ postInfo }: { postInfo: any }) {
           찬성: {postInfo.yes.length}, 반대: {postInfo.no.length}
         </p>
       )}
+      {postInfo.like && <p>좋아요 수: {postInfo.like.length}</p>}
       <button
         onClick={() => {
           navigate(-1)

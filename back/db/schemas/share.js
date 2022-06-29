@@ -23,6 +23,9 @@ const ShareSchema = new Schema(
         likeCount: {
             type: Number,
             default: 0
+        },
+        userLike: {
+            type: Boolean,
         }
     },
     {

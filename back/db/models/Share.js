@@ -21,7 +21,7 @@ class Share {
   }
 
   static async findAll() {
-    const shares = await ShareModel.find();
+    const shares = await ShareModel.find().sort({createdAt: -1 });
     return shares;
   }
 

@@ -54,8 +54,8 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
 
   return (
     <div>
+      <Header />
       <Container component="main" maxWidth="xs">
-        <Header />
         <p>{currentSub.label} 페이지입니다.</p>
         <CommonPostCards
           currentPage={currentPage}
@@ -72,8 +72,8 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
             글쓰기
           </button>
         )}
-        <Footer />
       </Container>
+      <Footer />
     </div>
   )
 }
