@@ -15,6 +15,12 @@ class FreeTopic {
     return post;
   }
 
+    // userId로 게시글 검색
+    static async findByUserId({ userId }){
+      const posts = await FreeTopicModel.find({ author: userId });
+      return posts;
+  }
+
   static async findAll() {
     const posts = await FreeTopicModel.find().populate('author', 'id name');
     return posts;

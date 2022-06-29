@@ -83,6 +83,12 @@ class devateService {
     return res;
   }
 
+  // 사용자가 쓴 게시물 조회
+  static async getPostInfoByUserId({ userId }){
+    const posts = await Devate.findByUserId({ userId });
+    return posts;
+  }
+
   // 전체 게시글 조회
   static async getPosts(filter) {
     let newFilter = {};

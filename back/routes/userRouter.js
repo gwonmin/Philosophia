@@ -7,6 +7,11 @@ import { smtpTransport } from "../config/email";
 import bcrypt from "bcrypt";
 import { Auth } from "../db/models/Auth";
 import upload from '../modules/multer';
+import { dataService } from "../services/dataService";
+import { devateService } from "../services/devateService";
+import { freetopicService } from "../services/freetopicService";
+import { philosopherService } from "../services/philosopherService";
+import { shareService } from "../services/shareService";
 
 const userRouter = Router();
 
@@ -117,6 +122,22 @@ userRouter.delete("/user/:userId", verifyToken, async function (req, res, next) 
     next(error);
   }
 });
+
+// 내가 쓴 게시물 조회
+userRouter.get("/user/mypost", verifyToken, async function (req, res, next){
+  try{
+    const userId = req.user;
+    const dataPost = await dataService.getPostInfoByUserId({ userId });
+    const devatePost = await devateService.getPostInfoByUserId({ userId });
+    const freetopicPost = await freetopicService.getPostInfoByUserId({ userId });
+    const philosopherPost = await philosopherService.getPostInfoByUserId({ userId });
+    const sharePost = await shareService.getPostInfoByUserId({ userId });
+
+    res.status(200).send({ dataPost, devatePost, freetopicPost, philosopherPost, sharePost });
+  } catch(error) {
+    next(error);
+  }
+})
 
 // 이메일 인증(인증번호 전송)
 userRouter.post("/user/send-email", async function (req, res, next){
