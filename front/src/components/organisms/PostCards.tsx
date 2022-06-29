@@ -5,10 +5,10 @@ import { Post } from "../templates/CommonPageTemplate"
 import * as Api from "../../api"
 
 //-------------------------------------------Devate-------------------------------------------//
-function Devate({ post }: { post: any }) {
+function Devate({ path, post }: { path: string; post: any }) {
   return (
     <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={post._id}>
+      <Link to={"/" + path + "/" + post._id}>
         <p>제목: {post.title}</p>
         <p>글쓴이: {post.author.name}</p>
         <p>태그: {post.tag}</p>
@@ -22,7 +22,17 @@ function Devate({ post }: { post: any }) {
 }
 
 //-------------------------------------------Share-------------------------------------------//
-function Share({ post, somethingWasChanged, setSomethingWasChanged }: { post: any; somethingWasChanged: any; setSomethingWasChanged: any }) {
+function Share({
+  path,
+  post,
+  somethingWasChanged,
+  setSomethingWasChanged,
+}: {
+  path: string
+  post: any
+  somethingWasChanged: any
+  setSomethingWasChanged: any
+}) {
   const user = useContext(UserStateContext)?.user
   const didLike = post.like.includes(user?._id)
   const likeHandler = async () => {
@@ -39,7 +49,7 @@ function Share({ post, somethingWasChanged, setSomethingWasChanged }: { post: an
   }
   return (
     <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={post?._id}>
+      <Link to={"/" + path + "/" + post._id}>
         <p>
           철학자 {post.philosopher}(이)가 생각하는 {post.subject}(이)란?
         </p>
@@ -56,10 +66,10 @@ function Share({ post, somethingWasChanged, setSomethingWasChanged }: { post: an
 }
 
 //-------------------------------------------Default-------------------------------------------//
-function Default({ post }: { post: any }) {
+function Default({ path, post }: { path: string; post: any }) {
   return (
     <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={post._id}>
+      <Link to={"/" + path + "/" + post._id}>
         <p>제목: {post.title}</p>
         <p>글쓴이: {post.author.name}</p>
         <p>덧글 수: {post.comment.length}</p>
@@ -69,7 +79,7 @@ function Default({ post }: { post: any }) {
 }
 
 //-------------------------------------------exchange-------------------------------------------//
-function Exchange({
+export default function Exchange({
   path,
   post,
   somethingWasChanged,
@@ -83,45 +93,10 @@ function Exchange({
   console.log("locatiom: Exchange, post: ", post)
   switch (path) {
     case "devates":
-      return <Devate post={post} />
+      return <Devate path={path} post={post} />
     case "shares":
-      return <Share post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+      return <Share path={path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
     default:
-      return <Default post={post} />
+      return <Default path={path} post={post} />
   }
-}
-
-export default function CommonPostCards({
-  currentPage,
-  postList,
-  somethingWasChanged,
-  setSomethingWasChanged,
-}: {
-  currentPage: any
-  postList: Post[]
-  somethingWasChanged: any
-  setSomethingWasChanged: any
-}) {
-  return (
-    <div>
-      {postList.length == 0 && <p>아직 게시물이 없네요.</p>}
-      {postList != [] && (
-        <div>
-          <p>게시물 목록:</p>
-          {postList.map((post: Post) => {
-            return (
-              <div key={post._id} style={{ backgroundColor: "grey" }}>
-                <Exchange
-                  path={currentPage.DEFAULT.path}
-                  post={post}
-                  somethingWasChanged={somethingWasChanged}
-                  setSomethingWasChanged={setSomethingWasChanged}
-                />
-              </div>
-            )
-          })}
-        </div>
-      )}
-    </div>
-  )
 }

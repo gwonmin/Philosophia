@@ -8,7 +8,7 @@ import { customFetch } from "../../util"
 import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
-import CommonPostCards from "../organisms/CommonPostCards"
+import Exchange from "../organisms/PostCards"
 
 type User = {
   _id: string
@@ -57,12 +57,26 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
       <Header />
       <Container component="main" maxWidth="xs">
         <p>{currentSub.label} 페이지입니다.</p>
-        <CommonPostCards
-          currentPage={currentPage}
-          postList={postList}
-          somethingWasChanged={somethingWasChanged}
-          setSomethingWasChanged={setSomethingWasChanged}
-        />
+        <div>
+          {postList.length == 0 && <p>아직 게시물이 없네요.</p>}
+          {postList != [] && (
+            <div>
+              <p>게시물 목록:</p>
+              {postList.map((post: Post) => {
+                return (
+                  <div key={post._id} style={{ backgroundColor: "grey" }}>
+                    <Exchange
+                      path={currentPage.DEFAULT.path ?? "에러"}
+                      post={post}
+                      somethingWasChanged={somethingWasChanged}
+                      setSomethingWasChanged={setSomethingWasChanged}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
         {userState?.user && (
           <button
             onClick={() => {
