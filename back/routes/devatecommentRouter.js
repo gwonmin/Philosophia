@@ -12,20 +12,28 @@ devatecommentRouter.post('/devatecomments', verifyToken, async (req, res, next) 
         const postId = req.query.postId;
         const { content } = req.body;
 
-        const newComment = await devatecommentService.addComment({
-            userId,
-            postId,
-            content,
-        });
+        await axios.post("http://127.0.0.1:5000/checkcomment", {
+            content: JSON.stringify(req.body.data),
+          }).then(function (response) {
+            // 1이면 비속어
+            const text = response.data
 
-        if (newComment.errorMessage) {
-            throw new Error(newComment.errorMessage);
-        }
+            const newComment = await devatecommentService.addComment({
+                userId,
+                postId,
+                content,
+            });
 
-        res.status(201).json(newComment);
+            if (newComment.errorMessage) {
+                throw new Error(newComment.errorMessage);
+            }
+
+            res.status(201).json(newComment);
+            })
     } catch (error) {
         next(error);
     }
+
 });
 
 // 댓글 수정
