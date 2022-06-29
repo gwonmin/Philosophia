@@ -5,7 +5,7 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import Modal from "@mui/material/Modal"
-import {Grid} from "@mui/material"
+import { Grid } from "@mui/material"
 
 import * as Api from "../../api"
 import { UserStateContext } from "../RootPage"
@@ -29,7 +29,7 @@ export default function MyPage({ user }: any) {
 
   return (
     <>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>마이페이지</Button>
       <Modal
         open={open}
         onClose={handleClose}
