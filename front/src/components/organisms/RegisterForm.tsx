@@ -1,13 +1,12 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
 import * as Api from "../../api"
-
 import { handleChange } from "../../util"
+import { User } from "../../types"
 import { GreenButton } from "../atoms/buttons"
 import Timer from "../molecules/TimerMolecule"
 import { Certification, NoticeTextField } from "../molecules/certification"
@@ -15,7 +14,7 @@ import { Certification, NoticeTextField } from "../molecules/certification"
 export default function RegisterForm({ register, userInfo }: { register: boolean; userInfo: any }) {
   const navigate = useNavigate()
   //user의 가입 정보를 객체로 다룬다.
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<User>({
     email: userInfo.email,
     password: userInfo.password,
     name: userInfo.name,
@@ -44,7 +43,7 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
 
   const isEmailValid = validateEmail(email)
   const isSended = certification != "인증을 진행해주세요."
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState<boolean>(false)
   const isPasswordValid = password.length >= 4
   const isPasswordSame = password === confirmPassword
   const isNameValid = name.length >= 2

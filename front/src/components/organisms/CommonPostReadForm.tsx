@@ -8,6 +8,7 @@ import ForUserMolcule from "../molecules/ForUserMolecule"
 import { handleDelete, handleStance } from "../../util"
 import ForAuthorMolcule from "../molecules/ForAuthorMolecule"
 import * as Api from "../../api"
+import { Post } from "../../types"
 
 export default function CommonPostReadForm({
   path,
@@ -18,7 +19,7 @@ export default function CommonPostReadForm({
 }: {
   path: string
   setIsEditing: any
-  postInfo: any
+  postInfo: Post
   somethingWasChanged: any
   setSomethingWasChanged: any
 }) {

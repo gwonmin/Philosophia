@@ -7,18 +7,9 @@ import Header from "../organisms/Header";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Avatar, Grid } from "@mui/material";
 
-type User = {
-  email: string;
-  password: string;
-  name: string;
-};
-export default function LoginTemplate({
-  login,
-  userInfo,
-}: {
-  login?: boolean;
-  userInfo?: User;
-}) {
+import { User } from "../../types"
+
+export default function LoginTemplate({ login, userInfo }: { login?: boolean; userInfo?: User }) {
   const initUser: User = {
     email: "",
     password: "",
