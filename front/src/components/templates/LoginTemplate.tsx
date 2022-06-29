@@ -5,11 +5,8 @@ import LoginForm from "../organisms/LoginForm"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 
-type User = {
-  email: string
-  password: string
-  name: string
-}
+import { User } from "../../types"
+
 export default function LoginTemplate({ login, userInfo }: { login?: boolean; userInfo?: User }) {
   const initUser: User = {
     email: "",

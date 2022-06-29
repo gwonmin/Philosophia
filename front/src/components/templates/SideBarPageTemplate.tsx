@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import { useNavigate, Link, useParams } from "react-router-dom"
 import Container from "@mui/material/Container"
 
@@ -10,12 +10,7 @@ import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import SideBarOrgan from "../organisms/SideBarOrgan"
 
-type User = {
-  _id: string
-  email: string
-  password: string
-  name: string
-}
+import { User, Post } from "../../types"
 
 const philosopherList = [
   { index: 0, label: "니체", path: "nietzsche" },
@@ -31,8 +26,6 @@ const shareList = [
   { index: 0, label: "글 공유", path: "shares" },
   { index: 1, label: "AI 철학자", path: "shares/add" },
 ]
-
-export type Post = { _id: string; author: User; title: string; content: string; comment: string[] }
 
 export default function SideBarPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화

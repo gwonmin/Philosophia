@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { UserStateContext } from "../../pages/RootPage"
-import { Post } from "../templates/CommonPageTemplate"
+import { Post } from "../../types"
 import * as Api from "../../api"
 
 //-------------------------------------------Devate-------------------------------------------//

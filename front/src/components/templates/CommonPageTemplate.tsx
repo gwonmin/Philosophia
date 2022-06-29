@@ -9,15 +9,7 @@ import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import Exchange from "../organisms/PostCards"
-
-type User = {
-  _id: string
-  email: string
-  password: string
-  name: string
-}
-
-export type Post = { _id: string; author: User; title: string; content: string; comment: string[] }
+import { User, Post } from "../../types"
 
 export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
@@ -26,8 +18,8 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
   const currentSub = currentPage.DEFAULT
   const path = () => {
     if (currentPage.DEFAULT.path === ":who") {
