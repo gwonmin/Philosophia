@@ -21,6 +21,7 @@ class Devate {
         const posts = await DevateModel.find(newFilter)
         .find({ tag: { $in: newFilter.tag } })
         .populate('author', 'id name')
+        .sort({createdAt: -1 });
     
         return posts;
     }
@@ -28,6 +29,7 @@ class Devate {
     static async findAllNoTag(newFilter) {
         const posts = await DevateModel.find(newFilter)
         .populate('author', 'id email name')
+        .sort({createdAt: -1 });
 
         return posts;
     }
