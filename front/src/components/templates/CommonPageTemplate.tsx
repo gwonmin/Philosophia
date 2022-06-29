@@ -9,9 +9,7 @@ import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import Exchange from "../organisms/PostCards"
-import { User } from "../../types"
-
-export type Post = { _id: string; author: User; title: string; content: string; comment: string[] }
+import { User, Post } from "../../types"
 
 export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화

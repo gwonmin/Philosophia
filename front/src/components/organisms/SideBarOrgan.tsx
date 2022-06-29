@@ -17,7 +17,7 @@ import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import Exchange from "../organisms/PostCards"
 import SharePostAddForm from "./SharePostAddForm"
-import { Post } from "../templates/CommonPageTemplate"
+import { Post } from "../../types"
 
 interface TabPanelProps {
   children?: React.ReactNode

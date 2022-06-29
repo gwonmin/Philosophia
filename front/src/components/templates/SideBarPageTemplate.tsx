@@ -10,7 +10,7 @@ import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import SideBarOrgan from "../organisms/SideBarOrgan"
 
-import { User } from "../../types"
+import { User, Post } from "../../types"
 
 const philosopherList = [
   { index: 0, label: "니체", path: "nietzsche" },
@@ -26,8 +26,6 @@ const shareList = [
   { index: 0, label: "글 공유", path: "shares" },
   { index: 1, label: "AI 철학자", path: "shares/add" },
 ]
-
-export type Post = { _id: string; author: User; title: string; content: string; comment: string[] }
 
 export default function SideBarPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
