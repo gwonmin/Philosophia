@@ -34,7 +34,7 @@ devateRouter.post('/devates', verifyToken, async (req, res, next) => {
 });
 
 // 게시글 1개 조회
-devateRouter.get('/devates/:id', verifyToken, async (req, res, next) => {
+devateRouter.get('/devates/:id', async (req, res, next) => {
     try {
         const userId = req.user;
         const postId = req.params.id;
@@ -91,7 +91,7 @@ devateRouter.delete('/devates/:id', verifyToken, async (req, res, next) => {
 });
 
 // 전체 게시글 조회
-devateRouter.get('/devates', verifyToken, async (req, res, next) => {
+devateRouter.get('/devates', async (req, res, next) => {
     try {
 
         const tag = req.query.tag ?? null;
@@ -105,7 +105,7 @@ devateRouter.get('/devates', verifyToken, async (req, res, next) => {
 
 });
 
-
+// 찬성, 반대
 devateRouter.put('/devates/:id/stance', verifyToken, async (req, res, next) => {
     try { 
         const userId = req.user;
@@ -120,19 +120,6 @@ devateRouter.put('/devates/:id/stance', verifyToken, async (req, res, next) => {
     }
 })
 
-// 반대
-devateRouter.put('/devates/:id/no', verifyToken, async (req, res, next) => {
-    try {
-        const userId = req.user;
-        const postId = req.params.id;
-
-        const no = await devateService.setPostNo({ userId, postId });
-
-        res.status(200).send(no);
-    } catch (error) {
-        next(error);
-    }
-})
 
 /* access token을 재발급 하기 위한 router.
   access token과 refresh token을 둘 다 헤더에 담아서 요청해야함 */

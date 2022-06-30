@@ -4,6 +4,7 @@ import { useState } from "react"
 import { TextFieldAtom } from "../atoms/textInputs"
 import { handleChange } from "../../util"
 import * as Api from "../../api"
+import { NewPost } from "../../types"
 
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
@@ -37,7 +38,7 @@ function Exchange({ path, postInfo, onChange }: { path: string; postInfo: any; o
 }
 
 export default function CommonPostAddForm({ path }: { path: string }) {
-  const [postInfo, setPostInfo] = useState({
+  const [postInfo, setPostInfo] = useState<NewPost>({
     title: "",
     content: "",
     tag: "",
@@ -45,7 +46,7 @@ export default function CommonPostAddForm({ path }: { path: string }) {
   const params = useParams()
   const philosopher = params.who
   const navigate = useNavigate()
-  const endpoint = path === "philosopher" ? philosopher : path
+  const endpoint = path === ":who" ? philosopher : path
 
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const handlePost = async () => {
@@ -54,7 +55,6 @@ export default function CommonPostAddForm({ path }: { path: string }) {
       return
     }
     try {
-      // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post({
         endpoint: endpoint,
         data: postInfo,

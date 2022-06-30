@@ -20,8 +20,14 @@ class Share {
     return share;
   }
 
+    // userId로 게시글 검색
+    static async findByUserId({ userId }){
+      const posts = await ShareModel.find({ author: userId });
+      return posts;
+  }
+
   static async findAll() {
-    const shares = await ShareModel.find();
+    const shares = await ShareModel.find().sort({createdAt: -1 });
     return shares;
   }
 

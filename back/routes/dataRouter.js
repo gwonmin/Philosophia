@@ -49,7 +49,7 @@ dataRouter.post("/data/uploadfile", verifyToken,
   }
 });
 
-dataRouter.get("/data/:id", verifyToken, async function(req, res, next){
+dataRouter.get("/data/:id", async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await dataService.getPostInfo({ postId });
@@ -64,7 +64,7 @@ dataRouter.get("/data/:id", verifyToken, async function(req, res, next){
     };
 });
 
-dataRouter.get("/data", verifyToken, async function(req, res, next){
+dataRouter.get("/data", async function(req, res, next){
     try{
         const posts = await dataService.getPostList();
         res.status(200).send(posts);

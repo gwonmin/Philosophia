@@ -3,26 +3,15 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Container } from "@mui/material"
 
 import { customFetch } from "../../util"
-
+import { User } from "../../types"
 import Header from "../organisms/Header"
+import Footer from "../organisms/Footer"
 import { UserStateContext } from "../../pages/RootPage"
 import { COMMON_ROUTE } from "../../route/Routes"
 import CommonPostEditForm from "../organisms/CommonPostEditForm"
 import CommonPostReadForm from "../organisms/CommonPostReadForm"
 
-type User = {
-  _id: string
-  email: string
-  password: string
-  name: string
-}
-
-type CommonPost = { _id: string; author: User; title: string; content: string; comment: string[] }
-export type DevatePost = CommonPost & { yes: string[]; no: string[]; tag: string[] }
-export type PhilosopherPost = CommonPost & {}
-export type SharePost = CommonPost & {}
-
-export type Post = DevatePost & PhilosopherPost & SharePost
+import { Post } from "../../types"
 
 export default function CommonDetailPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
@@ -31,10 +20,10 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
   const philosopher = params.who
   const currentPath = currentPage.DEFAULT.path === ":who" ? philosopher : currentPage.DEFAULT.path
   const userState = useContext(UserStateContext)
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
-  const [postInfo, setPostInfo] = useState<Post | undefined>(undefined)
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
+  const [postInfo, setPostInfo] = useState<Post | null>(null)
 
   //초기화 확인
   console.log("location: ", currentPage)
@@ -63,24 +52,30 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
   if (!isFetchCompleted) {
     return <p>loading...</p>
   }
+  if (!postInfo) {
+    return <p>loading...</p>
+  }
 
   return (
-    <Container>
+    <div>
       <Header />
-      <p>
-        {currentPath} 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}
-      </p>
-      {isEditing ? (
-        <CommonPostEditForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
-      ) : (
-        <CommonPostReadForm
-          path={currentPath}
-          setIsEditing={setIsEditing}
-          postInfo={postInfo}
-          somethingWasChanged={somethingWasChanged}
-          setSomethingWasChanged={setSomethingWasChanged}
-        />
-      )}
-    </Container>
+      <Container>
+        <p>
+          {currentPath} 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}
+        </p>
+        {isEditing ? (
+          <CommonPostEditForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
+        ) : (
+          <CommonPostReadForm
+            path={currentPath}
+            setIsEditing={setIsEditing}
+            postInfo={postInfo}
+            somethingWasChanged={somethingWasChanged}
+            setSomethingWasChanged={setSomethingWasChanged}
+          />
+        )}
+      </Container>
+      <Footer />
+    </div>
   )
 }

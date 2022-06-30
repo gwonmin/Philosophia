@@ -83,6 +83,12 @@ class devateService {
     return res;
   }
 
+  // 사용자가 쓴 게시물 조회
+  static async getPostInfoByUserId({ userId }){
+    const posts = await Devate.findByUserId({ userId });
+    return posts;
+  }
+
   // 전체 게시글 조회
   static async getPosts(filter) {
     let newFilter = {};
@@ -115,7 +121,7 @@ class devateService {
     const yes = await Devate.findYes({ postId, userId });
     const no = await Devate.findNo({ postId, userId });
   
-    let newValues, updateStance;
+    let newValues, message;
     if (stance == 1) {
       console.log(no);
       if (no.length != 0) {
@@ -129,6 +135,10 @@ class devateService {
           },
           $inc: { yesCount: 1 },
         };
+      } else if (yes.length != 0) {
+        message = '중복 투표 불가';
+        console.log(message);
+        return message;
       } else {
         newValues = {
           ['$push']: {
@@ -149,6 +159,10 @@ class devateService {
           },
           $inc: { noCount: 1 },
         };
+      } else if (no.length != 0) {
+        message = '중복 투표 불가';
+        console.log(message);
+        return message;
       } else {
         newValues = {
           ['$push']: {

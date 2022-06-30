@@ -8,16 +8,8 @@ import { customFetch } from "../../util"
 import { UserStateContext } from "../../pages/RootPage"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
-import CommonPostCards from "../organisms/CommonPostCards"
-
-type User = {
-  _id: string
-  email: string
-  password: string
-  name: string
-}
-
-export type Post = { _id: string; author: User; title: string; content: string; comment: string[] }
+import Exchange from "../organisms/PostCards"
+import { User, Post } from "../../types"
 
 export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
@@ -26,8 +18,8 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
   const currentSub = currentPage.DEFAULT
   const path = () => {
     if (currentPage.DEFAULT.path === ":who") {
@@ -54,15 +46,29 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
 
   return (
     <div>
+      <Header />
       <Container component="main" maxWidth="xs">
-        <Header />
         <p>{currentSub.label} 페이지입니다.</p>
-        <CommonPostCards
-          currentPage={currentPage}
-          postList={postList}
-          somethingWasChanged={somethingWasChanged}
-          setSomethingWasChanged={setSomethingWasChanged}
-        />
+        <div>
+          {postList.length == 0 && <p>아직 게시물이 없네요.</p>}
+          {postList != [] && (
+            <div>
+              <p>게시물 목록:</p>
+              {postList.map((post: Post) => {
+                return (
+                  <div key={post._id} style={{ backgroundColor: "grey" }}>
+                    <Exchange
+                      path={currentPage.DEFAULT.path ?? "에러"}
+                      post={post}
+                      somethingWasChanged={somethingWasChanged}
+                      setSomethingWasChanged={setSomethingWasChanged}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
         {userState?.user && (
           <button
             onClick={() => {
@@ -72,8 +78,8 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
             글쓰기
           </button>
         )}
-        <Footer />
       </Container>
+      <Footer />
     </div>
   )
 }

@@ -19,8 +19,8 @@ export default function CommentCard({
 }) {
   const params = useParams()
   const philosopher = params.who
-  const [isEditing, setIsEditing] = useState(false)
-  const [newComment, setNewComment] = useState(comment.content)
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [newComment, setNewComment] = useState<string>(comment.content)
   const user = useContext(UserStateContext)?.user ?? null
 
   const endpoint = () => {

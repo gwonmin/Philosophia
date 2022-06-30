@@ -32,31 +32,32 @@ const handleDelete = async ({ endpoint, id, callback }: { endpoint: string; id: 
   }
 }
 const handleStance = async ({
-  endpoint,
   id,
   stance,
   changeStance,
   value,
   callback,
 }: {
-  endpoint: string
   stance: any
   changeStance: string
   id: string
   value: boolean
   callback: Dispatch<SetStateAction<boolean>>
 }) => {
-  if (stance) {
-    console.log(changeStance == "1" ? "이미 찬성하셨습니다." : "이미 반대하셨습니다.")
+  const isYes = changeStance === "yes"
+  console.log("isYes: ", isYes, "stance: ", stance, "changeStance: ", changeStance, "value: ", value)
+  if (stance === changeStance) {
+    console.log(isYes ? "이미 찬성하셨습니다." : "이미 반대하셨습니다.")
     return
   }
   try {
-    await Api.put({ endpoint: `${endpoint}/${id}/stance`, data: { stance: changeStance } })
-    console.log(`${changeStance == "1" ? "찬성" : "반대"}하였습니다.`)
-    callback(!value)
+    await Api.put({ endpoint: `devates/${id}/stance`, data: { stance: isYes ? 1 : 0 } })
+    console.log(`${isYes ? "찬성" : "반대"}하였습니다.`)
   } catch (err) {
-    console.log("찬성에 실패했습니다.", err)
+    console.log(`${isYes ? "찬성" : "반대"}에 실패하였습니다.`, err)
   }
+  callback(!value)
+  return false
 }
 
 //endpoint에 get 요청을 보내고 value를 설정한 뒤 callback(setIsFetched)을 실행합니다.

@@ -5,11 +5,8 @@ import RegisterForm from "../organisms/RegisterForm"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 
-type User = {
-  email: string
-  password: string
-  name: string
-}
+import { User } from "../../types"
+
 export default function RegisterTemplate({ register, userInfo }: { register?: boolean; userInfo?: User }) {
   const initUser: User = {
     email: "",
@@ -18,11 +15,13 @@ export default function RegisterTemplate({ register, userInfo }: { register?: bo
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
       <Header />
-      <RegisterForm register={register ?? true} userInfo={userInfo ?? initUser} />
-      {!register && <Link to="/user/login">로그인</Link>}
+      <Container component="main" maxWidth="xs">
+        <RegisterForm register={register ?? true} userInfo={userInfo ?? initUser} />
+        {!register && <Link to="/user/login">로그인</Link>}
+      </Container>
       <Footer />
-    </Container>
+    </div>
   )
 }

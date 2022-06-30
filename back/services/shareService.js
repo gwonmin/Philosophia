@@ -40,8 +40,15 @@ class shareService {
     return share;
   }
 
-  static async getShareInfo({ shareId }) {
+  static async getShareInfo({ shareId, userId }) {
     const share = await Share.findByShareId({ shareId });
+    const like = await Share.findLike({ shareId, userId });
+    
+    if (like.includes(userId)) {
+      share.userLike = true;
+    } else {
+      share.userLike = false;
+    } 
 
     if (!share) {
       const errorMessage = '해당하는 글이 없습니다.';
@@ -64,6 +71,12 @@ class shareService {
 
     const res = await Share.delete({ shareId });
     return res;
+  }
+
+  // 사용자가 쓴 게시물 조회
+  static async getPostInfoByUserId({ userId }){
+    const posts = await Share.findByUserId({ userId });
+    return posts;
   }
 
   static async getShares() {
