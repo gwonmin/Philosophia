@@ -3,30 +3,37 @@ import { Link } from "react-router-dom"
 import { UserStateContext } from "../../pages/RootPage"
 import { Post } from "../../types"
 import * as Api from "../../api"
-import { Divider, Stack } from "@mui/material"
+import { Box, Divider, Grid, Stack, Typography } from "@mui/material"
 
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ path, post }: { path: string; post: any }) {
+  const comment: string = "[" + post.comment.length + "]"
   return (
-    <Link to={"/" + path + "/" + post._id}>
-      <Stack
-        direction="row"
-        justifyContent="space-evenly"
-        alignItems="center"
-        divider={<Divider orientation="vertical" flexItem />}
-        spacing={2}
-        sx={{ mt: 1, pb: 2, borderBottom: 1, borderColor: "divider" }}
-      >
-        <div>{post.title + "[" + post.comment.length + "]"}</div>
-        <div>{post.author.name}</div>
-        <div>{post.createdAt}</div>
-        {post.yes && (
-          <div>
-            찬:{post.yes.length} 반:{post.no.length}
-          </div>
-        )}
-      </Stack>
-    </Link>
+    <Box sx={{ pl: 1, pt: 1, pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
+      <Link to={"/" + path + "/" + post._id}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography align="left">
+              {post.title} {post.comment.length > 0 && comment}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center">{post.author.name}</Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center">{post.createdAt.substr(0, 10)}</Typography>
+          </Grid>
+          <Grid item xs={2}>
+            {post.visited >= 0 && <Typography align="center">{post.visited}</Typography>}
+            {post.yes && (
+              <Typography align="center">
+                {post.yes.length} / {post.no.length}
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
+      </Link>
+    </Box>
   )
 }
 
@@ -114,6 +121,8 @@ export default function Exchange({
   console.log("locatiom: Exchange, post: ", post)
   switch (path) {
     case "devates":
+      return <Devate path={path} post={post} />
+    case "freetopics":
       return <Devate path={path} post={post} />
     case "shares":
       return <Share path={path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />

@@ -19,6 +19,7 @@ import SharePostAddForm from "./SharePostAddForm"
 import { Post } from "../../types"
 import { HeaderText } from "../atoms/textboxs"
 import Divider from "@mui/material/Divider"
+import { Grid } from "@mui/material"
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -66,6 +67,7 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
 
   //fetch
   useEffect(() => {
+    setPostList([])
     customFetch({
       endpoint: pages[value].path ?? "",
       setValue: setPostList,
@@ -90,19 +92,36 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
             })}
           </div>
         )}
-        {postList.length == 0 && <p>아직 게시물이 없네요.</p>}
+        {postList.length == 0 && <p></p>}
         <p></p>
         {userState?.user && (
-          <button
-            onClick={() => {
-              navigate("/" + pages[value].path + "/add")
-            }}
-          >
-            글쓰기
-          </button>
+          <Grid sx={{ display: "flex", justifyContent: "right" }}>
+            <button
+              onClick={() => {
+                navigate("/" + pages[value].path + "/add")
+              }}
+            >
+              글쓰기
+            </button>
+          </Grid>
         )}
       </div>
     )
+  }
+
+  const lastlabel = () => {
+    switch (pages[value].path) {
+      case "devates":
+        return "찬/반"
+      case "freetopics":
+        return "조회수"
+      case "shares":
+        return
+      case "data":
+        return
+      default:
+        return
+    }
   }
 
   return (
@@ -124,25 +143,25 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
             }
             return (
               <TabPanel key={page.index} index={page.index} value={value}>
-                <Box sx={{ pb: 2, borderBottom: 1.5, borderColor: "divider" }}>
-                  <HeaderText level={"h2"}>{label()}</HeaderText>
-                  <HeaderText level={"h5"}>{`${label()} > ${pages[value].label}`}</HeaderText>
-                </Box>
-                <Stack
-                  direction="row"
-                  justifyContent="space-evenly"
-                  alignItems="center"
-                  divider={<Divider orientation="vertical" flexItem />}
-                  spacing={2}
-                  sx={{ mt: 1 }}
-                >
-                  <div>제목</div>
-                  <div>글쓴이</div>
-                  <div>작성일</div>
-                  <div>조회수</div>
-                </Stack>
-                <Box sx={{ borderRight: 1.5, borderColor: "black" }}>
-                  <p></p>
+                <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "black" }}>
+                  <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
+                    <HeaderText level={"h2"}>{label()}</HeaderText>
+                    <HeaderText level={"h5"}>{`${label()} > ${pages[value].label}`}</HeaderText>
+                  </Box>
+                  <Grid container spacing={2} sx={{ pt: 1 }}>
+                    <Grid item xs={6} alignItems="center">
+                      <Typography align="center">제목</Typography>
+                    </Grid>
+                    <Grid item xs={2} alignItems="center">
+                      <Typography align="center">글쓴이</Typography>
+                    </Grid>
+                    <Grid item xs={2} alignItems="center">
+                      <Typography align="center">작성일</Typography>
+                    </Grid>
+                    <Grid item xs={2} alignItems="center">
+                      <Typography align="center">{lastlabel()}</Typography>{" "}
+                    </Grid>
+                  </Grid>
                 </Box>
                 <GoodComponent postList={postList} />
               </TabPanel>
