@@ -90,7 +90,7 @@ class devateService {
   }
 
   // 전체 게시글 조회
-  static async getPosts(filter) {
+  static async getPosts(filter, page, limit) {
     let newFilter = {};
 
     if (filter.tag) {
@@ -102,11 +102,11 @@ class devateService {
       newFilter.tag.push(last);
       console.log(newFilter.tag);
     } else {
-      const posts = await Devate.findAllNoTag(newFilter);
+      const posts = await Devate.findAllNoTag(newFilter, page, limit);
       return posts;
     }
 
-    const posts = await Devate.findAll(newFilter);
+    const posts = await Devate.findAll(newFilter, page, limit);
     return posts;
   }
 

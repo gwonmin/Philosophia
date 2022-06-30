@@ -132,7 +132,6 @@ export default function Exchange({
   somethingWasChanged: any
   setSomethingWasChanged: any
 }) {
-  console.log("locatiom: Exchange, post: ", post)
   switch (path) {
     case "devates":
       return <Devate path={path} post={post} />
