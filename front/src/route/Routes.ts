@@ -337,6 +337,5 @@ for (const key in ROUTES) {
       newRoute.path = ROUTES[key]["DEFAULT"].path + "/" + newRoute.path
       ROUTES_ARR.push(newRoute)
     }
-    // routes_path_group
   }
 }
