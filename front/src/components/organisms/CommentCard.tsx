@@ -4,7 +4,7 @@ import { Container } from "@mui/material"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../atoms/textInputs"
 import { useParams } from "react-router-dom"
-import { UserStateContext } from "../../pages/RootPage"
+import { UserStateContext } from "../../RootContext"
 
 export default function CommentCard({
   path,
@@ -37,7 +37,10 @@ export default function CommentCard({
   const editHandler = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.put({ endpoint: endpoint() + `/${comment._id}`, data: { content: newComment } })
+      const res = await Api.put({
+        endpoint: endpoint() + `/${comment._id}`,
+        data: { content: newComment },
+      })
       console.log("수정에 성공했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
       setIsEditing(false)
@@ -47,7 +50,10 @@ export default function CommentCard({
   }
   const deleteHandler = async () => {
     try {
-      const res = await Api.delete({ endpoint: endpoint(), params: comment._id })
+      const res = await Api.delete({
+        endpoint: endpoint(),
+        params: comment._id,
+      })
       console.log("덧글을 삭제했습니다.", res.data)
       setSomethingWasChanged(!somethingWasChanged)
     } catch (err) {
@@ -75,7 +81,9 @@ export default function CommentCard({
       )}
       {!isEditing && (
         <div key={comment?._id} style={{ backgroundColor: "grey" }}>
-          {comment.stance && <p>입장: ({comment.stance == "yes" ? "찬성" : "반대"})</p>}
+          {comment.stance && (
+            <p>입장: ({comment.stance == "yes" ? "찬성" : "반대"})</p>
+          )}
           <p>작성자: {comment.author.name}</p>
           <p>내용: {comment.content}</p>
           {comment.author._id === user?._id && (

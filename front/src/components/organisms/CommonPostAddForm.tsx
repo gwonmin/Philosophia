@@ -25,7 +25,7 @@ function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
       />
       <TextFieldMultilineAtom
         id="content"
-        placeholder="본문은 입력해주세요"
+        placeholder="본문을 입력해주세요"
         name="content"
         value={postInfo.content}
         onChange={onChange}

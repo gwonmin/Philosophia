@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from "react"
 import { useNavigate, Link, useParams } from "react-router-dom"
 import Container from "@mui/material/Container"
 
-import { COMMON_ROUTE } from "../../route/Routes"
+import { ALL_ROUTE } from "../../route/Routes"
 import { customFetch } from "../../util"
 
-import { UserStateContext } from "../../pages/RootPage"
+import { UserStateContext } from "../../RootContext"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import SideBarOrgan from "../organisms/SideBarOrgan"
@@ -27,7 +27,11 @@ const shareList = [
   { index: 1, label: "AI 철학자", path: "shares/add" },
 ]
 
-export default function SideBarPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
+export default function SideBarPageTemplate({
+  currentPage,
+}: {
+  currentPage: ALL_ROUTE
+}) {
   //변수 초기화
   const params = useParams()
   const userState = useContext(UserStateContext)

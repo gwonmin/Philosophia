@@ -1,14 +1,20 @@
 import { useContext, useEffect, useState } from "react"
 import { Container } from "@mui/material"
 
-import { UserStateContext } from "../../pages/RootPage"
+import { UserStateContext } from "../../RootContext"
 import { customFetch } from "../../util"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./CommentCard"
 import { useParams } from "react-router-dom"
 
-export default function CommentList({ path, postId }: { path: string; postId: string }) {
+export default function CommentList({
+  path,
+  postId,
+}: {
+  path: string
+  postId: string
+}) {
   //변수 초기화
   const params = useParams()
   const philosopher = params.who

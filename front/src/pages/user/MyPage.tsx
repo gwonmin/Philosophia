@@ -8,7 +8,7 @@ import Modal from "@mui/material/Modal"
 import { Grid } from "@mui/material"
 
 import * as Api from "../../api"
-import { UserStateContext } from "../RootPage"
+import { UserStateContext } from "../../RootContext"
 
 const style = {
   position: "absolute" as "absolute",

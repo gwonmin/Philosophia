@@ -2,7 +2,7 @@ import { Container, Typography } from "@mui/material"
 
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
-import { COMMON_ROUTE } from "../../route/Routes"
+import { ALL_ROUTE } from "../../route/Routes"
 import CommonPostAddForm from "../organisms/CommonPostAddForm"
 
 import "../../../public/index.scss"
@@ -16,7 +16,7 @@ const addFormHeaderStyle = {
 export default function CommonAddPageTemplate({
   currentPage,
 }: {
-  currentPage: COMMON_ROUTE
+  currentPage: ALL_ROUTE
 }) {
   return (
     <div>

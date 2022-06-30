@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 import { ROUTES } from "../../route/Routes"
 import { RoutePath, ActionPath } from "../../route/RoutesURL"
-import { UserStateContext, DispatchContext } from "../../pages/RootPage"
+import { UserStateContext, DispatchContext } from "../../RootContext"
 import { HeaderText } from "../atoms/textboxs"
 import Divider from "@mui/material/Divider/Divider"
 import Stack from "@mui/material/Stack"
@@ -16,7 +16,6 @@ import "../../../public/index.scss"
 import MyPage from "../../pages/user/MyPage"
 
 const HEADER_ROUTES = [
-  { path: RoutePath.MASTER, label: "마스터 페이지(삭제예정)" },
   { path: RoutePath.TREND, label: "트렌드 페이지" },
   { path: RoutePath.DEVATES, label: "토론 게시판" },
   { path: "philosopher", label: "철학자 게시판" },

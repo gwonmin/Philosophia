@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
-import { UserStateContext } from "../../pages/RootPage"
+import { UserStateContext } from "../../RootContext"
 import { Post } from "../../types"
 import * as Api from "../../api"
 
@@ -42,7 +42,12 @@ function Share({
     try {
       const res = await Api.put({ endpoint: `shares/${post._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
-      console.log("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."), res.data, post.like, user)
+      console.log(
+        "좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."),
+        res.data,
+        post.like,
+        user
+      )
     } catch (err) {
       console.log("좋아요에 실패했습니다.", err)
     }
@@ -53,12 +58,19 @@ function Share({
         <p>
           철학자 {post.philosopher}(이)가 생각하는 {post.subject}(이)란?
         </p>
-        <p>본문: {post.content.length > 40 ? post.content.substr(0, 40) + "...(중략)" : post.content}</p>
+        <p>
+          본문:{" "}
+          {post.content.length > 40
+            ? post.content.substr(0, 40) + "...(중략)"
+            : post.content}
+        </p>
         <p>좋아요 수: {post.like.length}</p>
       </Link>
       {user && (
         <div>
-          <button onClick={likeHandler}>{didLike ? "좋아요 취소" : "좋아요"}</button>
+          <button onClick={likeHandler}>
+            {didLike ? "좋아요 취소" : "좋아요"}
+          </button>
         </div>
       )}
     </div>
@@ -109,7 +121,14 @@ export default function Exchange({
     case "devates":
       return <Devate path={path} post={post} />
     case "shares":
-      return <Share path={path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+      return (
+        <Share
+          path={path}
+          post={post}
+          somethingWasChanged={somethingWasChanged}
+          setSomethingWasChanged={setSomethingWasChanged}
+        />
+      )
     case "data":
       console.log("in data case")
       return <Data post={post} />
