@@ -23,8 +23,8 @@ const devateList = [
 ]
 
 const shareList = [
-  { index: 0, label: "글 공유", path: "shares" },
-  { index: 1, label: "AI 철학자", path: "shares/add" },
+  { index: 0, label: "AI 철학자의 글", path: "shares" },
+  { index: 1, label: "글 만들기", path: "shares/add" },
 ]
 
 export default function SideBarPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
@@ -52,7 +52,7 @@ export default function SideBarPageTemplate({ currentPage }: { currentPage: COMM
   return (
     <div>
       <Header />
-      <SideBarOrgan pages={pages()}></SideBarOrgan>
+      <SideBarOrgan path={currentPage.DEFAULT.path ?? ""} pages={pages()}></SideBarOrgan>
       <Footer />
     </div>
   )
