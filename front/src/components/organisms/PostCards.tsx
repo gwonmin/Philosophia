@@ -10,7 +10,7 @@ function Devate({ path, post }: { path: string; post: any }) {
   const comment: string = "[" + post.comment.length + "]"
   return (
     <Box sx={{ pl: 1, pt: 1, pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
-      <Link to={"/" + path + "/" + post._id}>
+      <Link to={"/" + path + "/" + post._id} style={{ textDecoration: "none", color: "black" }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Typography align="left">
@@ -65,7 +65,7 @@ function Share({
   }
   return (
     <>
-      <Link to={"/" + path + "/" + post._id}>
+      <Link to={"/" + path + "/" + post._id} style={{ textDecoration: "none", color: "black" }}>
         <p>
           철학자 {post.philosopher}(이)가 생각하는 {post.subject}(이)란?
         </p>
@@ -85,7 +85,7 @@ function Share({
 function Data({ post }: { post: any }) {
   console.log("in Data function")
   return (
-    <Link to={post._id}>
+    <Link to={post._id} style={{ textDecoration: "none", color: "black" }}>
       <p>제목: {post.title}</p>
       <p>공유 날짜: {post.createdAt}</p>
       <p>마지막 업데이트: {post.updatedAt}</p>
@@ -95,14 +95,28 @@ function Data({ post }: { post: any }) {
 
 //-------------------------------------------Default-------------------------------------------//
 function Default({ path, post }: { path: string; post: any }) {
+  const comment: string = "[" + post.comment.length + "]"
   return (
-    <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={"/" + path + "/" + post._id}>
-        <p>제목: {post.title}</p>
-        <p>글쓴이: {post.author.name}</p>
-        <p>덧글 수: {post.comment.length}</p>
+    <Box sx={{ pl: 1, pt: 1, pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
+      <Link to={"/" + path + "/" + post._id} style={{ textDecoration: "none", color: "black" }}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography align="left">
+              {post.title} {post.comment.length > 0 && comment}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center">{post.author.name}</Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center">{post.createdAt.substr(0, 10)}</Typography>
+          </Grid>
+          <Grid item xs={2}>
+            {post.visited >= 0 && <Typography align="center">{post.visited}</Typography>}
+          </Grid>
+        </Grid>
       </Link>
-    </div>
+    </Box>
   )
 }
 
