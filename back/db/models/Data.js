@@ -24,7 +24,7 @@ class Data{
     }
 
     static async findAll(){
-        const posts = await DataModel.find({});
+        const posts = await DataModel.find({}).sort({createdAt: -1 });
         return posts;
     }
 
