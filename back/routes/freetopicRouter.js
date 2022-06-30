@@ -3,6 +3,7 @@ import { freetopicService } from '../services/freetopicService';
 import { verifyToken } from '../middlewares/verifyToken';
 import { verifyRefresh } from '../middlewares/verifyRefresh';
 import { FreeTopic } from '../db';
+import { FreeTopicModel } from '../db/schemas/freetopic';
 
 const freetopicRouter = Router();
 
@@ -91,15 +92,28 @@ freetopicRouter.delete('/freetopics/:id', verifyToken, async (req, res, next) =>
   }
 });
 
-// 전체 게시글 조회
-freetopicRouter.get('/freetopics', async (req, res, next) => {
-  try {
-    const posts = await freetopicService.getPosts();
+// 자유 토론 게시판 전체 게시글 조회(페이지네이션)
+freetopicRouter.get('/freetopics', async function(req, res, next){ 
+  let page = Math.max(1, parseInt(req.query.page));   
+  let limit = 15 //Math.max(1, parseInt(req.query.limit));
+  page = !isNaN(page)?page:1;                         
+  limit = !isNaN(limit)?limit:5;                     
 
-    res.status(200).send(posts);
-  } catch (error) {
-    next(error);
+  let skip = (page-1)*limit;
+  let count = await FreeTopicModel.countDocuments({});
+  let maxPage = Math.ceil(count/limit);
+  let posts = await FreeTopicModel.find({})
+    .sort('-createdAt')
+    .skip(skip)   
+    .limit(limit) 
+    .exec();
+  let result = {
+    posts:posts,
+    currentPage:page,
+    maxPage:maxPage,
+    limit:limit
   }
+  res.status(200).send(result)
 });
 
 /* access token을 재발급 하기 위한 router.
