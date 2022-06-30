@@ -48,6 +48,12 @@ class Share {
     const updatedShare = await ShareModel.findOneAndUpdate(filter, update, option);
     return updatedShare;
   }
+
+  static async getTop3(){
+    const posts = await ShareModel.find().sort({"likeCount":-1, "_id":1}).limit(3);
+    return posts;
+  }
+
 }
 
 export { Share };
