@@ -2,11 +2,12 @@ import { Router } from "express";
 import { datacommentService } from "../services/datacommentService"; 
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
+import { checkComment } from "../middlewares/checkComment";
 
 const datacommentRouter = Router();
 
 // 댓글 작성
-datacommentRouter.post('/datacomments', verifyToken, async (req, res, next) => {
+datacommentRouter.post('/datacomments', verifyToken, checkComment, async (req, res, next) => {
     try {
         const userId = req.user;
         const postId = req.query.postId;
@@ -29,7 +30,7 @@ datacommentRouter.post('/datacomments', verifyToken, async (req, res, next) => {
 });
 
 // 댓글 수정
-datacommentRouter.put('/datacomments/:id', verifyToken, async (req, res, next) => {
+datacommentRouter.put('/datacomments/:id', verifyToken, checkComment, async (req, res, next) => {
     try {
         const userId = req.user;
         const commentId = req.params.id;
