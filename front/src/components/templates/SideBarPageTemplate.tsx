@@ -52,7 +52,7 @@ export default function SideBarPageTemplate({ currentPage }: { currentPage: COMM
   return (
     <div>
       <Header />
-      <SideBarOrgan pages={pages()}></SideBarOrgan>
+      <SideBarOrgan path={currentPage.DEFAULT.path ?? ""} pages={pages()}></SideBarOrgan>
       <Footer />
     </div>
   )

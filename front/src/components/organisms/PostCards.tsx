@@ -3,21 +3,37 @@ import { Link } from "react-router-dom"
 import { UserStateContext } from "../../pages/RootPage"
 import { Post } from "../../types"
 import * as Api from "../../api"
+import { Box, Divider, Grid, Stack, Typography } from "@mui/material"
 
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ path, post }: { path: string; post: any }) {
+  const comment: string = "[" + post.comment.length + "]"
   return (
-    <div key={post._id} style={{ backgroundColor: "grey" }}>
+    <Box sx={{ pl: 1, pt: 1, pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
       <Link to={"/" + path + "/" + post._id}>
-        <p>제목: {post.title}</p>
-        <p>글쓴이: {post.author.name}</p>
-        <p>태그: {post.tag}</p>
-        <p>
-          찬성: {post.yes.length}, 반대: {post.no.length}
-        </p>
-        <p>덧글 수: {post.comment.length}</p>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography align="left">
+              {post.title} {post.comment.length > 0 && comment}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center">{post.author.name}</Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center">{post.createdAt.substr(0, 10)}</Typography>
+          </Grid>
+          <Grid item xs={2}>
+            {post.visited >= 0 && <Typography align="center">{post.visited}</Typography>}
+            {post.yes && (
+              <Typography align="center">
+                {post.yes.length} / {post.no.length}
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
       </Link>
-    </div>
+    </Box>
   )
 }
 
@@ -48,7 +64,7 @@ function Share({
     }
   }
   return (
-    <div key={post._id} style={{ backgroundColor: "grey" }}>
+    <>
       <Link to={"/" + path + "/" + post._id}>
         <p>
           철학자 {post.philosopher}(이)가 생각하는 {post.subject}(이)란?
@@ -61,7 +77,7 @@ function Share({
           <button onClick={likeHandler}>{didLike ? "좋아요 취소" : "좋아요"}</button>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
@@ -69,13 +85,11 @@ function Share({
 function Data({ post }: { post: any }) {
   console.log("in Data function")
   return (
-    <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={post._id}>
-        <p>제목: {post.title}</p>
-        <p>공유 날짜: {post.createdAt}</p>
-        <p>마지막 업데이트: {post.updatedAt}</p>
-      </Link>
-    </div>
+    <Link to={post._id}>
+      <p>제목: {post.title}</p>
+      <p>공유 날짜: {post.createdAt}</p>
+      <p>마지막 업데이트: {post.updatedAt}</p>
+    </Link>
   )
 }
 
@@ -107,6 +121,8 @@ export default function Exchange({
   console.log("locatiom: Exchange, post: ", post)
   switch (path) {
     case "devates":
+      return <Devate path={path} post={post} />
+    case "freetopics":
       return <Devate path={path} post={post} />
     case "shares":
       return <Share path={path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
