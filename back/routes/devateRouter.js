@@ -93,27 +93,30 @@ devateRouter.delete('/devates/:id', verifyToken, async (req, res, next) => {
 
 // 토론 게시판 전체 게시글 조회(페이지네이션)
 devateRouter.get('/devates', async function(req, res, next){ 
-    let page = Math.max(1, parseInt(req.query.page));   
-    let limit = 15 //Math.max(1, parseInt(req.query.limit));
-    page = !isNaN(page)?page:1;                         
-    limit = !isNaN(limit)?limit:5;                     
-  
-    let skip = (page-1)*limit;
-    let count = await DevateModel.countDocuments({});
-    let maxPage = Math.ceil(count/limit);
-    let posts = await DevateModel.find({})
-      .sort('-createdAt')
-      .skip(skip)   
-      .limit(limit) 
-      .exec();
-    let result = {
-      posts:posts,
-      currentPage:page,
-      maxPage:maxPage,
-      limit:limit
+    try {
+        const tag = req.query.tag ?? null;
+        const filter = { tag };
+        let page = Math.max(1, parseInt(req.query.page));   
+        let limit = 15 //Math.max(1, parseInt(req.query.limit));
+        page = !isNaN(page)?page:1;                         
+        limit = !isNaN(limit)?limit:5;                     
+    
+        // let skip = (page-1)*limit;
+        let count = await DevateModel.countDocuments({});
+        let maxPage = Math.ceil(count/limit);
+        let posts = await devateService.getPosts(filter, page, limit);
+
+        let result = {
+        posts:posts,
+        currentPage:page,
+        maxPage:maxPage,
+        limit:limit
+        }
+        res.status(200).send(result)
+    } catch (error) {
+        next(error);
     }
-    res.status(200).send(result)
-  });
+});
 
 // 찬성, 반대
 devateRouter.put('/devates/:id/stance', verifyToken, async (req, res, next) => {
