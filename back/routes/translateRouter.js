@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TranslateModel } from "../db/schemas/translate";
+import { Translate } from "../db/models/translate";
 import axios from "axios";
 
 const translateRouter = Router();
@@ -43,14 +43,15 @@ translateRouter.post("/translate", async function (req, res) {
 
     request.post(options, async function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-        res.end(body);
+        // res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
+        // res.end(body);
         const a = JSON.parse(response.body);
         const content = a.message.result.translatedText;
         const text = options.form.text;
         const afterText = makeText(content);
-        const createdNewText = await TranslateModel.create({ text, afterText });
-        return createdNewText;
+        const createdNewText = await Translate.create({ text, afterText });
+        res.json(createdNewText.afterText);
+        
       } else {
         res.status(response.statusCode).end();
         console.log("error = " + response.statusCode);
