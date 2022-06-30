@@ -59,7 +59,7 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
       case "devates":
         return "토론 게시판"
       case "shares":
-        return "공유 게시판"
+        return "AI 철학자 게시판"
       default:
         return "에러"
     }
@@ -94,7 +94,7 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
         )}
         {postList.length == 0 && <p></p>}
         <p></p>
-        {userState?.user && (
+        {userState?.user && pages[value].path !== "shares" && (
           <Grid sx={{ display: "flex", justifyContent: "right" }}>
             <button
               onClick={() => {
@@ -134,9 +134,8 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
         </Tabs>
         <Container maxWidth="md">
           <Paper variant="outlined">
-            {" "}
             {pages.map((page) => {
-              if (page.label === "AI 철학자") {
+              if (page.label === "글 만들기") {
                 return (
                   <TabPanel key={page.index} index={page.index} value={value}>
                     <SharePostAddForm />
@@ -148,7 +147,7 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
                   <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "black" }}>
                     <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
                       <HeaderText level={"h2"}>{label()}</HeaderText>
-                      <HeaderText level={"h5"}>{`${label()} > ${pages[value].label}`}</HeaderText>
+                      <HeaderText level={"h5"}>{` > ${label()} > ${pages[value].label}`}</HeaderText>
                     </Box>
                     <Grid container spacing={2} sx={{ pt: 1 }}>
                       <Grid item xs={6} alignItems="center">
