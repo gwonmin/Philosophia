@@ -48,7 +48,8 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
 
   return (
     <Container maxWidth="md">
-      <Paper variant="outlined">
+      <Header />
+      <Paper variant="outlined" sx={{ m: 2, p: 2 }}>
         <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "black" }}>
           <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
             <HeaderText level={"h2"}>{label}</HeaderText>
