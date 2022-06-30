@@ -1,16 +1,26 @@
-import { Container } from "@mui/material"
+import { Container, Typography } from "@mui/material"
+import Footer from "../organisms/Footer"
 
 import Header from "../organisms/Header"
 import SharePostAddForm from "../organisms/SharePostAddForm"
 
+const addFormHeaderStyle = {
+  fontWeight: "bold",
+  borderBottom: "2px black solid",
+  mb: 2,
+}
+
 export default function ShareAddPageTemplate() {
   return (
-    <div>
+    <>
       <Header />
-      <Container component="main" maxWidth="xs">
-        <p>글 공유 페이지입니다.</p>
+      <Container component="main" maxWidth="md">
+        <Typography variant="h5" sx={addFormHeaderStyle}>
+          AI 철학자 : 새 글 생성하기
+        </Typography>
         <SharePostAddForm />
       </Container>
-    </div>
+      <Footer />
+    </>
   )
 }
