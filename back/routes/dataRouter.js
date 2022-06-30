@@ -75,7 +75,7 @@ dataRouter.get('/data', async function(req, res, next){
   let skip = (page-1)*limit;
   let count = await DataModel.countDocuments({});
   let maxPage = Math.ceil(count/limit);
-  let posts = await DataModel.find({})
+  let posts = await DataModel.find({}).populate('author', 'id name')
     .sort('-createdAt')
     .skip(skip)   
     .limit(limit) 

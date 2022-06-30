@@ -101,7 +101,7 @@ devateRouter.get('/devates', async function(req, res, next){
     let skip = (page-1)*limit;
     let count = await DevateModel.countDocuments({});
     let maxPage = Math.ceil(count/limit);
-    let posts = await DevateModel.find({})
+    let posts = await DevateModel.find({}).populate('author', 'id name')
       .sort('-createdAt')
       .skip(skip)   
       .limit(limit) 
