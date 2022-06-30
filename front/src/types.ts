@@ -45,4 +45,5 @@ export type Post = Devate_Post & Share_Post & Free_Post & Phil_Post
 export interface NewPost {
   title: string
   content: string
+  tag?: string
 }

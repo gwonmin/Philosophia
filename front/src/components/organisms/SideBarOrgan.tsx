@@ -19,7 +19,7 @@ import SharePostAddForm from "./SharePostAddForm"
 import { Post } from "../../types"
 import { HeaderText } from "../atoms/textboxs"
 import Divider from "@mui/material/Divider"
-import { Grid } from "@mui/material"
+import { Grid, Paper } from "@mui/material"
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -120,12 +120,12 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
       case "data":
         return
       default:
-        return
+        return "미정"
     }
   }
 
   return (
-    <Container component="main">
+    <Container component="main" sx={{ p: 2 }}>
       <Stack direction="row" spacing={1} justifyContent="center">
         <Tabs orientation="vertical" value={value} onChange={handleChange} aria-label="tab" sx={{ mt: 2, borderRight: 1, borderColor: "divider" }} centered>
           {pages.map((page) => {
@@ -133,40 +133,43 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
           })}
         </Tabs>
         <Container maxWidth="md">
-          {pages.map((page) => {
-            if (page.label === "AI 철학자") {
+          <Paper variant="outlined">
+            {" "}
+            {pages.map((page) => {
+              if (page.label === "AI 철학자") {
+                return (
+                  <TabPanel key={page.index} index={page.index} value={value}>
+                    <SharePostAddForm />
+                  </TabPanel>
+                )
+              }
               return (
                 <TabPanel key={page.index} index={page.index} value={value}>
-                  <SharePostAddForm />
+                  <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "black" }}>
+                    <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
+                      <HeaderText level={"h2"}>{label()}</HeaderText>
+                      <HeaderText level={"h5"}>{`${label()} > ${pages[value].label}`}</HeaderText>
+                    </Box>
+                    <Grid container spacing={2} sx={{ pt: 1 }}>
+                      <Grid item xs={6} alignItems="center">
+                        <Typography align="center">제목</Typography>
+                      </Grid>
+                      <Grid item xs={2} alignItems="center">
+                        <Typography align="center">글쓴이</Typography>
+                      </Grid>
+                      <Grid item xs={2} alignItems="center">
+                        <Typography align="center">작성일</Typography>
+                      </Grid>
+                      <Grid item xs={2} alignItems="center">
+                        <Typography align="center">{lastlabel()}</Typography>{" "}
+                      </Grid>
+                    </Grid>
+                  </Box>
+                  <GoodComponent postList={postList} />
                 </TabPanel>
               )
-            }
-            return (
-              <TabPanel key={page.index} index={page.index} value={value}>
-                <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "black" }}>
-                  <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
-                    <HeaderText level={"h2"}>{label()}</HeaderText>
-                    <HeaderText level={"h5"}>{`${label()} > ${pages[value].label}`}</HeaderText>
-                  </Box>
-                  <Grid container spacing={2} sx={{ pt: 1 }}>
-                    <Grid item xs={6} alignItems="center">
-                      <Typography align="center">제목</Typography>
-                    </Grid>
-                    <Grid item xs={2} alignItems="center">
-                      <Typography align="center">글쓴이</Typography>
-                    </Grid>
-                    <Grid item xs={2} alignItems="center">
-                      <Typography align="center">작성일</Typography>
-                    </Grid>
-                    <Grid item xs={2} alignItems="center">
-                      <Typography align="center">{lastlabel()}</Typography>{" "}
-                    </Grid>
-                  </Grid>
-                </Box>
-                <GoodComponent postList={postList} />
-              </TabPanel>
-            )
-          })}
+            })}
+          </Paper>
         </Container>
       </Stack>
     </Container>
