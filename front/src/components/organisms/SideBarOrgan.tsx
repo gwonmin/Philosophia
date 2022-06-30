@@ -74,6 +74,7 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
       callback: setIsFetchCompleted,
     })
   }, [value, somethingWasChanged])
+  console.log("location: line77", postList)
   if (!isFetchCompleted) {
     return <p>loading...</p>
   }
