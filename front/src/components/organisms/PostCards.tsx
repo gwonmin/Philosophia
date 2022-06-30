@@ -1,23 +1,132 @@
-import { useContext } from "react"
-import { Link } from "react-router-dom"
+import { SetStateAction, useContext } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import Button from "@mui/material/Button"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
+import Chip from "@mui/material/Chip"
+import Divider from "@mui/material/Divider"
+import IconButton from "@mui/material/IconButton"
+import HeartIcon from "@mui/icons-material/Favorite"
+import HeartBorderIcon from "@mui/icons-material/FavoriteBorder"
 import { UserStateContext } from "../../RootContext"
-import { Post } from "../../types"
+import { DataPost, Devate_Post, Post, Share_Post } from "../../types"
 import * as Api from "../../api"
+import { Props } from "../../types"
+import { RoutePath } from "../../route/RoutesURL"
+
+const TitleAtom: React.FC<{ title?: string }> = ({ title }) => {
+  return (
+    <>
+      {title !== undefined && (
+        <Typography
+          variant="h4"
+          sx={{ fontSize: 20, color: "#111111", mr: 0.5 }}
+        >
+          {`${title}`}
+        </Typography>
+      )}
+    </>
+  )
+}
+
+const NumberInBracketAtom: React.FC<{ number?: number }> = ({ number }) => {
+  return (
+    <>
+      {number !== undefined && (
+        <Typography sx={{ fontSize: 13, mr: 1, color: "#666666" }}>
+          ({number})
+        </Typography>
+      )}
+    </>
+  )
+}
+
+const TagsAtom: React.FC<{ tags?: string[] }> = ({ tags }) => {
+  return (
+    <>
+      {tags?.map((tag) => {
+        return (
+          <Chip
+            size="small"
+            sx={{ fontSize: 10, mr: 0.5 }}
+            color="primary"
+            label={`# ${tag || "(빈 태그)"}`}
+          />
+        )
+      })}
+    </>
+  )
+}
+
+const MainlineMolecule: React.FC<{
+  title?: string
+  number?: number
+  tags?: string[]
+}> = ({ title, tags, number }) => {
+  return (
+    <Box sx={{ display: "flex", mb: 1, width: "100%", alignItems: "center" }}>
+      <TitleAtom title={title} />
+      <NumberInBracketAtom number={number} />
+      <TagsAtom tags={tags} />
+    </Box>
+  )
+}
+
+const SublineAtom: React.FC<{
+  subtext?: string
+  yes?: number
+  no?: number
+}> = ({ subtext, yes, no }) => {
+  return (
+    <Typography variant="body1" sx={{ fontSize: 14, color: "#666666" }}>
+      {subtext} {yes !== undefined ? `· 👍: ${yes}` : ""}
+      {no !== undefined ? ` / 👎: ${no}` : ""}
+    </Typography>
+  )
+}
+
+const PostListItemContainerAtom: React.FC<Props & { onClick: () => void }> = ({
+  children,
+  onClick,
+}) => {
+  return (
+    <>
+      <Button fullWidth onClick={onClick} sx={{ pt: 2, pb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            alignItems: "flex-start",
+          }}
+        >
+          {children}
+        </Box>
+      </Button>
+      <Divider />
+    </>
+  )
+}
 
 //-------------------------------------------Devate-------------------------------------------//
-function Devate({ path, post }: { path: string; post: any }) {
+function Devate({ path, post }: { path: string; post: Devate_Post }) {
+  const navigate = useNavigate()
+  const toTheDetailPage = () => {
+    navigate(`/${path}/${post._id}`)
+  }
   return (
-    <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={"/" + path + "/" + post._id}>
-        <p>제목: {post.title}</p>
-        <p>글쓴이: {post.author.name}</p>
-        <p>태그: {post.tag}</p>
-        <p>
-          찬성: {post.yes.length}, 반대: {post.no.length}
-        </p>
-        <p>덧글 수: {post.comment.length}</p>
-      </Link>
-    </div>
+    <PostListItemContainerAtom onClick={toTheDetailPage}>
+      <MainlineMolecule
+        title={post.title}
+        tags={post.tag}
+        number={post.comment.length}
+      />
+      <SublineAtom
+        subtext={post.content}
+        yes={post.yes.length}
+        no={post.no.length}
+      />
+    </PostListItemContainerAtom>
   )
 }
 
@@ -29,19 +138,27 @@ function Share({
   setSomethingWasChanged,
 }: {
   path: string
-  post: any
-  somethingWasChanged: any
-  setSomethingWasChanged: any
+  post: Share_Post
+  somethingWasChanged: boolean
+  setSomethingWasChanged: React.Dispatch<SetStateAction<boolean>>
 }) {
   const user = useContext(UserStateContext)?.user
-  const didLike = post.like.includes(user?._id)
+  const didLike = user?._id ? post.like.includes(user?._id) : false
+  const navigate = useNavigate()
+
+  const toTheDetailPage = () => {
+    navigate(`/${path}/${post._id}`)
+  }
+
   const likeHandler = async () => {
     if (!user) {
       return <p>user does not exist(even null)</p>
     }
+
     try {
       const res = await Api.put({ endpoint: `shares/${post._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
+
       console.log(
         "좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."),
         res.data,
@@ -52,55 +169,82 @@ function Share({
       console.log("좋아요에 실패했습니다.", err)
     }
   }
+
   return (
-    <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={"/" + path + "/" + post._id}>
-        <p>
-          철학자 {post.philosopher}(이)가 생각하는 {post.subject}(이)란?
-        </p>
-        <p>
-          본문:{" "}
-          {post.content.length > 40
-            ? post.content.substr(0, 40) + "...(중략)"
-            : post.content}
-        </p>
-        <p>좋아요 수: {post.like.length}</p>
-      </Link>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <PostListItemContainerAtom onClick={toTheDetailPage}>
+        <MainlineMolecule
+          title={`철학자 ${post.philosopher}(이)가 생각하는 ${post.subject}(이)란?`}
+        />
+        <SublineAtom
+          subtext={
+            post.content.length > 40
+              ? `${post.content.substring(0, 40)}...`
+              : post.content
+          }
+          yes={post.like.length}
+        />
+      </PostListItemContainerAtom>
+
+      {/* 좋아요 버튼 */}
       {user && (
-        <div>
-          <button onClick={likeHandler}>
-            {didLike ? "좋아요 취소" : "좋아요"}
-          </button>
-        </div>
+        <Box>
+          <IconButton onClick={likeHandler}>
+            {didLike ? (
+              <HeartIcon color="primary" />
+            ) : (
+              <HeartBorderIcon color="primary" />
+            )}
+          </IconButton>
+        </Box>
       )}
-    </div>
+    </Box>
   )
 }
 
 //---------------------------------------------Data---------------------------------------------//
-function Data({ post }: { post: any }) {
-  console.log("in Data function")
+function Data({ post }: { post: DataPost }) {
+  const navigate = useNavigate()
+  const toTheDetailPage = () => {
+    navigate(`/${RoutePath.DATA}}/${post._id}`)
+  }
+
+  const d = new Date(post.createdAt)
+  const fullYear = d.getFullYear()
+  const month =
+    String(d.getMonth() + 1).length !== 2
+      ? `0${d.getMonth() + 1}`
+      : d.getMonth() + 1
+  const date =
+    String(d.getDate()).length !== 2 ? `0${d.getDate()}` : d.getDate()
+  const hours =
+    String(d.getHours()).length !== 2 ? `0${d.getHours()}` : d.getHours()
+  const minutes =
+    String(d.getMinutes()).length !== 2 ? `0${d.getMinutes()}` : d.getMinutes()
+  const seconds =
+    String(d.getSeconds()).length !== 2 ? `0${d.getSeconds()}` : d.getSeconds()
+
   return (
-    <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={post._id}>
-        <p>제목: {post.title}</p>
-        <p>공유 날짜: {post.createdAt}</p>
-        <p>마지막 업데이트: {post.updatedAt}</p>
-      </Link>
-    </div>
+    <PostListItemContainerAtom onClick={toTheDetailPage}>
+      <MainlineMolecule title={post.title} />
+      <SublineAtom
+        subtext={`${post.author.name} | ${fullYear}-${month}-${date} ${hours}:${minutes}:${seconds}`}
+      />
+    </PostListItemContainerAtom>
   )
 }
 
 //-------------------------------------------Default-------------------------------------------//
-function Default({ path, post }: { path: string; post: any }) {
+function Default({ path, post }: { path: string; post: Post }) {
+  const navigate = useNavigate()
+  const toTheDetailPage = () => {
+    navigate(`/${path}/${post._id}`)
+  }
   return (
-    <div key={post._id} style={{ backgroundColor: "grey" }}>
-      <Link to={"/" + path + "/" + post._id}>
-        <p>제목: {post.title}</p>
-        <p>글쓴이: {post.author.name}</p>
-        <p>덧글 수: {post.comment.length}</p>
-      </Link>
-    </div>
+    <PostListItemContainerAtom onClick={toTheDetailPage}>
+      <MainlineMolecule title={post.title} number={post.comment.length} />
+      <SublineAtom subtext={post.content} />
+    </PostListItemContainerAtom>
   )
 }
 
@@ -112,9 +256,9 @@ export default function Exchange({
   setSomethingWasChanged,
 }: {
   path: string
-  post: any
-  somethingWasChanged: any
-  setSomethingWasChanged: any
+  post: Post
+  somethingWasChanged: boolean
+  setSomethingWasChanged: React.Dispatch<SetStateAction<boolean>>
 }) {
   console.log("locatiom: Exchange, post: ", post)
   switch (path) {
@@ -130,7 +274,6 @@ export default function Exchange({
         />
       )
     case "data":
-      console.log("in data case")
       return <Data post={post} />
     default:
       return <Default path={path} post={post} />

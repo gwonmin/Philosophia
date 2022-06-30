@@ -33,7 +33,6 @@ export default function SideBarPageTemplate({
   currentPage: ALL_ROUTE
 }) {
   //변수 초기화
-  const params = useParams()
   const userState = useContext(UserStateContext)
 
   //초기화 확인
@@ -53,11 +52,5 @@ export default function SideBarPageTemplate({
     }
   }
 
-  return (
-    <div>
-      <Header />
-      <SideBarOrgan pages={pages()}></SideBarOrgan>
-      <Footer />
-    </div>
-  )
+  return <SideBarOrgan pages={pages()} />
 }

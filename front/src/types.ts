@@ -14,11 +14,12 @@ export interface Essential_Post {
 export interface Devate_Post extends Essential_Post {
   title: string
   comment: string[]
-  tag: string
+  tag: string[]
   userStance: string
   yes: string[]
   no: string[]
   visited?: string[]
+  content: string
 }
 
 export interface Free_Post extends Essential_Post {
@@ -40,9 +41,26 @@ export interface Phil_Post extends Essential_Post {
   title: string
   comment: string[]
 }
-export type Post = Devate_Post & Share_Post & Free_Post & Phil_Post
+
+export interface DataPost extends Essential_Post {
+  createdAt: string
+  filePath?: string
+  title: string
+  updatedAt: string
+}
+
+export type Post = Devate_Post & Share_Post & Free_Post & Phil_Post & DataPost
+
+export interface GetPostResponse {
+  posts: Post[]
+  currentPage: number
+}
 
 export interface NewPost {
   title: string
   content: string
+}
+
+export type Props = {
+  children?: React.ReactNode
 }

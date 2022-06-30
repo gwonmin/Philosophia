@@ -6,18 +6,24 @@ import { UserStateContext, DispatchContext } from "../../RootContext"
 import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import Typography from "@mui/material/Typography"
+import Paper from "@mui/material/Paper"
+import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 
 import { customFetch } from "../../util"
 
 import Exchange from "../organisms/PostCards"
 import SharePostAddForm from "./SharePostAddForm"
-import { Post } from "../../types"
+import { GetPostResponse, Post } from "../../types"
+import { SxProps } from "@mui/material"
+import WriteFabAtom from "../atoms/WriteFabAtom"
+import PaginationAtom from "../atoms/PaginationAtom"
 
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
   value: number
+  style?: React.CSSProperties
 }
 interface Page {
   index: number
@@ -36,7 +42,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ pl: 3, pr: 3 }}>{children}</Box>}
     </div>
   )
 }
@@ -49,69 +55,67 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
+  const [currentPageNumber, setCurrentPageNumber] = useState<number>(1)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
 
   //fetch
   useEffect(() => {
     customFetch({
-      endpoint: pages[value].path ?? "",
-      setValue: setPostList,
+      endpoint:
+        `${pages[value].path}${
+          currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""
+        }` ?? "",
+      setValue: (res: GetPostResponse) => {
+        setPostList(res.posts)
+      },
       callback: setIsFetchCompleted,
     })
-  }, [value, somethingWasChanged])
+  }, [value, somethingWasChanged, currentPageNumber])
+
   if (!isFetchCompleted) {
     return <p>loading...</p>
   }
 
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     return (
-      <div>
-        {postList != [] && (
-          <div>
-            <p>게시물 목록:</p>
-            {postList.map((post: Post) => {
+      <>
+        {postList.length === 0 ? (
+          <Typography variant="h4">아직 게시물이 없네요 😭</Typography>
+        ) : (
+          <>
+            {postList?.map((post: Post) => {
               return (
-                <div key={post._id} style={{ backgroundColor: "grey" }}>
-                  <Exchange
-                    path={pages[value].path}
-                    post={post}
-                    somethingWasChanged={somethingWasChanged}
-                    setSomethingWasChanged={setSomethingWasChanged}
-                  />
-                </div>
+                <Exchange
+                  path={pages[value].path}
+                  post={post}
+                  somethingWasChanged={somethingWasChanged}
+                  setSomethingWasChanged={setSomethingWasChanged}
+                />
               )
             })}
-            {postList.length == 0 && <p>아직 게시물이 없네요.</p>}
-          </div>
+          </>
         )}
-        {userState?.user && (
-          <button
-            onClick={() => {
-              navigate("/" + pages[value].path + "/add")
-            }}
-          >
-            글쓰기
-          </button>
-        )}
-      </div>
+
+        {userState?.user && <WriteFabAtom path={`/${pages[value].path}/add`} />}
+      </>
     )
   }
 
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex" }}>
+    <Box sx={{ height: "100%" }}>
       <Tabs
-        orientation="vertical"
         value={value}
         onChange={handleChange}
         aria-label="tab test"
-        sx={{ borderRight: 1, borderColor: "divider" }}
+        // sx={{ borderBottom: 1, borderColor: "divider" }}
         centered
       >
         {pages.map((page) => {
           return <Tab key={page.index} label={page.label} />
         })}
       </Tabs>
+
       {pages.map((page) => {
         if (page.label === "AI 철학자") {
           return (
@@ -121,11 +125,26 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
           )
         }
         return (
-          <TabPanel key={page.index} index={page.index} value={value}>
+          <TabPanel
+            style={{
+              width: "100%",
+              overflow: "auto",
+              maxHeight: "65vh",
+            }}
+            key={page.index}
+            index={page.index}
+            value={value}
+          >
             <GoodComponent postList={postList} />
           </TabPanel>
         )
       })}
+      <PaginationAtom
+        page={currentPageNumber}
+        onChange={(_e, val) => {
+          setCurrentPageNumber(val)
+        }}
+      />
     </Box>
   )
 }

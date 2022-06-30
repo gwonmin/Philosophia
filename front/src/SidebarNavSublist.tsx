@@ -5,6 +5,7 @@ import ListItemText from "@mui/material/ListItemText"
 import ListSubheader from "@mui/material/ListSubheader"
 import AssignmentIcon from "@mui/icons-material/Assignment"
 import { useNavigate } from "react-router-dom"
+import { RoutePath } from "./route/RoutesURL"
 
 const SidebarMainList = () => {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ const SidebarMainList = () => {
       </ListSubheader>
       <ListItemButton
         onClick={() => {
-          navigate("")
+          navigate(`/${RoutePath.TEAM_INTRO}`)
         }}
       >
         <ListItemIcon>

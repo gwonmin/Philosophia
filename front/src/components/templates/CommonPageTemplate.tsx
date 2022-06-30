@@ -9,7 +9,7 @@ import { UserStateContext } from "../../RootContext"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import Exchange from "../organisms/PostCards"
-import { User, Post } from "../../types"
+import { User, Post, GetPostResponse } from "../../types"
 
 export default function CommonPageTemplate({
   currentPage,
@@ -22,6 +22,7 @@ export default function CommonPageTemplate({
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
+  const [currentPageNumber, setCurrentPageNumber] = useState(1)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
   const currentSub = currentPage.DEFAULT
@@ -39,8 +40,13 @@ export default function CommonPageTemplate({
   //fetch
   useEffect(() => {
     customFetch({
-      endpoint: path() ?? "",
-      setValue: setPostList,
+      endpoint:
+        `${path()}${
+          currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""
+        }` ?? "",
+      setValue: (res: GetPostResponse) => {
+        setPostList(res.posts)
+      },
       callback: setIsFetchCompleted,
     })
   }, [somethingWasChanged])
@@ -60,7 +66,7 @@ export default function CommonPageTemplate({
               <p>게시물 목록:</p>
               {postList.map((post: Post) => {
                 return (
-                  <div key={post._id} style={{ backgroundColor: "grey" }}>
+                  <div key={post._id}>
                     <Exchange
                       path={currentPage.DEFAULT.path ?? "에러"}
                       post={post}

@@ -19,10 +19,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import NotificationsIcon from "@mui/icons-material/Notifications"
 import Mainlist from "./SidebarNavMainlist"
 import Sublist from "./SidebarNavSublist"
-
-type Props = {
-  children?: React.ReactNode
-}
+import { Props } from "./types"
 
 function Copyright(props: any) {
   return (
@@ -33,8 +30,12 @@ function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link
+        color="inherit"
+        href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15"
+        target="_blank"
+      >
+        Philosophia's GitLab
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
