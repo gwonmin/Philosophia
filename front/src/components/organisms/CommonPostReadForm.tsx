@@ -62,14 +62,14 @@ export default function CommonPostReadForm({
       setSomethingWasChanged(!somethingWasChanged)
       console.log(
         "좋아요를 " +
-          (postInfo.userLike === "yes" ? "취소하였습니다." : "눌렀습니다.")
+          (postInfo.userLike === true ? "취소하였습니다." : "눌렀습니다.")
       )
     } catch (err) {
       console.log("좋아요에 실패했습니다.", err)
     }
   }
   return (
-    <div>
+    <>
       <ShowPostInfo postInfo={postInfo} />
       <ForUserMolcule
         postInfo={postInfo}
@@ -83,6 +83,6 @@ export default function CommonPostReadForm({
         deleteHandler={deleteHandler}
       />
       {path != "shares" && <CommentList path={path} postId={postId} />}
-    </div>
+    </>
   )
 }

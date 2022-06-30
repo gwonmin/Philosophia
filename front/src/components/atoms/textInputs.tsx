@@ -11,6 +11,7 @@ export function TextFieldAtom({
   autoComplete,
   disabled,
   onChange,
+  sx,
 }: TextFieldProps) {
   const commonProps = {
     required,
@@ -20,6 +21,7 @@ export function TextFieldAtom({
     type,
     autoComplete,
     disabled,
+    sx,
   }
   return (
     <TextField
@@ -28,7 +30,7 @@ export function TextFieldAtom({
       value={value}
       placeholder={placeholder}
       fullWidth
-      sx={{ mb: 3 }}
+      sx={{ mb: 3, ...sx }}
     />
   )
 }

@@ -1,12 +1,78 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import { customFetch } from "../util"
-import Header from "../components/organisms/Header"
 
-import { Devate_Post, Free_Post, Post } from "../types"
-import { Grid } from "@mui/material"
-import Footer from "../components/organisms/Footer"
+import { Devate_Post, Free_Post, Post, Props } from "../types"
+import { Grid, Typography, Paper } from "@mui/material"
+import {
+  MainlineMolecule,
+  PostListItemContainerAtom,
+} from "../components/organisms/PostCards"
+
+// @ts-ignore
+import BannerImage from "../../public/img/banner.png"
+// @ts-ignore
+import TSMan from "../../public/img/ts_man.avif"
+import HotPotatoTitle from "../components/atoms/HotPotatoTitle"
+import SublineAtom from "../components/atoms/SublineAtom"
+
+const SectionPage: React.FC<Props & { xs?: number }> = ({
+  children,
+  xs = 12,
+}) => {
+  return (
+    <Grid item xs={xs}>
+      <Paper
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 3px 20px #1d26260d",
+          borderRadius: "15px",
+          // transform: perspective(1px) translateZ(0);
+          transitionDuration: "0.3s",
+          transitionProperty: "transform",
+          transitionTimingFunction: "ease-out",
+          "&:hover": {
+            transform: "translateY(-8px)",
+          },
+        }}
+      >
+        {children}
+      </Paper>
+    </Grid>
+  )
+}
+const ImageSectionPage: React.FC<{
+  source: any
+  height?: number
+  xs?: number
+}> = ({ source, height = 200, xs = 12 }) => {
+  return (
+    <Grid item xs={xs} sx={{ height: height }}>
+      <Paper
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 3px 20px #1d26260d",
+          borderRadius: "15px",
+          height: "100%",
+          // transform: perspective(1px) translateZ(0);
+          transitionDuration: "0.3s",
+          transitionProperty: "transform",
+          transitionTimingFunction: "ease-out",
+          backgroundImage: `url(${source})`,
+          backgroundSize: "cover",
+          "&:hover": {
+            transform: "translateY(-8px)",
+          },
+        }}
+      />
+    </Grid>
+  )
+}
 
 export default function TrendPage() {
   type Trend = {
@@ -15,6 +81,7 @@ export default function TrendPage() {
   }
   const [trend, setTrend] = useState<Trend | null>(null)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     customFetch({
@@ -30,44 +97,62 @@ export default function TrendPage() {
   if (!trend) return <p>게시물이 없습니다.</p>
   return (
     <>
-      <Header />
-      <Grid container>
-        <Grid item xs={12} sx={{ m: "10px 30px", border: "3px solid black" }}>
-          <p>화제의 찬반 토론</p>
-          {trend.devatePosts.map((post) => {
+      {/* first column */}
+      <Grid container item xs={6} rowSpacing={1.5}>
+        <ImageSectionPage source={BannerImage} height={160} />
+
+        <SectionPage>
+          <HotPotatoTitle title="화제의 찬반 토론" />
+          {trend.devatePosts.map((post, idx) => {
             const yesRatio =
               (post.yes.length / (post.yes.length + post.no.length)) * 100
             const noRatio =
               (post.no.length / (post.yes.length + post.no.length)) * 100
             return (
-              <div key={post._id} style={{ backgroundColor: "grey" }}>
-                <Link to={"/devates/" + post._id}>
-                  <p>제목: {post.title}</p>
-                  <p>찬성: {yesRatio.toFixed(2)}%</p>
-                  <p>반대: {noRatio.toFixed(2)}%</p>
-                </Link>
-              </div>
+              <PostListItemContainerAtom
+                key={`trend-chanban-${idx}`}
+                onClick={() => {
+                  navigate(`/devates/${post._id}`)
+                }}
+              >
+                <MainlineMolecule title={post.title} />
+                <SublineAtom
+                  yes={+yesRatio.toFixed(2)}
+                  no={+noRatio.toFixed(2)}
+                />
+              </PostListItemContainerAtom>
             )
           })}
-        </Grid>
-        <Grid item xs={12} sx={{ m: "10px 30px", border: "3px solid black" }}>
-          <p>화제의 자유 토론</p>
-          {trend.freePosts.map((post) => {
-            return (
-              <div key={post._id} style={{ backgroundColor: "grey" }}>
-                <Link to={"/freetopics/" + post._id}>
-                  <p>제목: {post.title}</p>
-                  <p>조회수: {post.visited}</p>
-                </Link>
-              </div>
-            )
-          })}
-        </Grid>
-        <Grid item xs={12} sx={{ m: "10px 30px", border: "3px solid black" }}>
-          <p>화제의 AI 철학</p>
-        </Grid>
+        </SectionPage>
       </Grid>
-      <Footer />
+
+      {/* second column */}
+      <Grid container item xs={3} rowSpacing={3}>
+        <SectionPage>
+          <HotPotatoTitle title="화제의 자유토론" />
+          {trend.freePosts.map((post, idx) => {
+            return (
+              <PostListItemContainerAtom
+                key={`trend-free-${idx}`}
+                onClick={() => {
+                  navigate(`/freetopics/${post._id}`)
+                }}
+              >
+                <MainlineMolecule title={`${post.title.substring(0, 8)}...`} />
+                <SublineAtom subtext={post.content} />
+              </PostListItemContainerAtom>
+            )
+          })}
+        </SectionPage>
+        <ImageSectionPage source={TSMan} height={250} />
+      </Grid>
+
+      {/* third column */}
+      <Grid container item xs={3} rowSpacing={3}>
+        <SectionPage>
+          <HotPotatoTitle title="화제의 AI 철학" />
+        </SectionPage>
+      </Grid>
     </>
   )
 }

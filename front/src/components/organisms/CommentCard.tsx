@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react"
-import { Container } from "@mui/material"
+import { Button, Container, Paper } from "@mui/material"
 
 import * as Api from "../../api"
 import { TextFieldAtom } from "../atoms/textInputs"
 import { useParams } from "react-router-dom"
 import { UserStateContext } from "../../RootContext"
+import TitleAtom from "../atoms/TitleAtom"
+import SublineAtom from "../atoms/SublineAtom"
+import { Box } from "@mui/system"
 
 export default function CommentCard({
   path,
@@ -75,30 +78,46 @@ export default function CommentCard({
             onChange={(e) => {
               setNewComment(e.target.value)
             }}
-          ></TextFieldAtom>
+          />
           <button onClick={editHandler}>등록</button>
         </div>
       )}
       {!isEditing && (
-        <div key={comment?._id} style={{ backgroundColor: "grey" }}>
-          {comment.stance && (
-            <p>입장: ({comment.stance == "yes" ? "찬성" : "반대"})</p>
-          )}
-          <p>작성자: {comment.author.name}</p>
-          <p>내용: {comment.content}</p>
+        <Paper
+          elevation={0}
+          sx={{
+            p: 2,
+            m: 2,
+            borderBottom: "1px solid #DDDDDD",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+          }}
+          key={comment?._id}
+        >
+          <Box>
+            <SublineAtom subtext={`${comment.author.name}`} sx={{ mb: 1 }} />
+            <TitleAtom
+              title={`${comment.content.substring(0, 20)} (${
+                comment.stance && comment.stance == "yes" ? "찬성" : "반대"
+              })`}
+            />
+          </Box>
           {comment.author._id === user?._id && (
-            <>
-              <button onClick={deleteHandler}>삭제하기</button>
-              <button
+            <Box>
+              <Button color="error" onClick={deleteHandler}>
+                삭제하기
+              </Button>
+              <Button
                 onClick={() => {
                   setIsEditing(true)
                 }}
               >
                 수정하기
-              </button>
-            </>
+              </Button>
+            </Box>
           )}
-        </div>
+        </Paper>
       )}
     </div>
   )

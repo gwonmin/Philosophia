@@ -13,21 +13,10 @@ import { DataPost, Devate_Post, Post, Share_Post } from "../../types"
 import * as Api from "../../api"
 import { Props } from "../../types"
 import { RoutePath } from "../../route/RoutesURL"
-
-const TitleAtom: React.FC<{ title?: string }> = ({ title }) => {
-  return (
-    <>
-      {title !== undefined && (
-        <Typography
-          variant="h4"
-          sx={{ fontSize: 20, color: "#111111", mr: 0.5 }}
-        >
-          {`${title}`}
-        </Typography>
-      )}
-    </>
-  )
-}
+import TagsAtom from "../atoms/TagsAtom"
+import SublineAtom from "../atoms/SublineAtom"
+import { formatDateString } from "../../util"
+import TitleAtom from "../atoms/TitleAtom"
 
 const NumberInBracketAtom: React.FC<{ number?: number }> = ({ number }) => {
   return (
@@ -41,24 +30,7 @@ const NumberInBracketAtom: React.FC<{ number?: number }> = ({ number }) => {
   )
 }
 
-const TagsAtom: React.FC<{ tags?: string[] }> = ({ tags }) => {
-  return (
-    <>
-      {tags?.map((tag) => {
-        return (
-          <Chip
-            size="small"
-            sx={{ fontSize: 10, mr: 0.5 }}
-            color="primary"
-            label={`# ${tag || "(빈 태그)"}`}
-          />
-        )
-      })}
-    </>
-  )
-}
-
-const MainlineMolecule: React.FC<{
+export const MainlineMolecule: React.FC<{
   title?: string
   number?: number
   tags?: string[]
@@ -72,23 +44,9 @@ const MainlineMolecule: React.FC<{
   )
 }
 
-const SublineAtom: React.FC<{
-  subtext?: string
-  yes?: number
-  no?: number
-}> = ({ subtext, yes, no }) => {
-  return (
-    <Typography variant="body1" sx={{ fontSize: 14, color: "#666666" }}>
-      {subtext} {yes !== undefined ? `· 👍: ${yes}` : ""}
-      {no !== undefined ? ` / 👎: ${no}` : ""}
-    </Typography>
-  )
-}
-
-const PostListItemContainerAtom: React.FC<Props & { onClick: () => void }> = ({
-  children,
-  onClick,
-}) => {
+export const PostListItemContainerAtom: React.FC<
+  Props & { onClick: () => void }
+> = ({ children, onClick }) => {
   return (
     <>
       <Button fullWidth onClick={onClick} sx={{ pt: 2, pb: 2 }}>
@@ -206,29 +164,14 @@ function Share({
 function Data({ post }: { post: DataPost }) {
   const navigate = useNavigate()
   const toTheDetailPage = () => {
-    navigate(`/${RoutePath.DATA}}/${post._id}`)
+    navigate(`/${RoutePath.DATA}/${post._id}`)
   }
-
-  const d = new Date(post.createdAt)
-  const fullYear = d.getFullYear()
-  const month =
-    String(d.getMonth() + 1).length !== 2
-      ? `0${d.getMonth() + 1}`
-      : d.getMonth() + 1
-  const date =
-    String(d.getDate()).length !== 2 ? `0${d.getDate()}` : d.getDate()
-  const hours =
-    String(d.getHours()).length !== 2 ? `0${d.getHours()}` : d.getHours()
-  const minutes =
-    String(d.getMinutes()).length !== 2 ? `0${d.getMinutes()}` : d.getMinutes()
-  const seconds =
-    String(d.getSeconds()).length !== 2 ? `0${d.getSeconds()}` : d.getSeconds()
 
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
       <MainlineMolecule title={post.title} />
       <SublineAtom
-        subtext={`${post.author.name} | ${fullYear}-${month}-${date} ${hours}:${minutes}:${seconds}`}
+        subtext={`${post.author.name} | ${formatDateString(post.createdAt)}`}
       />
     </PostListItemContainerAtom>
   )

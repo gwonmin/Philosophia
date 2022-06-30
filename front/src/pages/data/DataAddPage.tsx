@@ -13,14 +13,12 @@ export default function DataAddPage() {
   //변수 초기화
   return (
     <>
-      <Header />
       <Container component="main" maxWidth="md">
         <Typography variant="h5" sx={addFormHeaderStyle}>
           새 글 작성하기
         </Typography>
         <DataPostAddForm />
       </Container>
-      <Footer />
     </>
   )
 }

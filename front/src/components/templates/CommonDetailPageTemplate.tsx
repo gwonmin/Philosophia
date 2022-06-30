@@ -62,30 +62,23 @@ export default function CommonDetailPageTemplate({
   }
 
   return (
-    <div>
-      <Header />
-      <Container>
-        <p>
-          {currentPath} 상세정보 페이지, 모드: {isEditing ? "편집" : "읽기"}
-        </p>
-        {isEditing ? (
-          <CommonPostEditForm
-            path={currentPath}
-            setIsEditing={setIsEditing}
-            postInfo={postInfo}
-            setPostInfo={setPostInfo}
-          />
-        ) : (
-          <CommonPostReadForm
-            path={currentPath}
-            setIsEditing={setIsEditing}
-            postInfo={postInfo}
-            somethingWasChanged={somethingWasChanged}
-            setSomethingWasChanged={setSomethingWasChanged}
-          />
-        )}
-      </Container>
-      <Footer />
-    </div>
+    <Container>
+      {isEditing ? (
+        <CommonPostEditForm
+          path={currentPath}
+          setIsEditing={setIsEditing}
+          postInfo={postInfo}
+          setPostInfo={setPostInfo}
+        />
+      ) : (
+        <CommonPostReadForm
+          path={currentPath}
+          setIsEditing={setIsEditing}
+          postInfo={postInfo}
+          somethingWasChanged={somethingWasChanged}
+          setSomethingWasChanged={setSomethingWasChanged}
+        />
+      )}
+    </Container>
   )
 }

@@ -1,13 +1,11 @@
 import { useState, useContext, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
-import { UserStateContext, DispatchContext } from "../../RootContext"
+import { UserStateContext } from "../../RootContext"
 
 import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import Typography from "@mui/material/Typography"
-import Paper from "@mui/material/Paper"
-import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 
 import { customFetch } from "../../util"
@@ -15,36 +13,14 @@ import { customFetch } from "../../util"
 import Exchange from "../organisms/PostCards"
 import SharePostAddForm from "./SharePostAddForm"
 import { GetPostResponse, Post } from "../../types"
-import { SxProps } from "@mui/material"
 import WriteFabAtom from "../atoms/WriteFabAtom"
 import PaginationAtom from "../atoms/PaginationAtom"
+import TabPanel from "../atoms/TabPanel"
 
-interface TabPanelProps {
-  children?: React.ReactNode
-  index: number
-  value: number
-  style?: React.CSSProperties
-}
 interface Page {
   index: number
   label: string
   path: string
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ pl: 3, pr: 3 }}>{children}</Box>}
-    </div>
-  )
 }
 
 export default function SideBarOrgan({ pages }: { pages: Page[] }) {
@@ -52,7 +28,6 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   const handleChange = (event: React.SyntheticEvent, newValue: number) =>
     setValue(newValue)
 
-  const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(1)
@@ -129,7 +104,7 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
             style={{
               width: "100%",
               overflow: "auto",
-              maxHeight: "65vh",
+              height: "65vh",
             }}
             key={page.index}
             index={page.index}

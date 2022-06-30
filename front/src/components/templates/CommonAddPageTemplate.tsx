@@ -20,14 +20,12 @@ export default function CommonAddPageTemplate({
 }) {
   return (
     <div>
-      <Header />
       <Container component="main" maxWidth="md">
         <Typography variant="h5" sx={addFormHeaderStyle}>
           새 글 작성하기
         </Typography>
         <CommonPostAddForm path={currentPage.DEFAULT.path ?? ""} />
       </Container>
-      <Footer />
     </div>
   )
 }

@@ -13,14 +13,12 @@ const addFormHeaderStyle = {
 export default function ShareAddPageTemplate() {
   return (
     <>
-      <Header />
       <Container component="main" maxWidth="md">
         <Typography variant="h5" sx={addFormHeaderStyle}>
           AI 철학자 : 새 글 생성하기
         </Typography>
         <SharePostAddForm />
       </Container>
-      <Footer />
     </>
   )
 }
