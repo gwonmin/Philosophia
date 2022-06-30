@@ -93,26 +93,6 @@ devateRouter.delete('/devates/:id', verifyToken, async (req, res, next) => {
 
 // 토론 게시판 전체 게시글 조회(페이지네이션)
 devateRouter.get('/devates', async function(req, res, next){ 
-<<<<<<< HEAD
-    let page = Math.max(1, parseInt(req.query.page));   
-    let limit = 15 //Math.max(1, parseInt(req.query.limit));
-    page = !isNaN(page)?page:1;                         
-    limit = !isNaN(limit)?limit:5;                     
-  
-    let skip = (page-1)*limit;
-    let count = await DevateModel.countDocuments({});
-    let maxPage = Math.ceil(count/limit);
-    let posts = await DevateModel.find({}).populate('author', 'id name')
-      .sort('-createdAt')
-      .skip(skip)   
-      .limit(limit) 
-      .exec();
-    let result = {
-      posts:posts,
-      currentPage:page,
-      maxPage:maxPage,
-      limit:limit
-=======
     try {
         const tag = req.query.tag ?? null;
         const filter = { tag };
@@ -135,7 +115,6 @@ devateRouter.get('/devates', async function(req, res, next){
         res.status(200).send(result)
     } catch (error) {
         next(error);
->>>>>>> c6b493858b57d586291e8b3793896cc37ec78b40
     }
 });
 
