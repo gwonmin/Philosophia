@@ -44,11 +44,11 @@ function TabPanel(props: TabPanelProps) {
 
 export default function SideBarOrgan({ path, pages }: { path: string; pages: Page[] }) {
   const [value, setValue] = useState<number>(0)
+  const [page, setPage] = useState<number>(1)
   const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue)
-
   const navigate = useNavigate()
   const userState = useContext(UserStateContext)
-  const [postList, setPostList] = useState<Post[]>([])
+  const [pageInfo, setPageInfo] = useState<{ posts: Post[]; maxPage: number } | null>(null)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
 
@@ -67,17 +67,15 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
 
   //fetch
   useEffect(() => {
-    setPostList([])
+    setPageInfo(null)
     customFetch({
-      endpoint: pages[value].path ?? "",
-      setValue: setPostList,
+      endpoint: pages[value].path + `?page=${page}` ?? "",
+      setValue: setPageInfo,
       callback: setIsFetchCompleted,
     })
   }, [value, somethingWasChanged])
-  console.log("location: line77", postList)
-  if (!isFetchCompleted) {
-    return <p>loading...</p>
-  }
+  if (!isFetchCompleted) return <p>loading...</p>
+  if (!pageInfo) return <p>loading...</p>
 
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     return (
@@ -125,6 +123,11 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
     }
   }
 
+  const handlePage = (num: number) => {
+    setPage(num + 1)
+    setSomethingWasChanged(!somethingWasChanged)
+  }
+
   return (
     <Container component="main" sx={{ p: 2 }}>
       <Stack direction="row" spacing={1} justifyContent="center">
@@ -134,7 +137,7 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
           })}
         </Tabs>
         <Container maxWidth="md">
-          <Paper variant="outlined">
+          <Paper variant="outlined" sx={{ mb: 2 }}>
             {pages.map((page) => {
               return (
                 <TabPanel key={page.index} index={page.index} value={value}>
@@ -158,11 +161,26 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
                       </Grid>
                     </Grid>
                   </Box>
-                  <GoodComponent postList={postList} />
+                  <GoodComponent postList={pageInfo.posts} />
                 </TabPanel>
               )
             })}
           </Paper>
+          <Stack direction="row" spacing={1} justifyContent="center">
+            {parseInt(`${pageInfo.maxPage / 10}`) < parseInt(`${page / 10}`) && <button>{"< 이전"}</button>}
+            {Array.from({ length: Math.max(1, pageInfo.maxPage <= 10 ? pageInfo.maxPage : 10) }, (x, i) => i).map((num) => {
+              return (
+                <button
+                  key={num}
+                  style={{ backgroundColor: num + 1 == page ? "black" : "none", color: num + 1 == page ? "white" : "none" }}
+                  onClick={() => handlePage(num)}
+                >
+                  {num + 1}
+                </button>
+              )
+            })}
+            {parseInt(`${pageInfo.maxPage / 10}`) > parseInt(`${page / 10}`) && <button>{"다음 >"}</button>}
+          </Stack>
         </Container>
       </Stack>
     </Container>
