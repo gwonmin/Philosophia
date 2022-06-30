@@ -7,6 +7,13 @@ import { UserStateContext, DispatchContext } from "../../pages/RootPage"
 import { HeaderText } from "../atoms/textboxs"
 import Divider from "@mui/material/Divider/Divider"
 import Stack from "@mui/material/Stack"
+import { Grid, Typography, Link } from "@mui/material"
+
+import logo from "../../../public/img/logo.png"
+import banner from "../../../public/img/banner.png"
+import "../../../public/index.scss"
+
+import MyPage from "../../pages/user/MyPage"
 
 const HEADER_ROUTES = [
   { path: RoutePath.MASTER, label: "마스터 페이지(삭제예정)" },
@@ -20,18 +27,69 @@ const HEADER_ROUTES = [
 
 export default function Header() {
   const navigate = useNavigate()
+  const userStateContext = useContext(UserStateContext)
+  const user = userStateContext.user
 
   return (
-    <div>
-      <div>로고</div>
-      <HeaderText level={"h1"} variant={""} color={"black"}>
-        Philosophia
-      </HeaderText>
-      <Divider>
-        <Stack direction="row" spacing={2}>
-          {HEADER_ROUTES.map((route) => {
-            return (
+    <Grid container rowSpacing={2} sx={{ mb: 3 }}>
+      <Grid
+        item
+        xs={2}
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant="h6">환영합니다</Typography>
+        <Typography>{user ? user?.name : "익명의 사용자"}님</Typography>
+      </Grid>
+      <Grid
+        item
+        xs={8}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img
+          src={banner}
+          style={{
+            height: "20vh",
+          }}
+        ></img>
+      </Grid>
+      <Grid
+        item
+        xs={2}
+        sx={{
+          display: "flex",
+          justifyContent: "right",
+          alignItems: "center",
+          pr: 5,
+        }}
+      >
+        {user && <MyPage />}
+        {user ? (
+          <Link>로그아웃</Link>
+        ) : (
+          <Link
+            onClick={() => {
+              navigate("/user/login")
+            }}
+          >
+            로그인
+          </Link>
+        )}
+      </Grid>
+      <Grid item xs={12}>
+        <Divider>
+          <Stack direction="row" spacing={2}>
+            {HEADER_ROUTES.map((route) => (
               <button
+                className="fill"
                 key={route.label}
                 onClick={() => {
                   navigate("/" + route.path)
@@ -39,10 +97,10 @@ export default function Header() {
               >
                 {route.label}
               </button>
-            )
-          })}
-        </Stack>
-      </Divider>
-    </div>
+            ))}
+          </Stack>
+        </Divider>
+      </Grid>
+    </Grid>
   )
 }
