@@ -70,7 +70,7 @@ datacommentRouter.delete('/datacomments/:id', verifyToken, async (req, res, next
 })
 
 // 게시글 1개 전체 댓글 조회
-datacommentRouter.get('/datacommentlist', verifyToken, async (req, res, next) => {
+datacommentRouter.get('/datacommentlist', async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await datacommentService.getComments({ postId });

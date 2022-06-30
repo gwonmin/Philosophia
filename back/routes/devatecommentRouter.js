@@ -85,7 +85,7 @@ devatecommentRouter.delete('/devatecomments/:id', verifyToken, async (req, res, 
 })
 
 // 댓글 1개 조회
-devatecommentRouter.get('/devatecomments/:id', verifyToken, async (req, res, next) => {
+devatecommentRouter.get('/devatecomments/:id', async (req, res, next) => {
     try {
         const commentId = req.params.id;
         const comment = await devatecommentService.getComment({ commentId });
@@ -97,7 +97,7 @@ devatecommentRouter.get('/devatecomments/:id', verifyToken, async (req, res, nex
 })
 
 // 게시글 1개 전체 댓글 조회
-devatecommentRouter.get('/devatecommentlist', verifyToken, async (req, res, next) => {
+devatecommentRouter.get('/devatecommentlist', async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await devatecommentService.getComments({ postId });
