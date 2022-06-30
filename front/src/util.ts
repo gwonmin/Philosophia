@@ -65,9 +65,10 @@ async function customFetch({ endpoint, setValue, callback }: { endpoint: string;
   try {
     // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
     const res = await Api.get({ endpoint: endpoint })
+    const list = ["devates", "shares"]
     console.log(endpoint)
     if (res.data) {
-      if (endpoint === "devates") {
+      if (list.includes(endpoint)) {
         setValue(res.data.posts)
       } else {
         setValue(res.data)
