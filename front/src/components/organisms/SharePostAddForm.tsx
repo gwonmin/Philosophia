@@ -9,6 +9,7 @@ import { TextFieldAtom } from "../atoms/textInputs"
 
 export default function SharePostAddForm(aiShare?: any) {
   //AI와 상호작용하는 게시판에서 불러오게 될 것 같습니다.
+  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
   const [postInfo, setPostInfo] = useState({
     philosopher: "",
     subject: "",
@@ -51,6 +52,7 @@ export default function SharePostAddForm(aiShare?: any) {
     newPost.content = res.data
     console.log(newPost)
     setPostInfo(newPost)
+    setSomethingWasChanged(!somethingWasChanged)
   }
   const handleChange = (event: SelectChangeEvent) => {
     setPhilosopher(event.target.value as string)
