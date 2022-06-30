@@ -111,7 +111,11 @@ export default function DataPostAddForm() {
             alignItems: "center",
           }}
         >
-          <Button variant="contained" onClick={handlePost} sx={{ mr: 1.5 }}>
+          <Button
+            variant="contained"
+            onClick={handlePost}
+            sx={{ mr: 1.5, backgroundColor: "navy" }}
+          >
             게시글 등록하기
           </Button>
           <Button
@@ -119,6 +123,7 @@ export default function DataPostAddForm() {
             onClick={() => {
               navigate(-1)
             }}
+            sx={{ color: "navy", borderColor: "navy" }}
           >
             취소
           </Button>
