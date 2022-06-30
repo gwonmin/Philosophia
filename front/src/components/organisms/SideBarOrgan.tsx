@@ -135,13 +135,6 @@ export default function SideBarOrgan({ path, pages }: { path: string; pages: Pag
         <Container maxWidth="md">
           <Paper variant="outlined">
             {pages.map((page) => {
-              if (page.label === "글 만들기") {
-                return (
-                  <TabPanel key={page.index} index={page.index} value={value}>
-                    <SharePostAddForm />
-                  </TabPanel>
-                )
-              }
               return (
                 <TabPanel key={page.index} index={page.index} value={value}>
                   <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "black" }}>

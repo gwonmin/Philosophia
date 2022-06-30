@@ -10,6 +10,8 @@ import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import Exchange from "../organisms/PostCards"
 import { User, Post } from "../../types"
+import { Box, Grid, Paper, Typography } from "@mui/material"
+import { HeaderText } from "../atoms/textboxs"
 
 export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
   //변수 초기화
@@ -20,12 +22,12 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   const [postList, setPostList] = useState<Post[]>([])
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
-  const currentSub = currentPage.DEFAULT
+  const label = currentPage.DEFAULT.label
   const path = () => {
     if (currentPage.DEFAULT.path === ":who") {
       return philosopher
     }
-    return currentPage.DEFAULT.path
+    return currentPage.DEFAULT.path ?? ""
   }
 
   //초기화 확인
@@ -45,41 +47,54 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
   }
 
   return (
-    <div>
-      <Header />
-      <Container component="main" maxWidth="xs">
-        <p>{currentSub.label} 페이지입니다.</p>
+    <Container maxWidth="md">
+      <Paper variant="outlined">
+        <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "black" }}>
+          <Box sx={{ pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
+            <HeaderText level={"h2"}>{label}</HeaderText>
+          </Box>
+          <Grid container spacing={2} sx={{ pt: 1 }}>
+            <Grid item xs={6} alignItems="center">
+              <Typography align="center">제목</Typography>
+            </Grid>
+            <Grid item xs={2} alignItems="center">
+              <Typography align="center">글쓴이</Typography>
+            </Grid>
+            <Grid item xs={2} alignItems="center">
+              <Typography align="center">작성일</Typography>
+            </Grid>
+            <Grid item xs={2} alignItems="center">
+              <Typography align="center">좋아요</Typography>
+            </Grid>
+          </Grid>
+        </Box>
         <div>
-          {postList.length == 0 && <p>아직 게시물이 없네요.</p>}
           {postList != [] && (
             <div>
-              <p>게시물 목록:</p>
               {postList.map((post: Post) => {
                 return (
-                  <div key={post._id} style={{ backgroundColor: "grey" }}>
-                    <Exchange
-                      path={currentPage.DEFAULT.path ?? "에러"}
-                      post={post}
-                      somethingWasChanged={somethingWasChanged}
-                      setSomethingWasChanged={setSomethingWasChanged}
-                    />
+                  <div key={post._id}>
+                    <Exchange path={path()} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
                   </div>
                 )
               })}
             </div>
           )}
+          {postList.length == 0 && <p></p>}
+          <p></p>
+          {userState?.user && path() !== "shares" && (
+            <Grid sx={{ display: "flex", justifyContent: "right" }}>
+              <button
+                onClick={() => {
+                  navigate("/" + path() + "/add")
+                }}
+              >
+                글쓰기
+              </button>
+            </Grid>
+          )}
         </div>
-        {userState?.user && (
-          <button
-            onClick={() => {
-              navigate("add")
-            }}
-          >
-            글쓰기
-          </button>
-        )}
-      </Container>
-      <Footer />
-    </div>
+      </Paper>
+    </Container>
   )
 }
