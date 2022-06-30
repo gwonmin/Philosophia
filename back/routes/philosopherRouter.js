@@ -293,7 +293,7 @@ philosopherRouter.get('/aristotle', async function(req, res, next){
         let skip = (page-1)*limit;
         let count = await PhilosopherModel.countDocuments({});
         let maxPage = Math.ceil(count/limit);
-        let posts = await PhilosopherModel.find({ philosopherName })
+        let posts = await PhilosopherModel.find({ philosopherName }).populate('author', 'id name')
         .sort('-createdAt')
         .skip(skip)   
         .limit(limit) 
