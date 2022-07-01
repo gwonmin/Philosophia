@@ -21,6 +21,7 @@ import Mainlist from "./SidebarNavMainlist"
 import Sublist from "./SidebarNavSublist"
 import { Props } from "./types"
 import { useNavigate } from "react-router-dom"
+import VpnKeyIcon from "@mui/icons-material/VpnKey"
 
 function Copyright(props: any) {
   return (
