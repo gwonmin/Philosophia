@@ -203,10 +203,9 @@ export default function Exchange({
   somethingWasChanged: boolean
   setSomethingWasChanged: React.Dispatch<SetStateAction<boolean>>
 }) {
+  console.log("locatiom: Exchange, post: ", post)
   switch (path) {
     case "devates":
-      return <Devate path={path} post={post} />
-    case "freetopics":
       return <Devate path={path} post={post} />
     case "shares":
       return (

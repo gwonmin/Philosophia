@@ -26,12 +26,12 @@ export default function CommonPageTemplate({
   const [currentPageNumber, setCurrentPageNumber] = useState(1)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
-  const label = currentPage.DEFAULT.label
+  const currentSub = currentPage.DEFAULT
   const path = () => {
     if (currentPage.DEFAULT.path === ":who") {
       return philosopher
     }
-    return currentPage.DEFAULT.path ?? ""
+    return currentPage.DEFAULT.path
   }
 
   //fetch

@@ -7,8 +7,7 @@ trendRouter.get("/trend", async function(req, res, next){
     try{
         const freePosts = await trendService.getTop3Free();
         const devatePosts = await trendService.getTop3Devate();
-        const sharePosts = await trendService.getTop3Share();
-        res.status(200).send({ freePosts, devatePosts, sharePosts });
+        res.status(200).send({freePosts, devatePosts});
     } catch(error){
         next(error);
     };

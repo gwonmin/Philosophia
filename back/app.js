@@ -5,9 +5,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var passport  = require('passport');
-var session   = require('express-session');
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 import { userRouter } from './routes/userRouter';
@@ -23,14 +20,12 @@ import { dataRouter } from './routes/dataRouter';
 import { datacommentRouter } from './routes/datacommentRouter';
 import { translateRouter } from './routes/translateRouter';
 import { trendRouter } from './routes/trendRouter';
-import { googleloginRouter } from './routes/googlelogin';
 
 var app = express();
 app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(session({secret:'MySecret', resave: false, saveUninitialized:true}));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -40,14 +35,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-// Passport setting
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Routes
-app.use(googleloginRouter);
 app.use(userRouter);
+
 app.use(devateRouter);
 app.use(devatecommentRouter);
 app.use(shareRouter);

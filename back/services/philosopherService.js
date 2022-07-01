@@ -22,12 +22,6 @@ class philosopherService{
         return post
     }
 
-    // 사용자가 쓴 게시물 조회
-    static async getPostInfoByUserId({ userId }){
-        const posts = await Philosopher.findByUserId({ userId });
-        return posts;
-    }
-
     //게시글 전체 조회
     static async getPostList({ philosopherName }){
         const posts = await Philosopher.findAll({ philosopherName });

@@ -17,12 +17,6 @@ class Philosopher{
         return post;
     }
 
-    // userId로 게시글 검색
-    static async findByUserId({ userId }){
-        const posts = await PhilosopherModel.find({ author: userId });
-        return posts;
-    }
-
     // 철학자 게시판 별 전체 글 조회
     static async findAll({ philosopherName }){
         if(philosopherName === '니체'){

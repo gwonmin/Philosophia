@@ -10,7 +10,6 @@ import { Button, FormControl, Grid, InputLabel } from "@mui/material"
 
 export default function SharePostAddForm(aiShare?: any) {
   //AI와 상호작용하는 게시판에서 불러오게 될 것 같습니다.
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
   const [postInfo, setPostInfo] = useState({
     philosopher: "",
     subject: "",

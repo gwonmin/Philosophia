@@ -2,16 +2,28 @@ import { Router } from "express";
 import { devatecommentService } from "../services/devatecommentService"; 
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
-import { checkComment } from "../middlewares/checkComment";
+import axios from "axios";
 
 const devatecommentRouter = Router();
 
 // 댓글 작성
-devatecommentRouter.post('/devatecomments', verifyToken, checkComment, async (req, res, next) => {
+devatecommentRouter.post('/devatecomments', verifyToken, async (req, res, next) => {
     try {
         const userId = req.user;
         const postId = req.query.postId;
         let { content } = req.body;
+
+        await axios.post("http://127.0.0.1:5000/checkcomment", {
+            content: JSON.stringify(content),
+          }).then(async function (response) {
+            // 1이면 비속어
+            const text = response.data
+            
+            if (text == '1') {
+                content = '비속어가 포함된 댓글입니다.'
+            } else {
+                content = content;
+            }
 
             const newComment = await devatecommentService.addComment({
                 userId,
@@ -24,7 +36,7 @@ devatecommentRouter.post('/devatecomments', verifyToken, checkComment, async (re
             }
 
             res.status(201).json(newComment);
-
+            })
     } catch (error) {
         next(error);
     }
@@ -32,11 +44,11 @@ devatecommentRouter.post('/devatecomments', verifyToken, checkComment, async (re
 });
 
 // 댓글 수정
-devatecommentRouter.put('/devatecomments/:id', verifyToken, checkComment, async (req, res, next) => {
+devatecommentRouter.put('/devatecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const userId = req.user;
         const commentId = req.params.id;
-        let { content } = req.body;
+        const content = req.body.content ?? null;
 
         const toUpdate = { content };
         const updatedComment = await devatecommentService.setComment({
@@ -50,7 +62,6 @@ devatecommentRouter.put('/devatecomments/:id', verifyToken, checkComment, async 
         }
 
         res.status(200).json(updatedComment);
-
     } catch (error) {
         next(error);
     }
@@ -74,7 +85,7 @@ devatecommentRouter.delete('/devatecomments/:id', verifyToken, async (req, res, 
 })
 
 // 댓글 1개 조회
-devatecommentRouter.get('/devatecomments/:id', async (req, res, next) => {
+devatecommentRouter.get('/devatecomments/:id', verifyToken, async (req, res, next) => {
     try {
         const commentId = req.params.id;
         const comment = await devatecommentService.getComment({ commentId });
@@ -86,7 +97,7 @@ devatecommentRouter.get('/devatecomments/:id', async (req, res, next) => {
 })
 
 // 게시글 1개 전체 댓글 조회
-devatecommentRouter.get('/devatecommentlist', async (req, res, next) => {
+devatecommentRouter.get('/devatecommentlist', verifyToken, async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await devatecommentService.getComments({ postId });
