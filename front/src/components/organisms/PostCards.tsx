@@ -207,6 +207,8 @@ export default function Exchange({
   switch (path) {
     case "devates":
       return <Devate path={path} post={post} />
+    case "freetopics":
+      return <Devate path={path} post={post} />
     case "shares":
       return (
         <Share

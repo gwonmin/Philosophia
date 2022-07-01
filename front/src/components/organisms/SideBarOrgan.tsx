@@ -7,6 +7,7 @@ import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
+import Stack from "@mui/material/Stack"
 
 import { customFetch } from "../../util"
 
@@ -34,8 +35,22 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
 
+  const label = () => {
+    switch (path) {
+      case ":who":
+        return "철학자 게시판"
+      case "devates":
+        return "토론 게시판"
+      case "shares":
+        return "공유 게시판"
+      default:
+        return "에러"
+    }
+  }
+
   //fetch
   useEffect(() => {
+    setPostList([])
     customFetch({
       endpoint:
         `${pages[value].path}${
@@ -75,6 +90,21 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
         {userState?.user && <WriteFabAtom path={`/${pages[value].path}/add`} />}
       </>
     )
+  }
+
+  const lastlabel = () => {
+    switch (pages[value].path) {
+      case "devates":
+        return "찬/반"
+      case "freetopics":
+        return "조회수"
+      case "shares":
+        return
+      case "data":
+        return
+      default:
+        return
+    }
   }
 
   return (

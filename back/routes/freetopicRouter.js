@@ -34,7 +34,7 @@ freetopicRouter.post('/freetopics', verifyToken, async (req, res, next) => {
 });
 
 // 게시글 1개 조회
-freetopicRouter.get('/freetopics/:id', verifyToken, async (req, res, next) => {
+freetopicRouter.get('/freetopics/:id', async (req, res, next) => {
   try {
     const postId = req.params.id;
     const currentPostInfo = await freetopicService.getPostInfo({ postId });
@@ -92,7 +92,7 @@ freetopicRouter.delete('/freetopics/:id', verifyToken, async (req, res, next) =>
 });
 
 // 전체 게시글 조회
-freetopicRouter.get('/freetopics', verifyToken, async (req, res, next) => {
+freetopicRouter.get('/freetopics', async (req, res, next) => {
   try {
     const posts = await freetopicService.getPosts();
 

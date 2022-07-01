@@ -9,9 +9,7 @@ import Divider from "@mui/material/Divider/Divider"
 import Stack from "@mui/material/Stack"
 import { Grid, Typography, Link } from "@mui/material"
 
-import logo from "../../../public/img/logo.png"
 import banner from "../../../public/img/banner.png"
-import "../../../public/index.scss"
 
 import MyPage from "../../pages/user/MyPage"
 
@@ -27,10 +25,10 @@ const HEADER_ROUTES = [
 export default function Header() {
   const navigate = useNavigate()
   const userStateContext = useContext(UserStateContext)
-  const user = userStateContext.user
+  const user = userStateContext?.user
 
   return (
-    <Grid container rowSpacing={2} sx={{ mb: 3 }}>
+    <Grid container rowSpacing={2}>
       <Grid
         item
         xs={2}
