@@ -1,4 +1,4 @@
-import { FreeTopic, Devate, User } from '../db';
+import { FreeTopic, Devate, Share, User } from '../db';
 
 class trendService{
     static async getTop3Free(){
