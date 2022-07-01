@@ -17,18 +17,22 @@ translateRouter.post("/translate", async function (req, res) {
   }).then(function (response) {
     // response  
     function eliminateName(text) {
-      if (text.startsWith('Nietzche')) {
-        text = text.substr(0, length('Nietzche'));
-      } else if (text.startsWith('Kant')) {
-        text = text.substr(0, length('Kant'));
-      } else if (text.startsWith('Aristotles')) {
-        text = text.substr(0, length('Aristotles'));
+      if (text.startsWith("Nietzsche")) {
+        text = text.replace("Nietzsche", "");
+        return text;
+      } else if (text.startsWith("Kant")) {
+        text = text.replace("Kant", "");
+        return text;
+      } else if (text.startsWith("Aristotles")) {
+        text = text.replace("Aristotles", "");
+        return text;
+      } else {
+        return text;
       }
     }
-
-    let text = response.data
+    
+    let text = response.data;
     text = eliminateName(text);
-    console.log(text)
 
     var options = {
       url: api_url,
