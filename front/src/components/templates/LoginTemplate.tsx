@@ -2,7 +2,6 @@ import { Link } from "react-router-dom"
 import Container from "@mui/material/Container"
 
 import LoginForm from "../organisms/LoginForm"
-import Header from "../organisms/Header"
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { Avatar, Grid } from "@mui/material"

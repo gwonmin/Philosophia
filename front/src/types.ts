@@ -3,6 +3,7 @@ export interface User {
   email: string
   password: string
   name: string
+  image?: any
 }
 
 export interface Essential_Post {
@@ -59,6 +60,7 @@ export interface GetPostResponse {
 export interface NewPost {
   title: string
   content: string
+  tag?: any
 }
 
 export type Props = {

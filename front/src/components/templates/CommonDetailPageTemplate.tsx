@@ -4,8 +4,6 @@ import { Container } from "@mui/material"
 
 import { customFetch } from "../../util"
 import { User } from "../../types"
-import Header from "../organisms/Header"
-import Footer from "../organisms/Footer"
 import { UserStateContext } from "../../RootContext"
 import { ALL_ROUTE } from "../../route/Routes"
 import CommonPostEditForm from "../organisms/CommonPostEditForm"

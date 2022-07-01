@@ -17,6 +17,8 @@ export default function SharePostAddForm(aiShare?: any) {
   })
   const [philosopher, setPhilosopher] = useState<string>("Nietzsche")
   const [word, setWord] = useState<string>("")
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
+  const [writing, setWriting] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const handlePost = async () => {
@@ -26,12 +28,13 @@ export default function SharePostAddForm(aiShare?: any) {
         data: postInfo,
       })
       console.log("글 공유 게시판의 post요청이 성공했습니다. data: ", res.data)
-      navigate(-1)
+      navigate("share")
     } catch (err) {
       console.log("게시글 등록에 실패하였습니다.\n", err)
     }
   }
   const connectAI = async () => {
+    setWriting(true)
     // const serverUrl = "http://" + window.location.hostname + ":5000/inference"
     const serverUrl = "http://" + window.location.hostname + ":5001/translate"
     const data = { data: `${philosopher} ${word}` }
@@ -47,8 +50,13 @@ export default function SharePostAddForm(aiShare?: any) {
       },
     })
     let newPost = postInfo
+    newPost.philosopher = philosopher
+    newPost.subject = word
     newPost.content = res.data
+
     setPostInfo(newPost)
+    setSomethingWasChanged(!somethingWasChanged)
+    setWriting(false)
   }
   const handleChange = (event: SelectChangeEvent) => {
     setPhilosopher(event.target.value as string)
@@ -66,12 +74,7 @@ export default function SharePostAddForm(aiShare?: any) {
         <Grid item xs={4}>
           <FormControl variant="filled" sx={{ m: 1, minWidth: 240 }}>
             <InputLabel id="philosoperSelect">철학자를 선택하세요</InputLabel>
-            <Select
-              labelId="philosoperSelect"
-              id="philosoperSelect"
-              value={philosopher}
-              onChange={handleChange}
-            >
+            <Select labelId="philosoperSelect" id="philosoperSelect" value={philosopher} onChange={handleChange}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -88,13 +91,7 @@ export default function SharePostAddForm(aiShare?: any) {
             mt: 3,
           }}
         >
-          <TextFieldAtom
-            id="subject"
-            placeholder="제시어를 입력해주세요"
-            name="subject"
-            value={word}
-            onChange={(e) => setWord(e.target.value)}
-          />
+          <TextFieldAtom id="subject" placeholder="제시어를 입력해주세요" name="subject" value={word} onChange={(e) => setWord(e.target.value)} />
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -102,6 +99,7 @@ export default function SharePostAddForm(aiShare?: any) {
           글 생성하기
         </Button>
       </Grid>
+      {writing && <p>loading...</p>}
       {postInfo.content != "" && (
         <>
           <p>
