@@ -48,7 +48,6 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   if (!isFetchCompleted) {
     return <p>loadloaction: SideBarOrgan, loadinging...</p>
   }
-  if (!postList) return <p>loaction: SideBarOrgan, loading...</p>
 
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     return (
