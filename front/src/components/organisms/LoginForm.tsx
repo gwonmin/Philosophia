@@ -9,13 +9,7 @@ import { GreenButton } from "../atoms/buttons"
 import { DispatchContext } from "../../RootContext"
 import { NoticeTextField } from "../molecules/certification"
 
-export default function LoginForm({
-  login,
-  userInfo,
-}: {
-  login: boolean
-  userInfo: { email: string; password: string; name: string }
-}) {
+export default function LoginForm({ login, userInfo }: { login: boolean; userInfo: { email: string; password: string; name: string } }) {
   const navigate = useNavigate()
   const dispatch = useContext(DispatchContext)
 

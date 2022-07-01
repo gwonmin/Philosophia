@@ -19,15 +19,8 @@ import { formatDateString } from "../../util"
 import TitleAtom from "../atoms/TitleAtom"
 
 const NumberInBracketAtom: React.FC<{ number?: number }> = ({ number }) => {
-  return (
-    <>
-      {number !== undefined && (
-        <Typography sx={{ fontSize: 13, mr: 1, color: "#666666" }}>
-          ({number})
-        </Typography>
-      )}
-    </>
-  )
+  if (!number) return <></>
+  return <>{number !== undefined && <Typography sx={{ fontSize: 13, mr: 1, color: "#666666" }}>({number})</Typography>}</>
 }
 
 export const MainlineMolecule: React.FC<{
@@ -44,9 +37,7 @@ export const MainlineMolecule: React.FC<{
   )
 }
 
-export const PostListItemContainerAtom: React.FC<
-  Props & { onClick: () => void }
-> = ({ children, onClick }) => {
+export const PostListItemContainerAtom: React.FC<Props & { onClick: () => void }> = ({ children, onClick }) => {
   return (
     <>
       <Button fullWidth onClick={onClick} sx={{ pt: 2, pb: 2 }}>
@@ -72,18 +63,12 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
   }
+  if (!post.no) return <p>loading...</p>
+  
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
-      <MainlineMolecule
-        title={post.title}
-        tags={post.tag}
-        number={post.comment.length}
-      />
-      <SublineAtom
-        subtext={post.content}
-        yes={post.yes.length}
-        no={post.no.length}
-      />
+      <MainlineMolecule title={post.title} tags={post.tag} number={post.comment.length} />
+      <SublineAtom subtext={post.content} yes={post.yes.length} no={post.no.length} />
     </PostListItemContainerAtom>
   )
 }
@@ -117,12 +102,7 @@ function Share({
       const res = await Api.put({ endpoint: `shares/${post._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
 
-      console.log(
-        "좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."),
-        res.data,
-        post.like,
-        user
-      )
+      console.log("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."), res.data, post.like, user)
     } catch (err) {
       console.log("좋아요에 실패했습니다.", err)
     }
@@ -131,29 +111,14 @@ function Share({
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <PostListItemContainerAtom onClick={toTheDetailPage}>
-        <MainlineMolecule
-          title={`철학자 ${post.philosopher}(이)가 생각하는 ${post.subject}(이)란?`}
-        />
-        <SublineAtom
-          subtext={
-            post.content.length > 40
-              ? `${post.content.substring(0, 40)}...`
-              : post.content
-          }
-          yes={post.like.length}
-        />
+        <MainlineMolecule title={`철학자 ${post.philosopher}(이)가 생각하는 ${post.subject}(이)란?`} />
+        <SublineAtom subtext={post.content.length > 40 ? `${post.content.substring(0, 40)}...` : post.content} yes={post.like.length} />
       </PostListItemContainerAtom>
 
       {/* 좋아요 버튼 */}
       {user && (
         <Box>
-          <IconButton onClick={likeHandler}>
-            {didLike ? (
-              <HeartIcon color="primary" />
-            ) : (
-              <HeartBorderIcon color="primary" />
-            )}
-          </IconButton>
+          <IconButton onClick={likeHandler}>{didLike ? <HeartIcon color="primary" /> : <HeartBorderIcon color="primary" />}</IconButton>
         </Box>
       )}
     </Box>
@@ -170,9 +135,7 @@ function Data({ post }: { post: DataPost }) {
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
       <MainlineMolecule title={post.title} />
-      <SublineAtom
-        subtext={`${post.author.name} | ${formatDateString(post.createdAt)}`}
-      />
+      <SublineAtom subtext={`${post.author.name} | ${formatDateString(post.createdAt)}`} />
     </PostListItemContainerAtom>
   )
 }
@@ -208,14 +171,7 @@ export default function Exchange({
     case "devates":
       return <Devate path={path} post={post} />
     case "shares":
-      return (
-        <Share
-          path={path}
-          post={post}
-          somethingWasChanged={somethingWasChanged}
-          setSomethingWasChanged={setSomethingWasChanged}
-        />
-      )
+      return <Share path={path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
     case "data":
       return <Data post={post} />
     default:
