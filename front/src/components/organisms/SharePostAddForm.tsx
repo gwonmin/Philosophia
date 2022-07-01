@@ -17,7 +17,6 @@ export default function SharePostAddForm(aiShare?: any) {
   })
   const [philosopher, setPhilosopher] = useState<string>("Nietzsche")
   const [word, setWord] = useState<string>("")
-  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const handlePost = async () => {
@@ -48,12 +47,8 @@ export default function SharePostAddForm(aiShare?: any) {
       },
     })
     let newPost = postInfo
-    newPost.philosopher = philosopher
-    newPost.subject = word
     newPost.content = res.data
-
     setPostInfo(newPost)
-    setSomethingWasChanged(!somethingWasChanged)
   }
   const handleChange = (event: SelectChangeEvent) => {
     setPhilosopher(event.target.value as string)
@@ -71,7 +66,12 @@ export default function SharePostAddForm(aiShare?: any) {
         <Grid item xs={4}>
           <FormControl variant="filled" sx={{ m: 1, minWidth: 240 }}>
             <InputLabel id="philosoperSelect">철학자를 선택하세요</InputLabel>
-            <Select labelId="philosoperSelect" id="philosoperSelect" value={philosopher} onChange={handleChange}>
+            <Select
+              labelId="philosoperSelect"
+              id="philosoperSelect"
+              value={philosopher}
+              onChange={handleChange}
+            >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -88,7 +88,13 @@ export default function SharePostAddForm(aiShare?: any) {
             mt: 3,
           }}
         >
-          <TextFieldAtom id="subject" placeholder="제시어를 입력해주세요" name="subject" value={word} onChange={(e) => setWord(e.target.value)} />
+          <TextFieldAtom
+            id="subject"
+            placeholder="제시어를 입력해주세요"
+            name="subject"
+            value={word}
+            onChange={(e) => setWord(e.target.value)}
+          />
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
