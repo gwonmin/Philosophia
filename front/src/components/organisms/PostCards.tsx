@@ -105,6 +105,8 @@ function Share({
   const didLike = user?._id ? post.like.includes(user?._id) : false
   const navigate = useNavigate()
 
+  console.log(path, post)
+
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
   }

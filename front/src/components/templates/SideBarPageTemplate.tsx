@@ -21,15 +21,11 @@ const devateList = [
 ]
 
 const shareList = [
-  { index: 0, label: "글 공유", path: "shares" },
-  { index: 1, label: "AI 철학자", path: "shares/add" },
+  { index: 0, label: "AI 철학자", path: "shares/add" },
+  { index: 1, label: "글 공유", path: "shares" },
 ]
 
-export default function SideBarPageTemplate({
-  currentPage,
-}: {
-  currentPage: ALL_ROUTE
-}) {
+export default function SideBarPageTemplate({ currentPage }: { currentPage: ALL_ROUTE }) {
   //변수 초기화
   const userState = useContext(UserStateContext)
 
