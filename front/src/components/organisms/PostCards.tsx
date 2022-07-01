@@ -27,14 +27,12 @@ const NumberInBracketAtom: React.FC<{ number?: number }> = ({ number }) => {
 export const MainlineMolecule: React.FC<{
   title?: string
   number?: number
-  tags?: string[]
   name?: string
-}> = ({ title, tags, number, name }) => {
+}> = ({ title, number, name }) => {
   return (
     <Box sx={{ display: "flex", mb: 1, width: "100%", alignItems: "center" }}>
       <TitleAtom title={title} />
       <NumberInBracketAtom number={number} />
-      <TagsAtom tags={tags} />
     </Box>
   )
 }
@@ -72,7 +70,7 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
       <Grid container spacing={2}>
         <Grid container item xs={4} direction="column" alignItems="flex-start" justifyContent="center">
           <Grid item>
-            <MainlineMolecule title={post.title} tags={post.tag} number={post.comment.length} />
+            <MainlineMolecule title={post.title} number={post.comment.length} />
           </Grid>
           <Grid item>
             <SublineAtom subtext={post.author.name} />
