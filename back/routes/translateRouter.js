@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { TranslateModel } from "../db/schemas/translate";
+import { Translate } from "../db/models/Translate"
 import axios from "axios";
 
 const translateRouter = Router();
