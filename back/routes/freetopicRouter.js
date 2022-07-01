@@ -38,6 +38,7 @@ freetopicRouter.post('/freetopics', verifyToken, async (req, res, next) => {
 freetopicRouter.get('/freetopics/:id', async (req, res, next) => {
   try {
     const postId = req.params.id;
+
     const currentPostInfo = await freetopicService.getPostInfo({ postId });
     const article = await FreeTopic.findByPostId({ postId });
 

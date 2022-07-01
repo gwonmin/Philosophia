@@ -16,7 +16,19 @@ translateRouter.post("/translate", async function (req, res) {
     content: JSON.stringify(req.body.data),
   }).then(function (response) {
     // response  
-    const text = response.data
+    function eliminateName(text) {
+      if (text.startsWith('Nietzche')) {
+        text = text.substr(0, length('Nietzche'));
+      } else if (text.startsWith('Kant')) {
+        text = text.substr(0, length('Kant'));
+      } else if (text.startsWith('Aristotles')) {
+        text = text.substr(0, length('Aristotles'));
+      }
+    }
+
+    let text = response.data
+    text = eliminateName(text);
+    console.log(text)
 
     var options = {
       url: api_url,
@@ -68,21 +80,21 @@ translateRouter.post("/translate", async function (req, res) {
   });
 });
 
-translateRouter.get("/translate", async function (req, res, next) {
-  // const text = req.query.text;
-  // const translatedText = await TranslateModel.findOne({ text });
-  // res.status(200).json(translatedText);
-  // console.log(translatedText.afterText);
-  // return translatedText.afterText;
-    try { 
-      const translatedText = await TranslateModel.findOne().sort({ createdAt: -1 });
-      res.status(200).json(translatedText);
-      console.log(translatedText.afterText)
-      return translatedText.afterText;
+// translateRouter.get("/translate", async function (req, res, next) {
+//   // const text = req.query.text;
+//   // const translatedText = await TranslateModel.findOne({ text });
+//   // res.status(200).json(translatedText);
+//   // console.log(translatedText.afterText);
+//   // return translatedText.afterText;
+//     try { 
+//       const translatedText = await TranslateModel.findOne().sort({ createdAt: -1 });
+//       res.status(200).json(translatedText);
+//       console.log(translatedText.afterText)
+//       return translatedText.afterText;
       
-    } catch (error) {
-      next(error);
-    }
-})
+//     } catch (error) {
+//       next(error);
+//     }
+// })
 
 export { translateRouter };
