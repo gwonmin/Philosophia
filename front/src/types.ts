@@ -59,6 +59,7 @@ export interface GetPostResponse {
 export interface NewPost {
   title: string
   content: string
+  tag?: string
 }
 
 export type Props = {
