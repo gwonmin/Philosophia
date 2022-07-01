@@ -63,6 +63,8 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
   }
+  if (!post.no) return <p>loading...</p>
+  
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
       <MainlineMolecule title={post.title} tags={post.tag} number={post.comment.length} />
