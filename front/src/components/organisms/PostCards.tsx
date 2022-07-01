@@ -17,6 +17,7 @@ import TagsAtom from "../atoms/TagsAtom"
 import SublineAtom from "../atoms/SublineAtom"
 import { formatDateString } from "../../util"
 import TitleAtom from "../atoms/TitleAtom"
+import { Grid } from "@mui/material"
 
 const NumberInBracketAtom: React.FC<{ number?: number }> = ({ number }) => {
   if (!number) return <></>
@@ -27,7 +28,8 @@ export const MainlineMolecule: React.FC<{
   title?: string
   number?: number
   tags?: string[]
-}> = ({ title, tags, number }) => {
+  name?: string
+}> = ({ title, tags, number, name }) => {
   return (
     <Box sx={{ display: "flex", mb: 1, width: "100%", alignItems: "center" }}>
       <TitleAtom title={title} />
@@ -67,8 +69,22 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
 
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
-      <MainlineMolecule title={post.title} tags={post.tag} number={post.comment.length} />
-      <SublineAtom subtext={post.content} yes={post.yes.length} no={post.no.length} />
+      <Grid container spacing={2}>
+        <Grid container item xs={4} direction="column" alignItems="flex-start" justifyContent="center">
+          <Grid item>
+            <MainlineMolecule title={post.title} tags={post.tag} number={post.comment.length} />
+          </Grid>
+          <Grid item>
+            <SublineAtom subtext={post.author.name} />
+          </Grid>
+        </Grid>
+        <Grid item xs={6} alignItems="center" justifyContent="center">
+          <SublineAtom subtext={post.content} />
+        </Grid>
+        <Grid item xs={2} alignItems="center" justifyContent="center">
+          <SublineAtom yes={post.yes.length} no={post.no.length} />
+        </Grid>
+      </Grid>
     </PostListItemContainerAtom>
   )
 }
@@ -88,6 +104,8 @@ function Share({
   const user = useContext(UserStateContext)?.user
   const didLike = user?._id ? post.like.includes(user?._id) : false
   const navigate = useNavigate()
+
+  console.log(path, post)
 
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
@@ -134,7 +152,7 @@ function Data({ post }: { post: DataPost }) {
 
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
-      <MainlineMolecule title={post.title} />
+      <MainlineMolecule title={post.title} name={post.author.name} />
       <SublineAtom subtext={`${post.author.name} | ${formatDateString(post.createdAt)}`} />
     </PostListItemContainerAtom>
   )
@@ -148,7 +166,7 @@ function Default({ path, post }: { path: string; post: Post }) {
   }
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
-      <MainlineMolecule title={post.title} number={post.comment.length} />
+      <MainlineMolecule title={post.title} number={post.comment.length} name={post.author.name} />
       <SublineAtom subtext={post.content} />
     </PostListItemContainerAtom>
   )

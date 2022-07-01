@@ -27,7 +27,7 @@ export default function CommonPostReadForm({
   const navigate = useNavigate()
   const userState = useContext(UserStateContext) ?? { user: null }
   const postId = postInfo._id
-  const isAuthor = postInfo.author?._id === userState.user?._id
+  const isAuthor = postInfo.author._id === userState.user?._id
   let isUpdating = false
 
   //초기화 확인
@@ -36,7 +36,8 @@ export default function CommonPostReadForm({
   console.log("isAuthor: ", isAuthor)
 
   //함수 정의
-  const deleteHandler = () => handleDelete({ endpoint: path, id: postId, callback: navigate(-1) })
+  const deleteHandler = () =>
+    handleDelete({ endpoint: path, id: postId, callback: navigate(-1) })
   const handleChangeStance = async (changeStance: string) => {
     if (isUpdating) {
       console.log("이전 post 요청이 끝나지 않았습니다.")
@@ -59,7 +60,10 @@ export default function CommonPostReadForm({
     try {
       await Api.put({ endpoint: `shares/${postInfo._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
-      console.log("좋아요를 " + (postInfo.userLike === true ? "취소하였습니다." : "눌렀습니다."))
+      console.log(
+        "좋아요를 " +
+          (postInfo.userLike === true ? "취소하였습니다." : "눌렀습니다.")
+      )
     } catch (err) {
       console.log("좋아요에 실패했습니다.", err)
     }
@@ -67,8 +71,17 @@ export default function CommonPostReadForm({
   return (
     <>
       <ShowPostInfo postInfo={postInfo} />
-      <ForUserMolcule postInfo={postInfo} isUser={userState.user != null} handleChangeStance={handleChangeStance} handleLike={handleLike} />
-      <ForAuthorMolcule isAuthor={isAuthor} setIsEditing={setIsEditing} deleteHandler={deleteHandler} />
+      <ForUserMolcule
+        postInfo={postInfo}
+        isUser={userState.user != null}
+        handleChangeStance={handleChangeStance}
+        handleLike={handleLike}
+      />
+      <ForAuthorMolcule
+        isAuthor={isAuthor}
+        setIsEditing={setIsEditing}
+        deleteHandler={deleteHandler}
+      />
       {path != "shares" && <CommentList path={path} postId={postId} />}
     </>
   )

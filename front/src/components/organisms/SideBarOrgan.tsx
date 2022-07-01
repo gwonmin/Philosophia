@@ -50,6 +50,9 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   }
 
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
+    if (!isFetchCompleted) {
+      return <p>loadloaction: SideBarOrgan, loadinging...</p>
+    }
     return (
       <>
         {postList && postList.length === 0 ? (
@@ -83,6 +86,7 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
         aria-label="tab test"
         // sx={{ borderBottom: 1, borderColor: "divider" }}
         centered
+        sx={{ mb: 1 }}
       >
         {pages.map((page) => {
           return <Tab key={page.index} label={page.label} />
@@ -109,15 +113,15 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
             value={value}
           >
             <GoodComponent postList={postList} />
+            <PaginationAtom
+              page={currentPageNumber}
+              onChange={(_e, val) => {
+                setCurrentPageNumber(val)
+              }}
+            />
           </TabPanel>
         )
       })}
-      <PaginationAtom
-        page={currentPageNumber}
-        onChange={(_e, val) => {
-          setCurrentPageNumber(val)
-        }}
-      />
     </Box>
   )
 }
