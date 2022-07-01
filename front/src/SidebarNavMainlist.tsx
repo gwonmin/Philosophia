@@ -15,7 +15,6 @@ const ForMap: { path: string; icon?: any; label: string }[] = [
   { path: RoutePath.DEVATES, icon: ForumIcon, label: "토론 게시판" },
   { path: RoutePath.PHILOSOPHER, icon: PeopleIcon, label: "철학자 게시판" },
   { path: RoutePath.SHARE, icon: ShareIcon, label: "AI 철학자" },
-  { path: RoutePath.DATA, icon: LayersIcon, label: "자료 게시판" },
 ]
 
 const MainList = () => {

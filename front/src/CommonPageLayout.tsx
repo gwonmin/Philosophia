@@ -20,21 +20,14 @@ import NotificationsIcon from "@mui/icons-material/Notifications"
 import Mainlist from "./SidebarNavMainlist"
 import Sublist from "./SidebarNavSublist"
 import { Props } from "./types"
+import VpnKeyIcon from "@mui/icons-material/VpnKey"
+import { useNavigate } from "react-router-dom"
 
 function Copyright(props: any) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
-      <Link
-        color="inherit"
-        href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15"
-        target="_blank"
-      >
+      <Link color="inherit" href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15" target="_blank">
         Philosophia's GitLab
       </Link>{" "}
       {new Date().getFullYear()}
@@ -104,7 +97,7 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
   const toggleDrawer = () => {
     setOpen(!open)
   }
-
+  const navigate = useNavigate()
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -126,19 +119,11 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
+            <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               Philosophia
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+            <IconButton color="inherit" onClick={() => navigate(`/user/login`)}>
+              <VpnKeyIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -168,10 +153,7 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+            backgroundColor: (theme) => (theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[900]),
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",
