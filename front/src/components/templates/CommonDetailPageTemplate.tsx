@@ -31,7 +31,7 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
   //fetch + 새로고침 로직
   useEffect(() => {
     customFetch({
-      endpoint: currentPath + "/" + postId,
+      endpoint: currentPath !== "devates" ? currentPath + "/" + postId : currentPath + "/" + postId + "?userId=" + userState?.user?._id,
       setValue: setPostInfo,
       callback: setIsFetchCompleted,
     })
