@@ -24,29 +24,16 @@ export default function showPostInfo({ postInfo }: { postInfo: any }) {
       {/* 제목 */}
       {postInfo.title && <HotPotatoTitle title={postInfo.title} />}
 
-      <SublineAtom
-        subtext={`작성자: ${postInfo.author.name} / ${formatDateString(
-          postInfo.createdAt
-        )}`}
-        sx={{ textAlign: "right", mr: 1 }}
-      />
+      <SublineAtom subtext={`작성자: ${postInfo.author?.name} / ${formatDateString(postInfo.createdAt)}`} sx={{ textAlign: "right", mr: 1 }} />
 
-      <Box sx={{ pt: 1, display: "flex", justifyContent: "flex-end" }}>
-        {postInfo.tag && <TagsAtom tags={postInfo.tag} />}
-      </Box>
+      <Box sx={{ pt: 1, display: "flex", justifyContent: "flex-end" }}>{postInfo.tag && <TagsAtom tags={postInfo.tag} />}</Box>
 
       <Box sx={{ p: 2 }}>
         <Typography>{postInfo.content}</Typography>
       </Box>
 
       {/* 찬성, 반대 */}
-      {postInfo.yes && postInfo.no && (
-        <SublineAtom
-          sx={{ textAlign: "center" }}
-          yes={postInfo.yes.length}
-          no={postInfo.no.length}
-        />
-      )}
+      {postInfo.yes && postInfo.no && <SublineAtom sx={{ textAlign: "center" }} yes={postInfo.yes.length} no={postInfo.no.length} />}
 
       {/* 좋아요 */}
       {postInfo.like && <Typography>❤️: {postInfo.like.length}</Typography>}

@@ -83,6 +83,7 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
       switch (res.data.result) {
         case "success":
           console.log("인증에 성공했습니다.")
+          setIsAuth(true)
           break
         case "fail":
           console.log("인증번호가 잘못되었습니다.")
