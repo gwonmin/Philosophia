@@ -2,9 +2,9 @@ import React from "react"
 import { SxProps, Typography } from "@mui/material"
 
 const SublineAtom: React.FC<{
-  subtext?: string
-  yes?: number
-  no?: number
+  subtext?: string 
+  yes?: number | string
+  no?: number | string
   sx?: SxProps
 }> = ({ subtext, yes, no, sx }) => {
   return (

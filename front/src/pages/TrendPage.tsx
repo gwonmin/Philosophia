@@ -5,10 +5,7 @@ import { customFetch } from "../util"
 
 import { Devate_Post, Free_Post, Post, Props } from "../types"
 import { Grid, Typography, Paper } from "@mui/material"
-import {
-  MainlineMolecule,
-  PostListItemContainerAtom,
-} from "../components/organisms/PostCards"
+import { MainlineMolecule, PostListItemContainerAtom } from "../components/organisms/PostCards"
 
 // @ts-ignore
 import BannerImage from "../../public/img/banner.png"
@@ -17,10 +14,7 @@ import TSMan from "../../public/img/ts_man.avif"
 import HotPotatoTitle from "../components/atoms/HotPotatoTitle"
 import SublineAtom from "../components/atoms/SublineAtom"
 
-const SectionPage: React.FC<Props & { xs?: number }> = ({
-  children,
-  xs = 12,
-}) => {
+const SectionPage: React.FC<Props & { xs?: number }> = ({ children, xs = 12 }) => {
   return (
     <Grid item xs={xs}>
       <Paper
@@ -100,14 +94,11 @@ export default function TrendPage() {
       {/* first column */}
       <Grid container item xs={6} rowSpacing={1.5}>
         <ImageSectionPage source={BannerImage} height={160} />
-
         <SectionPage>
           <HotPotatoTitle title="화제의 찬반 토론" />
           {trend.devatePosts.map((post, idx) => {
-            const yesRatio =
-              (post.yes.length / (post.yes.length + post.no.length)) * 100
-            const noRatio =
-              (post.no.length / (post.yes.length + post.no.length)) * 100
+            const yesRatio = (post.yes.length / (post.yes.length + post.no.length)) * 100
+            const noRatio = (post.no.length / (post.yes.length + post.no.length)) * 100
             return (
               <PostListItemContainerAtom
                 key={`trend-chanban-${idx}`}
@@ -116,10 +107,7 @@ export default function TrendPage() {
                 }}
               >
                 <MainlineMolecule title={post.title} />
-                <SublineAtom
-                  yes={+yesRatio.toFixed(2)}
-                  no={+noRatio.toFixed(2)}
-                />
+                <SublineAtom yes={yesRatio.toFixed(1) + "%"} no={noRatio.toFixed(1) + "%"} />
               </PostListItemContainerAtom>
             )
           })}
