@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { shareService } from '../services/shareService';
 import { verifyToken } from '../middlewares/verifyToken';
 import { verifyRefresh } from '../middlewares/verifyRefresh';
+import { ShareModel } from '../db/schemas/share';
 
 const shareRouter = Router();
 
@@ -87,6 +88,11 @@ shareRouter.delete('/shares/:id', verifyToken, async function (req, res, next) {
 
 // 전체 공유글 조회
 shareRouter.get('/shares', async function (req, res, next) {
+    let page = Math.max(1, parseInt(req.query.page));   
+    let limit = 15 //Math.max(1, parseInt(req.query.limit));
+    page = !isNaN(page)?page:1;                         
+    limit = !isNaN(limit)?limit:5;
+
     let skip = (page-1)*limit;
     let count = await ShareModel.countDocuments({});
     let maxPage = Math.ceil(count/limit);

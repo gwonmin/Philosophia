@@ -2,6 +2,7 @@ import { Router } from "express";
 import { dataService } from "../services/dataService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
+import { DataModel } from "../db/schemas/data";
 
 const dataRouter = Router();
 const upload = require("../modules/multer");
