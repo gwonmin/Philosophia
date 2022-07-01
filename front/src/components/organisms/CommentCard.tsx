@@ -101,15 +101,15 @@ export default function CommentCard({
           </Box>
           {comment.author._id === user?._id && (
             <Box>
-              <Button color="error" onClick={deleteHandler}>
-                삭제하기
-              </Button>
               <Button
                 onClick={() => {
                   setIsEditing(true)
                 }}
               >
                 수정하기
+              </Button>
+              <Button color="error" onClick={deleteHandler}>
+                삭제하기
               </Button>
             </Box>
           )}

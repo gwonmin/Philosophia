@@ -30,13 +30,6 @@ function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
         value={postInfo.content}
         onChange={onChange}
       />
-      <TextFieldAtom
-        id="tag"
-        placeholder="태그를 입력해주세요"
-        name="tag"
-        value={postInfo.tag}
-        onChange={onChange}
-      />
     </>
   )
 }
