@@ -2,6 +2,7 @@ import { Router } from "express";
 import { devateService } from "../services/devateService" 
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
+import { DevateModel } from "../db/schemas/devate";
 
 const devateRouter = Router();
 
@@ -34,7 +35,7 @@ devateRouter.post('/devates', verifyToken, async (req, res, next) => {
 });
 
 // 게시글 1개 조회
-devateRouter.get('/devates/:id', verifyToken, async (req, res, next) => {
+devateRouter.get('/devates/:id', async (req, res, next) => {
     try {
         const userId = req.user;
         const postId = req.params.id;

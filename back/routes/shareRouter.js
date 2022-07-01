@@ -52,7 +52,7 @@ shareRouter.put('/shares/:id', verifyToken, async (req, res, next) => {
 });
 
 // 글 1개 조회
-shareRouter.get('/shares/:id', verifyToken, async function (req, res, next) {
+shareRouter.get('/shares/:id', async function (req, res, next) {
   try {
     const userId = req.user;
     const shareId = req.params.id;
@@ -86,7 +86,7 @@ shareRouter.delete('/shares/:id', verifyToken, async function (req, res, next) {
 });
 
 // 전체 공유글 조회
-shareRouter.get('/shares', verifyToken, async function (req, res, next) {
+shareRouter.get('/shares', async function (req, res, next) {
     let skip = (page-1)*limit;
     let count = await ShareModel.countDocuments({});
     let maxPage = Math.ceil(count/limit);

@@ -49,7 +49,7 @@ dataRouter.post("/data/uploadfile", verifyToken,
   }
 });
 
-dataRouter.get("/data/:id", verifyToken, async function(req, res, next){
+dataRouter.get("/data/:id", async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await dataService.getPostInfo({ postId });
