@@ -72,6 +72,7 @@ export default function TrendPage() {
   type Trend = {
     devatePosts: Devate_Post[]
     freePosts: Free_Post[]
+    sharePosts: any[]
   }
   const [trend, setTrend] = useState<Trend | null>(null)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
@@ -106,8 +107,19 @@ export default function TrendPage() {
                   navigate(`/devates/${post._id}`)
                 }}
               >
-                <MainlineMolecule title={post.title} />
-                <SublineAtom yes={yesRatio.toFixed(1) + "%"} no={noRatio.toFixed(1) + "%"} />
+                <Grid container>
+                  <Grid container xs={8} item direction="column" alignItems="flex-start" justifyContent="center">
+                    <Grid item>
+                      <MainlineMolecule title={post.title} />
+                    </Grid>
+                    <Grid item>
+                      <SublineAtom subtext={post.author.name} />
+                    </Grid>
+                  </Grid>
+                  <Grid container xs={4}>
+                    <SublineAtom yes={yesRatio.toFixed(1) + "%"} no={noRatio.toFixed(1) + "%"} />
+                  </Grid>
+                </Grid>
               </PostListItemContainerAtom>
             )
           })}
@@ -126,8 +138,8 @@ export default function TrendPage() {
                   navigate(`/freetopics/${post._id}`)
                 }}
               >
-                <MainlineMolecule title={`${post.title.substring(0, 8)}...`} />
-                <SublineAtom subtext={post.content} />
+                <MainlineMolecule title={post.title.length > 8 ? `${post.title.substring(0, 8)}...` : post.title} />
+                <SublineAtom subtext={post.author.name} />
               </PostListItemContainerAtom>
             )
           })}
@@ -139,6 +151,19 @@ export default function TrendPage() {
       <Grid container item xs={3} rowSpacing={3}>
         <SectionPage>
           <HotPotatoTitle title="화제의 AI 철학" />
+          {trend.sharePosts.map((post, idx) => {
+            return (
+              <PostListItemContainerAtom
+                key={`trend-share-${post._id}`}
+                onClick={() => {
+                  navigate(`/shares/${post._id}`)
+                }}
+              >
+                <MainlineMolecule title={`${post.philosopher}(이)가 생각하는 ${post.subject}(이)란?`} />
+                <SublineAtom subtext={post.author.name} />
+              </PostListItemContainerAtom>
+            )
+          })}
         </SectionPage>
       </Grid>
     </>
