@@ -75,7 +75,7 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
         payload: user,
       })
       // 기본 페이지로 이동함.
-      navigate("/trend", { replace: true })
+      navigate("/", { replace: true })
     } catch (err) {
       console.log("로그인에 실패하였습니다.\n", err)
     }
