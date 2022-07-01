@@ -13,17 +13,12 @@ import CommonPostReadForm from "../organisms/CommonPostReadForm"
 
 import { Post } from "../../types"
 
-export default function CommonDetailPageTemplate({
-  currentPage,
-}: {
-  currentPage: ALL_ROUTE
-}) {
+export default function CommonDetailPageTemplate({ currentPage }: { currentPage: ALL_ROUTE }) {
   //변수 초기화
   const params = useParams()
   const postId = params.id
   const philosopher = params.who
-  const currentPath =
-    currentPage.DEFAULT.path === ":who" ? philosopher : currentPage.DEFAULT.path
+  const currentPath = currentPage.DEFAULT.path === ":who" ? philosopher : currentPage.DEFAULT.path
   const userState = useContext(UserStateContext)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const [isEditing, setIsEditing] = useState<boolean>(false)
@@ -55,21 +50,16 @@ export default function CommonDetailPageTemplate({
     return <p>Param is not valid</p>
   }
   if (!isFetchCompleted) {
-    return <p>loading...</p>
+    return <p>loaction: CommonDetailPageTemplate, loading...</p>
   }
   if (!postInfo) {
-    return <p>loading...</p>
+    return <p>loaction: CommonDetailPageTemplate, loading...</p>
   }
 
   return (
     <Container>
       {isEditing ? (
-        <CommonPostEditForm
-          path={currentPath}
-          setIsEditing={setIsEditing}
-          postInfo={postInfo}
-          setPostInfo={setPostInfo}
-        />
+        <CommonPostEditForm path={currentPath} setIsEditing={setIsEditing} postInfo={postInfo} setPostInfo={setPostInfo} />
       ) : (
         <CommonPostReadForm
           path={currentPath}

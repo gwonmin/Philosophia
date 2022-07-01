@@ -23,7 +23,7 @@ const SidebarMainList = () => {
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="팀 소개" />
+        <ListItemText primary="필로소피아" />
       </ListItemButton>
 
       <ListItemButton

@@ -1,4 +1,4 @@
-import { FreeTopic, Devate, User } from '../db';
+import { FreeTopic, Devate, Share, User } from '../db';
 
 class trendService{
     static async getTop3Free(){
@@ -10,6 +10,12 @@ class trendService{
         const posts = await Devate.getTop3();
         return posts;
     }
+
+    static async getTop3Share(){
+        const posts = await Share.getTop3();
+        return posts;
+    }
+
 };
 
 export { trendService }

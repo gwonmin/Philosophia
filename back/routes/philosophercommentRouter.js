@@ -2,11 +2,12 @@ import { Router } from "express";
 import { philosophercommentService } from "../services/philosophercommentService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
+import { checkComment } from "../middlewares/checkComment";
 
 const philosophercommentRouter = Router();
 
 // 니체 게시판 댓글 작성
-philosophercommentRouter.post("/nietzschecomments", verifyToken, async function(req, res, next){
+philosophercommentRouter.post("/nietzschecomments", verifyToken, checkComment, async function(req, res, next){
     try {
         const userId = req.user;
         const postId = req.query.postId;
@@ -41,7 +42,7 @@ philosophercommentRouter.get('/nietzschecommentlist', verifyToken, async (req, r
 });
 
 //니체 게시판 댓글 수정
-philosophercommentRouter.put('/nietzschecomments/:id', verifyToken, async (req, res, next) => {
+philosophercommentRouter.put('/nietzschecomments/:id', verifyToken, checkComment, async (req, res, next) => {
     try {
         const userId = req.user;
         const commentId = req.params.id;
@@ -83,7 +84,7 @@ philosophercommentRouter.delete('/nietzschecomments/:id', verifyToken, async (re
 
 
 // 칸트 게시판 댓글 작성
-philosophercommentRouter.post("/kantcomments", verifyToken, async function(req, res, next){
+philosophercommentRouter.post("/kantcomments", verifyToken, checkComment, async function(req, res, next){
     try {
         const userId = req.user;
         const postId = req.query.postId;
@@ -118,7 +119,7 @@ philosophercommentRouter.get('/kantcommentlist', verifyToken, async (req, res, n
 });
 
 //칸트 게시판 댓글 수정
-philosophercommentRouter.put('/kantcomments/:id', verifyToken, async (req, res, next) => {
+philosophercommentRouter.put('/kantcomments/:id', verifyToken, checkComment, async (req, res, next) => {
     try {
         const userId = req.user;
         const commentId = req.params.id;
@@ -160,7 +161,7 @@ philosophercommentRouter.delete('/kantcomments/:id', verifyToken, async (req, re
 
 
 // 아리스토텔레스 게시판 댓글 작성
-philosophercommentRouter.post("/aristotlecomments", verifyToken, async function(req, res, next){
+philosophercommentRouter.post("/aristotlecomments", verifyToken, checkComment, async function(req, res, next){
     try {
         const userId = req.user;
         const postId = req.query.postId;
@@ -195,7 +196,7 @@ philosophercommentRouter.get('/aristotlecommentlist', verifyToken, async (req, r
 });
 
 // 아리스토텔레스 게시판 댓글 수정
-philosophercommentRouter.put('/aristotlecomments/:id', verifyToken, async (req, res, next) => {
+philosophercommentRouter.put('/aristotlecomments/:id', verifyToken, checkComment, async (req, res, next) => {
     try {
         const userId = req.user;
         const commentId = req.params.id;

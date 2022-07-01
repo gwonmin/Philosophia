@@ -9,13 +9,7 @@ import { GreenButton } from "../atoms/buttons"
 import { DispatchContext } from "../../RootContext"
 import { NoticeTextField } from "../molecules/certification"
 
-export default function LoginForm({
-  login,
-  userInfo,
-}: {
-  login: boolean
-  userInfo: { email: string; password: string; name: string }
-}) {
+export default function LoginForm({ login, userInfo }: { login: boolean; userInfo: { email: string; password: string; name: string } }) {
   const navigate = useNavigate()
   const dispatch = useContext(DispatchContext)
 
@@ -81,7 +75,7 @@ export default function LoginForm({
         payload: user,
       })
       // 기본 페이지로 이동함.
-      navigate("/trend", { replace: true })
+      navigate("/", { replace: true })
     } catch (err) {
       console.log("로그인에 실패하였습니다.\n", err)
     }

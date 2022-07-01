@@ -10,6 +10,14 @@ import ShareIcon from "@mui/icons-material/Share"
 import { useNavigate } from "react-router-dom"
 import { RoutePath } from "./route/RoutesURL"
 
+const ForMap: { path: string; icon?: any; label: string }[] = [
+  { path: RoutePath.TREND, icon: DashboardIcon, label: "트렌드 페이지" },
+  { path: RoutePath.DEVATES, icon: ForumIcon, label: "토론 게시판" },
+  { path: RoutePath.PHILOSOPHER, icon: PeopleIcon, label: "철학자 게시판" },
+  { path: RoutePath.SHARE, icon: ShareIcon, label: "AI 철학자" },
+  { path: RoutePath.DATA, icon: LayersIcon, label: "자료 게시판" },
+]
+
 const MainList = () => {
   const navigate = useNavigate()
   const navi = (val: string) => {
@@ -17,40 +25,18 @@ const MainList = () => {
   }
   return (
     <>
-      <ListItemButton onClick={() => navi(RoutePath.TREND)}>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="트렌드 페이지" />
-      </ListItemButton>
-
-      <ListItemButton onClick={() => navi(RoutePath.DEVATES)}>
-        <ListItemIcon>
-          <ForumIcon />
-        </ListItemIcon>
-        <ListItemText primary="토론 게시판" />
-      </ListItemButton>
-
-      <ListItemButton onClick={() => navi(RoutePath.PHILOSOPHER)}>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="철학자 게시판" />
-      </ListItemButton>
-
-      <ListItemButton onClick={() => navi(RoutePath.SHARE)}>
-        <ListItemIcon>
-          <ShareIcon />
-        </ListItemIcon>
-        <ListItemText primary="글 공유 게시판" />
-      </ListItemButton>
-
-      <ListItemButton onClick={() => navi(RoutePath.DATA)}>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="자료 게시판" />
-      </ListItemButton>
+      {ForMap.map((item) => {
+        return (
+          <ListItemButton key={item.label} onClick={() => navi(item.path)}>
+            {item.icon && (
+              <ListItemIcon>
+                <item.icon />
+              </ListItemIcon>
+            )}
+            <ListItemText primary={item.label} />
+          </ListItemButton>
+        )
+      })}
     </>
   )
 }

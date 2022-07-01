@@ -16,15 +16,13 @@ export default function UserInfoCard() {
   const userState = React.useContext(UserStateContext)
   const curUser = userState?.user
 
+  if (!curUser) return <p>User does not exist(even null)</p>
+
   return (
     <>
       <Grid container>
         <Grid item xs={3} sx={{ p: 2 }}>
-          <img
-            src={curUser.image}
-            alt="user-profile-image"
-            style={{ width: "100%", borderRadius: "50%" }}
-          ></img>
+          <img src={curUser.image} alt="user-profile-image" style={{ width: "100%", borderRadius: "50%" }}></img>
         </Grid>
         <Grid
           item
@@ -42,9 +40,7 @@ export default function UserInfoCard() {
             </Grid>
             <Grid xs={12}>{curUser.email}</Grid>
             <Grid xs={12}>
-              <button onClick={() => navigate("edit")}>
-                회원정보 수정하기
-              </button>
+              <button onClick={() => navigate("edit")}>회원정보 수정하기</button>
             </Grid>
           </Grid>
         </Grid>
