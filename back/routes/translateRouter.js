@@ -27,8 +27,8 @@ translateRouter.post("/translate", async function (req, res) {
     }
 
     let text = response.data
-    text = eliminateName(text);
-    console.log(text)
+    // text = eliminateName(text);
+    
 
     var options = {
       url: api_url,
@@ -70,6 +70,7 @@ translateRouter.post("/translate", async function (req, res) {
         // res.status(response.statusCode).end();
         console.log("변역기 API 사용량 초과" + response.statusCode);
         const text = options.form.text;
+        console.log(text)
         const createdOnlyText = await Translate.createOnlyText({ text });
         res.json(createdOnlyText.text);
 
