@@ -106,8 +106,19 @@ export default function TrendPage() {
                   navigate(`/devates/${post._id}`)
                 }}
               >
-                <MainlineMolecule title={post.title} />
-                <SublineAtom yes={yesRatio.toFixed(1) + "%"} no={noRatio.toFixed(1) + "%"} />
+                <Grid container>
+                  <Grid container xs={8} item direction="column" alignItems="flex-start" justifyContent="center">
+                    <Grid item>
+                      <MainlineMolecule title={post.title} />
+                    </Grid>
+                    <Grid item>
+                      <SublineAtom subtext={post.author.name} />
+                    </Grid>
+                  </Grid>
+                  <Grid container xs={4}>
+                    <SublineAtom yes={yesRatio.toFixed(1) + "%"} no={noRatio.toFixed(1) + "%"} />
+                  </Grid>
+                </Grid>
               </PostListItemContainerAtom>
             )
           })}
