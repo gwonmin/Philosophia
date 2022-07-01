@@ -44,7 +44,7 @@ class Share {
   }
 
   static async getTop3(){
-    const posts = await ShareModel.find().populate("author", "id").sort({"likeCount":-1, "_id":1}).limit(3);
+    const posts = await ShareModel.find().populate("author", "id name").sort({"likeCount":-1, "_id":1}).limit(3);
     return posts;
   }
 
