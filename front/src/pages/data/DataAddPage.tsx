@@ -1,6 +1,4 @@
 import DataPostAddForm from "../../components/organisms/DataPostAddForm"
-import Header from "../../components/organisms/Header"
-import Footer from "../../components/organisms/Footer"
 import { Container, Typography } from "@mui/material"
 
 const addFormHeaderStyle = {

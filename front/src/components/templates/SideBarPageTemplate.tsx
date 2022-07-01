@@ -6,8 +6,6 @@ import { ALL_ROUTE } from "../../route/Routes"
 import { customFetch } from "../../util"
 
 import { UserStateContext } from "../../RootContext"
-import Header from "../organisms/Header"
-import Footer from "../organisms/Footer"
 import SideBarOrgan from "../organisms/SideBarOrgan"
 
 import { User, Post } from "../../types"

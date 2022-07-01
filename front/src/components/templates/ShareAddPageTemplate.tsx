@@ -1,7 +1,4 @@
 import { Container, Typography } from "@mui/material"
-import Footer from "../organisms/Footer"
-
-import Header from "../organisms/Header"
 import SharePostAddForm from "../organisms/SharePostAddForm"
 
 const addFormHeaderStyle = {

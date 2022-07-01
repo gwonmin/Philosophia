@@ -1,7 +1,5 @@
 import { Container, Typography } from "@mui/material"
 
-import Header from "../organisms/Header"
-import Footer from "../organisms/Footer"
 import { ALL_ROUTE } from "../../route/Routes"
 import CommonPostAddForm from "../organisms/CommonPostAddForm"
 

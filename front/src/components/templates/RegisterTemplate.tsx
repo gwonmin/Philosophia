@@ -2,8 +2,6 @@ import { Link } from "react-router-dom"
 import Container from "@mui/material/Container"
 
 import RegisterForm from "../organisms/RegisterForm"
-import Header from "../organisms/Header"
-import Footer from "../organisms/Footer"
 
 import { User } from "../../types"
 
