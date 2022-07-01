@@ -52,7 +52,7 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     return (
       <>
-        {[...postList] == [] ? (
+        {postList && postList.length === 0 ? (
           <Typography variant="h4">아직 게시물이 없네요 😭</Typography>
         ) : (
           <>
