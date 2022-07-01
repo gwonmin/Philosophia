@@ -1,7 +1,7 @@
 export enum RoutePath {
   MASTER = "",
   USER = "user",
-  TREND = "trend",
+  TREND = "",
   DEVATES = "devates",
   PHILOSOPHER = ":who",
   SHARE = "shares",

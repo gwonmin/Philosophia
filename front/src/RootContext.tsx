@@ -6,12 +6,8 @@ import { User } from "./types"
 import { customFetch } from "./util"
 import MyRouter from "./route/Router"
 
-export const UserStateContext = createContext<
-  { user: User | null } | undefined
->(undefined)
-export const DispatchContext = createContext<Dispatch<Action> | undefined>(
-  undefined
-)
+export const UserStateContext = createContext<{ user: User | null } | undefined>(undefined)
+export const DispatchContext = createContext<Dispatch<Action> | undefined>(undefined)
 
 export default function RootContext() {
   const [userState, dispatch] = useReducer(loginReducer, {
@@ -34,7 +30,7 @@ export default function RootContext() {
   }, [])
 
   if (!isFetchCompleted) {
-    return <p>loading...</p>
+    return <p>loaction: RootContext, loading...</p>
   }
   if (!dispatch) {
     return <p>dispatch does not exist...</p>

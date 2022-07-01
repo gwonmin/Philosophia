@@ -63,7 +63,7 @@ export default function CommentList({
     return <p>userState does not exist(even null)</p>
   }
   if (!isFetchCompleted) {
-    return <p>loading...</p>
+    return <p>loaction: CommentList, loading...</p>
   }
 
   return (

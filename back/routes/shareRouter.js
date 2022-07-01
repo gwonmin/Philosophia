@@ -87,13 +87,21 @@ shareRouter.delete('/shares/:id', verifyToken, async function (req, res, next) {
 
 // 전체 공유글 조회
 shareRouter.get('/shares', verifyToken, async function (req, res, next) {
-  try {
-    const shares = await shareService.getShares();
-
-    res.status(200).send(shares);
-  } catch (error) {
-    next(error);
+    let skip = (page-1)*limit;
+    let count = await ShareModel.countDocuments({});
+    let maxPage = Math.ceil(count/limit);
+    let posts = await ShareModel.find({}).populate('author', 'id name')
+      .sort('-createdAt')
+      .skip(skip)   
+      .limit(limit) 
+      .exec();
+    let result = {
+      posts:posts,
+      currentPage:page,
+      maxPage:maxPage,
+      limit:limit
   }
+  res.status(200).send(result)
 });
 
 // 좋아요
