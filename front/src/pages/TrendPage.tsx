@@ -72,6 +72,7 @@ export default function TrendPage() {
   type Trend = {
     devatePosts: Devate_Post[]
     freePosts: Free_Post[]
+    sharePosts: any[]
   }
   const [trend, setTrend] = useState<Trend | null>(null)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
@@ -137,8 +138,8 @@ export default function TrendPage() {
                   navigate(`/freetopics/${post._id}`)
                 }}
               >
-                <MainlineMolecule title={`${post.title.substring(0, 8)}...`} />
-                <SublineAtom subtext={post.content} />
+                <MainlineMolecule title={post.title.length > 8 ? `${post.title.substring(0, 8)}...` : post.title} />
+                <SublineAtom subtext={post.author.name} />
               </PostListItemContainerAtom>
             )
           })}
@@ -150,6 +151,19 @@ export default function TrendPage() {
       <Grid container item xs={3} rowSpacing={3}>
         <SectionPage>
           <HotPotatoTitle title="화제의 AI 철학" />
+          {trend.sharePosts.map((post, idx) => {
+            return (
+              <PostListItemContainerAtom
+                key={`trend-share-${post._id}`}
+                onClick={() => {
+                  navigate(`/shares/${post._id}`)
+                }}
+              >
+                <MainlineMolecule title={`${post.philosopher}(이)가 생각하는 ${post.subject}(이)란?`} />
+                <SublineAtom subtext={post.author.name} />
+              </PostListItemContainerAtom>
+            )
+          })}
         </SectionPage>
       </Grid>
     </>
