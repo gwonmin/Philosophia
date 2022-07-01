@@ -97,11 +97,7 @@ export default function CommentCard({
         >
           <Box>
             <SublineAtom subtext={`${comment.author.name}`} sx={{ mb: 1 }} />
-            <TitleAtom
-              title={`${comment.content.substring(0, 20)} (${
-                comment.stance && comment.stance == "yes" ? "찬성" : "반대"
-              })`}
-            />
+            <TitleAtom title={`${comment.content.substring(0, 20)}` + `${!comment.stance ? "" : comment.stance == "yes" ? "(찬성)" : "(반대)"}`} />
           </Box>
           {comment.author._id === user?._id && (
             <Box>
