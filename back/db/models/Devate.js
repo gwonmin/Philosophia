@@ -98,7 +98,7 @@ class Devate {
         var postObj = []
         for(var i in posts){
             const postId = posts[i]._id;
-            const post = await DevateModel.findOne({ _id: postId }).populate("author", "id");
+            const post = await DevateModel.findOne({ _id: postId }).populate("author", "id name");
             postObj.push(post)
         }
 
