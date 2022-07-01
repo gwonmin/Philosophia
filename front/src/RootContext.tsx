@@ -1,17 +1,19 @@
 import { createContext, Dispatch, useEffect, useReducer, useState } from "react"
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
-import * as Api from "../api"
-import { loginReducer, Action } from "../reducer"
-import { User } from "../types"
+import { loginReducer, Action } from "./reducer"
+import { User } from "./types"
 
-import { customFetch } from "../util"
-import MyRouter from "../route/Router"
+import { customFetch } from "./util"
+import MyRouter from "./route/Router"
 
-export const UserStateContext = createContext<{ user: User | null } | undefined>(undefined)
-export const DispatchContext = createContext<Dispatch<Action> | undefined>(undefined)
+export const UserStateContext = createContext<
+  { user: User | null } | undefined
+>(undefined)
+export const DispatchContext = createContext<Dispatch<Action> | undefined>(
+  undefined
+)
 
-export default function RootPage() {
+export default function RootContext() {
   const [userState, dispatch] = useReducer(loginReducer, {
     user: null,
   })
@@ -24,7 +26,11 @@ export default function RootPage() {
     })
   }
   useEffect(() => {
-    customFetch({ endpoint: "user/current", setValue: setValue, callback: setIsFetchCompleted })
+    customFetch({
+      endpoint: "user/current",
+      setValue: setValue,
+      callback: setIsFetchCompleted,
+    })
   }, [])
 
   if (!isFetchCompleted) {

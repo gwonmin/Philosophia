@@ -1,10 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import React from "react"
+import ReactDOM from "react-dom"
+import RootContext from "./RootContext"
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <RootContext />
   </React.StrictMode>,
   document.getElementById("root")
-);
+)

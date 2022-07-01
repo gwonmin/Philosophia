@@ -7,6 +7,7 @@ export enum RoutePath {
   SHARE = "shares",
   FREE = "freetopics",
   DATA = "data",
+  TEAM_INTRO = "service",
 }
 
 export enum ActionPath {

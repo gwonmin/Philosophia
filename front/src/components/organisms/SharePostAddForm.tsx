@@ -6,6 +6,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import * as Api from "../../api"
 import axios from "axios"
 import { TextFieldAtom } from "../atoms/textInputs"
+import { Button, FormControl, Grid, InputLabel } from "@mui/material"
 
 export default function SharePostAddForm(aiShare?: any) {
   //AI와 상호작용하는 게시판에서 불러오게 될 것 같습니다.
@@ -46,13 +47,9 @@ export default function SharePostAddForm(aiShare?: any) {
         //   // Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       },
     })
-    const newPost = postInfo
-    newPost.philosopher = philosopher
-    newPost.subject = word
+    let newPost = postInfo
     newPost.content = res.data
-    console.log(newPost)
     setPostInfo(newPost)
-    setSomethingWasChanged(!somethingWasChanged)
   }
   const handleChange = (event: SelectChangeEvent) => {
     setPhilosopher(event.target.value as string)
@@ -60,16 +57,52 @@ export default function SharePostAddForm(aiShare?: any) {
 
   return (
     <>
-      <p>철학자를 선택하세요.</p>
-      <Select labelId="philosoperSelect" id="philosoperSelect" placeholder="철학자" value={philosopher} label={"철학자"} onChange={handleChange}>
-        <MenuItem value={"Nietzsche"}>니체</MenuItem>
-        <MenuItem value={"Descartes"}>데카르트</MenuItem>
-        <MenuItem value={"Aristotle"}>아리스토텔레스</MenuItem>
-      </Select>
-      <p>제시어를 입력하세요.</p>
-      <TextFieldAtom id="subject" label="subject" name="subject" value={word} onChange={(e) => setWord(e.target.value)} />
-      <p></p>
-      <button onClick={connectAI}>글 생성하기</button>
+      <Grid
+        container
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Grid item xs={4}>
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 240 }}>
+            <InputLabel id="philosoperSelect">철학자를 선택하세요</InputLabel>
+            <Select
+              labelId="philosoperSelect"
+              id="philosoperSelect"
+              value={philosopher}
+              onChange={handleChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"Nietzsche"}>니체</MenuItem>
+              <MenuItem value={"Descartes"}>데카르트</MenuItem>
+              <MenuItem value={"Aristotle"}>아리스토텔레스</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid
+          item
+          xs={8}
+          sx={{
+            mt: 3,
+          }}
+        >
+          <TextFieldAtom
+            id="subject"
+            placeholder="제시어를 입력해주세요"
+            name="subject"
+            value={word}
+            onChange={(e) => setWord(e.target.value)}
+          />
+        </Grid>
+      </Grid>
+      <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button variant="outlined" onClick={connectAI}>
+          글 생성하기
+        </Button>
+      </Grid>
       {postInfo.content != "" && (
         <>
           <p>
@@ -79,7 +112,7 @@ export default function SharePostAddForm(aiShare?: any) {
           <button onClick={handlePost}>공유하기</button>
           <button
             onClick={() => {
-              navigate("/share")
+              navigate(-1)
             }}
           >
             취소

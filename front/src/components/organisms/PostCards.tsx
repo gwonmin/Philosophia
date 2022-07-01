@@ -1,39 +1,90 @@
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { UserStateContext } from "../../pages/RootPage"
-import { Post } from "../../types"
+import { SetStateAction, useContext } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import Button from "@mui/material/Button"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
+import Chip from "@mui/material/Chip"
+import Divider from "@mui/material/Divider"
+import IconButton from "@mui/material/IconButton"
+import HeartIcon from "@mui/icons-material/Favorite"
+import HeartBorderIcon from "@mui/icons-material/FavoriteBorder"
+import { UserStateContext } from "../../RootContext"
+import { DataPost, Devate_Post, Post, Share_Post } from "../../types"
 import * as Api from "../../api"
-import { Box, Divider, Grid, Stack, Typography } from "@mui/material"
+import { Props } from "../../types"
+import { RoutePath } from "../../route/RoutesURL"
+import TagsAtom from "../atoms/TagsAtom"
+import SublineAtom from "../atoms/SublineAtom"
+import { formatDateString } from "../../util"
+import TitleAtom from "../atoms/TitleAtom"
+
+const NumberInBracketAtom: React.FC<{ number?: number }> = ({ number }) => {
+  return (
+    <>
+      {number !== undefined && (
+        <Typography sx={{ fontSize: 13, mr: 1, color: "#666666" }}>
+          ({number})
+        </Typography>
+      )}
+    </>
+  )
+}
+
+export const MainlineMolecule: React.FC<{
+  title?: string
+  number?: number
+  tags?: string[]
+}> = ({ title, tags, number }) => {
+  return (
+    <Box sx={{ display: "flex", mb: 1, width: "100%", alignItems: "center" }}>
+      <TitleAtom title={title} />
+      <NumberInBracketAtom number={number} />
+      <TagsAtom tags={tags} />
+    </Box>
+  )
+}
+
+export const PostListItemContainerAtom: React.FC<
+  Props & { onClick: () => void }
+> = ({ children, onClick }) => {
+  return (
+    <>
+      <Button fullWidth onClick={onClick} sx={{ pt: 2, pb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            alignItems: "flex-start",
+          }}
+        >
+          {children}
+        </Box>
+      </Button>
+      <Divider />
+    </>
+  )
+}
 
 //-------------------------------------------Devate-------------------------------------------//
-function Devate({ path, post }: { path: string; post: any }) {
-  const comment: string = "[" + post.comment.length + "]"
+function Devate({ path, post }: { path: string; post: Devate_Post }) {
+  const navigate = useNavigate()
+  const toTheDetailPage = () => {
+    navigate(`/${path}/${post._id}`)
+  }
   return (
-    <Box sx={{ pl: 1, pt: 1, pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
-      <Link to={"/" + path + "/" + post._id} style={{ textDecoration: "none", color: "black" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Typography align="left">
-              {post.title} {post.comment.length > 0 && comment}
-            </Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Typography align="center">{post.author.name}</Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Typography align="center">{post.createdAt.substr(0, 10)}</Typography>
-          </Grid>
-          <Grid item xs={2}>
-            {post.visited >= 0 && <Typography align="center">{post.visited}</Typography>}
-            {post.yes && (
-              <Typography align="center">
-                {post.yes.length} / {post.no.length}
-              </Typography>
-            )}
-          </Grid>
-        </Grid>
-      </Link>
-    </Box>
+    <PostListItemContainerAtom onClick={toTheDetailPage}>
+      <MainlineMolecule
+        title={post.title}
+        tags={post.tag}
+        number={post.comment.length}
+      />
+      <SublineAtom
+        subtext={post.content}
+        yes={post.yes.length}
+        no={post.no.length}
+      />
+    </PostListItemContainerAtom>
   )
 }
 
@@ -45,78 +96,98 @@ function Share({
   setSomethingWasChanged,
 }: {
   path: string
-  post: any
-  somethingWasChanged: any
-  setSomethingWasChanged: any
+  post: Share_Post
+  somethingWasChanged: boolean
+  setSomethingWasChanged: React.Dispatch<SetStateAction<boolean>>
 }) {
   const user = useContext(UserStateContext)?.user
-  const didLike = post.like.includes(user?._id)
+  const didLike = user?._id ? post.like.includes(user?._id) : false
+  const navigate = useNavigate()
+
+  const toTheDetailPage = () => {
+    navigate(`/${path}/${post._id}`)
+  }
+
   const likeHandler = async () => {
     if (!user) {
       return <p>user does not exist(even null)</p>
     }
+
     try {
       const res = await Api.put({ endpoint: `shares/${post._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
-      console.log("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."), res.data, post.like, user)
+
+      console.log(
+        "좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."),
+        res.data,
+        post.like,
+        user
+      )
     } catch (err) {
       console.log("좋아요에 실패했습니다.", err)
     }
   }
+
   return (
-    <>
-      <Link to={"/" + path + "/" + post._id} style={{ textDecoration: "none", color: "black" }}>
-        <p>
-          철학자 {post.philosopher}(이)가 생각하는 {post.subject}(이)란?
-        </p>
-        <p>본문: {post.content.length > 40 ? post.content.substr(0, 40) + "...(중략)" : post.content}</p>
-        <p>좋아요 수: {post.like.length}</p>
-      </Link>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <PostListItemContainerAtom onClick={toTheDetailPage}>
+        <MainlineMolecule
+          title={`철학자 ${post.philosopher}(이)가 생각하는 ${post.subject}(이)란?`}
+        />
+        <SublineAtom
+          subtext={
+            post.content.length > 40
+              ? `${post.content.substring(0, 40)}...`
+              : post.content
+          }
+          yes={post.like.length}
+        />
+      </PostListItemContainerAtom>
+
+      {/* 좋아요 버튼 */}
       {user && (
-        <div>
-          <button onClick={likeHandler}>{didLike ? "좋아요 취소" : "좋아요"}</button>
-        </div>
+        <Box>
+          <IconButton onClick={likeHandler}>
+            {didLike ? (
+              <HeartIcon color="primary" />
+            ) : (
+              <HeartBorderIcon color="primary" />
+            )}
+          </IconButton>
+        </Box>
       )}
-    </>
+    </Box>
   )
 }
 
 //---------------------------------------------Data---------------------------------------------//
-function Data({ post }: { post: any }) {
-  console.log("in Data function")
+function Data({ post }: { post: DataPost }) {
+  const navigate = useNavigate()
+  const toTheDetailPage = () => {
+    navigate(`/${RoutePath.DATA}/${post._id}`)
+  }
+
   return (
-    <Link to={post._id} style={{ textDecoration: "none", color: "black" }}>
-      <p>제목: {post.title}</p>
-      <p>공유 날짜: {post.createdAt}</p>
-      <p>마지막 업데이트: {post.updatedAt}</p>
-    </Link>
+    <PostListItemContainerAtom onClick={toTheDetailPage}>
+      <MainlineMolecule title={post.title} />
+      <SublineAtom
+        subtext={`${post.author.name} | ${formatDateString(post.createdAt)}`}
+      />
+    </PostListItemContainerAtom>
   )
 }
 
 //-------------------------------------------Default-------------------------------------------//
-function Default({ path, post }: { path: string; post: any }) {
-  const comment: string = "[" + post.comment.length + "]"
+function Default({ path, post }: { path: string; post: Post }) {
+  const navigate = useNavigate()
+  const toTheDetailPage = () => {
+    navigate(`/${path}/${post._id}`)
+  }
   return (
-    <Box sx={{ pl: 1, pt: 1, pb: 1, borderBottom: 1.5, borderColor: "divider" }}>
-      <Link to={"/" + path + "/" + post._id} style={{ textDecoration: "none", color: "black" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Typography align="left">
-              {post.title} {post.comment.length > 0 && comment}
-            </Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Typography align="center">{post.author.name}</Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Typography align="center">{post.createdAt.substr(0, 10)}</Typography>
-          </Grid>
-          <Grid item xs={2}>
-            {post.visited >= 0 && <Typography align="center">{post.visited}</Typography>}
-          </Grid>
-        </Grid>
-      </Link>
-    </Box>
+    <PostListItemContainerAtom onClick={toTheDetailPage}>
+      <MainlineMolecule title={post.title} number={post.comment.length} />
+      <SublineAtom subtext={post.content} />
+    </PostListItemContainerAtom>
   )
 }
 
@@ -128,9 +199,9 @@ export default function Exchange({
   setSomethingWasChanged,
 }: {
   path: string
-  post: any
-  somethingWasChanged: any
-  setSomethingWasChanged: any
+  post: Post
+  somethingWasChanged: boolean
+  setSomethingWasChanged: React.Dispatch<SetStateAction<boolean>>
 }) {
   switch (path) {
     case "devates":
@@ -138,9 +209,15 @@ export default function Exchange({
     case "freetopics":
       return <Devate path={path} post={post} />
     case "shares":
-      return <Share path={path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+      return (
+        <Share
+          path={path}
+          post={post}
+          somethingWasChanged={somethingWasChanged}
+          setSomethingWasChanged={setSomethingWasChanged}
+        />
+      )
     case "data":
-      console.log("in data case")
       return <Data post={post} />
     default:
       return <Default path={path} post={post} />

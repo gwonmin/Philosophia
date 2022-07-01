@@ -1,20 +1,20 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material"
 
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { UserStateContext } from "../../pages/RootPage";
+import * as React from "react"
+import { useNavigate } from "react-router-dom"
+import { UserStateContext } from "../../RootContext"
 
 const nameStyle = {
   fontSize: "24px",
   fontWeight: "bold",
-};
+}
 
 // userInfo card for mypage
 export default function UserInfoCard() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const userState = React.useContext(UserStateContext);
-  const curUser = userState?.user;
+  const userState = React.useContext(UserStateContext)
+  const curUser = userState?.user
 
   return (
     <>
@@ -50,5 +50,5 @@ export default function UserInfoCard() {
         </Grid>
       </Grid>
     </>
-  );
+  )
 }

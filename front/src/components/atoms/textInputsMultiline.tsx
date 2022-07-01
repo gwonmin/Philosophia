@@ -1,6 +1,6 @@
 import { TextField, TextFieldProps } from "@mui/material"
 
-export function TextFieldAtom({
+export function TextFieldMultilineAtom({
   required = true,
   id,
   label,
@@ -11,7 +11,6 @@ export function TextFieldAtom({
   autoComplete,
   disabled,
   onChange,
-  sx,
 }: TextFieldProps) {
   const commonProps = {
     required,
@@ -21,16 +20,18 @@ export function TextFieldAtom({
     type,
     autoComplete,
     disabled,
-    sx,
   }
   return (
     <TextField
       {...commonProps}
       onChange={onChange}
-      value={value}
+      id="outlined-multiline-static"
+      // label="본문을 입력해주세요"
+      multiline
       placeholder={placeholder}
+      rows={15}
       fullWidth
-      sx={{ mb: 3, ...sx }}
+      sx={{ mb: 3 }}
     />
   )
 }

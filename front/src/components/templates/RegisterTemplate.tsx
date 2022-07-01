@@ -7,7 +7,13 @@ import Footer from "../organisms/Footer"
 
 import { User } from "../../types"
 
-export default function RegisterTemplate({ register, userInfo }: { register?: boolean; userInfo?: User }) {
+export default function RegisterTemplate({
+  register,
+  userInfo,
+}: {
+  register?: boolean
+  userInfo?: User
+}) {
   const initUser: User = {
     email: "",
     password: "",
@@ -16,12 +22,13 @@ export default function RegisterTemplate({ register, userInfo }: { register?: bo
 
   return (
     <div>
-      <Header />
       <Container component="main" maxWidth="xs">
-        <RegisterForm register={register ?? true} userInfo={userInfo ?? initUser} />
+        <RegisterForm
+          register={register ?? true}
+          userInfo={userInfo ?? initUser}
+        />
         {!register && <Link to="/user/login">로그인</Link>}
       </Container>
-      <Footer />
     </div>
   )
 }
