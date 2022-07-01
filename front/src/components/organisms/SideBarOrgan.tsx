@@ -53,12 +53,20 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     return (
       <>
-        {postList.length === 0 ? (
+        {[...postList] == [] ? (
           <Typography variant="h4">아직 게시물이 없네요 😭</Typography>
         ) : (
           <>
             {postList?.map((post: Post) => {
-              return <Exchange path={pages[value].path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
+              return (
+                <Exchange
+                  key={post._id}
+                  path={pages[value].path}
+                  post={post}
+                  somethingWasChanged={somethingWasChanged}
+                  setSomethingWasChanged={setSomethingWasChanged}
+                />
+              )
             })}
           </>
         )}
