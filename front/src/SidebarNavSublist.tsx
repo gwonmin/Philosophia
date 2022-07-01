@@ -25,17 +25,6 @@ const SidebarMainList = () => {
         </ListItemIcon>
         <ListItemText primary="필로소피아" />
       </ListItemButton>
-
-      <ListItemButton
-        onClick={() => {
-          navigate(`/${RoutePath.USER}/${ActionPath.LOGIN}`)
-        }}
-      >
-        <ListItemIcon>
-          <VpnKeyIcon />
-        </ListItemIcon>
-        <ListItemText primary="로그인" />
-      </ListItemButton>
     </>
   )
 }
