@@ -8,13 +8,7 @@ import { Avatar, Grid } from "@mui/material"
 
 import { User } from "../../types"
 
-export default function LoginTemplate({
-  login,
-  userInfo,
-}: {
-  login?: boolean
-  userInfo?: User
-}) {
+export default function LoginTemplate({ login, userInfo }: { login?: boolean; userInfo?: User }) {
   const initUser: User = {
     email: "",
     password: "",

@@ -46,41 +46,6 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
   const isPasswordValid = password.length >= 4
   const isFormValid = isEmailValid && isPasswordValid
 
-  const testLogin = async () => {
-    try {
-      // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post({
-        endpoint: "user/login",
-        data: {
-          email: "test@test.com",
-          password: "0000",
-        },
-      })
-
-      console.log(res)
-      const user = res.data.user
-      // JWT 토큰은 유저 정보의 token임.
-      const jwtToken = res.data.accessToken
-      console.log(jwtToken)
-
-      // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", String(jwtToken))
-      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      if (!dispatch) {
-        console.log("Dispatch가 존재하지 않습니다.")
-        return
-      }
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      })
-      // 기본 페이지로 이동함.
-      navigate("/", { replace: true })
-    } catch (err) {
-      console.log("로그인에 실패하였습니다.\n", err)
-    }
-  }
-
   const handleSubmit = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
@@ -119,7 +84,7 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
       }}
     >
       <Typography component="h1" variant="h5">
-        {login ? "로그인하느냐 마느냐, 그것이 문제로다" : "본인 확인"}
+        {login ? "로그인" : "본인 확인"}
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
@@ -154,7 +119,6 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
           <GreenButton onClick={handleSubmit} disabled={!isFormValid}>
             {login ? "로그인" : "인증하기"}
           </GreenButton>
-          <GreenButton onClick={testLogin}>테스트 로그인</GreenButton>
         </Grid>
       </Box>
     </Box>

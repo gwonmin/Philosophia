@@ -79,7 +79,7 @@ export default function SharePostAddForm(aiShare?: any) {
                 <em>None</em>
               </MenuItem>
               <MenuItem value={"Nietzsche"}>니체</MenuItem>
-              <MenuItem value={"Descartes"}>데카르트</MenuItem>
+              <MenuItem value={"Kant"}>칸트</MenuItem>
               <MenuItem value={"Aristotle"}>아리스토텔레스</MenuItem>
             </Select>
           </FormControl>

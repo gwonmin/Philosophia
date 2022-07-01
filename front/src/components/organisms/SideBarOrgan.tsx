@@ -35,7 +35,7 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
 
   //fetch
   useEffect(() => {
-    setPostList([])
+    if (pages[value].path === "shares/add") setPostList([])
     customFetch({
       endpoint: `${pages[value].path}${currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""}` ?? "",
       setValue: (res: GetPostResponse) => {
