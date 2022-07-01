@@ -1,6 +1,3 @@
-import Header from "../organisms/Header"
-import Footer from "../organisms/Footer"
-
 import UserDetail from "../organisms/UserDetail"
 import UserInfoCardMolecule from "../organisms/UserInfoCardMolecule"
 
