@@ -49,7 +49,7 @@ class FreeTopic {
     var postObj = []
         for(var i in posts){
             const postId = posts[i]._id;
-            const post = await FreeTopicModel.findOne({ _id: postId });
+            const post = await FreeTopicModel.findOne({ _id: postId }).populate("author", "id");
             postObj.push(post)
         }
 
