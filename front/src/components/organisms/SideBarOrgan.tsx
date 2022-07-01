@@ -25,8 +25,7 @@ interface Page {
 
 export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   const [value, setValue] = useState<number>(0)
-  const handleChange = (event: React.SyntheticEvent, newValue: number) =>
-    setValue(newValue)
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue)
 
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
@@ -36,11 +35,9 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
 
   //fetch
   useEffect(() => {
+    setPostList([])
     customFetch({
-      endpoint:
-        `${pages[value].path}${
-          currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""
-        }` ?? "",
+      endpoint: `${pages[value].path}${currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""}` ?? "",
       setValue: (res: GetPostResponse) => {
         setPostList(res.posts)
       },
@@ -51,6 +48,7 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   if (!isFetchCompleted) {
     return <p>loading...</p>
   }
+  if (!postList) return <p>loading...</p>
 
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     return (
@@ -60,14 +58,7 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
         ) : (
           <>
             {postList?.map((post: Post) => {
-              return (
-                <Exchange
-                  path={pages[value].path}
-                  post={post}
-                  somethingWasChanged={somethingWasChanged}
-                  setSomethingWasChanged={setSomethingWasChanged}
-                />
-              )
+              return <Exchange path={pages[value].path} post={post} somethingWasChanged={somethingWasChanged} setSomethingWasChanged={setSomethingWasChanged} />
             })}
           </>
         )}
