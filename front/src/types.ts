@@ -60,6 +60,7 @@ export interface GetPostResponse {
 export interface NewPost {
   title: string
   content: string
+  tag?: any
 }
 
 export type Props = {
