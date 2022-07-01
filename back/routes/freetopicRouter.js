@@ -107,6 +107,7 @@ freetopicRouter.get('/freetopics', verifyToken, async (req, res, next) => {
         maxPage:maxPage,
         limit:limit
   }
+    res.status(200).send(result)
 });
 
 /* access token을 재발급 하기 위한 router.

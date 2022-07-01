@@ -101,6 +101,7 @@ shareRouter.get('/shares', verifyToken, async function (req, res, next) {
       maxPage:maxPage,
       limit:limit
   }
+  res.status(200).send(result)
 });
 
 // 좋아요
