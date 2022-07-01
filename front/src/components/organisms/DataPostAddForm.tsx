@@ -25,13 +25,12 @@ export default function DataPostAddForm() {
   })
   const navigate = useNavigate()
 
-  const onChange = (e: any) =>
-    handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
+  const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const handlePost = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post({
-        endpoint: path.DEFAULT.path,
+        endpoint: path.DEFAULT.path ?? "error",
         data: postInfo,
       })
       console.log(path, "의 post요청이 성공했습니다. data: ", res.data)
@@ -63,13 +62,7 @@ export default function DataPostAddForm() {
     <>
       <Grid container>
         <Grid item xs={12}>
-          <TextFieldAtom
-            id="title"
-            placeholder="공유하고자 하는 자료의 제목을 입력해주세요"
-            name="title"
-            value={postInfo.title}
-            onChange={onChange}
-          />
+          <TextFieldAtom id="title" placeholder="공유하고자 하는 자료의 제목을 입력해주세요" name="title" value={postInfo.title} onChange={onChange} />
         </Grid>
         <Grid item xs={12}>
           <TextFieldMultilineAtom
@@ -90,13 +83,7 @@ export default function DataPostAddForm() {
         >
           <form encType="multipart/form-data">
             <label htmlFor="contained-button-file">
-              <Input
-                accept="application/msword, text/plain, application/pdf, image/*"
-                id="contained-button-file"
-                multiple
-                onChange={handleFile}
-                type="file"
-              />
+              <Input accept="application/msword, text/plain, application/pdf, image/*" id="contained-button-file" multiple onChange={handleFile} type="file" />
               <Button variant="contained" component="span">
                 파일 업로드
               </Button>
@@ -111,11 +98,7 @@ export default function DataPostAddForm() {
             alignItems: "center",
           }}
         >
-          <Button
-            variant="contained"
-            onClick={handlePost}
-            sx={{ mr: 1.5, backgroundColor: "navy" }}
-          >
+          <Button variant="contained" onClick={handlePost} sx={{ mr: 1.5, backgroundColor: "navy" }}>
             게시글 등록하기
           </Button>
           <Button
