@@ -64,13 +64,28 @@ dataRouter.get("/data/:id", verifyToken, async function(req, res, next){
     };
 });
 
-dataRouter.get("/data", verifyToken, async function(req, res, next){
-    try{
-        const posts = await dataService.getPostList();
-        res.status(200).send(posts);
-    } catch (error){
-        next(error);
-    };
+// 자료 게시판 전체 게시글 조회(페이지네이션)
+dataRouter.get('/data', async function(req, res, next){ 
+  let page = Math.max(1, parseInt(req.query.page));   
+  let limit = 15 //Math.max(1, parseInt(req.query.limit));
+  page = !isNaN(page)?page:1;                         
+  limit = !isNaN(limit)?limit:5;                     
+
+  let skip = (page-1)*limit;
+  let count = await DataModel.countDocuments({});
+  let maxPage = Math.ceil(count/limit);
+  let posts = await DataModel.find({}).populate('author', 'id name')
+    .sort('-createdAt')
+    .skip(skip)   
+    .limit(limit) 
+    .exec();
+  let result = {
+    posts:posts,
+    currentPage:page,
+    maxPage:maxPage,
+    limit:limit
+  }
+  res.status(200).send(result)
 });
 
 dataRouter.put("/data/:id", verifyToken, async function(req, res, next){

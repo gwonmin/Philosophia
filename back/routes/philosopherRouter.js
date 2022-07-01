@@ -248,9 +248,22 @@ philosopherRouter.get("/aristotle/:id", verifyToken, async function(req, res, ne
 philosopherRouter.get("/aristotle", verifyToken, async function(req, res, next){
     try{
         const philosopherName = '아리스토텔레스';
-        const posts = await philosopherService.getPostList({ philosopherName });
-        res.status(200).send(posts);
-    } catch (error){
+        let skip = (page-1)*limit;
+        let count = await PhilosopherModel.countDocuments({});
+        let maxPage = Math.ceil(count/limit);
+        let posts = await PhilosopherModel.find({ philosopherName }).populate('author', 'id name')
+        .sort('-createdAt')
+        .skip(skip)   
+        .limit(limit) 
+        .exec();
+        let result = {
+            posts:posts,
+            currentPage:page,
+            maxPage:maxPage,
+            limit:limit
+        }
+        res.status(200).send(result)
+    } catch(error){
         next(error);
     };
 });

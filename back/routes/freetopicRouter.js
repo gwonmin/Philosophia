@@ -93,12 +93,19 @@ freetopicRouter.delete('/freetopics/:id', verifyToken, async (req, res, next) =>
 
 // 전체 게시글 조회
 freetopicRouter.get('/freetopics', verifyToken, async (req, res, next) => {
-  try {
-    const posts = await freetopicService.getPosts();
-
-    res.status(200).send(posts);
-  } catch (error) {
-    next(error);
+      let skip = (page-1)*limit;
+      let count = await FreeTopicModel.countDocuments({});
+      let maxPage = Math.ceil(count/limit);
+      let posts = await FreeTopicModel.find({}).populate('author', 'id name')
+        .sort('-createdAt')
+        .skip(skip)   
+        .limit(limit) 
+        .exec();
+      let result = {
+        posts:posts,
+        currentPage:page,
+        maxPage:maxPage,
+        limit:limit
   }
 });
 
