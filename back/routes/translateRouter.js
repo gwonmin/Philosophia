@@ -17,18 +17,22 @@ translateRouter.post("/translate", async function (req, res) {
   }).then(function (response) {
     // response  
     function eliminateName(text) {
-      if (text.startsWith('Nietzche')) {
-        text = text.substr(0, length('Nietzche'));
-      } else if (text.startsWith('Kant')) {
-        text = text.substr(0, length('Kant'));
-      } else if (text.startsWith('Aristotles')) {
-        text = text.substr(0, length('Aristotles'));
+      if (text.startsWith("Nietzsche")) {
+        text = text.replace("Nietzsche", "");
+        return text;
+      } else if (text.startsWith("Kant")) {
+        text = text.replace("Kant", "");
+        return text;
+      } else if (text.startsWith("Aristotles")) {
+        text = text.replace("Aristotles", "");
+        return text;
+      } else {
+        return text;
       }
     }
-
-    let text = response.data
-    // text = eliminateName(text);
     
+    let text = response.data;
+    text = eliminateName(text);
 
     var options = {
       url: api_url,
@@ -70,7 +74,6 @@ translateRouter.post("/translate", async function (req, res) {
         // res.status(response.statusCode).end();
         console.log("변역기 API 사용량 초과" + response.statusCode);
         const text = options.form.text;
-        console.log(text)
         const createdOnlyText = await Translate.createOnlyText({ text });
         res.json(createdOnlyText.text);
 
