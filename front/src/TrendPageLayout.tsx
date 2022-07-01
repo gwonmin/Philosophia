@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import MuiDrawer from "@mui/material/Drawer"
@@ -22,6 +22,9 @@ import Sublist from "./SidebarNavSublist"
 import { Props } from "./types"
 import { useNavigate } from "react-router-dom"
 import VpnKeyIcon from "@mui/icons-material/VpnKey"
+import PersonIcon from "@mui/icons-material/Person"
+import { DispatchContext, UserStateContext } from "./RootContext"
+import { Stack, Menu, MenuItem } from "@mui/material"
 
 function Copyright(props: any) {
   return (
@@ -98,6 +101,35 @@ const TrendPageLayout: React.FC<Props> = ({ children }) => {
     setOpen(!open)
   }
   const navigate = useNavigate()
+  const dispatch = useContext(DispatchContext) ?? null
+  const user = useContext(UserStateContext)?.user ?? null
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  if (!dispatch) {
+    return <p>dispatch do not exist...</p>
+  }
+
+  const logout = () => {
+    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
+    sessionStorage.removeItem("userToken")
+    // dispatch 함수를 이용해 로그아웃함.
+    if (dispatch) {
+      dispatch({ type: "LOGOUT" })
+    }
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+  const handleUserEdit = () => {
+    setAnchorEl(null)
+  }
+  const handleLogOut = () => {
+    setAnchorEl(null)
+    logout()
+    navigate("/")
+  }
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -122,9 +154,40 @@ const TrendPageLayout: React.FC<Props> = ({ children }) => {
             <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               Philosophia
             </Typography>
-            <IconButton color="inherit" onClick={() => navigate(`/user/login`)}>
-              <VpnKeyIcon />
-            </IconButton>
+            {/*li, lo logic*/}
+            {!user && (
+              <IconButton color="inherit" onClick={() => navigate(`/user/login`)}>
+                <VpnKeyIcon />
+              </IconButton>
+            )}
+            {user && (
+              <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" onClick={handleMenu}>
+                <IconButton color="inherit">
+                  <PersonIcon />
+                </IconButton>
+                <Typography variant="body1" color="inherit">
+                  {user.name}
+                </Typography>
+              </Stack>
+            )}
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleUserEdit}>정보변경</MenuItem>
+              <MenuItem onClick={handleLogOut}>로그아웃</MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
 
