@@ -49,7 +49,7 @@ export default function CommonPageTemplate({
   }, [somethingWasChanged])
 
   if (!isFetchCompleted) {
-    return <p>loading...</p>
+    return <p>loadloaction: CommonPageTemplate, loadinging...</p>
   }
 
   return (
