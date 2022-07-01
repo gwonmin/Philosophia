@@ -17,10 +17,10 @@ class devateService {
 
     const yes = await DevateComment.findYeses({ postId });
     const no = await DevateComment.findNos({ postId });
-    
-    if (yes.includes(userId)) {
+
+    if (yes.includes(String(post.author._id))) {
       post.userStance = 'yes'
-    } else if (no.includes(userId)) {
+    } else if (no.includes(String(post.author._id))) {
       post.userStance = 'no'
     } else {
       post.userStance = '투표를 하지 않았습니다'

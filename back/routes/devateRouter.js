@@ -111,7 +111,7 @@ devateRouter.put('/devates/:id/stance', verifyToken, async (req, res, next) => {
         const userId = req.user;
         const postId = req.params.id;
         const { stance } = req.body;
-
+    
         const support = await devateService.setPostStance({ userId, postId, stance });
 
         res.status(200).send(support);
