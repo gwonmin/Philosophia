@@ -5,7 +5,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 import { userRouter } from './routes/userRouter';
@@ -14,7 +13,7 @@ import { devatecommentRouter } from './routes/devatecommentRouter';
 import { shareRouter } from './routes/shareRouter';
 
 import { philosopherRouter } from './routes/philosopherRouter';
-import { philosophercommentRouter } from './routes/philosopherCommentRouter';
+import { philosophercommentRouter } from './routes/philosophercommentRouter';
 import { freetopicRouter } from './routes/freetopicRouter';
 import { freetopiccommentRouter } from './routes/freetopiccommentRouter';
 import { dataRouter } from './routes/dataRouter';
