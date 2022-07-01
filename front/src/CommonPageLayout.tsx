@@ -20,6 +20,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications"
 import Mainlist from "./SidebarNavMainlist"
 import Sublist from "./SidebarNavSublist"
 import { Props } from "./types"
+import VpnKeyIcon from "@mui/icons-material/VpnKey"
+import { useNavigate } from "react-router-dom"
 
 function Copyright(props: any) {
   return (
@@ -95,7 +97,7 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
   const toggleDrawer = () => {
     setOpen(!open)
   }
-
+  const navigate = useNavigate()
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -120,7 +122,7 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
             <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               Philosophia
             </Typography>
-            <IconButton color="inherit" onClick={navigate(`/${RoutePath.USER}/${ActionPath.LOGIN}`)}>
+            <IconButton color="inherit" onClick={() => navigate(`/user/login`)}>
               <VpnKeyIcon />
             </IconButton>
           </Toolbar>
