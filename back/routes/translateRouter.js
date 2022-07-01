@@ -23,8 +23,8 @@ translateRouter.post("/translate", async function (req, res) {
       } else if (text.startsWith("Kant")) {
         text = text.replace("Kant", "");
         return text;
-      } else if (text.startsWith("Aristotles")) {
-        text = text.replace("Aristotles", "");
+      } else if (text.startsWith("Aristotle")) {
+        text = text.replace("Aristotle", "");
         return text;
       } else {
         return text;
