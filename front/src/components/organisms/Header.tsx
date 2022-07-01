@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom"
 
 import { ROUTES } from "../../route/Routes"
 import { RoutePath, ActionPath } from "../../route/RoutesURL"
-import { UserStateContext, DispatchContext } from "../../pages/RootPage"
+import { UserStateContext, DispatchContext } from "../../RootContext"
 import { HeaderText } from "../atoms/textboxs"
 import Divider from "@mui/material/Divider/Divider"
 import Stack from "@mui/material/Stack"
 import { Grid, Typography, Link } from "@mui/material"
 
+import logo from "../../../public/img/logo.png"
 import banner from "../../../public/img/banner.png"
+import "../../../public/index.scss"
 
 import MyPage from "../../pages/user/MyPage"
 
@@ -18,7 +20,6 @@ const HEADER_ROUTES = [
   { path: RoutePath.DEVATES, label: "토론 게시판" },
   { path: "philosopher", label: "철학자 게시판" },
   { path: RoutePath.SHARE, label: "글 공유 게시판" },
-  { path: RoutePath.SHARE + "/add", label: "AI 철학자 게시판" },
   { path: RoutePath.DATA, label: "자료 게시판" },
   { path: "service", label: "필로소피아" },
 ]
@@ -26,10 +27,10 @@ const HEADER_ROUTES = [
 export default function Header() {
   const navigate = useNavigate()
   const userStateContext = useContext(UserStateContext)
-  const user = userStateContext?.user
+  const user = userStateContext.user
 
   return (
-    <Grid container rowSpacing={2}>
+    <Grid container rowSpacing={2} sx={{ mb: 3 }}>
       <Grid
         item
         xs={2}

@@ -1,14 +1,21 @@
 import { useContext, useEffect, useState } from "react"
-import { Container } from "@mui/material"
+import { Button, Container, Typography } from "@mui/material"
 
-import { UserStateContext } from "../../pages/RootPage"
+import { UserStateContext } from "../../RootContext"
 import { customFetch } from "../../util"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./CommentCard"
 import { useParams } from "react-router-dom"
+import { Box } from "@mui/system"
 
-export default function CommentList({ path, postId }: { path: string; postId: string }) {
+export default function CommentList({
+  path,
+  postId,
+}: {
+  path: string
+  postId: string
+}) {
   //변수 초기화
   const params = useParams()
   const philosopher = params.who
@@ -61,11 +68,10 @@ export default function CommentList({ path, postId }: { path: string; postId: st
 
   return (
     <Container>
-      <p style={{ backgroundColor: "grey" }}>덧글 창입니다.</p>
-      {commentList.length == 0 && <p>아직 덧글이 없습니다.</p>}
-      {commentList != [] && (
-        <div>
-          <p>덧글 목록({commentList.length}): </p>
+      {commentList.length === 0 ? (
+        <Typography sx={{ color: "#999999" }}>아직 덧글이 없습니다.</Typography>
+      ) : (
+        <>
           {commentList.map((comment: any) => {
             return (
               <CommentCard
@@ -77,20 +83,25 @@ export default function CommentList({ path, postId }: { path: string; postId: st
               />
             )
           })}
-        </div>
+        </>
       )}
-      <TextFieldAtom
-        id="newComment"
-        label="새 덧글"
-        name="newComment"
-        type="comment"
-        autoComplete="comment"
-        value={newComment}
-        onChange={(e) => {
-          setNewComment(e.target.value)
-        }}
-      ></TextFieldAtom>
-      <button onClick={commentHandler}>등록</button>
+      <Box sx={{ mt: 3, pl: 2, pr: 2, mb: 2 }}>
+        <TextFieldAtom
+          id="newComment"
+          label="새 덧글"
+          name="newComment"
+          type="comment"
+          autoComplete="comment"
+          value={newComment}
+          onChange={(e) => {
+            setNewComment(e.target.value)
+          }}
+          sx={{ mb: 1.5 }}
+        />
+        <Button variant="contained" fullWidth onClick={commentHandler}>
+          등록
+        </Button>
+      </Box>
     </Container>
   )
 }

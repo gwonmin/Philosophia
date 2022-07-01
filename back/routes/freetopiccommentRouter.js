@@ -2,12 +2,11 @@ import { Router } from 'express';
 import { freetopiccommentService } from '../services/freetopiccommentService';
 import { verifyToken } from '../middlewares/verifyToken';
 import { verifyRefresh } from '../middlewares/verifyRefresh';
-import { checkComment } from "../middlewares/checkComment";
 
 const freetopiccommentRouter = Router();
 
 // 댓글 작성
-freetopiccommentRouter.post('/freetopiccomments', verifyToken, checkComment, async (req, res, next) => {
+freetopiccommentRouter.post('/freetopiccomments', verifyToken, async (req, res, next) => {
   try {
     const userId = req.user;
     const postId = req.query.postId;
@@ -30,7 +29,7 @@ freetopiccommentRouter.post('/freetopiccomments', verifyToken, checkComment, asy
 });
 
 // 댓글 수정
-freetopiccommentRouter.put('/freetopiccomments/:id', verifyToken,  checkComment, async (req, res, next) => {
+freetopiccommentRouter.put('/freetopiccomments/:id', verifyToken, async (req, res, next) => {
   try {
     const userId = req.user;
     const commentId = req.params.id;
@@ -71,7 +70,7 @@ freetopiccommentRouter.delete('/freetopiccomments/:id', verifyToken, async (req,
 });
 
 // 댓글 1개 조회
-freetopiccommentRouter.get('/freetopiccomments/:id', async (req, res, next) => {
+freetopiccommentRouter.get('/freetopiccomments/:id', verifyToken, async (req, res, next) => {
   try {
     const commentId = req.params.id;
     const comment = await freetopiccommentService.getComment({ commentId });
@@ -83,7 +82,7 @@ freetopiccommentRouter.get('/freetopiccomments/:id', async (req, res, next) => {
 });
 
 // 게시글 1개 전체 댓글 조회
-freetopiccommentRouter.get('/freetopiccommentlist', async (req, res, next) => {
+freetopiccommentRouter.get('/freetopiccommentlist', verifyToken, async (req, res, next) => {
   try {
     const postId = req.query.postId;
     const comments = await freetopiccommentService.getComments({ postId });

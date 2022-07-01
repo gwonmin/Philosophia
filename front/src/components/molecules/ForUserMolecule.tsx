@@ -1,3 +1,26 @@
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import Chip from "@mui/material/Chip"
+
+const map: { [key: string]: any } = {
+  yes: {
+    label: "찬성",
+    color: "#000080",
+  },
+  no: {
+    label: "반대",
+    color: "#660000",
+  },
+  grey: {
+    label: "중립",
+    color: "#666666",
+  },
+  "투표를 하지 않았습니다": {
+    label: "투표를 하지 않았습니다",
+    color: "#AA0000",
+  },
+}
+
 export default function ForUserMolcule({
   postInfo,
   isUser,
@@ -9,27 +32,55 @@ export default function ForUserMolcule({
   handleChangeStance: any
   handleLike: any
 }) {
+  console.log("야 이거,", postInfo)
   return (
     <>
       {isUser && (
-        <div>
-          <p>여기서부터는 로그인한 유저에게만 보입니다.</p>
-          {postInfo.yes && (
-            <div className="devate">
-              <>
-                <p>찬반 토론에서만 보이는 부분입니다.</p>
-                <button onClick={() => handleChangeStance("yes")}>찬성</button>
-                <button onClick={() => handleChangeStance("no")}>반대</button>
-                <div>현재 상태: </div>
-              </>
-              {postInfo.userStance === "yes" && "찬성"}
-              {postInfo.userStance === "no" && "반대"}
-              {postInfo.userStance === "grey" && "중립"}
-            </div>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          {postInfo.userStance && (
+            <Chip
+              label={map[postInfo.userStance].label}
+              sx={{
+                backgroundColor: map[postInfo.userStance].color,
+                color: "#EFEFEF",
+                m: 1.5,
+              }}
+            />
           )}
-        </div>
+          {postInfo.yes && (
+            <Box
+              className="devate"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                onClick={() => handleChangeStance("yes")}
+                sx={{ m: 1.5, backgroundColor: "navy" }}
+              >
+                찬성
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  handleChangeStance("no")
+                }}
+                sx={{ m: 1.5, color: "navy", borderColor: "navy" }}
+              >
+                반대
+              </Button>
+            </Box>
+          )}
+        </Box>
       )}
-      {postInfo.like && <button onClick={handleLike}>{postInfo.userLike === true ? "좋아요 취소" : "좋아요"}</button>}
+      {postInfo.like && (
+        <Button onClick={handleLike} variant="contained" color="info">
+          {postInfo.userLike === true ? "좋아요 취소" : "좋아요"}
+        </Button>
+      )}
     </>
   )
 }

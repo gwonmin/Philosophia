@@ -2,7 +2,6 @@ import { Router } from "express";
 import { philosopherService } from "../services/philosopherService";
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
-import { PhilosopherModel } from "../db/schemas/philosopher";
 
 const philosopherRouter = Router();
 
@@ -34,7 +33,7 @@ philosopherRouter.post("/nietzsche", verifyToken, async function(req, res, next)
 });
 
 // 니체 게시판 게시글 상세 조회
-philosopherRouter.get("/nietzsche/:id", async function(req, res, next){
+philosopherRouter.get("/nietzsche/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await philosopherService.getPostInfo({ postId });
@@ -49,34 +48,16 @@ philosopherRouter.get("/nietzsche/:id", async function(req, res, next){
     };
 });
 
-// 철학자별 게시판(니체) 전체 게시글 조회(페이지네이션)
-philosopherRouter.get('/nietzsche', async function(req, res, next){
+// 니체 게시판 게시글 전체 조회
+philosopherRouter.get("/nietzsche", verifyToken, async function(req, res, next){
     try{
-        let page = Math.max(1, parseInt(req.query.page));   
-        let limit = 15 //Math.max(1, parseInt(req.query.limit));
-        page = !isNaN(page)?page:1;                         
-        limit = !isNaN(limit)?limit:5;                     
-        
         const philosopherName = '니체';
-        let skip = (page-1)*limit;
-        let count = await PhilosopherModel.countDocuments({});
-        let maxPage = Math.ceil(count/limit);
-        let posts = await PhilosopherModel.find({ philosopherName })
-        .sort('-createdAt')
-        .skip(skip)   
-        .limit(limit) 
-        .exec();
-        let result = {
-            posts:posts,
-            currentPage:page,
-            maxPage:maxPage,
-            limit:limit
-        }
-        res.status(200).send(result)
-    } catch(error){
+        const posts = await philosopherService.getPostList({ philosopherName });
+        res.status(200).send(posts);
+    } catch (error){
         next(error);
-    }
-  });
+    };
+});
 
 // 니체 게시판 게시글 수정
 philosopherRouter.put("/nietzsche/:id", verifyToken, async function(req, res, next){
@@ -150,7 +131,7 @@ philosopherRouter.post("/kant", verifyToken, async function(req, res, next){
 });
 
 // 칸트 게시판 게시글 상세 조회
-philosopherRouter.get("/kant/:id", async function(req, res, next){
+philosopherRouter.get("/kant/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await philosopherService.getPostInfo({ postId });
@@ -165,34 +146,16 @@ philosopherRouter.get("/kant/:id", async function(req, res, next){
     };
 });
 
-// 철학자별 게시판(칸트) 전체 게시글 조회(페이지네이션)
-philosopherRouter.get('/kant', async function(req, res, next){
+// 칸트 게시판 게시글 전체 조회
+philosopherRouter.get("/kant", verifyToken, async function(req, res, next){
     try{
-        let page = Math.max(1, parseInt(req.query.page));   
-        let limit = 15 //Math.max(1, parseInt(req.query.limit));
-        page = !isNaN(page)?page:1;                         
-        limit = !isNaN(limit)?limit:5;                     
-        
         const philosopherName = '칸트';
-        let skip = (page-1)*limit;
-        let count = await PhilosopherModel.countDocuments({});
-        let maxPage = Math.ceil(count/limit);
-        let posts = await PhilosopherModel.find({ philosopherName })
-        .sort('-createdAt')
-        .skip(skip)   
-        .limit(limit) 
-        .exec();
-        let result = {
-            posts:posts,
-            currentPage:page,
-            maxPage:maxPage,
-            limit:limit
-        }
-        res.status(200).send(result)
-    } catch(error){
+        const posts = await philosopherService.getPostList({ philosopherName });
+        res.status(200).send(posts);
+    } catch (error){
         next(error);
-    }
-  });
+    };
+});
 
 // 칸트 게시판 게시글 수정
 philosopherRouter.put("/kant/:id", verifyToken, async function(req, res, next){
@@ -266,7 +229,7 @@ philosopherRouter.post("/aristotle", verifyToken, async function(req, res, next)
 });
 
 // 아리스토텔레스 게시판 게시글 상세 조회
-philosopherRouter.get("/aristotle/:id", async function(req, res, next){
+philosopherRouter.get("/aristotle/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await philosopherService.getPostInfo({ postId });
@@ -281,34 +244,16 @@ philosopherRouter.get("/aristotle/:id", async function(req, res, next){
     };
 });
 
-// 철학자별 게시판(아리스토텔레스) 전체 게시글 조회(페이지네이션)
-philosopherRouter.get('/aristotle', async function(req, res, next){
+// 아리스토텔레스 게시판 게시글 전체 조회
+philosopherRouter.get("/aristotle", verifyToken, async function(req, res, next){
     try{
-        let page = Math.max(1, parseInt(req.query.page));   
-        let limit = 15 //Math.max(1, parseInt(req.query.limit));
-        page = !isNaN(page)?page:1;                         
-        limit = !isNaN(limit)?limit:5;                     
-        
         const philosopherName = '아리스토텔레스';
-        let skip = (page-1)*limit;
-        let count = await PhilosopherModel.countDocuments({});
-        let maxPage = Math.ceil(count/limit);
-        let posts = await PhilosopherModel.find({ philosopherName })
-        .sort('-createdAt')
-        .skip(skip)   
-        .limit(limit) 
-        .exec();
-        let result = {
-            posts:posts,
-            currentPage:page,
-            maxPage:maxPage,
-            limit:limit
-        }
-        res.status(200).send(result)
-    } catch(error){
+        const posts = await philosopherService.getPostList({ philosopherName });
+        res.status(200).send(posts);
+    } catch (error){
         next(error);
-    }
-  });
+    };
+});
 
 // 아리스토텔레스 게시판 게시글 수정
 philosopherRouter.put("/aristotle/:id", verifyToken, async function(req, res, next){

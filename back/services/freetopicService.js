@@ -69,12 +69,6 @@ class freetopicService {
     return res;
   }
 
-  // 사용자가 쓴 게시물 조회
-  static async getPostInfoByUserId({ userId }){
-    const posts = await FreeTopic.findByUserId({ userId });
-    return posts;
-  }
-
   // 전체 게시글 조회
   static async getPosts() {
     const posts = await FreeTopic.findAll();

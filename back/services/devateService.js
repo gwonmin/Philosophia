@@ -83,14 +83,8 @@ class devateService {
     return res;
   }
 
-  // 사용자가 쓴 게시물 조회
-  static async getPostInfoByUserId({ userId }){
-    const posts = await Devate.findByUserId({ userId });
-    return posts;
-  }
-
   // 전체 게시글 조회
-  static async getPosts(filter, page, limit) {
+  static async getPosts(filter) {
     let newFilter = {};
 
     if (filter.tag) {
@@ -102,11 +96,11 @@ class devateService {
       newFilter.tag.push(last);
       console.log(newFilter.tag);
     } else {
-      const posts = await Devate.findAllNoTag(newFilter, page, limit);
+      const posts = await Devate.findAllNoTag(newFilter);
       return posts;
     }
 
-    const posts = await Devate.findAll(newFilter, page, limit);
+    const posts = await Devate.findAll(newFilter);
     return posts;
   }
 

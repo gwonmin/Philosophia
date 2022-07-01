@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { dataService } from "../services/dataService";
 import { verifyToken } from "../middlewares/verifyToken";
-import { DataModel } from "../db/schemas/data";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
 
 const dataRouter = Router();
@@ -50,7 +49,7 @@ dataRouter.post("/data/uploadfile", verifyToken,
   }
 });
 
-dataRouter.get("/data/:id", async function(req, res, next){
+dataRouter.get("/data/:id", verifyToken, async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await dataService.getPostInfo({ postId });
@@ -65,37 +64,14 @@ dataRouter.get("/data/:id", async function(req, res, next){
     };
 });
 
-// 자료 게시판 전체 게시글 조회(페이지네이션)
-dataRouter.get('/data', async function(req, res, next){ 
-  let page = Math.max(1, parseInt(req.query.page));   
-  let limit = 15 //Math.max(1, parseInt(req.query.limit));
-  page = !isNaN(page)?page:1;                         
-  limit = !isNaN(limit)?limit:5;                     
-
-  let skip = (page-1)*limit;
-  let count = await DataModel.countDocuments({});
-  let maxPage = Math.ceil(count/limit);
-  let posts = await DataModel.find({})
-    .sort('-createdAt')
-    .skip(skip)   
-    .limit(limit) 
-    .exec();
-  let result = {
-    posts:posts,
-    currentPage:page,
-    maxPage:maxPage,
-    limit:limit
-  }
-  res.status(200).send(result)
-
-        // res.render('data/index', {
-        //   posts:posts,
-        //   currentPage:page, // 9
-        //   maxPage:maxPage,  // 9
-        //   limit:limit       // 9
-        // });
+dataRouter.get("/data", verifyToken, async function(req, res, next){
+    try{
+        const posts = await dataService.getPostList();
+        res.status(200).send(posts);
+    } catch (error){
+        next(error);
+    };
 });
-
 
 dataRouter.put("/data/:id", verifyToken, async function(req, res, next){
     try{

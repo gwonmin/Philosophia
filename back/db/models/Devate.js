@@ -17,31 +17,19 @@ class Devate {
         return post;
     }
 
-    // userId로 게시글 검색
-    static async findByUserId({ userId }){
-        const posts = await DevateModel.find({ author: userId });
-        return posts;
-    }
-
-    static async findAll(newFilter, page, limit) {
+    static async findAll(newFilter) {
         const posts = await DevateModel.find(newFilter)
         .find({ tag: { $in: newFilter.tag } })
         .populate('author', 'id name')
-        .sort('-createdAt')
-        .skip((page-1)*limit)   
-        .limit(limit) 
-        .exec();
+        .sort({createdAt: -1 });
     
         return posts;
     }
 
-    static async findAllNoTag(newFilter, page, limit) {
+    static async findAllNoTag(newFilter) {
         const posts = await DevateModel.find(newFilter)
         .populate('author', 'id email name')
-        .sort('-createdAt')
-        .skip((page-1)*limit)   
-        .limit(limit) 
-        .exec();
+        .sort({createdAt: -1 });
 
         return posts;
     }

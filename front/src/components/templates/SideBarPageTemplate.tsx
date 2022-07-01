@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from "react"
 import { useNavigate, Link, useParams } from "react-router-dom"
 import Container from "@mui/material/Container"
 
-import { COMMON_ROUTE } from "../../route/Routes"
+import { ALL_ROUTE } from "../../route/Routes"
 import { customFetch } from "../../util"
 
-import { UserStateContext } from "../../pages/RootPage"
+import { UserStateContext } from "../../RootContext"
 import Header from "../organisms/Header"
 import Footer from "../organisms/Footer"
 import SideBarOrgan from "../organisms/SideBarOrgan"
@@ -23,13 +23,16 @@ const devateList = [
 ]
 
 const shareList = [
-  { index: 0, label: "AI 철학자의 글", path: "shares" },
-  { index: 1, label: "글 만들기", path: "shares/add" },
+  { index: 0, label: "글 공유", path: "shares" },
+  { index: 1, label: "AI 철학자", path: "shares/add" },
 ]
 
-export default function SideBarPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
+export default function SideBarPageTemplate({
+  currentPage,
+}: {
+  currentPage: ALL_ROUTE
+}) {
   //변수 초기화
-  const params = useParams()
   const userState = useContext(UserStateContext)
 
   //초기화 확인
@@ -49,11 +52,5 @@ export default function SideBarPageTemplate({ currentPage }: { currentPage: COMM
     }
   }
 
-  return (
-    <div>
-      <Header />
-      <SideBarOrgan path={currentPage.DEFAULT.path ?? ""} pages={pages()}></SideBarOrgan>
-      <Footer />
-    </div>
-  )
+  return <SideBarOrgan pages={pages()} />
 }

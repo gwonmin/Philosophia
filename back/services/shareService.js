@@ -73,12 +73,6 @@ class shareService {
     return res;
   }
 
-  // 사용자가 쓴 게시물 조회
-  static async getPostInfoByUserId({ userId }){
-    const posts = await Share.findByUserId({ userId });
-    return posts;
-  }
-
   static async getShares() {
     const shares = await Share.findAll();
     return shares;

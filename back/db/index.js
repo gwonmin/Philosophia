@@ -11,7 +11,6 @@ import { FreeTopic } from './models/FreeTopic';
 import { FreeTopicComment } from './models/FreeTopicComment';
 import { Data } from "./models/Data";
 import { DataComment } from "./models/DataComment";
-import { Translate } from './models/Translate';
 
 // import dotenv from "dotenv";
 // dotenv.config();
@@ -31,4 +30,4 @@ import { Translate } from './models/Translate';
 //   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 // );
 
-export { User, Token, Devate, DevateComment, Share, Philosopher, PhilosopherComment, FreeTopic, FreeTopicComment, Data, DataComment, Translate };
+export { User, Token, Devate, DevateComment, Share, Philosopher, PhilosopherComment, FreeTopic, FreeTopicComment, Data, DataComment };

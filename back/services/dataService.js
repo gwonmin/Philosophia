@@ -22,12 +22,6 @@ class dataService{
         return post
     };
 
-    // 사용자가 쓴 게시물 조회
-    static async getPostInfoByUserId({ userId }){
-        const posts = await Data.findByUserId({ userId });
-        return posts;
-    }
-
     //게시글 전체 조회
     static async getPostList(){
         const posts = await Data.findAll();
