@@ -29,7 +29,6 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
 
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
-  const [currentPageNumber, setCurrentPageNumber] = useState<number>(1)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
 
@@ -41,13 +40,13 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
     }
     setPostList([])
     customFetch({
-      endpoint: `${pages[value].path}${currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""}` ?? "",
+      endpoint: `${pages[value].path}` ?? "",
       setValue: (res: GetPostResponse) => {
         setPostList(res.posts)
       },
       callback: setIsFetchCompleted,
     })
-  }, [value, somethingWasChanged, currentPageNumber])
+  }, [value, somethingWasChanged])
 
   if (!isFetchCompleted) {
     return <p>loadloaction: SideBarOrgan, loadinging...</p>
@@ -117,12 +116,6 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
             value={value}
           >
             <GoodComponent postList={postList} />
-            <PaginationAtom
-              page={currentPageNumber}
-              onChange={(_e, val) => {
-                setCurrentPageNumber(val)
-              }}
-            />
           </TabPanel>
         )
       })}
