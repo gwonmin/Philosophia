@@ -30,7 +30,7 @@ philosophercommentRouter.post("/nietzschecomments", verifyToken, checkComment, a
 });
 
 // 니체 게시판 게시글 1개 댓글 조회
-philosophercommentRouter.get('/nietzschecommentlist', verifyToken, async (req, res, next) => {
+philosophercommentRouter.get('/nietzschecommentlist', async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await philosophercommentService.getComments({ postId });
@@ -107,7 +107,7 @@ philosophercommentRouter.post("/kantcomments", verifyToken, checkComment, async 
 });
 
 // 칸트 게시판 게시글 1개 댓글 조회
-philosophercommentRouter.get('/kantcommentlist', verifyToken, async (req, res, next) => {
+philosophercommentRouter.get('/kantcommentlist', async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await philosophercommentService.getComments({ postId });
@@ -184,7 +184,7 @@ philosophercommentRouter.post("/aristotlecomments", verifyToken, checkComment, a
 });
 
 // 아리스토텔레스 게시판 게시글 1개 댓글 조회
-philosophercommentRouter.get('/aristotlecommentlist', verifyToken, async (req, res, next) => {
+philosophercommentRouter.get('/aristotlecommentlist', async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await philosophercommentService.getComments({ postId });
