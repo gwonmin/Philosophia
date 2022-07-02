@@ -31,10 +31,12 @@ function Copyright(props: any) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15" target="_blank">
-        Philosophia's GitLab
+        Philosophia
       </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+      <p>
+        {new Date().getFullYear()}
+        {"."}
+      </p>
     </Typography>
   )
 }
@@ -130,6 +132,8 @@ const TrendPageLayout: React.FC<Props> = ({ children }) => {
     logout()
     navigate("/")
   }
+  if (!user) return <p>오류가 발생하였습니다.</p>
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -155,12 +159,12 @@ const TrendPageLayout: React.FC<Props> = ({ children }) => {
               Philosophia
             </Typography>
             {/*li, lo logic*/}
-            {!user && (
+            {!user.name && (
               <IconButton color="inherit" onClick={() => navigate(`/user/login`)}>
                 <VpnKeyIcon />
               </IconButton>
             )}
-            {user && (
+            {user.name && (
               <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" onClick={handleMenu}>
                 <IconButton color="inherit">
                   <PersonIcon />

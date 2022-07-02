@@ -5,6 +5,7 @@ import CheckUserPage from "../pages/user/CheckUserPage"
 import EditUserInfoPage from "../pages/user/EditUserInfoPage"
 
 import TrendPage from "../pages/TrendPage"
+import ServicePage from "../pages/ServicePage"
 
 import DevatesPage from "../pages/devate/DevatesPage"
 import DevateAddPage from "../pages/devate/DevateAddPage"
@@ -318,6 +319,13 @@ export const ROUTES: ROUTES_GROUP = {
       path: ActionPath.DETAIL,
       component: DataDetailPage,
       label: "게시글 상세 정보",
+    },
+  },
+  SERVICE: {
+    DEFAULT: {
+      path: RoutePath.SERVICE,
+      component: ServicePage,
+      label: "서비스 소개",
     },
   },
 }

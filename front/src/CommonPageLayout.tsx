@@ -31,10 +31,12 @@ function Copyright(props: any) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15" target="_blank">
-        Philosophia's GitLab
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+        Philosophia
+      </Link>
+      <p>
+        {new Date().getFullYear()}
+        {"."}
+      </p>
     </Typography>
   )
 }
@@ -211,7 +213,6 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
             <Sublist />
           </List>
         </Drawer>
-
         <Box
           component="main"
           sx={{

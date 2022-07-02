@@ -53,7 +53,7 @@ export default function CommentCard({
   }
   const deleteHandler = async () => {
     try {
-      const res = await Api.delete({
+      await Api.delete({
         endpoint: endpoint(),
         params: comment._id,
       })

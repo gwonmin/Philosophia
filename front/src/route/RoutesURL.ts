@@ -1,5 +1,4 @@
 export enum RoutePath {
-  MASTER = "",
   USER = "user",
   TREND = "",
   DEVATES = "devates",
@@ -7,7 +6,7 @@ export enum RoutePath {
   SHARE = "shares",
   FREE = "freetopics",
   DATA = "data",
-  TEAM_INTRO = "service",
+  SERVICE = "service",
 }
 
 export enum ActionPath {

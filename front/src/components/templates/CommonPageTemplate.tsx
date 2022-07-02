@@ -13,11 +13,7 @@ import { Post, GetPostResponse } from "../../types"
 import WriteFabAtom from "../atoms/WriteFabAtom"
 import PaginationAtom from "../atoms/PaginationAtom"
 
-export default function CommonPageTemplate({
-  currentPage,
-}: {
-  currentPage: ALL_ROUTE
-}) {
+export default function CommonPageTemplate({ currentPage }: { currentPage: ALL_ROUTE }) {
   //변수 초기화
   const params = useParams()
   const philosopher = params.who ?? ""
@@ -37,10 +33,7 @@ export default function CommonPageTemplate({
   //fetch
   useEffect(() => {
     customFetch({
-      endpoint:
-        `${path()}${
-          currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""
-        }` ?? "",
+      endpoint: `${path()}${currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""}` ?? "",
       setValue: (res: GetPostResponse) => {
         setPostList(res.posts)
       },
@@ -49,7 +42,7 @@ export default function CommonPageTemplate({
   }, [somethingWasChanged])
 
   if (!isFetchCompleted) {
-    return <p>loadloaction: CommonPageTemplate, loadinging...</p>
+    return <p>loading...</p>
   }
 
   return (
