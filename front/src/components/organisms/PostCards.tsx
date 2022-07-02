@@ -63,7 +63,7 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
   }
-  if (!post.no) return <p>loaction: PostCards, loading...</p>
+  if (!post.no) return <p>loadinging...</p>
 
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
