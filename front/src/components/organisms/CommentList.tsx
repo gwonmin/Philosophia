@@ -8,6 +8,7 @@ import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./CommentCard"
 import { useParams } from "react-router-dom"
 import { Box } from "@mui/system"
+import SublineAtom from "../atoms/SublineAtom"
 
 export default function CommentList({ path, postId }: { path: string; postId: string }) {
   //변수 초기화
@@ -80,6 +81,7 @@ export default function CommentList({ path, postId }: { path: string; postId: st
         </>
       )}
       <Box sx={{ mt: 3, pl: 2, pr: 2, mb: 2 }}>
+        <SublineAtom subtext="AI 댓글 클린봇(Beta)가 작동중입니다." />
         <TextFieldAtom
           id="newComment"
           label="새 덧글"
