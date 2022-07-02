@@ -18,6 +18,7 @@ import SublineAtom from "../atoms/SublineAtom"
 import { formatDateString } from "../../util"
 import TitleAtom from "../atoms/TitleAtom"
 import { Grid } from "@mui/material"
+import Loading from "../atoms/Loading"
 
 const NumberInBracketAtom: React.FC<{ number?: number }> = ({ number }) => {
   if (!number) return <></>
@@ -63,7 +64,7 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
   }
-  if (!post.no) return <p>loading...</p>
+  if (!post.no) return <Loading />
 
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>

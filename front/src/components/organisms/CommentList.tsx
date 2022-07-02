@@ -9,6 +9,7 @@ import CommentCard from "./CommentCard"
 import { useParams } from "react-router-dom"
 import { Box } from "@mui/system"
 import SublineAtom from "../atoms/SublineAtom"
+import Loading from "../atoms/Loading"
 
 export default function CommentList({ path, postId }: { path: string; postId: string }) {
   //변수 초기화
@@ -58,7 +59,7 @@ export default function CommentList({ path, postId }: { path: string; postId: st
     return <p>userState does not exist(even null)</p>
   }
   if (!isFetchCompleted) {
-    return <p>loading...</p>
+    return <Loading />
   }
 
   return (

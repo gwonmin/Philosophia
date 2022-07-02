@@ -8,6 +8,7 @@ import axios from "axios"
 import { TextFieldAtom } from "../atoms/textInputs"
 import { Button, FormControl, Grid, InputLabel } from "@mui/material"
 import SublineAtom from "../atoms/SublineAtom"
+import Loading from "../atoms/Loading"
 
 export default function SharePostAddForm(aiShare?: any) {
   //AI와 상호작용하는 게시판에서 불러오게 될 것 같습니다.
@@ -29,7 +30,7 @@ export default function SharePostAddForm(aiShare?: any) {
         data: postInfo,
       })
       alert("게시글 등록에 성공했습니다.")
-      navigate("/share")
+      navigate("/shares")
     } catch (err) {
       alert("게시글 등록에 실패하였습니다.")
     }
@@ -99,7 +100,7 @@ export default function SharePostAddForm(aiShare?: any) {
           글 생성하기
         </Button>
       </Grid>
-      {writing && <p>loading...</p>}
+      {writing && <Loading />}
       {postInfo.content != "" && (
         <>
           <p>

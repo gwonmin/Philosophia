@@ -8,7 +8,7 @@ import { UserStateContext } from "../../RootContext"
 import { ALL_ROUTE } from "../../route/Routes"
 import CommonPostEditForm from "../organisms/CommonPostEditForm"
 import CommonPostReadForm from "../organisms/CommonPostReadForm"
-
+import Loading from "../atoms/Loading"
 import { Post } from "../../types"
 
 export default function CommonDetailPageTemplate({ currentPage }: { currentPage: ALL_ROUTE }) {
@@ -42,12 +42,9 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
   if (!postId) {
     return <p>Param is not valid</p>
   }
-  if (!isFetchCompleted) {
-    return <p>loading...</p>
-  }
-  if (!postInfo) {
-    return <p>loading...</p>
-  }
+  if (!isFetchCompleted) return <Loading />
+
+  if (!postInfo) return <Loading />
 
   return (
     <Container>

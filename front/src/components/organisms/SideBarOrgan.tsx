@@ -16,6 +16,7 @@ import { GetPostResponse, Post } from "../../types"
 import WriteFabAtom from "../atoms/WriteFabAtom"
 import PaginationAtom from "../atoms/PaginationAtom"
 import TabPanel from "../atoms/TabPanel"
+import Loading from "../atoms/Loading"
 
 interface Page {
   index: number
@@ -49,12 +50,12 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   }, [value, somethingWasChanged])
 
   if (!isFetchCompleted) {
-    return <p>loading...</p>
+    return <Loading />
   }
 
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     if (!isFetchCompleted) {
-      return <p>loading...</p>
+      return <Loading />
     }
     return (
       <>

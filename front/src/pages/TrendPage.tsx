@@ -8,11 +8,12 @@ import { Grid, Typography, Paper } from "@mui/material"
 import { MainlineMolecule, PostListItemContainerAtom } from "../components/organisms/PostCards"
 
 // @ts-ignore
-import BannerImage from "../../public/img/banner.png"
+import BannerImage from "/img/banner.png"
 // @ts-ignore
-import TSMan from "../../public/img/ts_man.avif"
+import TSMan from "/img/ts_man.avif"
 import HotPotatoTitle from "../components/atoms/HotPotatoTitle"
 import SublineAtom from "../components/atoms/SublineAtom"
+import Loading from "../components/atoms/Loading"
 
 const SectionPage: React.FC<Props & { xs?: number }> = ({ children, xs = 12 }) => {
   return (
@@ -85,9 +86,8 @@ export default function TrendPage() {
     })
   }, [])
 
-  if (!isFetchCompleted) {
-    return <p>loading...</p>
-  }
+  if (!isFetchCompleted) return <Loading />
+
   if (!trend) return <p>게시물이 없습니다.</p>
   return (
     <>

@@ -5,6 +5,7 @@ import { User } from "./types"
 
 import { customFetch } from "./util"
 import MyRouter from "./route/Router"
+import Loading from "./components/atoms/Loading"
 
 export const UserStateContext = createContext<{ user: User | null } | undefined>(undefined)
 export const DispatchContext = createContext<Dispatch<Action> | undefined>(undefined)
@@ -30,7 +31,7 @@ export default function RootContext() {
   }, [])
 
   if (!isFetchCompleted) {
-    return <p>loading...</p>
+    return <Loading />
   }
   if (!dispatch) {
     return <p>dispatch does not exist...</p>

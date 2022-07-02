@@ -12,6 +12,7 @@ import Exchange from "../organisms/PostCards"
 import { Post, GetPostResponse } from "../../types"
 import WriteFabAtom from "../atoms/WriteFabAtom"
 import PaginationAtom from "../atoms/PaginationAtom"
+import Loading from "../atoms/Loading"
 
 export default function CommonPageTemplate({ currentPage }: { currentPage: ALL_ROUTE }) {
   //변수 초기화
@@ -41,9 +42,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: ALL_R
     })
   }, [somethingWasChanged])
 
-  if (!isFetchCompleted) {
-    return <p>loading...</p>
-  }
+  if (!isFetchCompleted) return <Loading />
 
   return (
     <Container component="main" sx={{ width: "100%" }}>
