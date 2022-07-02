@@ -7,6 +7,7 @@ import * as Api from "../../api"
 import axios from "axios"
 import { TextFieldAtom } from "../atoms/textInputs"
 import { Button, FormControl, Grid, InputLabel } from "@mui/material"
+import SublineAtom from "../atoms/SublineAtom"
 
 export default function SharePostAddForm(aiShare?: any) {
   //AI와 상호작용하는 게시판에서 불러오게 될 것 같습니다.
@@ -91,6 +92,7 @@ export default function SharePostAddForm(aiShare?: any) {
         >
           <TextFieldAtom id="subject" placeholder="제시어를 입력해주세요" name="subject" value={word} onChange={(e) => setWord(e.target.value)} />
         </Grid>
+        <SublineAtom subtext="*Beta에서는 영어를 입력했을 때 더 완성도 있는 문장이 나옵니다."></SublineAtom>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button variant="outlined" onClick={connectAI}>
