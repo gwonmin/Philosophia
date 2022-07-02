@@ -34,7 +34,7 @@ philosopherRouter.post("/nietzsche", verifyToken, async function(req, res, next)
 });
 
 // 니체 게시판 게시글 상세 조회
-philosopherRouter.get("/nietzsche/:id", verifyToken, async function(req, res, next){
+philosopherRouter.get("/nietzsche/:id", async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await philosopherService.getPostInfo({ postId });
@@ -151,7 +151,7 @@ philosopherRouter.post("/kant", verifyToken, async function(req, res, next){
 });
 
 // 칸트 게시판 게시글 상세 조회
-philosopherRouter.get("/kant/:id", verifyToken, async function(req, res, next){
+philosopherRouter.get("/kant/:id", async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await philosopherService.getPostInfo({ postId });
@@ -268,7 +268,7 @@ philosopherRouter.post("/aristotle", verifyToken, async function(req, res, next)
 });
 
 // 아리스토텔레스 게시판 게시글 상세 조회
-philosopherRouter.get("/aristotle/:id", verifyToken, async function(req, res, next){
+philosopherRouter.get("/aristotle/:id", async function(req, res, next){
     try{
         const postId = req.params.id;
         const currentPostInfo = await philosopherService.getPostInfo({ postId });
