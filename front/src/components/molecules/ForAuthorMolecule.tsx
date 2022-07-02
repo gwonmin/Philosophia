@@ -1,18 +1,10 @@
 import { Box, Button } from "@mui/material"
 
-export default function ForAuthorMolcule({
-  isAuthor,
-  setIsEditing,
-  deleteHandler,
-}: {
-  isAuthor: boolean
-  setIsEditing: any
-  deleteHandler: any
-}) {
+export default function ForAuthorMolcule({ isAuthor, setIsEditing, deleteHandler }: { isAuthor: boolean; setIsEditing: any; deleteHandler: any }) {
   return (
     <>
       {isAuthor && (
-        <Box sx={{ mt: 10, display: "flex", justifyContent: "center" }}>
+        <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
           <Button
             sx={{ mr: 2 }}
             variant="outlined"

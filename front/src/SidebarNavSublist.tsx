@@ -17,7 +17,7 @@ const SidebarMainList = () => {
       </ListSubheader>
       <ListItemButton
         onClick={() => {
-          navigate(`/${RoutePath.TEAM_INTRO}`)
+          navigate(`/${RoutePath.SERVICE}`)
         }}
       >
         <ListItemIcon>

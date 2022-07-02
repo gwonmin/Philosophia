@@ -9,6 +9,7 @@ import { handleDelete, handleStance } from "../../util"
 import ForAuthorMolcule from "../molecules/ForAuthorMolecule"
 import * as Api from "../../api"
 import { Post } from "../../types"
+import { Divider } from "@mui/material"
 
 export default function CommonPostReadForm({
   path,
@@ -64,6 +65,7 @@ export default function CommonPostReadForm({
       <ShowPostInfo postInfo={postInfo} />
       <ForUserMolcule postInfo={postInfo} isUser={userState.user != null} handleChangeStance={handleChangeStance} handleLike={handleLike} />
       <ForAuthorMolcule isAuthor={isAuthor} setIsEditing={setIsEditing} deleteHandler={deleteHandler} />
+      <Divider sx={{ mt: 3, mb: 3 }} />
       {path != "shares" && <CommentList path={path} postId={postId} />}
     </>
   )
