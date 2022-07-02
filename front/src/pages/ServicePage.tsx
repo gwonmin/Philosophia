@@ -32,7 +32,7 @@ export default function ServicePage() {
         팀 소개
       </Typography>
       <Typography variant="body1" sx={{ p: 2 }}>
-        AI : 양권민 AI : 정예승 FE : 명하준 FE : 주강현 BE : 유하얀 BE : 장준수
+        AI : 양권민 AI : 정예승 FE : 주강현 BE : 유하얀 BE : 장준수
       </Typography>
     </>
   )
