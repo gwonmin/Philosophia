@@ -10,7 +10,6 @@ export type Action =
 export function loginReducer(userState: { user: User | null }, action: Action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
-      alert("로그인에 성공하였습니다!")
       return {
         ...userState,
         user: action.payload,

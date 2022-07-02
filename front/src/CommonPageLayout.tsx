@@ -211,7 +211,6 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
             <Sublist />
           </List>
         </Drawer>
-
         <Box
           component="main"
           sx={{

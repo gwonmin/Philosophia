@@ -23,7 +23,7 @@ export default function SharePostAddForm(aiShare?: any) {
 
   const handlePost = async () => {
     try {
-      const res = await Api.post({
+      await Api.post({
         endpoint: "shares",
         data: postInfo,
       })
