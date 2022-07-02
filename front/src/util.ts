@@ -72,7 +72,7 @@ async function customFetch({ endpoint, setValue, callback }: { endpoint: string;
       setValue(res.data)
     }
   } catch {
-    alert("데이터를 받아오는 데에 실패했습니다. 새로고침을 해주세요.")
+    if (endpoint !== "user/current") alert("데이터를 받아오는 데에 실패했습니다. 새로고침을 해주세요.")
   }
   callback(true)
 }

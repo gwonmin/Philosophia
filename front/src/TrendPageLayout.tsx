@@ -33,10 +33,8 @@ function Copyright(props: any) {
       <Link color="inherit" href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15" target="_blank">
         Philosophia
       </Link>{" "}
-      <p>
-        {new Date().getFullYear()}
-        {"."}
-      </p>
+      {new Date().getFullYear()}
+      {"."}
     </Typography>
   )
 }
@@ -132,7 +130,6 @@ const TrendPageLayout: React.FC<Props> = ({ children }) => {
     logout()
     navigate("/")
   }
-  if (!user) return <p>오류가 발생하였습니다.</p>
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -159,18 +156,18 @@ const TrendPageLayout: React.FC<Props> = ({ children }) => {
               Philosophia
             </Typography>
             {/*li, lo logic*/}
-            {!user.name && (
+            {!user?.name && (
               <IconButton color="inherit" onClick={() => navigate(`/user/login`)}>
                 <VpnKeyIcon />
               </IconButton>
             )}
-            {user.name && (
+            {user?.name && (
               <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" onClick={handleMenu}>
                 <IconButton color="inherit">
                   <PersonIcon />
                 </IconButton>
                 <Typography variant="body1" color="inherit">
-                  {user.name}
+                  {user?.name}
                 </Typography>
               </Stack>
             )}
@@ -189,7 +186,6 @@ const TrendPageLayout: React.FC<Props> = ({ children }) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleUserEdit}>정보변경</MenuItem>
               <MenuItem onClick={handleLogOut}>로그아웃</MenuItem>
             </Menu>
           </Toolbar>

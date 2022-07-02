@@ -43,10 +43,10 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
     return <p>Param is not valid</p>
   }
   if (!isFetchCompleted) {
-    return <p>loadinging...</p>
+    return <p>loading...</p>
   }
   if (!postInfo) {
-    return <p>loadinging...</p>
+    return <p>loading...</p>
   }
 
   return (

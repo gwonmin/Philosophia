@@ -57,7 +57,7 @@ export default function CommentList({ path, postId }: { path: string; postId: st
     return <p>userState does not exist(even null)</p>
   }
   if (!isFetchCompleted) {
-    return <p>loadinging...</p>
+    return <p>loading...</p>
   }
 
   return (
