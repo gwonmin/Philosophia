@@ -49,17 +49,17 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
   }, [value, somethingWasChanged])
 
   if (!isFetchCompleted) {
-    return <p>loadloaction: SideBarOrgan, loadinging...</p>
+    return <p>loading...</p>
   }
 
   const GoodComponent = ({ postList }: { postList: Post[] }) => {
     if (!isFetchCompleted) {
-      return <p>loadloaction: SideBarOrgan, loadinging...</p>
+      return <p>loading...</p>
     }
     return (
       <>
         {postList && postList.length === 0 ? (
-          <Typography variant="h4">아직 게시물이 없네요 😭</Typography>
+          <Typography variant="h4">아직 게시물이 없습니다.</Typography>
         ) : (
           <>
             {postList?.map((post: Post) => {

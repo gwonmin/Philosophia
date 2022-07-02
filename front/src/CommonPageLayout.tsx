@@ -32,11 +32,9 @@ function Copyright(props: any) {
       {"Copyright © "}
       <Link color="inherit" href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15" target="_blank">
         Philosophia
-      </Link>
-      <p>
-        {new Date().getFullYear()}
-        {"."}
-      </p>
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
     </Typography>
   )
 }
@@ -186,7 +184,6 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleUserEdit}>정보변경</MenuItem>
               <MenuItem onClick={handleLogOut}>로그아웃</MenuItem>
             </Menu>
           </Toolbar>

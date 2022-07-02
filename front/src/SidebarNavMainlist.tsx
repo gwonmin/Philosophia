@@ -14,7 +14,7 @@ const ForMap: { path: string; icon?: any; label: string }[] = [
   { path: RoutePath.TREND, icon: DashboardIcon, label: "트렌드 페이지" },
   { path: RoutePath.DEVATES, icon: ForumIcon, label: "토론 게시판" },
   { path: RoutePath.PHILOSOPHER, icon: PeopleIcon, label: "철학자 게시판" },
-  { path: RoutePath.SHARE, icon: ShareIcon, label: "AI 철학자" },
+  { path: RoutePath.SHARE, icon: ShareIcon, label: "AI 철학자(Beta)" },
 ]
 
 const MainList = () => {

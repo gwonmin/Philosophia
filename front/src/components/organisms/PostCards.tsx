@@ -63,7 +63,7 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
   }
-  if (!post.no) return <p>loaction: PostCards, loading...</p>
+  if (!post.no) return <p>loading...</p>
 
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
@@ -77,7 +77,7 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
           </Grid>
         </Grid>
         <Grid item xs={6} alignItems="center" justifyContent="center">
-          <SublineAtom subtext={post.content} />
+          <SublineAtom subtext={post.content.length > 40 ? `${post.content.substring(0, 40)}...` : post.content} />
         </Grid>
         <Grid item xs={2} alignItems="center" justifyContent="center">
           <SublineAtom yes={post.yes.length} no={post.no.length} />
@@ -124,13 +124,25 @@ function Share({
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <PostListItemContainerAtom onClick={toTheDetailPage}>
         <MainlineMolecule title={`철학자 ${post.philosopher}(이)가 생각하는 ${post.subject}(이)란?`} />
-        <SublineAtom subtext={post.content.length > 40 ? `${post.content.substring(0, 40)}...` : post.content} yes={post.like.length} />
+        <SublineAtom subtext={post.content.length > 40 ? `${post.content.substring(0, 40)}...` : post.content} like={post.like.length} />
       </PostListItemContainerAtom>
 
       {/* 좋아요 버튼 */}
       {user && (
         <Box>
-          <IconButton onClick={likeHandler}>{didLike ? <HeartIcon color="primary" /> : <HeartBorderIcon color="primary" />}</IconButton>
+          <IconButton onClick={likeHandler}>
+            {didLike ? (
+              <div>
+                <HeartIcon color="primary" />
+                {post.like.length}
+              </div>
+            ) : (
+              <div>
+                <HeartBorderIcon color="primary" />
+                {post.like.length}
+              </div>
+            )}
+          </IconButton>
         </Box>
       )}
     </Box>
@@ -160,8 +172,19 @@ function Default({ path, post }: { path: string; post: Post }) {
   }
   return (
     <PostListItemContainerAtom onClick={toTheDetailPage}>
-      <MainlineMolecule title={post.title} number={post.comment.length} name={post.author.name} />
-      <SublineAtom subtext={post.content} />
+      <Grid container spacing={2}>
+        <Grid container item xs={4} direction="column" alignItems="flex-start" justifyContent="center">
+          <Grid item>
+            <MainlineMolecule title={post.title} number={post.comment.length} />
+          </Grid>
+          <Grid item>
+            <SublineAtom subtext={post.author.name} />
+          </Grid>
+        </Grid>
+        <Grid item xs={8} alignItems="center" justifyContent="center">
+          <SublineAtom subtext={post.content.length > 40 ? `${post.content.substring(0, 40)}...` : post.content} />
+        </Grid>
+      </Grid>
     </PostListItemContainerAtom>
   )
 }

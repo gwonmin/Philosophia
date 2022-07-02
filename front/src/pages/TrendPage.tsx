@@ -77,7 +77,7 @@ export default function TrendPage() {
   const [trend, setTrend] = useState<Trend | null>(null)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const navigate = useNavigate()
-
+  console.log(trend)
   useEffect(() => {
     customFetch({
       endpoint: "trend",
@@ -98,8 +98,8 @@ export default function TrendPage() {
         <SectionPage>
           <HotPotatoTitle title="화제의 찬반 토론" />
           {trend.devatePosts.map((post, idx) => {
-            const yesRatio = (post.yes.length / (post.yes.length + post.no.length)) * 100
-            const noRatio = (post.no.length / (post.yes.length + post.no.length)) * 100
+            const yesRatio = (post.yes.length / Math.max(1, post.yes.length + post.no.length)) * 100
+            const noRatio = (post.no.length / Math.max(1, post.yes.length + post.no.length)) * 100
             return (
               <PostListItemContainerAtom
                 key={`trend-chanban-${idx}`}

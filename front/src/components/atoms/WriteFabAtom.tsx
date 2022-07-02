@@ -13,7 +13,7 @@ const WriteFabAtom: React.FC<{ path: string }> = ({ path }) => {
       onClick={() => {
         navigate(path)
       }}
-      sx={{ position: "fixed", bottom: 80, right: 8 }}
+      sx={{ position: "fixed", bottom: 40, right: 40 }}
     >
       <Edit />
     </Fab>

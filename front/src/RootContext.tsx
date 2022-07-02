@@ -30,7 +30,7 @@ export default function RootContext() {
   }, [])
 
   if (!isFetchCompleted) {
-    return <p>loaction: RootContext, loading...</p>
+    return <p>loading...</p>
   }
   if (!dispatch) {
     return <p>dispatch does not exist...</p>
