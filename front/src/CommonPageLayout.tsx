@@ -154,18 +154,18 @@ const CommonPageLayout: React.FC<Props> = ({ children }) => {
             <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               Philosophia
             </Typography>
-            {!user && (
+            {!user?.name && (
               <IconButton color="inherit" onClick={() => navigate(`/user/login`)}>
                 <VpnKeyIcon />
               </IconButton>
             )}
-            {user && (
+            {user?.name && (
               <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" onClick={handleMenu}>
                 <IconButton color="inherit">
                   <PersonIcon />
                 </IconButton>
                 <Typography variant="body1" color="inherit">
-                  {user.name}
+                  {user?.name}
                 </Typography>
               </Stack>
             )}
