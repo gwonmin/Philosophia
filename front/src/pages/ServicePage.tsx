@@ -24,7 +24,7 @@ export default function ServicePage() {
         있습니다.
       </Typography>
       <Typography variant="body1" sx={{ p: 2 }}>
-        철학 책을 읽다 헷갈리는 개념이 나온다면 AI 철학자에게 물어보는 건 어떨까요?AI 철학자 게시판에서는 영어로 제시어를 입력하면 철학자들의 책을 학습한 AI가
+        철학 책을 읽다 헷갈리는 개념이 나온다면 AI 철학자에게 물어보는 건 어떨까요? AI 철학자 게시판에서는 영어로 제시어를 입력하면 철학자들의 책을 학습한 AI가
         제시어에 대한 글을 생성해줍니다. 마음에 드는 글이 생성되었다면 그 글을 다른 유저들과 공유할 수 있습니다.
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2, mt: 2 }} />
@@ -32,7 +32,7 @@ export default function ServicePage() {
         팀 소개
       </Typography>
       <Typography variant="body1" sx={{ p: 2 }}>
-        AI : 양권민 AI : 정예승 FE : 주강현 BE : 유하얀 BE : 장준수
+        [AI]양권민, [AI]정예승, [FE]주강현, [BE]유하얀, [BE]장준수
       </Typography>
     </>
   )

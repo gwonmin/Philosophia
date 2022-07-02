@@ -23,18 +23,18 @@ const map: { [key: string]: any } = {
 
 export default function ForUserMolcule({
   postInfo,
-  isUser,
+  userName,
   handleChangeStance,
   handleLike,
 }: {
   postInfo: any
-  isUser: boolean
+  userName: string
   handleChangeStance: any
   handleLike: any
 }) {
   return (
     <>
-      {isUser && (
+      {userName && (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           {postInfo.userStance && (
             <Chip
@@ -55,11 +55,7 @@ export default function ForUserMolcule({
                 justifyContent: "center",
               }}
             >
-              <Button
-                variant="contained"
-                onClick={() => handleChangeStance("yes")}
-                sx={{ m: 1.5, backgroundColor: "navy" }}
-              >
+              <Button variant="contained" onClick={() => handleChangeStance("yes")} sx={{ m: 1.5, backgroundColor: "navy" }}>
                 찬성
               </Button>
               <Button

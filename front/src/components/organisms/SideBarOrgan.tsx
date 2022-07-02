@@ -77,7 +77,7 @@ export default function SideBarOrgan({ pages }: { pages: Page[] }) {
           </>
         )}
 
-        {userState?.user && <WriteFabAtom path={`/${pages[value].path}/add`} />}
+        {userState?.user?.name && <WriteFabAtom path={`/${pages[value].path}/add`} />}
       </>
     )
   }

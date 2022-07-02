@@ -108,7 +108,7 @@ function Share({
     navigate(`/${path}/${post._id}`)
   }
   const likeHandler = async () => {
-    if (!user) {
+    if (!user?.name) {
       alert("로그인이 필요한 기능입니다.")
       return
     }

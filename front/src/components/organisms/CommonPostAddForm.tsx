@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { UserStateContext } from "../../RootContext"
 
 import { TextFieldAtom } from "../atoms/textInputs"
 import { TextFieldMultilineAtom } from "../atoms/textInputsMultiline"
@@ -52,11 +53,16 @@ export default function CommonPostAddForm({ path }: { path: string }) {
   const philosopher = params.who
   const navigate = useNavigate()
   const endpoint = path === ":who" ? philosopher : path
+  const userState = useContext(UserStateContext) ?? { user: null }
 
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const handlePost = async () => {
     if (!endpoint) {
       alert("에러: post 경로가 잘못되었습니다. 다시 시도해주세요.")
+      return
+    }
+    if (!userState?.user?.name) {
+      alert("로그인이 필요한 기능입니다.")
       return
     }
     try {

@@ -63,7 +63,7 @@ export default function CommonPostReadForm({
   return (
     <>
       <ShowPostInfo postInfo={postInfo} />
-      <ForUserMolcule postInfo={postInfo} isUser={userState.user != null} handleChangeStance={handleChangeStance} handleLike={handleLike} />
+      <ForUserMolcule postInfo={postInfo} userName={userState?.user?.name ?? ""} handleChangeStance={handleChangeStance} handleLike={handleLike} />
       <ForAuthorMolcule isAuthor={isAuthor} setIsEditing={setIsEditing} deleteHandler={deleteHandler} />
       <Divider sx={{ mt: 3, mb: 3 }} />
       {path != "shares" && <CommentList path={path} postId={postId} />}

@@ -65,7 +65,7 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: ALL_R
           })
         )}
       </Box>
-      {userState?.user && <WriteFabAtom path="add" />}
+      {userState?.user?.name && <WriteFabAtom path="add" />}
       <PaginationAtom
         page={currentPageNumber}
         onChange={(_e, val) => {

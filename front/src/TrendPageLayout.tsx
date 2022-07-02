@@ -95,7 +95,7 @@ const mdTheme = createTheme({
 })
 
 const TrendPageLayout: React.FC<Props> = ({ children }) => {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   const toggleDrawer = () => {
     setOpen(!open)
   }
