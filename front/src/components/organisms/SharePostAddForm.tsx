@@ -27,10 +27,10 @@ export default function SharePostAddForm(aiShare?: any) {
         endpoint: "shares",
         data: postInfo,
       })
-      console.log("글 공유 게시판의 post요청이 성공했습니다. data: ", res.data)
-      navigate("share")
+      alert("게시글 등록에 성공했습니다.")
+      navigate("/share")
     } catch (err) {
-      console.log("게시글 등록에 실패하였습니다.\n", err)
+      alert("게시글 등록에 실패하였습니다.")
     }
   }
   const connectAI = async () => {
@@ -41,8 +41,6 @@ export default function SharePostAddForm(aiShare?: any) {
     const bodyData = JSON.stringify(data)
     // const serverUrl = "http://localhost:5001/translate";
     // const bodyData = JSON.stringify(philosopher + " " + word).replace("\"", "").replace("\"", "");
-    console.log(`%cPOST 요청: ${serverUrl}`, "color: #296aba;")
-    console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;")
     const res = await axios.post(serverUrl, bodyData, {
       headers: {
         "Content-Type": "application/json",

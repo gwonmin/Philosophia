@@ -23,11 +23,6 @@ export default function CommonDetailPageTemplate({ currentPage }: { currentPage:
   const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
   const [postInfo, setPostInfo] = useState<Post | null>(null)
 
-  //초기화 확인
-  console.log("location: ", currentPage)
-  console.log("userState: ", userState)
-  console.log("postId: ", postId)
-
   //fetch + 새로고침 로직
   useEffect(() => {
     customFetch({

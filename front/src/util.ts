@@ -11,24 +11,24 @@ async function handleChange({ event, someState, setSomeState }: { event: React.C
 }
 const handleEdit = async ({ endpoint, data, callback }: { endpoint: string; data: any; callback: any }) => {
   try {
-    const res = await Api.put({ endpoint: endpoint, data: data })
-    console.log("수정에 성공했습니다.", res.data)
+    await Api.put({ endpoint: endpoint, data: data })
+    alert("수정에 성공했습니다.")
     callback()
   } catch (err) {
-    console.log("수정에 실패하였습니다.\n", err)
+    alert("수정에 실패하였습니다.")
   }
 }
 const handleDelete = async ({ endpoint, id, callback }: { endpoint: string; id: string; callback: any }) => {
   if (id) {
     try {
       await Api.delete({ endpoint: endpoint, params: id })
-      console.log(`${endpoint}의 ${id}이 삭제되었습니다.`)
+      alert(`삭제에 성공하였습니다.`)
       callback()
     } catch (err) {
-      console.log(`${endpoint}의 ${id} 삭제에 실패했습니다.`, err)
+      alert(`삭제에 실패했습니다.`)
     }
   } else {
-    console.log("존재하지 않는 글입니다.")
+    alert("존재하지 않는 글입니다.")
   }
 }
 const handleStance = async ({
@@ -45,9 +45,8 @@ const handleStance = async ({
   callback: Dispatch<SetStateAction<boolean>>
 }) => {
   const isYes = changeStance === "yes"
-  console.log("isYes: ", isYes, "stance: ", stance, "changeStance: ", changeStance, "value: ", value)
   if (stance === changeStance) {
-    console.log(isYes ? "이미 찬성하셨습니다." : "이미 반대하셨습니다.")
+    alert(isYes ? "이미 찬성하셨습니다." : "이미 반대하셨습니다.")
     return
   }
   try {
@@ -55,9 +54,9 @@ const handleStance = async ({
       endpoint: `devates/${id}/stance`,
       data: { stance: isYes ? 1 : 0 },
     })
-    console.log(`${isYes ? "찬성" : "반대"}하였습니다.`)
+    alert(`${isYes ? "찬성" : "반대"}하였습니다.`)
   } catch (err) {
-    console.log(`${isYes ? "찬성" : "반대"}에 실패하였습니다.`, err)
+    alert(`${isYes ? "찬성" : "반대"}에 실패하였습니다.`)
   }
   callback(!value)
   return false
@@ -72,10 +71,8 @@ async function customFetch({ endpoint, setValue, callback }: { endpoint: string;
     if (res.data) {
       setValue(res.data)
     }
-    console.log("데이터를 정상적으로 받아왔습니다.", "color: #d93d1a;")
-    console.log("경로: ", endpoint, "데이터: ", res.data)
   } catch {
-    console.log("데이터를 받아오는 데에 실패했습니다.", "color: #d93d1a;")
+    alert("데이터를 받아오는 데에 실패했습니다. 새로고침을 해주세요.")
   }
   callback(true)
 }

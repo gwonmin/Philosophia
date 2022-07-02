@@ -102,25 +102,21 @@ function Share({
   const user = useContext(UserStateContext)?.user
   const didLike = user?._id ? post.like.includes(user?._id) : false
   const navigate = useNavigate()
-
-  console.log(path, post)
-
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
   }
-
   const likeHandler = async () => {
     if (!user) {
       return <p>user does not exist(even null)</p>
     }
 
     try {
-      const res = await Api.put({ endpoint: `shares/${post._id}/like` })
+      await Api.put({ endpoint: `shares/${post._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
 
-      console.log("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."), res.data, post.like, user)
+      alert("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."))
     } catch (err) {
-      console.log("좋아요에 실패했습니다.", err)
+      alert("좋아요에 실패했습니다.")
     }
   }
 

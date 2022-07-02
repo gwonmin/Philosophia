@@ -29,10 +29,6 @@ export default function SideBarPageTemplate({ currentPage }: { currentPage: ALL_
   //변수 초기화
   const userState = useContext(UserStateContext)
 
-  //초기화 확인
-  console.log("location: ", currentPage)
-  console.log("userState: ", userState)
-
   let pages = () => {
     switch (currentPage.DEFAULT.path) {
       case ":who":

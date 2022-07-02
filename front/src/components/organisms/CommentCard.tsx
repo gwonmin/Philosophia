@@ -44,11 +44,11 @@ export default function CommentCard({
         endpoint: endpoint() + `/${comment._id}`,
         data: { content: newComment },
       })
-      console.log("수정에 성공했습니다.")
+      alert("수정에 성공했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
       setIsEditing(false)
     } catch (err) {
-      console.log("수정에 실패하였습니다.\n", err)
+      alert("수정에 실패하였습니다.")
     }
   }
   const deleteHandler = async () => {
@@ -57,10 +57,10 @@ export default function CommentCard({
         endpoint: endpoint(),
         params: comment._id,
       })
-      console.log("덧글을 삭제했습니다.", res.data)
+      alert("덧글을 삭제했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
     } catch (err) {
-      console.log("덧글 삭제에 실패했습니다.", err)
+      alert("덧글 삭제에 실패했습니다.")
     }
   }
 
@@ -101,15 +101,15 @@ export default function CommentCard({
           </Box>
           {comment.author._id === user?._id && (
             <Box>
-              <Button color="error" onClick={deleteHandler}>
-                삭제하기
-              </Button>
               <Button
                 onClick={() => {
                   setIsEditing(true)
                 }}
               >
                 수정하기
+              </Button>
+              <Button color="error" onClick={deleteHandler}>
+                삭제하기
               </Button>
             </Box>
           )}

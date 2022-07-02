@@ -16,27 +16,8 @@ import { Typography } from "@mui/material"
 function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
     <>
-      <TextFieldAtom
-        id="title"
-        placeholder="제목을 입력해주세요"
-        name="title"
-        value={postInfo.title}
-        onChange={onChange}
-      />
-      <TextFieldMultilineAtom
-        id="content"
-        placeholder="본문을 입력해주세요"
-        name="content"
-        value={postInfo.content}
-        onChange={onChange}
-      />
-      <TextFieldAtom
-        id="tag"
-        placeholder="태그를 입력해주세요"
-        name="tag"
-        value={postInfo.tag}
-        onChange={onChange}
-      />
+      <TextFieldAtom id="title" placeholder="제목을 입력해주세요" name="title" value={postInfo.title} onChange={onChange} />
+      <TextFieldMultilineAtom id="content" placeholder="본문을 입력해주세요" name="content" value={postInfo.content} onChange={onChange} />
     </>
   )
 }
@@ -45,34 +26,14 @@ function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
 function Default({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
     <Box sx={{ p: 1, mb: 3, mt: 4 }}>
-      <TextFieldAtom
-        id="title"
-        placeholder="제목을 입력해주세요"
-        name="title"
-        value={postInfo.title}
-        onChange={onChange}
-      />
-      <TextFieldMultilineAtom
-        id="content"
-        placeholder="본문을 입력해주세요"
-        name="content"
-        value={postInfo.content}
-        onChange={onChange}
-      />
+      <TextFieldAtom id="title" placeholder="제목을 입력해주세요" name="title" value={postInfo.title} onChange={onChange} />
+      <TextFieldMultilineAtom id="content" placeholder="본문을 입력해주세요" name="content" value={postInfo.content} onChange={onChange} />
     </Box>
   )
 }
 
 //-------------------------------------------exchange-------------------------------------------//
-function Exchange({
-  path,
-  postInfo,
-  onChange,
-}: {
-  path: string
-  postInfo: any
-  onChange: any
-}) {
+function Exchange({ path, postInfo, onChange }: { path: string; postInfo: any; onChange: any }) {
   switch (path) {
     case "devates":
       return <Devate postInfo={postInfo} onChange={onChange} />
@@ -92,13 +53,10 @@ export default function CommonPostAddForm({ path }: { path: string }) {
   const navigate = useNavigate()
   const endpoint = path === ":who" ? philosopher : path
 
-  const onChange = (e: any) =>
-    handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
+  const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const handlePost = async () => {
     if (!endpoint) {
-      console.log(
-        "location: CommonPostAddForm, err: post 경로가 잘못되었습니다."
-      )
+      alert("에러: post 경로가 잘못되었습니다. 다시 시도해주세요.")
       return
     }
     try {
@@ -106,10 +64,10 @@ export default function CommonPostAddForm({ path }: { path: string }) {
         endpoint: endpoint,
         data: postInfo,
       })
-      console.log(path, "의 post요청이 성공했습니다. data: ", res.data)
+      alert("게시글 등록에 성공했습니다.")
       navigate(-1)
     } catch (err) {
-      console.log("게시글 등록에 실패하였습니다.\n", err)
+      alert("게시글 등록에 실패하였습니다.")
     }
   }
 
