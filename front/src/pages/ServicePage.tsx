@@ -1,11 +1,11 @@
 import { Avatar, Box, Card, CardContent, Divider, Grid, Stack, Typography } from "@mui/material"
 
 const forMap = [
-  { name: "[AI]양권민", photo: " " },
-  { name: "[AI]정예승", photo: " " },
-  { name: "[FE]주강현", photo: " " },
-  { name: "[BE]유하얀", photo: " " },
-  { name: "[BE]장준수", photo: " " },
+  { name: "[AI]양권민", photo: "/img/sponge.png" },
+  { name: "[AI]정예승", photo: "/img/jingjing.png" },
+  { name: "[FE]주강현", photo: "/img/daram.png" },
+  { name: "[BE]유하얀", photo: "/img/patrick.png" },
+  { name: "[BE]장준수", photo: "/img/Boss.png" },
 ]
 export default function ServicePage() {
   return (
@@ -44,7 +44,11 @@ export default function ServicePage() {
           return (
             <Card sx={{ minWidth: 200, minHeight: 300 }}>
               <CardContent sx={{ alignItems: "center" }}>
-                <Avatar alt={profile.name} src={profile.photo} sx={{ width: 100, height: 100, mt: 5, mb: 2, ml: "auto", mr: "auto" }} />
+                <Avatar
+                  alt={profile.name}
+                  src={profile.photo}
+                  sx={{ width: 100, height: 100, mt: 5, mb: 2, ml: "auto", mr: "auto", border: 1, borderColor: "divider" }}
+                />
                 <Typography variant="h5" align={"center"} sx={{ mt: 5 }}>
                   {profile.name}
                 </Typography>
