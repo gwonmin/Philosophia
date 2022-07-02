@@ -31,7 +31,7 @@ class Share {
   }
 
   static async findLike({ shareId, userId }) {
-    const share = await ShareModel.findOne({ _id: shareId }, { like: { $elemMatch: { $eq: userId } } });
+    const share = await ShareModel.findOne({ _id: shareId });
     return share.like;
   }
 
