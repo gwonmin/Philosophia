@@ -13,14 +13,13 @@ import Badge from "@mui/material/Badge"
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
-import Link from "@mui/material/Link"
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import NotificationsIcon from "@mui/icons-material/Notifications"
 import Mainlist from "./SidebarNavMainlist"
 import Sublist from "./SidebarNavSublist"
 import { Props } from "./types"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import VpnKeyIcon from "@mui/icons-material/VpnKey"
 import PersonIcon from "@mui/icons-material/Person"
 import { DispatchContext, UserStateContext } from "./RootContext"
@@ -30,9 +29,9 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
-      <Link color="inherit" href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15" target="_blank">
+      <a href="https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team15/ai-project-team15" target="_blank">
         Philosophia
-      </Link>{" "}
+      </a>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -153,7 +152,9 @@ const TrendPageLayout: React.FC<Props> = ({ children }) => {
               <MenuIcon />
             </IconButton>
             <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-              Philosophia
+              <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+                Philosophia
+              </Link>
             </Typography>
             {/*li, lo logic*/}
             {!user?.name && (

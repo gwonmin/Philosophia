@@ -113,7 +113,6 @@ function Share({
     try {
       await Api.put({ endpoint: `shares/${post._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
-
       alert("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."))
     } catch (err) {
       alert("좋아요에 실패했습니다.")
@@ -134,12 +133,12 @@ function Share({
             {didLike ? (
               <div>
                 <HeartIcon color="primary" />
-                {post.like.length}
+                {post.likeCount}
               </div>
             ) : (
               <div>
                 <HeartBorderIcon color="primary" />
-                {post.like.length}
+                {post.likeCount}
               </div>
             )}
           </IconButton>

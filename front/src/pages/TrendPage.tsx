@@ -77,7 +77,6 @@ export default function TrendPage() {
   const [trend, setTrend] = useState<Trend | null>(null)
   const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
   const navigate = useNavigate()
-  console.log(trend)
   useEffect(() => {
     customFetch({
       endpoint: "trend",
