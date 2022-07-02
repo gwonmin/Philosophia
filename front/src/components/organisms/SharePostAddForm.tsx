@@ -109,7 +109,7 @@ export default function SharePostAddForm(aiShare?: any) {
           <button onClick={handlePost}>공유하기</button>
           <button
             onClick={() => {
-              navigate(-1)
+              navigate("/shares")
             }}
           >
             취소

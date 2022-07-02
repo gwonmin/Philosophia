@@ -45,11 +45,11 @@ export default function CommentList({ path, postId }: { path: string; postId: st
         endpoint: endpoint() + `s/?postId=${postId}`,
         data: { content: newComment },
       })
-      alert("덧글을 등록했습니다.")
+      alert("댓글을 등록했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
       setNewComment("")
     } catch (err) {
-      alert("덧글 등록에 실패했습니다.")
+      alert("댓글 등록에 실패했습니다.")
     }
   }
 
@@ -64,7 +64,7 @@ export default function CommentList({ path, postId }: { path: string; postId: st
   return (
     <Container>
       {commentList.length === 0 ? (
-        <Typography sx={{ color: "#999999" }}>아직 덧글이 없습니다.</Typography>
+        <Typography sx={{ color: "#999999" }}>아직 댓글이 없습니다.</Typography>
       ) : (
         <>
           {commentList.map((comment: any) => {
@@ -84,7 +84,7 @@ export default function CommentList({ path, postId }: { path: string; postId: st
         <SublineAtom subtext="AI 댓글 클린봇(Beta)가 작동중입니다." />
         <TextFieldAtom
           id="newComment"
-          label="새 덧글"
+          label="새 댓글"
           name="newComment"
           type="comment"
           autoComplete="comment"

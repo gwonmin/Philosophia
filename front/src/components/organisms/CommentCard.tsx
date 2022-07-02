@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { Button, Container, Paper } from "@mui/material"
+import { Button, Container, Paper, Typography } from "@mui/material"
 
 import * as Api from "../../api"
 import { TextFieldAtom } from "../atoms/textInputs"
@@ -57,10 +57,10 @@ export default function CommentCard({
         endpoint: endpoint(),
         params: comment._id,
       })
-      alert("덧글을 삭제했습니다.")
+      alert("댓글을 삭제했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
     } catch (err) {
-      alert("덧글 삭제에 실패했습니다.")
+      alert("댓글 삭제에 실패했습니다.")
     }
   }
 
@@ -70,7 +70,7 @@ export default function CommentCard({
         <div>
           <TextFieldAtom
             id="newComment"
-            label="수정될 덧글"
+            label="수정될 댓글"
             name="newComment"
             type="comment"
             autoComplete="comment"
@@ -97,7 +97,7 @@ export default function CommentCard({
         >
           <Box>
             <SublineAtom subtext={`${comment.author.name}`} sx={{ mb: 1 }} />
-            <TitleAtom title={`${comment.content}` + `${!comment.stance ? "" : comment.stance == "yes" ? "(찬성)" : "(반대)"}`} />
+            <Typography align="left">{`${comment.content}` + `${!comment.stance ? "" : comment.stance == "yes" ? "(찬성)" : "(반대)"}`}</Typography>
           </Box>
           {comment.author._id === user?._id && (
             <Box>

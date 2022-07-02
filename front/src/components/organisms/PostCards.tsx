@@ -77,7 +77,7 @@ function Devate({ path, post }: { path: string; post: Devate_Post }) {
           </Grid>
         </Grid>
         <Grid item xs={6} alignItems="center" justifyContent="center">
-          <SublineAtom subtext={post.content.length > 40 ? `${post.content.substring(0, 40)}...` : post.content} />
+          <SublineAtom subtext={post.content.length > 70 ? `${post.content.substring(0, 70)}...` : post.content} />
         </Grid>
         <Grid item xs={2} alignItems="center" justifyContent="center">
           <SublineAtom yes={post.yes.length} no={post.no.length} />
@@ -100,14 +100,16 @@ function Share({
   setSomethingWasChanged: React.Dispatch<SetStateAction<boolean>>
 }) {
   const user = useContext(UserStateContext)?.user
-  const didLike = user?._id ? post.like.includes(user?._id) : false
+  const didLike = post.like.includes(user?._id ?? "")
+
   const navigate = useNavigate()
   const toTheDetailPage = () => {
     navigate(`/${path}/${post._id}`)
   }
   const likeHandler = async () => {
     if (!user) {
-      return <p>user does not exist(even null)</p>
+      alert("로그인이 필요한 기능입니다.")
+      return
     }
 
     try {
@@ -123,7 +125,7 @@ function Share({
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <PostListItemContainerAtom onClick={toTheDetailPage}>
         <MainlineMolecule title={`철학자 ${post.philosopher}(이)가 생각하는 ${post.subject}(이)란?`} />
-        <SublineAtom subtext={post.content.length > 40 ? `${post.content.substring(0, 40)}...` : post.content} like={post.like.length} />
+        <SublineAtom subtext={post.content.length > 70 ? `${post.content.substring(0, 70)}...` : post.content} like={post.like.length} />
       </PostListItemContainerAtom>
 
       {/* 좋아요 버튼 */}
@@ -181,7 +183,7 @@ function Default({ path, post }: { path: string; post: Post }) {
           </Grid>
         </Grid>
         <Grid item xs={8} alignItems="center" justifyContent="center">
-          <SublineAtom subtext={post.content.length > 40 ? `${post.content.substring(0, 40)}...` : post.content} />
+          <SublineAtom subtext={post.content.length > 70 ? `${post.content.substring(0, 70)}...` : post.content} />
         </Grid>
       </Grid>
     </PostListItemContainerAtom>
