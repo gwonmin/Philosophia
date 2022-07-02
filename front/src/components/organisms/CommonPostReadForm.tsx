@@ -30,6 +30,7 @@ export default function CommonPostReadForm({
   const postId = postInfo._id
   const isAuthor = postInfo.author?._id === userState.user?._id
   let isUpdating = false
+  const didLike = postInfo.like?.includes(userState?.user?._id ?? "")
 
   //함수 정의
   const deleteHandler = () => handleDelete({ endpoint: path, id: postId, callback: navigate(-1) })
@@ -49,20 +50,21 @@ export default function CommonPostReadForm({
     isUpdating = false
   }
   const handleLike = async () => {
-    if (!userState.user) {
-      return <p>user does not exist(even null)</p>
+    if (!userState?.user?.name) {
+      alert("로그인이 필요한 기능입니다.")
+      return
     }
     try {
       await Api.put({ endpoint: `shares/${postInfo._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
-      alert("좋아요를 " + (postInfo.userLike === true ? "취소하였습니다." : "눌렀습니다."))
+      alert("좋아요를 " + (didLike ? "취소하였습니다." : "눌렀습니다."))
     } catch (err) {
       alert("좋아요에 실패했습니다.")
     }
   }
   return (
     <>
-      <ShowPostInfo postInfo={postInfo} />
+      <ShowPostInfo postInfo={postInfo} user={userState.user} handleLike={handleLike} />
       <ForUserMolcule postInfo={postInfo} userName={userState?.user?.name ?? ""} handleChangeStance={handleChangeStance} handleLike={handleLike} />
       <ForAuthorMolcule isAuthor={isAuthor} setIsEditing={setIsEditing} deleteHandler={deleteHandler} />
       <Divider sx={{ mt: 3, mb: 3 }} />

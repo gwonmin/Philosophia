@@ -7,9 +7,13 @@ import TagsAtom from "../atoms/TagsAtom"
 import SublineAtom from "../atoms/SublineAtom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { formatDateString } from "../../util"
+import HeartIcon from "@mui/icons-material/Favorite"
+import HeartBorderIcon from "@mui/icons-material/FavoriteBorder"
 
-export default function showPostInfo({ postInfo }: { postInfo: any }) {
+export default function showPostInfo({ user, postInfo, handleLike }: { user: any; postInfo: any; handleLike: any }) {
   const navigate = useNavigate()
+  const didLike = postInfo.like?.includes(user?._id ?? "")
+
   return (
     <Box>
       {/* 뒤로 */}
@@ -24,7 +28,12 @@ export default function showPostInfo({ postInfo }: { postInfo: any }) {
       {/* 제목 */}
       {postInfo.title && <HotPotatoTitle title={postInfo.title} />}
 
-      <SublineAtom subtext={`작성자: ${postInfo.author?.name} / ${formatDateString(postInfo.createdAt)}`} sx={{ textAlign: "right", mr: 1 }} />
+      {postInfo.philosopher && postInfo.subject && <HotPotatoTitle title={`${postInfo.philosopher}(이)가 생각하는 ${postInfo.subject}(이)란?`} />}
+
+      <SublineAtom
+        subtext={postInfo.subject ? "공유자" : "작성자" + `: ${postInfo.author?.name ?? "익명"} / ${formatDateString(postInfo.createdAt)}`}
+        sx={{ textAlign: "right", mr: 1 }}
+      />
 
       <Box sx={{ p: 2 }}>
         <Typography>{postInfo.content}</Typography>
@@ -33,8 +42,23 @@ export default function showPostInfo({ postInfo }: { postInfo: any }) {
       {/* 찬성, 반대 */}
       {postInfo.yes && postInfo.no && <SublineAtom sx={{ textAlign: "center" }} yes={postInfo.yes.length} no={postInfo.no.length} />}
 
-      {/* 좋아요 */}
-      {postInfo.like && <Typography>❤️: {postInfo.like.length}</Typography>}
+      {postInfo.subject && (
+        <Box sx={{ textAlign: "center" }}>
+          <IconButton onClick={handleLike}>
+            {didLike ? (
+              <div>
+                <HeartIcon color="primary" />
+                {postInfo.likeCount}
+              </div>
+            ) : (
+              <div>
+                <HeartBorderIcon color="primary" />
+                {postInfo.likeCount}
+              </div>
+            )}
+          </IconButton>
+        </Box>
+      )}
     </Box>
   )
 }

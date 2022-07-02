@@ -1,5 +1,12 @@
-import { Box, Divider, Grid, Typography } from "@mui/material"
+import { Avatar, Box, Card, CardContent, Divider, Grid, Stack, Typography } from "@mui/material"
 
+const forMap = [
+  { name: "[AI]양권민", photo: " " },
+  { name: "[AI]정예승", photo: " " },
+  { name: "[FE]주강현", photo: " " },
+  { name: "[BE]유하얀", photo: " " },
+  { name: "[BE]장준수", photo: " " },
+]
 export default function ServicePage() {
   return (
     <>
@@ -31,9 +38,21 @@ export default function ServicePage() {
       <Typography variant="h5" sx={{ p: 2 }}>
         팀 소개
       </Typography>
-      <Typography variant="body1" sx={{ p: 2 }}>
-        [AI]양권민, [AI]정예승, [FE]주강현, [BE]유하얀, [BE]장준수
-      </Typography>
+      <Typography variant="body1" sx={{ p: 2 }}></Typography>
+      <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ pb: 5 }}>
+        {forMap.map((profile) => {
+          return (
+            <Card sx={{ minWidth: 200, minHeight: 300 }}>
+              <CardContent sx={{ alignItems: "center" }}>
+                <Avatar alt={profile.name} src={profile.photo} sx={{ width: 100, height: 100, mt: 5, mb: 2, ml: "auto", mr: "auto" }} />
+                <Typography variant="h5" align={"center"} sx={{ mt: 5 }}>
+                  {profile.name}
+                </Typography>
+              </CardContent>
+            </Card>
+          )
+        })}
+      </Stack>
     </>
   )
 }

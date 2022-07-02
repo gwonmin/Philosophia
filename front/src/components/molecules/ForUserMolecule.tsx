@@ -71,11 +71,6 @@ export default function ForUserMolcule({
           )}
         </Box>
       )}
-      {postInfo.like && (
-        <Button onClick={handleLike} variant="contained" color="info">
-          {postInfo.userLike === true ? "좋아요 취소" : "좋아요"}
-        </Button>
-      )}
     </>
   )
 }

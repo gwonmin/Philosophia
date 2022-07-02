@@ -81,24 +81,26 @@ export default function CommentList({ path, postId }: { path: string; postId: st
           })}
         </>
       )}
-      <Box sx={{ mt: 3, pl: 2, pr: 2, mb: 2 }}>
-        <SublineAtom subtext="AI 댓글 클린봇(Beta)가 작동중입니다." />
-        <TextFieldAtom
-          id="newComment"
-          label="새 댓글"
-          name="newComment"
-          type="comment"
-          autoComplete="comment"
-          value={newComment}
-          onChange={(e) => {
-            setNewComment(e.target.value)
-          }}
-          sx={{ mb: 1.5 }}
-        />
-        <Button variant="contained" fullWidth onClick={commentHandler}>
-          등록
-        </Button>
-      </Box>
+      {userState?.user?.name && (
+        <Box sx={{ mt: 3, pl: 2, pr: 2, mb: 2 }}>
+          <SublineAtom subtext="AI 댓글 클린봇(Beta)가 작동중입니다." />
+          <TextFieldAtom
+            id="newComment"
+            label="새 댓글"
+            name="newComment"
+            type="comment"
+            autoComplete="comment"
+            value={newComment}
+            onChange={(e) => {
+              setNewComment(e.target.value)
+            }}
+            sx={{ mb: 1.5 }}
+          />
+          <Button variant="contained" fullWidth onClick={commentHandler}>
+            등록
+          </Button>
+        </Box>
+      )}
     </Container>
   )
 }
