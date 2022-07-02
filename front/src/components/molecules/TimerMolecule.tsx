@@ -18,7 +18,7 @@ export default function Timer() {
   useEffect(() => {
     // 만약 타임 아웃이 발생했을 경우
     if (time.current <= 0) {
-      console.log("타임 아웃")
+      alert("시간 초과")
       clearInterval(timerId.current)
       // dispatch event
     }

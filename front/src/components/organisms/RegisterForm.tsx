@@ -54,27 +54,27 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
       // "user/register" 엔드포인트로 post요청함.
       await Api.post({ endpoint: "user/register", data: userData })
       // 로그인 페이지로 이동함.
+      alert("회원가입에 성공하였습니다.")
       navigate("/user/login")
     } catch (err) {
-      console.log("회원가입에 실패하였습니다.", err)
+      alert("회원가입에 실패하였습니다.")
     }
   }
 
   const mailHandler = async () => {
     //나중에 메일 관련 api를 만들고 채울 부분
-    console.log("메일로 인증번호가 발송됩니다.")
+    alert("메일로 인증번호가 발송됩니다.")
     setMeaningless(meaningless + 1)
     setTimer(true)
     try {
       await Api.post({ endpoint: "user/send-email", data: { email } })
       setCertification("")
     } catch (err) {
-      console.log("메일 발송에 실패하였습니다.", err)
+      alert("메일 발송에 실패하였습니다.")
     }
   }
 
   const authHandler = async () => {
-    console.log("인증번호를 확인합니다.")
     try {
       const res = await Api.post({
         endpoint: "user/email-auth",
@@ -82,18 +82,18 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
       })
       switch (res.data.result) {
         case "success":
-          console.log("인증에 성공했습니다.")
+          alert("인증에 성공했습니다.")
           setIsAuth(true)
           break
         case "fail":
-          console.log("인증번호가 잘못되었습니다.")
+          alert("인증번호가 잘못되었습니다.")
           setIsAuth(false)
           break
         default:
           throw Error("잘못된 응답입니다.")
       }
     } catch (err) {
-      console.log("인증에 실패하였습니다.", err)
+      alert("인증에 실패하였습니다.")
     }
   }
 

@@ -17,7 +17,6 @@ const Input = styled("input")({
 
 export default function DataPostAddForm() {
   const path = ROUTES.DATA
-  console.log(path)
   const [postInfo, setPostInfo] = useState({
     title: "",
     content: "",
@@ -33,10 +32,10 @@ export default function DataPostAddForm() {
         endpoint: path.DEFAULT.path ?? "error",
         data: postInfo,
       })
-      console.log(path, "의 post요청이 성공했습니다. data: ", res.data)
+      alert("게시글 등록에 성공했습니다.")
       navigate(-1)
     } catch (err) {
-      console.log("게시글 등록에 실패하였습니다.\n", err)
+      alert("게시글 등록에 실패하였습니다.")
     }
   }
 
@@ -51,10 +50,9 @@ export default function DataPostAddForm() {
         endpoint: dataEndpoint,
         data: formData,
       })
-      console.log("파일 업로드 성공")
       alert("파일이 정상적으로 업로드되었습니다")
     } catch (err) {
-      console.log("파일 업로드 실패", err)
+      alert("파일 업로드 실패하였습니다")
     }
   }
 

@@ -56,7 +56,6 @@ export default function CommonPostEditForm({
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const onClick = () => handleEdit({ endpoint: `${path}/${postInfo._id}`, data: postInfo, callback: setIsEditing })
   const navigate = useNavigate()
-  console.log(postInfo)
   return (
     <>
       <Exchange path={path} postInfo={postInfo} onChange={onChange} />

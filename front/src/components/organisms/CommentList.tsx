@@ -9,13 +9,7 @@ import CommentCard from "./CommentCard"
 import { useParams } from "react-router-dom"
 import { Box } from "@mui/system"
 
-export default function CommentList({
-  path,
-  postId,
-}: {
-  path: string
-  postId: string
-}) {
+export default function CommentList({ path, postId }: { path: string; postId: string }) {
   //변수 초기화
   const params = useParams()
   const philosopher = params.who
@@ -50,11 +44,11 @@ export default function CommentList({
         endpoint: endpoint() + `s/?postId=${postId}`,
         data: { content: newComment },
       })
-      console.log("덧글을 등록했습니다.", res.data)
+      alert("덧글을 등록했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
       setNewComment("")
     } catch (err) {
-      console.log("덧글 등록에 실패했습니다.", err)
+      alert("덧글 등록에 실패했습니다.")
     }
   }
 

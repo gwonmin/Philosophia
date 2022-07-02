@@ -32,7 +32,6 @@ export default function ForUserMolcule({
   handleChangeStance: any
   handleLike: any
 }) {
-  console.log("야 이거,", postInfo)
   return (
     <>
       {isUser && (

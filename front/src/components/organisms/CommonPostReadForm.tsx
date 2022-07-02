@@ -30,16 +30,11 @@ export default function CommonPostReadForm({
   const isAuthor = postInfo.author?._id === userState.user?._id
   let isUpdating = false
 
-  //초기화 확인
-  console.log("path: ", path)
-  console.log("postId: ", postId)
-  console.log("isAuthor: ", isAuthor)
-
   //함수 정의
   const deleteHandler = () => handleDelete({ endpoint: path, id: postId, callback: navigate(-1) })
   const handleChangeStance = async (changeStance: string) => {
     if (isUpdating) {
-      console.log("이전 post 요청이 끝나지 않았습니다.")
+      alert("조금만 기다려 주세요.")
       return
     }
     isUpdating = true
@@ -59,9 +54,9 @@ export default function CommonPostReadForm({
     try {
       await Api.put({ endpoint: `shares/${postInfo._id}/like` })
       setSomethingWasChanged(!somethingWasChanged)
-      console.log("좋아요를 " + (postInfo.userLike === true ? "취소하였습니다." : "눌렀습니다."))
+      alert("좋아요를 " + (postInfo.userLike === true ? "취소하였습니다." : "눌렀습니다."))
     } catch (err) {
-      console.log("좋아요에 실패했습니다.", err)
+      alert("좋아요에 실패했습니다.")
     }
   }
   return (

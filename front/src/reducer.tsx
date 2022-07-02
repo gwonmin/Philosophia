@@ -10,13 +10,13 @@ export type Action =
 export function loginReducer(userState: { user: User | null }, action: Action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
-      console.log("%c로그인!", "color: #d93d1a;")
+      alert("로그인에 성공하였습니다!")
       return {
         ...userState,
         user: action.payload,
       }
     case "LOGOUT":
-      console.log("%c로그아웃!", "color: #d93d1a;")
+      alert("로그아웃하셨습니다.")
       return {
         ...userState,
         user: null,
