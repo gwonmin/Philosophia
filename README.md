@@ -1,5 +1,7 @@
 ### **`필로소피아 (philosophia)`**
 
+URL : http://kdt-ai4-team15.elicecoding.com/
+
 1. 철학토론 사이트 
 
 2. 엔드유저에게 보이는 웹 서비스 타이틀 및 한 줄 소개
