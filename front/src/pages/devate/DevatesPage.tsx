@@ -1,8 +1,8 @@
 import { ROUTES } from "../../route/Routes"
-import CommonTemplate from "../../components/templates/CommonPageTemplate"
+import SideBarPageTemplate from "../../components/templates/SideBarPageTemplate"
 
 export default function DevatesPage() {
   //변수 초기화
   const currentPage = ROUTES.DEVATES
-  return <CommonTemplate currentPage={currentPage} />
+  return <SideBarPageTemplate currentPage={currentPage} />
 }

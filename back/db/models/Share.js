@@ -31,7 +31,12 @@ class Share {
   }
 
   static async findLike({ shareId, userId }) {
-    const share = await ShareModel.findOne({ _id: shareId }, { like: { $elemMatch: { $eq: userId } } });
+    const share = await ShareModel.findOne({ _id: shareId }, {like: { $elemMatch: {$eq:userId}}});
+    return share.like;
+  }
+
+  static async findAllLike({ shareId, userId }) {
+    const share = await ShareModel.findOne({ _id: shareId });
     return share.like;
   }
 
@@ -42,6 +47,12 @@ class Share {
     const updatedShare = await ShareModel.findOneAndUpdate(filter, update, option);
     return updatedShare;
   }
+
+  static async getTop3(){
+    const posts = await ShareModel.find().populate("author", "id name").sort({"likeCount":-1, "_id":1}).limit(3);
+    return posts;
+  }
+
 }
 
 export { Share };

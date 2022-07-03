@@ -14,10 +14,10 @@ class devateService {
   // 게시글 1개 조회
   static async getPostInfo({ postId, userId }) {
     const post = await Devate.findByPostId({ postId, userId });
-
+    console.log(userId)
     const yes = await DevateComment.findYeses({ postId });
     const no = await DevateComment.findNos({ postId });
-    
+
     if (yes.includes(userId)) {
       post.userStance = 'yes'
     } else if (no.includes(userId)) {
@@ -106,7 +106,7 @@ class devateService {
 
   static async setPostStance({ userId, postId, stance }) {
     const post = await Devate.findByPostId({ postId });
-
+    console.log(userId)
     if (!post) {
       const errorMessage = '해당 포스트가 없습니다.';
       return { errorMessage };
