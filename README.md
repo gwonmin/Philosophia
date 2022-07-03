@@ -54,18 +54,23 @@ URL : http://kdt-ai4-team15.elicecoding.com/
 - 메인 기능
 
    1. 철학자를 고르면 그 철학자의 작풍에 맞게 글을 생성해주는 기능
+   
+   <img width="682" alt="스크린샷 2022-07-03 오후 3 25 07" src="https://user-images.githubusercontent.com/65943751/177027898-e3e0d800-66b4-4c42-9723-ac45110c72b1.png">
+
 
    2. 철학자유주제 토론 게시판(아고라) (찬반/ 해시태그)
 
-   3. 철학자별 게시판
+   <img width="581" alt="스크린샷 2022-07-03 오후 3 23 40" src="https://user-images.githubusercontent.com/65943751/177027793-923102d8-9dfe-4505-8fb6-8adf7766f99d.png">
+
+   <img width="598" alt="스크린샷 2022-07-03 오후 3 24 08" src="https://user-images.githubusercontent.com/65943751/177027818-dfac68d9-7a16-4c69-b5b6-f9e6f1d31fd0.png">
+
 
 - 서브 기능
 
-   1. 철학자의 글 공유 게시판
+   댓글 비속어 필터링
 
-   2. 댓글 비속어 필터링
+   <img width="522" alt="스크린샷 2022-07-03 오후 3 24 39" src="https://user-images.githubusercontent.com/65943751/177027848-7ee06dc9-fcab-4241-95c7-6b76177b3370.png">
 
-   3. 철학 자료 게시판
 
 
 ### `스토리보드 & 시나리오`
