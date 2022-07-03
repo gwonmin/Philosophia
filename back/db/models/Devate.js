@@ -17,17 +17,25 @@ class Devate {
         return post;
     }
 
-    static async findAll(newFilter) {
+    static async findAll(newFilter, page, limit) {
         const posts = await DevateModel.find(newFilter)
         .find({ tag: { $in: newFilter.tag } })
         .populate('author', 'id name')
+        .sort('-createdAt')
+        .skip((page-1)*limit)   
+        .limit(limit) 
+        .exec();
     
         return posts;
     }
 
-    static async findAllNoTag(newFilter) {
+    static async findAllNoTag(newFilter, page, limit) {
         const posts = await DevateModel.find(newFilter)
         .populate('author', 'id email name')
+        .sort('-createdAt')
+        .skip((page-1)*limit)   
+        .limit(limit) 
+        .exec();
 
         return posts;
     }
@@ -90,7 +98,7 @@ class Devate {
         var postObj = []
         for(var i in posts){
             const postId = posts[i]._id;
-            const post = await DevateModel.findOne({ _id: postId });
+            const post = await DevateModel.findOne({ _id: postId }).populate("author", "id name");
             postObj.push(post)
         }
 

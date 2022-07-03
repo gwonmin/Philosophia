@@ -42,7 +42,7 @@ class shareService {
 
   static async getShareInfo({ shareId, userId }) {
     const share = await Share.findByShareId({ shareId });
-    const like = await Share.findLike({ shareId, userId });
+    const like = await Share.findAllLike({ shareId, userId });
     
     if (like.includes(userId)) {
       share.userLike = true;

@@ -16,7 +16,9 @@ class FreeTopic {
   }
 
   static async findAll() {
-    const posts = await FreeTopicModel.find().populate('author', 'id name');
+    const posts = await FreeTopicModel.find()
+    .populate('author', 'id name')
+    .sort({createdAt: -1 });
     return posts;
   }
 
@@ -47,7 +49,7 @@ class FreeTopic {
     var postObj = []
         for(var i in posts){
             const postId = posts[i]._id;
-            const post = await FreeTopicModel.findOne({ _id: postId });
+            const post = await FreeTopicModel.findOne({ _id: postId }).populate("author", "id name");
             postObj.push(post)
         }
 

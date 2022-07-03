@@ -1,33 +1,28 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useNavigate, Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import Box from "@mui/material/Box"
 import Container from "@mui/material/Container"
+import Typography from "@mui/material/Typography"
 
-import { COMMON_ROUTE } from "../../route/Routes"
+import { ALL_ROUTE } from "../../route/Routes"
 import { customFetch } from "../../util"
 
-import { UserStateContext } from "../../pages/RootPage"
-import Header from "../organisms/Header"
-import Footer from "../organisms/Footer"
-import CommonPostCards from "../organisms/CommonPostCards"
+import { UserStateContext } from "../../RootContext"
+import Exchange from "../organisms/PostCards"
+import { Post, GetPostResponse } from "../../types"
+import WriteFabAtom from "../atoms/WriteFabAtom"
+import PaginationAtom from "../atoms/PaginationAtom"
+import Loading from "../atoms/Loading"
 
-type User = {
-  _id: string
-  email: string
-  password: string
-  name: string
-}
-
-export type Post = { _id: string; author: User; title: string; content: string; comment: string[] }
-
-export default function CommonPageTemplate({ currentPage }: { currentPage: COMMON_ROUTE }) {
+export default function CommonPageTemplate({ currentPage }: { currentPage: ALL_ROUTE }) {
   //변수 초기화
   const params = useParams()
   const philosopher = params.who ?? ""
-  const navigate = useNavigate()
   const userState = useContext(UserStateContext)
   const [postList, setPostList] = useState<Post[]>([])
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
+  const [currentPageNumber, setCurrentPageNumber] = useState(1)
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
   const currentSub = currentPage.DEFAULT
   const path = () => {
     if (currentPage.DEFAULT.path === ":who") {
@@ -36,44 +31,47 @@ export default function CommonPageTemplate({ currentPage }: { currentPage: COMMO
     return currentPage.DEFAULT.path
   }
 
-  //초기화 확인
-  console.log("location: ", currentPage)
-  console.log("userState: ", userState)
-
   //fetch
   useEffect(() => {
     customFetch({
-      endpoint: path() ?? "",
-      setValue: setPostList,
+      endpoint: `${path()}${currentPageNumber !== 1 ? `?page=${currentPageNumber}` : ""}` ?? "",
+      setValue: (res: GetPostResponse) => {
+        setPostList(res.posts)
+      },
       callback: setIsFetchCompleted,
     })
   }, [somethingWasChanged])
-  if (!isFetchCompleted) {
-    return <p>loading...</p>
-  }
+
+  if (!isFetchCompleted) return <Loading />
 
   return (
-    <div>
-      <Header />
-      <Container component="main" maxWidth="xs">
-        <p>{currentSub.label} 페이지입니다.</p>
-        <CommonPostCards
-          currentPage={currentPage}
-          postList={postList}
-          somethingWasChanged={somethingWasChanged}
-          setSomethingWasChanged={setSomethingWasChanged}
-        />
-        {userState?.user && (
-          <button
-            onClick={() => {
-              navigate("add")
-            }}
-          >
-            글쓰기
-          </button>
+    <Container component="main" sx={{ width: "100%" }}>
+      <Box sx={{ overflow: "auto", height: "70.2vh" }}>
+        <Typography sx={{ textAlign: "center", mb: 1 }} variant="h4">
+          {currentSub.label} 페이지
+        </Typography>
+        {postList.length === 0 ? (
+          <Typography variant="h4">아직 게시물이 없네요 😭</Typography>
+        ) : (
+          postList.map((post: Post) => {
+            return (
+              <Exchange
+                path={currentPage.DEFAULT.path ?? "에러"}
+                post={post}
+                somethingWasChanged={somethingWasChanged}
+                setSomethingWasChanged={setSomethingWasChanged}
+              />
+            )
+          })
         )}
-      </Container>
-      <Footer />
-    </div>
+      </Box>
+      {userState?.user?.name && <WriteFabAtom path="add" />}
+      <PaginationAtom
+        page={currentPageNumber}
+        onChange={(_e, val) => {
+          setCurrentPageNumber(val)
+        }}
+      />
+    </Container>
   )
 }

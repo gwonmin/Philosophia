@@ -1,17 +1,24 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { UserStateContext } from "../../RootContext"
 
 import { TextFieldAtom } from "../atoms/textInputs"
+import { TextFieldMultilineAtom } from "../atoms/textInputsMultiline"
 import { handleChange } from "../../util"
 import * as Api from "../../api"
+import { NewPost } from "../../types"
+
+import "../../../public/index.scss"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import { Typography } from "@mui/material"
 
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
     <>
-      <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
-      <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
-      <TextFieldAtom id="tag" label="tag" name="tag" value={postInfo.tag} onChange={onChange} />
+      <TextFieldAtom id="title" placeholder="제목을 입력해주세요" name="title" value={postInfo.title} onChange={onChange} />
+      <TextFieldMultilineAtom id="content" placeholder="본문을 입력해주세요" name="content" value={postInfo.content} onChange={onChange} />
     </>
   )
 }
@@ -19,10 +26,10 @@ function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
 //-------------------------------------------Default-------------------------------------------//
 function Default({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
-    <>
-      <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
-      <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
-    </>
+    <Box sx={{ p: 1, mb: 3, mt: 4 }}>
+      <TextFieldAtom id="title" placeholder="제목을 입력해주세요" name="title" value={postInfo.title} onChange={onChange} />
+      <TextFieldMultilineAtom id="content" placeholder="본문을 입력해주세요" name="content" value={postInfo.content} onChange={onChange} />
+    </Box>
   )
 }
 
@@ -37,7 +44,7 @@ function Exchange({ path, postInfo, onChange }: { path: string; postInfo: any; o
 }
 
 export default function CommonPostAddForm({ path }: { path: string }) {
-  const [postInfo, setPostInfo] = useState({
+  const [postInfo, setPostInfo] = useState<NewPost>({
     title: "",
     content: "",
     tag: "",
@@ -46,37 +53,54 @@ export default function CommonPostAddForm({ path }: { path: string }) {
   const philosopher = params.who
   const navigate = useNavigate()
   const endpoint = path === ":who" ? philosopher : path
+  const userState = useContext(UserStateContext) ?? { user: null }
 
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const handlePost = async () => {
     if (!endpoint) {
-      console.log("location: CommonPostAddForm, err: post 경로가 잘못되었습니다.")
+      alert("에러: post 경로가 잘못되었습니다. 다시 시도해주세요.")
+      return
+    }
+    if (!userState?.user?.name) {
+      alert("로그인이 필요한 기능입니다.")
       return
     }
     try {
-      // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post({
         endpoint: endpoint,
         data: postInfo,
       })
-      console.log(path, "의 post요청이 성공했습니다. data: ", res.data)
+      alert("게시글 등록에 성공했습니다.")
       navigate(-1)
     } catch (err) {
-      console.log("게시글 등록에 실패하였습니다.\n", err)
+      alert("게시글 등록에 실패하였습니다.")
     }
   }
 
   return (
     <>
       <Exchange path={path} postInfo={postInfo} onChange={onChange} />
-      <button onClick={handlePost}>게시글 등록하기</button>
-      <button
-        onClick={() => {
-          navigate(-1)
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          mr: 1,
         }}
       >
-        취소
-      </button>
+        <Button
+          sx={{ mr: 1.5 }}
+          variant="outlined"
+          onClick={() => {
+            navigate(-1)
+          }}
+        >
+          취소
+        </Button>
+        <Button variant="contained" onClick={handlePost}>
+          게시글 등록하기
+        </Button>
+      </Box>
     </>
   )
 }

@@ -2,34 +2,38 @@ import { Router } from "express";
 import { devatecommentService } from "../services/devatecommentService"; 
 import { verifyToken } from "../middlewares/verifyToken";
 import { verifyRefresh } from "../middlewares/verifyRefresh";
+import { checkComment } from "../middlewares/checkComment";
+import axios from "axios";
 
 const devatecommentRouter = Router();
 
 // 댓글 작성
-devatecommentRouter.post('/devatecomments', verifyToken, async (req, res, next) => {
+devatecommentRouter.post('/devatecomments', verifyToken, checkComment, async (req, res, next) => {
     try {
         const userId = req.user;
         const postId = req.query.postId;
-        const { content } = req.body;
+        let { content } = req.body;
 
-        const newComment = await devatecommentService.addComment({
-            userId,
-            postId,
-            content,
-        });
+            const newComment = await devatecommentService.addComment({
+                userId,
+                postId,
+                content,
+            });
 
-        if (newComment.errorMessage) {
-            throw new Error(newComment.errorMessage);
-        }
+            if (newComment.errorMessage) {
+                throw new Error(newComment.errorMessage);
+            }
 
-        res.status(201).json(newComment);
-    } catch (error) {
+            res.status(201).json(newComment);
+
+        } catch (error) {
         next(error);
     }
+
 });
 
 // 댓글 수정
-devatecommentRouter.put('/devatecomments/:id', verifyToken, async (req, res, next) => {
+devatecommentRouter.put('/devatecomments/:id', verifyToken, checkComment, async (req, res, next) => {
     try {
         const userId = req.user;
         const commentId = req.params.id;
@@ -82,7 +86,7 @@ devatecommentRouter.get('/devatecomments/:id', verifyToken, async (req, res, nex
 })
 
 // 게시글 1개 전체 댓글 조회
-devatecommentRouter.get('/devatecommentlist', verifyToken, async (req, res, next) => {
+devatecommentRouter.get('/devatecommentlist', async (req, res, next) => {
     try {
         const postId = req.query.postId;
         const comments = await devatecommentService.getComments({ postId });

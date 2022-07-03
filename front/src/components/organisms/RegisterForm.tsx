@@ -1,37 +1,33 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
 import * as Api from "../../api"
-
-import { TextFieldAtom } from "../atoms/textInputs"
+import { handleChange } from "../../util"
+import { User } from "../../types"
 import { GreenButton } from "../atoms/buttons"
+import Timer from "../molecules/TimerMolecule"
 import { Certification, NoticeTextField } from "../molecules/certification"
 
 export default function RegisterForm({ register, userInfo }: { register: boolean; userInfo: any }) {
   const navigate = useNavigate()
   //user의 가입 정보를 객체로 다룬다.
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<User>({
     email: userInfo.email,
     password: userInfo.password,
     name: userInfo.name,
   })
   const email = userData.email
-  const [certification, setCertification] = useState("인증을 진행해주세요.")
+  const [certification, setCertification] = useState<string>("인증을 진행해주세요.")
   const password = userData.password
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState<string>("")
   const name = userData.name
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setUserData({
-      ...userData,
-      [name]: value,
-    })
-  }
+  const [timer, setTimer] = useState<boolean>(false)
+  const [meaningless, setMeaningless] = useState<number>(0)
 
+  const onChange = (e: any) => handleChange({ event: e, someState: userData, setSomeState: setUserData })
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email: string) => {
     const val = email
@@ -39,7 +35,6 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       )
-
     if (val == null) {
       return false
     }
@@ -48,7 +43,7 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
 
   const isEmailValid = validateEmail(email)
   const isSended = certification != "인증을 진행해주세요."
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState<boolean>(false)
   const isPasswordValid = password.length >= 4
   const isPasswordSame = password === confirmPassword
   const isNameValid = name.length >= 2
@@ -58,29 +53,28 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
     try {
       // "user/register" 엔드포인트로 post요청함.
       await Api.post({ endpoint: "user/register", data: userData })
-      //dispatch
-
       // 로그인 페이지로 이동함.
-      navigate("/login")
+      alert("회원가입에 성공하였습니다.")
+      navigate("/user/login")
     } catch (err) {
-      console.log("회원가입에 실패하였습니다.", err)
+      alert("회원가입에 실패하였습니다.")
     }
   }
 
   const mailHandler = async () => {
     //나중에 메일 관련 api를 만들고 채울 부분
-    console.log("메일로 인증번호가 발송됩니다.")
+    alert("메일로 인증번호가 발송됩니다.")
+    setMeaningless(meaningless + 1)
+    setTimer(true)
     try {
       await Api.post({ endpoint: "user/send-email", data: { email } })
       setCertification("")
     } catch (err) {
-      console.log("메일 발송에 실패하였습니다.", err)
+      alert("메일 발송에 실패하였습니다.")
     }
   }
 
   const authHandler = async () => {
-    //나중에 인증 관련 api와 연결할 함수
-    console.log("인증번호를 확인합니다.")
     try {
       const res = await Api.post({
         endpoint: "user/email-auth",
@@ -88,18 +82,18 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
       })
       switch (res.data.result) {
         case "success":
-          console.log("인증에 성공했습니다.")
+          alert("인증에 성공했습니다.")
           setIsAuth(true)
           break
         case "fail":
-          console.log("인증번호가 잘못되었습니다.")
+          alert("인증번호가 잘못되었습니다.")
           setIsAuth(false)
           break
         default:
           throw Error("잘못된 응답입니다.")
       }
     } catch (err) {
-      console.log("인증에 실패하였습니다.", err)
+      alert("인증에 실패하였습니다.")
     }
   }
 
@@ -132,7 +126,8 @@ export default function RegisterForm({ register, userInfo }: { register: boolean
               buttonText="인증번호 받기"
             />
           </Grid>
-          {<p></p>}
+          {timer && <Timer key={meaningless} />}
+          <p></p>
           <Grid item xs={12}>
             <Certification
               id="Certification"

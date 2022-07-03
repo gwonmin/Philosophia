@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography"
 
 import * as Api from "../../api"
 import { GreenButton } from "../atoms/buttons"
-import { DispatchContext } from "../../pages/RootPage"
+import { DispatchContext } from "../../RootContext"
 import { NoticeTextField } from "../molecules/certification"
 
 export default function LoginForm({ login, userInfo }: { login: boolean; userInfo: { email: string; password: string; name: string } }) {
@@ -46,57 +46,18 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
   const isPasswordValid = password.length >= 4
   const isFormValid = isEmailValid && isPasswordValid
 
-  const testLogin = async () => {
-    try {
-      // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post({
-        endpoint: "user/login",
-        data: {
-          email: "test@test.com",
-          password: "0000",
-        },
-      })
-
-      console.log(res)
-      const user = res.data.user
-      // JWT 토큰은 유저 정보의 token임.
-      const jwtToken = res.data.accessToken
-      console.log(jwtToken)
-
-      // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", String(jwtToken))
-      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      if (!dispatch) {
-        console.log("Dispatch가 존재하지 않습니다.")
-        return
-      }
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      })
-      // 기본 페이지로 이동함.
-      navigate("/", { replace: true })
-    } catch (err) {
-      console.log("로그인에 실패하였습니다.\n", err)
-    }
-  }
-
   const handleSubmit = async () => {
     try {
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post({ endpoint: "user/login", data: loginData })
-
-      console.log(res)
       const user = res.data.user
       // JWT 토큰은 유저 정보의 token임.
       const jwtToken = res.data.accessToken
-      console.log(jwtToken)
-
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       sessionStorage.setItem("userToken", jwtToken)
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       if (!dispatch) {
-        console.log("Dispatch가 존재하지 않습니다.")
+        alert("dispatch가 존재하지 않습니다. 새로고침을 해 주세요!")
         return
       }
       dispatch({
@@ -104,16 +65,16 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
         payload: user,
       })
       // 기본 페이지로 이동함.
+      alert("로그인에 성공하였습니다.")
       navigate("/", { replace: true })
     } catch (err) {
-      console.log("로그인에 실패하였습니다.\n", err)
+      alert("로그인에 실패하였습니다.")
     }
   }
 
   return (
     <Box
       sx={{
-        marginTop: 8,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -151,10 +112,11 @@ export default function LoginForm({ login, userInfo }: { login: boolean; userInf
             />
           </Grid>
         </Grid>
-        <GreenButton onClick={handleSubmit} disabled={!isFormValid}>
-          {login ? "로그인" : "인증하기"}
-        </GreenButton>
-        <GreenButton onClick={testLogin}>테스트 로그인</GreenButton>
+        <Grid item xs={12} sx={{ display: "flex", justifyContent: "right" }}>
+          <GreenButton onClick={handleSubmit} disabled={!isFormValid}>
+            {login ? "로그인" : "인증하기"}
+          </GreenButton>
+        </Grid>
       </Box>
     </Box>
   )

@@ -13,7 +13,7 @@ import { devatecommentRouter } from './routes/devatecommentRouter';
 import { shareRouter } from './routes/shareRouter';
 
 import { philosopherRouter } from './routes/philosopherRouter';
-import { philosophercommentRouter } from './routes/philosopherCommentRouter';
+import { philosophercommentRouter } from './routes/philosophercommentRouter';
 import { freetopicRouter } from './routes/freetopicRouter';
 import { freetopiccommentRouter } from './routes/freetopiccommentRouter';
 import { dataRouter } from './routes/dataRouter';

@@ -1,15 +1,23 @@
-import { Container } from "@mui/material"
+import { useNavigate, useParams } from "react-router-dom"
+import { useState } from "react"
 
 import { TextFieldAtom } from "../atoms/textInputs"
+import { TextFieldMultilineAtom } from "../atoms/textInputsMultiline"
 import { handleChange, handleEdit } from "../../util"
+import * as Api from "../../api"
+import { NewPost } from "../../types"
+
+import "../../../public/index.scss"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import { Typography } from "@mui/material"
 
 //-------------------------------------------Devate-------------------------------------------//
 function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
     <>
-      <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
-      <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
-      <TextFieldAtom id="tag" label="tag" name="tag" value={postInfo.tag} onChange={onChange} />
+      <TextFieldAtom id="title" placeholder="제목을 입력해주세요" name="title" value={postInfo.title} onChange={onChange} />
+      <TextFieldMultilineAtom id="content" name="content" value={postInfo.content} onChange={onChange} />
     </>
   )
 }
@@ -17,10 +25,10 @@ function Devate({ postInfo, onChange }: { postInfo: any; onChange: any }) {
 //-------------------------------------------Default-------------------------------------------//
 function Default({ postInfo, onChange }: { postInfo: any; onChange: any }) {
   return (
-    <>
-      <TextFieldAtom id="title" label="title" name="title" value={postInfo.title} onChange={onChange} />
-      <TextFieldAtom id="content" label="content" name="content" value={postInfo.content} onChange={onChange} />
-    </>
+    <Box sx={{ p: 1, mb: 3, mt: 4 }}>
+      <TextFieldAtom id="title" placeholder="제목을 입력해주세요" name="title" value={postInfo.title} onChange={onChange} />
+      <TextFieldMultilineAtom id="content" name="content" value={postInfo.content} onChange={onChange} />
+    </Box>
   )
 }
 
@@ -47,20 +55,31 @@ export default function CommonPostEditForm({
 }) {
   const onChange = (e: any) => handleChange({ event: e, someState: postInfo, setSomeState: setPostInfo })
   const onClick = () => handleEdit({ endpoint: `${path}/${postInfo._id}`, data: postInfo, callback: setIsEditing })
-
+  const navigate = useNavigate()
   return (
-    <div>
-      <Container component="main" maxWidth="xs">
-        <Exchange path={path} postInfo={postInfo} onChange={onChange} />
-        <button onClick={onClick}>게시글 수정하기</button>
-        <button
+    <>
+      <Exchange path={path} postInfo={postInfo} onChange={onChange} />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          mr: 1,
+        }}
+      >
+        <Button
+          sx={{ mr: 1.5 }}
+          variant="outlined"
           onClick={() => {
             setIsEditing(false)
           }}
         >
           취소
-        </button>
-      </Container>
-    </div>
+        </Button>
+        <Button variant="contained" onClick={onClick}>
+          게시글 등록하기
+        </Button>
+      </Box>
+    </>
   )
 }

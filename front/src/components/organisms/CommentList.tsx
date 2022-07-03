@@ -1,22 +1,25 @@
 import { useContext, useEffect, useState } from "react"
-import { Container } from "@mui/material"
+import { Button, Container, Typography } from "@mui/material"
 
-import { UserStateContext } from "../../pages/RootPage"
+import { UserStateContext } from "../../RootContext"
 import { customFetch } from "../../util"
 import * as Api from "../../api"
 import { TextFieldAtom } from "../../components/atoms/textInputs"
 import CommentCard from "./CommentCard"
 import { useParams } from "react-router-dom"
+import { Box } from "@mui/system"
+import SublineAtom from "../atoms/SublineAtom"
+import Loading from "../atoms/Loading"
 
 export default function CommentList({ path, postId }: { path: string; postId: string }) {
   //변수 초기화
   const params = useParams()
   const philosopher = params.who
   const userState = useContext(UserStateContext)
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const [somethingWasChanged, setSomethingWasChanged] = useState(false)
-  const [commentList, setCommentList] = useState([])
-  const [newComment, setNewComment] = useState("")
+  const [isFetchCompleted, setIsFetchCompleted] = useState<boolean>(false)
+  const [somethingWasChanged, setSomethingWasChanged] = useState<boolean>(false)
+  const [commentList, setCommentList] = useState<string[]>([])
+  const [newComment, setNewComment] = useState<string>("")
 
   const endpoint = () => {
     switch (path) {
@@ -43,11 +46,11 @@ export default function CommentList({ path, postId }: { path: string; postId: st
         endpoint: endpoint() + `s/?postId=${postId}`,
         data: { content: newComment },
       })
-      console.log("덧글을 등록했습니다.", res.data)
+      alert("댓글을 등록했습니다.")
       setSomethingWasChanged(!somethingWasChanged)
       setNewComment("")
     } catch (err) {
-      console.log("덧글 등록에 실패했습니다.", err)
+      alert("댓글 등록에 실패했습니다.")
     }
   }
 
@@ -56,16 +59,15 @@ export default function CommentList({ path, postId }: { path: string; postId: st
     return <p>userState does not exist(even null)</p>
   }
   if (!isFetchCompleted) {
-    return <p>loading...</p>
+    return <Loading />
   }
 
   return (
     <Container>
-      <p style={{ backgroundColor: "grey" }}>덧글 창입니다.</p>
-      {commentList.length == 0 && <p>아직 덧글이 없습니다.</p>}
-      {commentList != [] && (
-        <div>
-          <p>덧글 목록({commentList.length}): </p>
+      {commentList.length === 0 ? (
+        <Typography sx={{ color: "#999999" }}>아직 댓글이 없습니다.</Typography>
+      ) : (
+        <>
           {commentList.map((comment: any) => {
             return (
               <CommentCard
@@ -77,20 +79,28 @@ export default function CommentList({ path, postId }: { path: string; postId: st
               />
             )
           })}
-        </div>
+        </>
       )}
-      <TextFieldAtom
-        id="newComment"
-        label="새 덧글"
-        name="newComment"
-        type="comment"
-        autoComplete="comment"
-        value={newComment}
-        onChange={(e) => {
-          setNewComment(e.target.value)
-        }}
-      ></TextFieldAtom>
-      <button onClick={commentHandler}>등록</button>
+      {userState?.user?.name && (
+        <Box sx={{ mt: 3, pl: 2, pr: 2, mb: 2 }}>
+          <SublineAtom subtext="AI 댓글 클린봇(Beta)가 작동중입니다." />
+          <TextFieldAtom
+            id="newComment"
+            label="새 댓글"
+            name="newComment"
+            type="comment"
+            autoComplete="comment"
+            value={newComment}
+            onChange={(e) => {
+              setNewComment(e.target.value)
+            }}
+            sx={{ mb: 1.5 }}
+          />
+          <Button variant="contained" fullWidth onClick={commentHandler}>
+            등록
+          </Button>
+        </Box>
+      )}
     </Container>
   )
 }
